@@ -1,5 +1,8 @@
 package com.wedevol.iclass;
 
+/**
+ * Greeting Bean
+ */
 public class Greeting {
 
 	private final long id;
