@@ -1,7 +1,7 @@
-package com.wedevol.iclass;
+package com.wedevol.iclass.core.entity;
 
 /**
- * Greeting Bean
+ * Greeting Entity
  */
 public class Greeting {
 
