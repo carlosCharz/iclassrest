@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpStatus;
+import com.wedevol.iclass.core.enums.ErrorType;
 
 /**
  * Bad request exception
@@ -9,33 +8,12 @@ import org.springframework.http.HttpStatus;
  * @author charz
  *
  */
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-class BadRequestException extends RuntimeException {
+public class BadRequestException extends BaseRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private int errorCode;
-	private String message;
-
-	public BadRequestException(int errorCode, String message) {
-		super("Error code: " + errorCode + ". Message: " + message);
-		this.errorCode = errorCode;
-		this.message = message;
+	public BadRequestException(ErrorType errorType) {
+		super(errorType.getCode(), errorType.getMessage());
 	}
 
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 }

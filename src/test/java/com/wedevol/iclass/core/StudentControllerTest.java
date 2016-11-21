@@ -13,16 +13,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.wedevol.iclass.core.entity.Student;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GreetingControllerTests {
+public class StudentControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
 	public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
+		//TODO: implement
+		Student student1 = new Student.StudentBuilder("Carlos", "Becerra", "1234567", "carlos@gmail.com",
+				"sfdt4ygdgdsda").build();
 
 		this.mockMvc.perform(get("/greeting"))
 					.andDo(print())

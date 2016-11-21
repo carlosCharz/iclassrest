@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpStatus;
+import com.wedevol.iclass.core.enums.ErrorType;
 
 /**
  * Resource not found exception
@@ -9,33 +8,12 @@ import org.springframework.http.HttpStatus;
  * @author charz
  *
  */
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class ResourceNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends BaseRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private int errorCode;
-	private String message;
-
-	public ResourceNotFoundException(int errorCode, String message) {
-		super("Error code: " + errorCode + ". Message: " + message);
-		this.errorCode = errorCode;
-		this.message = message;
+	public ResourceNotFoundException(ErrorType errorType) {
+		super(errorType.getCode(), errorType.getMessage());
 	}
 
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 }
