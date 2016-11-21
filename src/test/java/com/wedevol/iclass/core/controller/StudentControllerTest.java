@@ -1,38 +1,53 @@
-package com.wedevol.iclass.core;
+package com.wedevol.iclass.core.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.service.StudentServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class StudentControllerTest {
 
-	@Autowired
+	@InjectMocks
+	private StudentController studentController;
+	
+	@Mock
+	private StudentServiceImpl studentService;
+	
 	private MockMvc mockMvc;
 
+	@Before
+	public void init() {
+		mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
+	}
+	
 	@Test
 	public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
 		//TODO: implement
 		Student student1 = new Student.StudentBuilder("Carlos", "Becerra", "1234567", "carlos@gmail.com",
 				"sfdt4ygdgdsda").build();
 
-		this.mockMvc.perform(get("/greeting"))
+		final MvcResult result = mockMvc.perform(get("/students/1"))
 					.andDo(print())
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$.content").value("Hello, World!"));
+					.andExpect(jsonPath("$.content").value("Hello, World!")).andReturn();
 	}
 
 	@Test

@@ -8,7 +8,7 @@ public interface StudentService {
 
 	List<Student> findAll();
 
-	Student findByEmail(Student student);
+	Student findByEmail(String email);
 
 	Student findById(Long userId);
 

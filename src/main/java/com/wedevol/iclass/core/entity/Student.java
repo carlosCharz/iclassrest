@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -19,7 +21,8 @@ import org.hibernate.annotations.DynamicInsert;
  */
 @Entity
 @Table(name = "student")
-@DynamicInsert //this enables the DBMS values
+@DynamicInsert
+// this enables the DBMS values
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,43 +31,56 @@ public class Student implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@Column(name = "firstname", nullable = false)
+	@NotNull
+	@Size(min = 1, max = 45)
+	@Column(name = "firstname")
 	private String firstName;
 
-	@Column(name = "lastname", nullable = false)
+	@NotNull
+	@Size(min = 1, max = 45)
+	@Column(name = "lastname")
 	private String lastName;
 
-	@Column(nullable = false)
+	@NotNull
+	@Size(min = 1, max = 20)
+	@Column
 	private String phone;
 
-	@Column(nullable = false)
+	@NotNull
+	@Size(min = 1, max = 80)
+	@Column
 	private String email;
 
-	@Column(nullable = false)
+	@NotNull
+	@Size(min = 6, max = 6)
+	@Column
 	private String password;
 
 	@Column(nullable = true)
 	private Date birthday;
 
+	@Size(min = 1, max = 1)
 	@Column(nullable = true)
 	private String gender;
 
+	@Size(max = 100)
 	@Column(name = "profilepictureurl", nullable = true)
 	private String profilePictureUrl;
 
 	@Column(name = "placeoptions", nullable = true)
 	private String placeOptions;
 
+	@Size(max = 100)
 	@Column(nullable = true)
 	private String university;
 
-	@Column(nullable = false)
+	@Column
 	private Float rating;
 
-	@Column(nullable = false)
+	@Column
 	private Integer level;
 
-	@Column(name = "totalhours", nullable = false)
+	@Column(name = "totalhours")
 	private Integer totalHours;
 
 	protected Student() {

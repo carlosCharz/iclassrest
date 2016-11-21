@@ -7,7 +7,7 @@ package com.wedevol.iclass.core.enums;
  */
 public enum ErrorType {
 
-	STUDENT_NOT_FOUND(1, "Student not found");
+	RESOURCE_NOT_FOUND(1, "Resource not found"), ARGUMENT_NOT_VALID(2, "Argument not valid");
 
 	private final int code;
 	private final String message;

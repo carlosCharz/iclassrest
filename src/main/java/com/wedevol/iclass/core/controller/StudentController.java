@@ -2,6 +2,8 @@ package com.wedevol.iclass.core.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,14 +47,14 @@ public class StudentController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@RequestBody Student student) {
+	public void create(@Valid @RequestBody Student student) {
 		studentService.create(student);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void update(@PathVariable Long userId, @RequestBody Student student) {
+	public void update(@PathVariable Long userId, @Valid @RequestBody Student student) {
 		studentService.update(userId, student);
 	}
 

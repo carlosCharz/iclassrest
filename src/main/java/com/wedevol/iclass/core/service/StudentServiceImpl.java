@@ -33,7 +33,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student findByEmail(Student student) {
+	public Student findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student findById(Long userId) {
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		return studentObj.orElseThrow(() -> new ResourceNotFoundException(ErrorType.STUDENT_NOT_FOUND));
+		return studentObj.orElseThrow(() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND));
 	}
 
 	@Override
@@ -51,8 +51,11 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void update(Long userId, Student student) {
-		// TODO: validate that id is not null
-		studentRepository.save(student);
+		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
+		if (studentObj.isPresent()){
+			student.setId(userId);
+			studentRepository.save(student);
+		}
 	}
 
 	@Override
