@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.enums.ErrorType;
+import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.repository.StudentRepository;
 
@@ -34,8 +35,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student findByEmail(String email) {
-		// TODO not implemented
-		return null;
+		return studentRepository.findByEmail(email);
 	}
 
 	@Override
@@ -46,16 +46,18 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void create(Student student) {
+		// We first search by email, the student should not exist
+		Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
+		studentObj.ifPresent(s -> new BadRequestException(ErrorType.BAD_REQUEST_EXCEPTION));
 		// TODO: the password should be hashed
-		// TODO: throw exception when exists //HTTP CONFLICT
 		studentRepository.save(student);
 	}
 
 	@Override
 	public void update(Long userId, Student student) {
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		Student existingStudent = studentObj.orElseThrow(
-				() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND));
+		Student existingStudent = studentObj.orElseThrow(() -> new ResourceNotFoundException(
+				ErrorType.RESOURCE_NOT_FOUND));
 		// TODO: analyze the full changed fields
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
@@ -68,7 +70,8 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void delete(Long userId) {
-		// TODO: find the student first
+		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
+		studentObj.orElseThrow(() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND));
 		studentRepository.delete(userId);
 	}
 
