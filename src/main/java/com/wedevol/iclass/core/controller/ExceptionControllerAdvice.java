@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.enums.ErrorType;
@@ -19,7 +18,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
  *
  */
 @ControllerAdvice
-public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
+public class ExceptionControllerAdvice {
 
 	@ResponseBody
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -28,9 +27,10 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ErrorResponse(ex.getCode(), ex.getMessage());
 	}
 
-	@ExceptionHandler
+	@ResponseBody
+	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
-		return new ErrorResponse(ErrorType.ARGUMENT_NOT_VALID.getCode(), ex.getMessage());
+		return new ErrorResponse(ErrorType.ARGUMENT_NOT_VALID.getCode(), ErrorType.ARGUMENT_NOT_VALID.getMessage());
 	}
 }
