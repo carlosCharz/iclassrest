@@ -34,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student findByEmail(String email) {
-		// TODO Auto-generated method stub
+		// TODO not implemented
 		return null;
 	}
 
@@ -46,20 +46,29 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void create(Student student) {
+		// TODO: the password should be hashed
+		// TODO: throw exception when exists //HTTP CONFLICT
 		studentRepository.save(student);
 	}
 
 	@Override
 	public void update(Long userId, Student student) {
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		if (studentObj.isPresent()){
-			student.setId(userId);
-			studentRepository.save(student);
-		}
+		Student existingStudent = studentObj.orElseThrow(
+				() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND));
+		// TODO: analyze the full changed fields
+		existingStudent.setFirstName(student.getFirstName());
+		existingStudent.setLastName(student.getLastName());
+		existingStudent.setPhone(student.getPhone());
+		existingStudent.setEmail(student.getEmail());
+		// TODO: the password should be hashed
+		existingStudent.setPassword(student.getPassword());
+		studentRepository.save(existingStudent);
 	}
 
 	@Override
 	public void delete(Long userId) {
+		// TODO: find the student first
 		studentRepository.delete(userId);
 	}
 

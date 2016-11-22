@@ -31,6 +31,6 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
-		return new ErrorResponse(ErrorType.ARGUMENT_NOT_VALID.getCode(), ErrorType.ARGUMENT_NOT_VALID.getMessage());
+		return new ErrorResponse(ErrorType.ARGUMENT_NOT_VALID.getCode(), ex.getMessage());
 	}
 }

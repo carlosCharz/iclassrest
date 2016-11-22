@@ -114,52 +114,104 @@ public class Student implements Serializable {
 		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	public String getLastName() {
 		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Date getBirthday() {
 		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getGender() {
 		return gender;
 	}
 
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getProfilePictureUrl() {
 		return profilePictureUrl;
+	}
+
+	public void setProfilePictureUrl(String profilePictureUrl) {
+		this.profilePictureUrl = profilePictureUrl;
 	}
 
 	public String getPlaceOptions() {
 		return placeOptions;
 	}
 
+	public void setPlaceOptions(String placeOptions) {
+		this.placeOptions = placeOptions;
+	}
+
 	public String getUniversity() {
 		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
 	}
 
 	public Float getRating() {
 		return rating;
 	}
 
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+
 	public Integer getLevel() {
 		return level;
 	}
 
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	public Integer getTotalHours() {
 		return totalHours;
+	}
+
+	public void setTotalHours(Integer totalHours) {
+		this.totalHours = totalHours;
 	}
 
 	/**
