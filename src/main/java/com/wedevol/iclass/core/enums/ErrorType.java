@@ -7,6 +7,7 @@ package com.wedevol.iclass.core.enums;
  */
 public enum ErrorType {
 
+	//TODO: separate not found status and bad request status and update the controller advice
 	RESOURCE_NOT_FOUND(1, "40x", "Resource not found"), ARGUMENT_NOT_VALID(2, "40x", "Argument not valid"), VALIDATION_EXCEPTION(
 			3, "40x", "User validation exception"), BAD_REQUEST_EXCEPTION(4, "40x", "Bad request exception");
 
