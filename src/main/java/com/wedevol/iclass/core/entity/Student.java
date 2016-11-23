@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Student Entity
  * 
@@ -57,6 +59,7 @@ public class Student implements Serializable {
 	private String password;
 
 	@Column(nullable = true)
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date birthday;
 
 	@Size(min = 1, max = 1)

@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import com.wedevol.iclass.core.enums.ErrorType;
+import com.wedevol.iclass.core.enums.BadRequestErrorType;
 
 /**
  * Bad request exception
@@ -12,7 +12,7 @@ public class BadRequestException extends BaseRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public BadRequestException(ErrorType errorType) {
+	public BadRequestException(BadRequestErrorType errorType) {
 		super(errorType.getCode(), errorType.getMessage());
 	}
 

@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.enums.ErrorType;
+import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.service.StudentServiceImpl;
 
@@ -60,7 +60,7 @@ public class StudentControllerTest {
 	@Test
 	public void throwExpcetionWhenStudentDoesNotExist() throws Exception {
 
-		when(studentService.findById(100L)).thenThrow(new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND));
+		when(studentService.findById(100L)).thenThrow(new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 
 		mvc	.perform(get("/students/100"))
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
