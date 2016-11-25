@@ -107,6 +107,36 @@ public class StudentControllerTest {
 		verifyNoMoreInteractions(studentService);
 	}
 
+	@Test
+	public void throwExceptionWhenCreatingAndPasswordTooLong() throws Exception {
+
+		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com", "12345678901234567").build();
+		student1JsonString = Util.toJsonString(student1);
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+										.content(student1JsonString))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.errorCode").value(401));
+
+		verify(studentService, times(0)).create(Mockito.any(Student.class));
+		verifyNoMoreInteractions(studentService);
+	}
+
+	@Test
+	public void throwExceptionWhenUpdatingAndNameTooLong() throws Exception {
+
+		student1 = new Student.StudentBuilder(
+				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
+				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
+		student1JsonString = Util.toJsonString(student1);
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+										.content(student1JsonString))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.errorCode").value(401));
+
+		verify(studentService, times(0)).create(Mockito.any(Student.class));
+		verifyNoMoreInteractions(studentService);
+	}
+
 	// TODO: test validations in update
 	/* .contentType(MediaType.APPLICATION_JSON_VALUE) */
 
