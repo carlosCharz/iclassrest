@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 		// We first search by email, the student should not exist
 		Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		// TODO: the password should be hashed
+		student.setPassword(Util.hashSHA256(student.getPassword()));
 		studentRepository.save(student);
 	}
 
