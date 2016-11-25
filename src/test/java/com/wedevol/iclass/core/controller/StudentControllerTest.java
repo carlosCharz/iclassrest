@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -80,18 +81,29 @@ public class StudentControllerTest {
 	}
 
 	@Test
-	public void throwExpcetionWhenCreatingAndStudentExists() throws Exception {
+	public void throwExceptionWhenCreatingAndStudentExists() throws Exception {
 
-		when(studentService.findByEmail(student1.getEmail())).thenThrow(
-				new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		Mockito.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
+				.when(studentService)
+				.create(Mockito.any(Student.class));
 
-		mvc.perform(post("/students/1").contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.errorCode").value(400));
 
-		verify(studentService, times(1)).create(student1);
+		verify(studentService, times(1)).create(Mockito.any(Student.class));
+		verifyNoMoreInteractions(studentService);
+	}
+
+	@Test
+	public void createStudent() throws Exception {
+
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+										.content(student1JsonString))
+			.andExpect(status().isCreated());
+
+		verify(studentService, times(1)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
 	}
 
