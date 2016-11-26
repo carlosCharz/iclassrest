@@ -16,6 +16,10 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.wedevol.iclass.core.constraint.CustomDateDeserialize;
+import com.wedevol.iclass.core.constraint.Gender;
+
 /**
  * Student Entity
  * 
@@ -62,11 +66,11 @@ public class Student implements Serializable {
 	private String password;
 
 	@Past
-	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$") // dd/MM/yyyy
+	@JsonDeserialize(using = CustomDateDeserialize.class)
 	@Column(nullable = true)
 	private Date birthday;
 
-	@Size(min = 1, max = 1)
+	@Gender // It has size validation, gender validation and default message
 	@Column(nullable = true)
 	private String gender;
 
