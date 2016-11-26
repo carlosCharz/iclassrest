@@ -8,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Student Entity
@@ -34,32 +35,35 @@ public class Student implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Size(min = 1, max = 45)
+	@Size(min = 2, max = 45, message = "First name must be between 2 - 45 characters")
 	@Column(name = "firstname")
 	private String firstName;
 
 	@NotNull
-	@Size(min = 1, max = 45)
+	@Size(min = 2, max = 45, message = "Last name must be between 2 - 45 characters")
 	@Column(name = "lastname")
 	private String lastName;
 
 	@NotNull
-	@Size(min = 1, max = 20)
+	@Size(min = 7, max = 20, message = "Phone number must be between 7 - 20 digits")
+	@Digits(integer = 20, fraction = 0)
 	@Column
 	private String phone;
 
 	@NotNull
-	@Size(min = 1, max = 80)
+	@Size(max = 80, message = "Email must be maximum 80 characters")
+	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalid format")
 	@Column
 	private String email;
 
 	@NotNull
-	@Size(min = 6, max = 6)
+	@Size(min = 6, max = 64, message = "Password must be 6 characters minimum")
 	@Column
 	private String password;
 
+	@Past
+	@Pattern(regexp = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$") // dd/MM/yyyy
 	@Column(nullable = true)
-	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date birthday;
 
 	@Size(min = 1, max = 1)

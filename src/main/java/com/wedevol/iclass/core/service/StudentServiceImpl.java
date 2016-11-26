@@ -3,6 +3,8 @@ package com.wedevol.iclass.core.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,28 +28,34 @@ import com.wedevol.iclass.core.util.Util;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+	protected static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
 	@Autowired
 	private StudentRepository studentRepository;
 
 	@Override
 	public List<Student> findAll() {
+		logger.info("Student service -> find all");
 		final Iterable<Student> studentsIterator = studentRepository.findAll();
 		return Lists.newArrayList(studentsIterator);
 	}
 
 	@Override
 	public Student findByEmail(String email) {
+		logger.info("Student service -> find by email");
 		return studentRepository.findByEmail(email);
 	}
 
 	@Override
 	public Student findById(Long userId) {
+		logger.info("Student service -> find by id");
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		return studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 	}
 
 	@Override
 	public void create(Student student) {
+		logger.info("Student service -> create");
 		// We first search by email, the student should not exist
 		Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
@@ -57,9 +65,10 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void update(Long userId, Student student) {
+		logger.info("Student service -> update");
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		Student existingStudent = studentObj.orElseThrow(() -> new ResourceNotFoundException(
-				NotFoundErrorType.USER_NOT_FOUND));
+		Student existingStudent = studentObj.orElseThrow(
+				() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 		// TODO: analyze the full changed fields
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
@@ -71,6 +80,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void delete(Long userId) {
+		logger.info("Student service -> delete");
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 		studentRepository.delete(userId);

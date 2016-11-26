@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
+	// Custom exception handlers
 	@ResponseBody
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -37,10 +39,19 @@ public class ExceptionControllerAdvice {
 		return new ErrorResponse(ex.getCode(), ex.getMessage());
 	}
 
+	// Spring exception handlers
 	@ResponseBody
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
 		return new ErrorResponse(BadRequestErrorType.ARGUMENT_NOT_VALID.getCode(), ex.getMessage());
 	}
+
+	@ResponseBody
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse methodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
+		return new ErrorResponse(BadRequestErrorType.METHOD_NOT_ALLOWED.getCode(), ex.getMessage());
+	}
+
 }

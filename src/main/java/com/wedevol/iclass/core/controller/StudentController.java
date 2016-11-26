@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,8 @@ import com.wedevol.iclass.core.service.StudentService;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
+	
+	protected static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
 	@Autowired
 	private StudentService studentService;
@@ -34,6 +38,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Student> findAll() {
+		logger.info("Controller -> find all");
 		return studentService.findAll();
 	}
 
@@ -41,6 +46,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Student findById(@PathVariable Long userId) {
+		logger.info("Controller -> find by id");
 		return studentService.findById(userId);
 	}
 
@@ -48,6 +54,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody Student student) {
+		logger.info("Controller -> create");
 		studentService.create(student);
 	}
 
@@ -55,6 +62,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void update(@PathVariable Long userId, @Valid @RequestBody Student student) {
+		logger.info("Controller -> update");
 		studentService.update(userId, student);
 	}
 
@@ -62,6 +70,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long userId) {
+		logger.info("Controller -> delete");
 		studentService.delete(userId);
 	}
 }
