@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.constraint;
+package com.wedevol.iclass.core.validation;
 
 import java.util.Arrays;
 
@@ -12,10 +12,7 @@ import com.wedevol.iclass.core.enums.GenderType;
  *
  * @author charz
  */
-public class GenderValidator implements ConstraintValidator<Gender, String> {
-
-	private boolean ignoreCase;
-	private String message;
+public class GenderValidator extends BaseValidator implements ConstraintValidator<Gender, String> {
 
 	@Override
 	public void initialize(Gender constraintAnnotation) {
@@ -30,7 +27,7 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 		}
 
 		final boolean isValid = Arrays	.stream(GenderType.values())
-										.filter(gender -> equalGender(gender.getDescription(), value))
+										.filter(gender -> equal(value, gender.getDescription()))
 										.findFirst()
 										.isPresent();
 
@@ -41,9 +38,5 @@ public class GenderValidator implements ConstraintValidator<Gender, String> {
 		}
 
 		return isValid;
-	}
-
-	private boolean equalGender(String value1, String value2) {
-		return ignoreCase ? value1.equalsIgnoreCase(value2) : value1.equals(value2);
 	}
 }

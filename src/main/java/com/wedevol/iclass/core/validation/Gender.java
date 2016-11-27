@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.constraint;
+package com.wedevol.iclass.core.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

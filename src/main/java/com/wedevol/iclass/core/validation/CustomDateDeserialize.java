@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.constraint;
+package com.wedevol.iclass.core.validation;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -29,7 +29,7 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
 		try {
 			return dateFormat.parse(str);
 		} catch (ParseException e) {
-			throw new BadRequestException(BadRequestErrorType.JSON_DATE_DESERIALIZE);
+			throw new BadRequestException(BadRequestErrorType.WRONG_DESERIALIZATION);
 		}
 	}
 }

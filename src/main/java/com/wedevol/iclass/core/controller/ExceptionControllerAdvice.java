@@ -52,7 +52,7 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse methodArgumentNotValidExceptionHandler(HttpMessageNotReadableException ex) {
-		return new ErrorResponse(BadRequestErrorType.JSON_DATE_DESERIALIZE.getCode(), ex.getMessage());
+		return new ErrorResponse(BadRequestErrorType.WRONG_DESERIALIZATION.getCode(), ex.getMessage());
 	}
 
 	@ResponseBody

@@ -1,7 +1,11 @@
 package com.wedevol.iclass.core.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +21,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.wedevol.iclass.core.constraint.CustomDateDeserialize;
-import com.wedevol.iclass.core.constraint.Gender;
+import com.wedevol.iclass.core.validation.CustomDateDeserialize;
+import com.wedevol.iclass.core.validation.Gender;
+import com.wedevol.iclass.core.validation.PlaceOptions;
 
 /**
  * Student Entity
@@ -78,6 +83,7 @@ public class Student implements Serializable {
 	@Column(name = "profilepictureurl", nullable = true)
 	private String profilePictureUrl;
 
+	@PlaceOptions // It has place options validation and default message
 	@Column(name = "placeoptions", nullable = true)
 	private String placeOptions;
 
@@ -185,12 +191,13 @@ public class Student implements Serializable {
 		this.profilePictureUrl = profilePictureUrl;
 	}
 
-	public String getPlaceOptions() {
-		return placeOptions;
+	public Set<String> getPlaceOptions() {
+		return placeOptions == null ? Collections.emptySet()
+				: Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(placeOptions.split(","))));
 	}
 
-	public void setPlaceOptions(String placeOptions) {
-		this.placeOptions = placeOptions;
+	public void setPlaceOptions(Set<String> placeOptionsSet) {
+		placeOptions = placeOptionsSet == null ? null : String.join(",", placeOptionsSet);
 	}
 
 	public String getUniversity() {
