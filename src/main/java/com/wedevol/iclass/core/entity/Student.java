@@ -21,7 +21,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.validation.CustomDateDeserialize;
+import com.wedevol.iclass.core.validation.CustomDateSerialize;
 import com.wedevol.iclass.core.validation.Gender;
 import com.wedevol.iclass.core.validation.PlaceOptions;
 
@@ -34,7 +36,7 @@ import com.wedevol.iclass.core.validation.PlaceOptions;
 @Entity
 @Table(name = "student")
 @DynamicInsert
-// this enables the DBMS values
+// It excludes null properties
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -55,7 +57,7 @@ public class Student implements Serializable {
 
 	@NotNull
 	@Size(min = 7, max = 20, message = "Phone number must be between 7 - 20 digits")
-	@Digits(integer = 20, fraction = 0)
+	@Digits(integer = 20, fraction = 0, message = "Phone number must be just digits")
 	@Column
 	private String phone;
 
@@ -72,6 +74,7 @@ public class Student implements Serializable {
 
 	@Past
 	@JsonDeserialize(using = CustomDateDeserialize.class)
+	@JsonSerialize(using = CustomDateSerialize.class)
 	@Column(nullable = true)
 	private Date birthday;
 
@@ -79,7 +82,7 @@ public class Student implements Serializable {
 	@Column(nullable = true)
 	private String gender;
 
-	@Size(max = 100)
+	@Size(min = 2, max = 100, message = "Profile picture url must be between 2 - 100 characters")
 	@Column(name = "profilepictureurl", nullable = true)
 	private String profilePictureUrl;
 
@@ -87,7 +90,7 @@ public class Student implements Serializable {
 	@Column(name = "placeoptions", nullable = true)
 	private String placeOptions;
 
-	@Size(max = 100)
+	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	@Column(nullable = true)
 	private String university;
 
