@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +49,14 @@ public class StudentControllerTest {
 
 	@Before
 	public void init() throws JsonProcessingException {
+		final Set<String> placeOptionsSet = new HashSet<String>();
+		placeOptionsSet.add("house");
+		placeOptionsSet.add("university");
+
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com", "123456").build();
+		student1.setPlaceOptions(placeOptionsSet);
+		// Fix why testing is requiring the placeOptions
+
 		student1JsonString = Util.toJsonString(student1);
 		student1.setId(1L);
 	}
@@ -56,7 +66,7 @@ public class StudentControllerTest {
 
 		when(studentService.findById(1L)).thenReturn(student1);
 
-		mvc.perform(get("/students/1"))
+		mvc	.perform(get("/students/1"))
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.firstName").value("Carlos"))
@@ -71,7 +81,7 @@ public class StudentControllerTest {
 
 		when(studentService.findById(11L)).thenThrow(new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 
-		mvc.perform(get("/students/11"))
+		mvc	.perform(get("/students/11"))
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 			.andExpect(status().isNotFound())
 			.andExpect(jsonPath("$.errorCode").value(100));
@@ -83,11 +93,11 @@ public class StudentControllerTest {
 	@Test
 	public void throwExceptionWhenCreatingAndStudentExists() throws Exception {
 
-		Mockito.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
+		Mockito	.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
 				.when(studentService)
 				.create(Mockito.any(Student.class));
 
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.errorCode").value(400));
@@ -99,7 +109,7 @@ public class StudentControllerTest {
 	@Test
 	public void createStudent() throws Exception {
 
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isCreated());
 
@@ -110,9 +120,10 @@ public class StudentControllerTest {
 	@Test
 	public void throwExceptionWhenCreatingAndPasswordTooLong() throws Exception {
 
-		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com", "12345678901234567").build();
+		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com",
+				"12345678901234567").build();
 		student1JsonString = Util.toJsonString(student1);
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.errorCode").value(401));
@@ -128,7 +139,7 @@ public class StudentControllerTest {
 				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
 				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
 		student1JsonString = Util.toJsonString(student1);
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.errorCode").value(401));
