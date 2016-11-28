@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.StudentCourse;
 import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -33,6 +34,7 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 
+	/********************* CRUD for student ****************************/
 	@Override
 	public List<Student> findAll() {
 		logger.info("Student service -> find all");
@@ -84,6 +86,15 @@ public class StudentServiceImpl implements StudentService {
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 		studentRepository.delete(userId);
+	}
+
+	/********************* Student courses ****************************/
+	@Override
+	public List<StudentCourse> findStudentCourses(Long studentId) {
+		logger.info("Student service -> find student courses");
+		List<StudentCourse> studentCourses = studentRepository.findStudentCourses(studentId);
+		//List<Course> courses = studentCourses.stream().map((sc) -> new Course(sc.getStudentCourseId().getCourseId())).collect(Collectors.toList());
+		return studentCourses;
 	}
 
 }

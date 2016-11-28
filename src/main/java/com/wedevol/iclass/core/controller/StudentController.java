@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.StudentCourse;
 import com.wedevol.iclass.core.service.StudentService;
 
 /**
@@ -28,12 +29,13 @@ import com.wedevol.iclass.core.service.StudentService;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-	
+
 	protected static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
 	@Autowired
 	private StudentService studentService;
 
+	/********************* CRUD for student ****************************/
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -72,5 +74,14 @@ public class StudentController {
 	public void delete(@PathVariable Long userId) {
 		logger.info("Controller -> delete");
 		studentService.delete(userId);
+	}
+
+	/********************* Student courses ****************************/
+	@RequestMapping(value = "/{studentId}/courses", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<StudentCourse> findStudentCourses(@PathVariable Long studentId) {
+		logger.info("Controller -> find student courses");
+		return studentService.findStudentCourses(studentId);
 	}
 }
