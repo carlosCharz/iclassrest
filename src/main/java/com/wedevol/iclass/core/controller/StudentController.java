@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.entity.StudentCourse;
 import com.wedevol.iclass.core.service.StudentService;
 
 /**
@@ -80,7 +80,7 @@ public class StudentController {
 	@RequestMapping(value = "/{studentId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<StudentCourse> findStudentCourses(@PathVariable Long studentId) {
+	public List<Course> findStudentCourses(@PathVariable Long studentId) {
 		logger.info("Controller -> find student courses");
 		return studentService.findStudentCourses(studentId);
 	}

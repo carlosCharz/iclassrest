@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.entity.StudentCourse;
 import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -90,11 +90,11 @@ public class StudentServiceImpl implements StudentService {
 
 	/********************* Student courses ****************************/
 	@Override
-	public List<StudentCourse> findStudentCourses(Long studentId) {
+	public List<Course> findStudentCourses(Long studentId) {
 		logger.info("Student service -> find student courses");
-		List<StudentCourse> studentCourses = studentRepository.findStudentCourses(studentId);
-		//List<Course> courses = studentCourses.stream().map((sc) -> new Course(sc.getStudentCourseId().getCourseId())).collect(Collectors.toList());
-		return studentCourses;
+		// TODO: do the same as the find all
+		List<Course> courses = studentRepository.findStudentCourses(studentId);
+		return courses;
 	}
 
 }

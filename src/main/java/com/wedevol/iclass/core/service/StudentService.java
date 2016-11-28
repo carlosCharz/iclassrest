@@ -2,9 +2,15 @@ package com.wedevol.iclass.core.service;
 
 import java.util.List;
 
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.entity.StudentCourse;
 
+/**
+ * Student Service Interface
+ * 
+ * @author charz
+ *
+ */
 public interface StudentService {
 
 	List<Student> findAll();
@@ -19,6 +25,6 @@ public interface StudentService {
 
 	void delete(Long userId);
 
-	List<StudentCourse> findStudentCourses(Long studentId);
+	List<Course> findStudentCourses(Long studentId);
 
 }
