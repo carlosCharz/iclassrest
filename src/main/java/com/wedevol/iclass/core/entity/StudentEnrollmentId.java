@@ -7,12 +7,12 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 /**
- * Student_Course Composed Id
+ * Student Enrollment Composed Id
  *
  * @author charz
  */
 @Embeddable
-public class StudentCourseId implements Serializable {
+public class StudentEnrollmentId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,10 +24,10 @@ public class StudentCourseId implements Serializable {
 	@Column(name = "courseid")
 	private Long courseId;
 
-	protected StudentCourseId() {
+	protected StudentEnrollmentId() {
 	}
 
-	public StudentCourseId(Long studentId, Long courseId) {
+	public StudentEnrollmentId(Long studentId, Long courseId) {
 		super();
 		this.studentId = studentId;
 		this.courseId = courseId;

@@ -9,19 +9,19 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.StudentCourse;
-import com.wedevol.iclass.core.entity.StudentCourseId;
+import com.wedevol.iclass.core.entity.StudentEnrollment;
+import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 
 /**
- * Student_Course Repository
+ * Student Enrollment Repository
  * 
  * @author charz
  *
  */
 @Repository
 @Transactional
-public interface StudentCourseRepository extends CrudRepository<StudentCourse, StudentCourseId> {
-	
+public interface StudentEnrollmentRepository extends CrudRepository<StudentEnrollment, StudentEnrollmentId> {
+
 	/**
 	 * Return the student's list of courses
 	 * 
@@ -29,7 +29,7 @@ public interface StudentCourseRepository extends CrudRepository<StudentCourse, S
 	 * @return list of courses
 	 */
 	// TODO: filter query by status
-	@Query("SELECT c FROM StudentCourse sc, Course c WHERE c.id = sc.studentCourseId.courseId AND sc.studentCourseId.studentId = :studentId")
+	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId")
 	public List<Course> findCourses(@Param("studentId") Long studentId);
 
 }

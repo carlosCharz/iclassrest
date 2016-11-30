@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.entity.StudentCourse;
-import com.wedevol.iclass.core.entity.StudentCourseId;
-import com.wedevol.iclass.core.service.StudentCourseService;
+import com.wedevol.iclass.core.entity.StudentEnrollment;
+import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.service.StudentEnrollmentService;
 
 /**
- * Student_Course Controller
+ * Student Enrollment Controller
  * 
  * @author charz
  *
  */
 @RestController
 @RequestMapping("")
-public class StudentCourseController {
+public class StudentEnrollmentController {
 
-	protected static final Logger logger = LoggerFactory.getLogger(StudentCourseController.class);
+	protected static final Logger logger = LoggerFactory.getLogger(StudentEnrollmentController.class);
 
 	@Autowired
-	private StudentCourseService studentCourseService;
+	private StudentEnrollmentService studentEnrollmentService;
 
 	/************** Courses & Students **********************/
 	@RequestMapping(value = "/students/{studentId}/courses", method = RequestMethod.GET)
@@ -43,7 +43,7 @@ public class StudentCourseController {
 	@ResponseBody
 	public List<Course> findCourses(@PathVariable Long studentId) {
 		logger.info("Controller -> find courses of a student");
-		return studentCourseService.findCourses(studentId);
+		return studentEnrollmentService.findCourses(studentId);
 	}
 
 	@RequestMapping(value = "/courses/{courseId}/students", method = RequestMethod.GET)
@@ -51,51 +51,51 @@ public class StudentCourseController {
 	@ResponseBody
 	public List<Student> findStudents(@PathVariable Long courseId) {
 		logger.info("Controller -> find students of a course");
-		return studentCourseService.findStudents(courseId);
+		return studentEnrollmentService.findStudents(courseId);
 	}
 
-	/************** CRUD for student_course **********************/
-	@RequestMapping(value = "/studentcourse", method = RequestMethod.GET)
+	/************** CRUD for student enrollment **********************/
+	@RequestMapping(value = "/studentenrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<StudentCourse> findAll() {
+	public List<StudentEnrollment> findAll() {
 		logger.info("Controller -> find all");
-		return studentCourseService.findAll();
+		return studentEnrollmentService.findAll();
 	}
 
-	@RequestMapping(value = "/studentcourse/{studentId}/{courseId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public StudentCourse findById(@PathVariable Long studentId, @PathVariable Long courseId) {
+	public StudentEnrollment findById(@PathVariable Long studentId, @PathVariable Long courseId) {
 		logger.info("Controller -> find by id");
-		final StudentCourseId id = new StudentCourseId(studentId, courseId);
-		return studentCourseService.findById(id);
+		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+		return studentEnrollmentService.findById(id);
 	}
 
-	@RequestMapping(value = "/studentcourse", method = RequestMethod.POST)
+	@RequestMapping(value = "/studentenrollment", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody StudentCourse studentCourse) {
+	public void create(@Valid @RequestBody StudentEnrollment studentCourse) {
 		logger.info("Controller -> create");
-		studentCourseService.create(studentCourse);
+		studentEnrollmentService.create(studentCourse);
 	}
 
-	@RequestMapping(value = "/studentcourse/{studentId}/{courseId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void update(@PathVariable Long studentId, @PathVariable Long courseId,
-			@Valid @RequestBody StudentCourse studentCourse) {
+			@Valid @RequestBody StudentEnrollment studentCourse) {
 		logger.info("Controller -> update");
-		final StudentCourseId id = new StudentCourseId(studentId, courseId);
-		studentCourseService.update(id, studentCourse);
+		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+		studentEnrollmentService.update(id, studentCourse);
 	}
 
-	@RequestMapping(value = "/studentcourse/{studentId}/{courseId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long studentId, @PathVariable Long courseId) {
 		logger.info("Controller -> delete");
-		final StudentCourseId id = new StudentCourseId(studentId, courseId);
-		studentCourseService.delete(id);
+		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+		studentEnrollmentService.delete(id);
 	}
 }
