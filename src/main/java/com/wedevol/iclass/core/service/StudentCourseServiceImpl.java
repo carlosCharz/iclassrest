@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,10 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentCourse;
 import com.wedevol.iclass.core.entity.StudentCourseId;
+import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.enums.ServerErrorType;
 import com.wedevol.iclass.core.exception.NotImplementedException;
+import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.StudentCourseRepository;
 import com.wedevol.iclass.core.repository.StudentRepository;
@@ -64,8 +67,9 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
 	@Override
 	public StudentCourse findById(StudentCourseId id) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
+		logger.info("Student_Course service -> find by id");
+		Optional<StudentCourse> scObj = Optional.ofNullable(scRepository.findOne(id));
+		return scObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_COURSE_NOT_FOUND));
 	}
 
 	@Override
