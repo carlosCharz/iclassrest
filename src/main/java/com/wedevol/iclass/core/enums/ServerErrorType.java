@@ -1,17 +1,17 @@
 package com.wedevol.iclass.core.enums;
 
 /**
- * Resource Not Found Error Type Enum (4xx family)
+ * Server Error Type Enum (5xx family)
  *
  * @author charz
  */
-public enum NotFoundErrorType {
-	USER_NOT_FOUND(100, "User not found");
+public enum ServerErrorType {
+	NOT_IMPLEMENTED(500, "Method not implemented");
 
 	private final int code;
 	private final String message;
 
-	NotFoundErrorType(int code, String message) {
+	ServerErrorType(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}

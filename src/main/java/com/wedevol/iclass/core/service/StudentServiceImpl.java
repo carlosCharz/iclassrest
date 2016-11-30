@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.enums.NotFoundErrorType;
@@ -86,15 +85,6 @@ public class StudentServiceImpl implements StudentService {
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 		studentRepository.delete(userId);
-	}
-
-	/********************* Student courses ****************************/
-	@Override
-	public List<Course> findStudentCourses(Long studentId) {
-		logger.info("Student service -> find student courses");
-		// TODO: do the same as the find all
-		List<Course> courses = studentRepository.findStudentCourses(studentId);
-		return courses;
 	}
 
 }

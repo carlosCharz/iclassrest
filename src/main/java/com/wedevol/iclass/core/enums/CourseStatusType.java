@@ -5,13 +5,13 @@ package com.wedevol.iclass.core.enums;
  *
  * @author charz
  */
-public enum CourseStatus {
+public enum CourseStatusType {
 	FREE("free"), OPEN("open"), PENDING_PAYMENT("pendingPayment"), VERIFYING_PAYMENT("verifyingPayment"), PAYED(
 			"payed");
 
 	private final String description;
 
-	CourseStatus(String description) {
+	CourseStatusType(String description) {
 		this.description = description;
 	}
 

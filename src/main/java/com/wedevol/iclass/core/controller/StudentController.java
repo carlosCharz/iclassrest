@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentService;
 
@@ -74,14 +73,5 @@ public class StudentController {
 	public void delete(@PathVariable Long userId) {
 		logger.info("Controller -> delete");
 		studentService.delete(userId);
-	}
-
-	/********************* Student courses ****************************/
-	@RequestMapping(value = "/{studentId}/courses", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Course> findStudentCourses(@PathVariable Long studentId) {
-		logger.info("Controller -> find student courses");
-		return studentService.findStudentCourses(studentId);
 	}
 }

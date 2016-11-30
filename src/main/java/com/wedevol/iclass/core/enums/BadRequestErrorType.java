@@ -1,7 +1,7 @@
 package com.wedevol.iclass.core.enums;
 
 /**
- * Validation Error Type Enum: 40x
+ * Validation Error Type Enum (4xx family)
  *
  * @author charz
  */

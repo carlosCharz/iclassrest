@@ -3,16 +3,16 @@ package com.wedevol.iclass.core.entity;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.wedevol.iclass.core.enums.CourseStatus;
+import com.wedevol.iclass.core.enums.CourseStatusType;
+import com.wedevol.iclass.core.validation.CourseStatus;
 
 /**
- * Course Entity
+ * Student_Course Entity
  * 
  * @author charz
  *
@@ -27,9 +27,11 @@ public class StudentCourse implements Serializable {
 	private StudentCourseId studentCourseId;
 
 	@NotNull
-	// TODO: constraint for the enum
+	//@CourseStatus
 	@Column
-	private CourseStatus status;
+	//private CourseStatusType status;
+	//TODO: refactor this
+	private String status;
 
 	protected StudentCourse() {
 	}
@@ -38,49 +40,17 @@ public class StudentCourse implements Serializable {
 		return studentCourseId;
 	}
 
-	public void setStudentCourseId(StudentCourseId studentCourseId) {
+	public void setScId(StudentCourseId studentCourseId) {
 		this.studentCourseId = studentCourseId;
 	}
 
 	public String getStatus() {
-		return status.getDescription();
+		//return status.getDescription();
+		return status;
 	}
 
 	public void setStatus(String status) {
-		this.status = CourseStatus.valueOf(status);
+		//this.status = CourseStatusType.valueOf(status);
+		this.status = status;
 	}
-}
-
-@Embeddable
-class StudentCourseId implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@NotNull
-	@Column(name = "studentid")
-	private Long studentId;
-
-	@NotNull
-	@Column(name = "courseid")
-	private Long courseId;
-
-	protected StudentCourseId() {
-	}
-
-	public Long getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
 }

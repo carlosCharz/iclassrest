@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
+import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 
 /**
@@ -40,6 +41,14 @@ public class ExceptionControllerAdvice {
 		return new ErrorResponse(ex.getCode(), ex.getMessage());
 	}
 
+	@ResponseBody
+	@ExceptionHandler(NotImplementedException.class)
+	@ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
+	public ErrorResponse notImplementedExceptionHandler(NotImplementedException ex) {
+		// Handles all not implemented exceptions types
+		return new ErrorResponse(ex.getCode(), ex.getMessage());
+	}
+
 	// Spring exception handlers
 	@ResponseBody
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -47,7 +56,7 @@ public class ExceptionControllerAdvice {
 	public ErrorResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
 		return new ErrorResponse(BadRequestErrorType.ARGUMENT_NOT_VALID.getCode(), ex.getMessage());
 	}
-	
+
 	@ResponseBody
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
