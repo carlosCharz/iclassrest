@@ -6,8 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,12 +32,9 @@ public class Topic implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
-	// TODO: it must be a foreign key
-	@Size(min = 2, max = 11, message = "Course id must be between 2 - 11 digits")
-	@Digits(integer = 11, fraction = 0, message = "Topic id must be just digits")
-	@Column
-	private Long courseId;
+	@ManyToOne
+    @JoinColumn(name = "courseid")
+	private Course course;
 
 	@NotNull
 	@Size(min = 2, max = 100, message = "Topic name must be between 2 - 100 characters")
@@ -47,7 +45,6 @@ public class Topic implements Serializable {
 	}
 
 	private Topic(TopicBuilder builder) {
-		this.courseId = builder.courseId;
 		this.name = builder.name;
 	}
 
@@ -57,14 +54,6 @@ public class Topic implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
 	}
 
 	public String getName() {

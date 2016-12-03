@@ -1,11 +1,14 @@
 package com.wedevol.iclass.core.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +45,9 @@ public class Course implements Serializable {
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	@Column(nullable = true)
 	private String university;
+	
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+	private Set<Topic> topics;
 
 	protected Course() {
 	}
@@ -83,6 +89,16 @@ public class Course implements Serializable {
 	public void setUniversity(String university) {
 		this.university = university;
 	}
+
+	public Set<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(Set<Topic> topics) {
+		this.topics = topics;
+	}
+
+
 
 	/**
 	 * Course Builder
