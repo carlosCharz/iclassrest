@@ -57,7 +57,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
 	}
 
-	/********************* CRUD for Student_Course ****************************/
+	/***************** CRUD for Student Enrollment ***********************/
 
 	@Override
 	public List<StudentEnrollment> findAll() {

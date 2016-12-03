@@ -15,6 +15,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * Course Entity
  * 
@@ -24,6 +27,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Table(name = "course")
 @DynamicInsert
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;

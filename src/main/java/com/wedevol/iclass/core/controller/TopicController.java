@@ -1,0 +1,77 @@
+package com.wedevol.iclass.core.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wedevol.iclass.core.entity.Topic;
+import com.wedevol.iclass.core.service.TopicService;
+
+/**
+ * Topic Controller
+ * 
+ * @author charz
+ *
+ */
+@RestController
+@RequestMapping("/topics")
+public class TopicController {
+
+	protected static final Logger logger = LoggerFactory.getLogger(TopicController.class);
+
+	@Autowired
+	private TopicService topicService;
+
+	/********************* CRUD for topic ****************************/
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Topic> findAll() {
+		logger.info("Controller -> find all");
+		return topicService.findAll();
+	}
+
+	@RequestMapping(value = "/{topicId}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Topic findById(@PathVariable Long topicId) {
+		logger.info("Controller -> find by id");
+		return topicService.findById(topicId);
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public void create(@Valid @RequestBody Topic topic) {
+		logger.info("Controller -> create");
+		topicService.create(topic);
+	}
+
+	@RequestMapping(value = "/{topicId}", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void update(@PathVariable Long topicId, @Valid @RequestBody Topic topic) {
+		logger.info("Controller -> update");
+		topicService.update(topicId, topic);
+	}
+
+	@RequestMapping(value = "/{topicId}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void delete(@PathVariable Long topicId) {
+		logger.info("Controller -> delete");
+		topicService.delete(topicId);
+	}
+}

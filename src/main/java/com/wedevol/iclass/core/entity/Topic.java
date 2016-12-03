@@ -14,7 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Topic Entity
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "topic")
 @DynamicInsert
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Topic implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,9 +35,9 @@ public class Topic implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "courseid")
-	@JsonIgnore
 	private Course course;
 
 	@NotNull

@@ -67,6 +67,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void update(Long userId, Student student) {
 		logger.info("Student service -> update");
+		// The student should exist
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		Student existingStudent = studentObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
@@ -82,6 +83,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void delete(Long userId) {
 		logger.info("Student service -> delete");
+		// The student should exist
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
 		studentRepository.delete(userId);

@@ -56,26 +56,29 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public void create(Course course) {
 		logger.info("Course service -> create");
-		// We first search by email, the student should not exist
+		// We first search by name, the course should not exist
 		Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		courseObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		// TODO: analyze the other fields
 		courseRepository.save(course);
 	}
 
 	@Override
 	public void update(Long courseId, Course course) {
 		logger.info("Course service -> update");
+		// The course should exist
 		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
 		Course existingCourse = courseObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
-		// TODO: analyze the full changed fields
+		existingCourse.setName(course.getName());
+		existingCourse.setDescription(course.getDescription());
+		existingCourse.setUniversity(course.getUniversity());
 		courseRepository.save(existingCourse);
 	}
 
 	@Override
 	public void delete(Long courseId) {
 		logger.info("Course service -> delete");
+		// The course should exist
 		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
 		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 		courseRepository.delete(courseId);
