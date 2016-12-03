@@ -24,7 +24,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Table(name = "course")
 @DynamicInsert
-// It excludes null properties
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -45,9 +44,17 @@ public class Course implements Serializable {
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	@Column(nullable = true)
 	private String university;
-	
+
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private Set<Topic> topics;
+	
+	public static Course from(Long id) {
+		return new Course(id);
+	}
+
+	private Course(Long id) {
+		this.id = id;
+	}
 
 	protected Course() {
 	}
@@ -98,8 +105,6 @@ public class Course implements Serializable {
 		this.topics = topics;
 	}
 
-
-
 	/**
 	 * Course Builder
 	 * 
@@ -131,6 +136,17 @@ public class Course implements Serializable {
 			return new Course(this);
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		String result = String.format("Course[id=%d, name='%s']%n", id, name);
+		if (topics != null) {
+			for (Topic topic : topics) {
+				result += String.format("Topic[id=%d, name='%s']%n", topic.getId(), topic.getName());
+			}
+		}
+		return result;
 	}
 
 }

@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Topic Entity
  * 
@@ -23,7 +25,6 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Table(name = "topic")
 @DynamicInsert
-// It excludes null properties
 public class Topic implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,7 +34,8 @@ public class Topic implements Serializable {
 	private Long id;
 
 	@ManyToOne
-    @JoinColumn(name = "courseid")
+	@JoinColumn(name = "courseid")
+	@JsonIgnore
 	private Course course;
 
 	@NotNull
@@ -45,6 +47,7 @@ public class Topic implements Serializable {
 	}
 
 	private Topic(TopicBuilder builder) {
+		this.course = builder.course;
 		this.name = builder.name;
 	}
 
@@ -54,6 +57,14 @@ public class Topic implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	public String getName() {
@@ -72,16 +83,16 @@ public class Topic implements Serializable {
 	 */
 	public static class TopicBuilder {
 
-		private Long courseId;
+		private Course course;
 		private String name;
 
-		public TopicBuilder(Long courseId, String name) {
-			this.courseId = courseId;
+		public TopicBuilder(Course course, String name) {
+			this.course = course;
 			this.name = name;
 		}
 
-		public TopicBuilder courseId(Long courseId) {
-			this.courseId = courseId;
+		public TopicBuilder course(Course course) {
+			this.course = course;
 			return this;
 		}
 
