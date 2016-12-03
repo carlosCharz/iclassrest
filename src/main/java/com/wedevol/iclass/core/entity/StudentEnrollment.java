@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.wedevol.iclass.core.enums.CourseStatusType;
 import com.wedevol.iclass.core.validation.CourseStatus;
 
 /**
@@ -28,8 +29,6 @@ public class StudentEnrollment implements Serializable {
 	@NotNull
 	@CourseStatus
 	@Column
-	// private CourseStatusType status;
-	// TODO: refactor this
 	private String status;
 
 	protected StudentEnrollment() {
@@ -44,12 +43,14 @@ public class StudentEnrollment implements Serializable {
 	}
 
 	public String getStatus() {
-		// return status.getDescription();
 		return status;
 	}
 
-	public void setStatus(String status) {
-		// this.status = CourseStatusType.valueOf(status);
-		this.status = status;
+	public CourseStatusType getStatusType() {
+		return CourseStatusType.valueOf(status);
+	}
+
+	public void setStatus(CourseStatusType status) {
+		this.status = status.getDescription();
 	}
 }
