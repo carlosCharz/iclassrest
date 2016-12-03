@@ -23,7 +23,7 @@ import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
 import com.wedevol.iclass.core.repository.StudentRepository;
 
 /**
- * Student_Course Service Implementation
+ * Student Enrollment Service Implementation
  * 
  * @author charz
  *
@@ -46,7 +46,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	/************** Courses & Students **********************/
 	@Override
 	public List<Course> findCourses(Long studentId) {
-		logger.info("StudentCourse service -> find student courses");
+		logger.info("StudentEnrollment service -> find student courses");
 		List<Course> courses = enrRepository.findCourses(studentId);
 		return courses;
 	}
@@ -61,7 +61,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public List<StudentEnrollment> findAll() {
-		logger.info("StudentCourse service -> find all");
+		logger.info("StudentEnrollment service -> find all");
 		final Iterable<StudentEnrollment> scIterator = enrRepository.findAll();
 		return Lists.newArrayList(scIterator);
 	}
@@ -74,13 +74,13 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	}
 
 	@Override
-	public void create(StudentEnrollment studentCourse) {
+	public void create(StudentEnrollment studentEnrollment) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
 	}
 
 	@Override
-	public void update(StudentEnrollmentId id, StudentEnrollment studentCourse) {
+	public void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
 	}

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.wedevol.iclass.core.validation.CourseStatus;
+
 /**
  * Student Enrollment Entity
  * 
@@ -24,7 +26,7 @@ public class StudentEnrollment implements Serializable {
 	private StudentEnrollmentId studentEnrollmentId;
 
 	@NotNull
-	// @CourseStatus
+	@CourseStatus
 	@Column
 	// private CourseStatusType status;
 	// TODO: refactor this

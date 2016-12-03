@@ -6,7 +6,7 @@ package com.wedevol.iclass.core.enums;
  * @author charz
  */
 public enum NotFoundErrorType {
-	USER_NOT_FOUND(100, "User not found"), STUDENT_COURSE_NOT_FOUND(101, "Student_Couse not found");
+	USER_NOT_FOUND(100, "User not found"), STUDENT_COURSE_NOT_FOUND(101, "Student enrollment not found");
 
 	private final int code;
 	private final String message;

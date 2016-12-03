@@ -63,7 +63,7 @@ public class StudentEnrollmentController {
 		return studentEnrollmentService.findAll();
 	}
 
-	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public StudentEnrollment findById(@PathVariable Long studentId, @PathVariable Long courseId) {
@@ -80,7 +80,7 @@ public class StudentEnrollmentController {
 		studentEnrollmentService.create(studentCourse);
 	}
 
-	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void update(@PathVariable Long studentId, @PathVariable Long courseId,
@@ -90,7 +90,7 @@ public class StudentEnrollmentController {
 		studentEnrollmentService.update(id, studentCourse);
 	}
 
-	@RequestMapping(value = "/studentenrollment/{studentId}/{courseId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long studentId, @PathVariable Long courseId) {

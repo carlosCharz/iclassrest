@@ -30,15 +30,16 @@ public class Topic implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@NotNull
-	@Size(min = 2, max = 100, message = "Course name must be between 2 - 100 characters")
+	// TODO: it must be a foreign key
+	@Size(min = 2, max = 11, message = "Course id must be between 2 - 11 digits")
 	@Digits(integer = 11, fraction = 0, message = "Topic id must be just digits")
 	@Column
 	private Long courseId;
 
 	@NotNull
-	@Size(min = 2, max = 100, message = "Course name must be between 2 - 100 characters")
+	@Size(min = 2, max = 100, message = "Topic name must be between 2 - 100 characters")
 	@Column
 	private String name;
 
@@ -46,9 +47,8 @@ public class Topic implements Serializable {
 	}
 
 	private Topic(TopicBuilder builder) {
+		this.courseId = builder.courseId;
 		this.name = builder.name;
-		this.description = builder.description;
-		this.university = builder.university;
 	}
 
 	public Long getId() {
@@ -59,6 +59,14 @@ public class Topic implements Serializable {
 		this.id = id;
 	}
 
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -67,45 +75,29 @@ public class Topic implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(String university) {
-		this.university = university;
-	}
-
 	/**
-	 * Course Builder
+	 * Topic Builder
 	 * 
 	 * @author charz
 	 *
 	 */
-	public static class CourseBuilder {
+	public static class TopicBuilder {
 
+		private Long courseId;
 		private String name;
-		private String description;
-		private String university;
 
-		public CourseBuilder(String name) {
+		public TopicBuilder(Long courseId, String name) {
+			this.courseId = courseId;
 			this.name = name;
 		}
 
-		public CourseBuilder description(String description) {
-			this.description = description;
+		public TopicBuilder courseId(Long courseId) {
+			this.courseId = courseId;
 			return this;
 		}
 
-		public CourseBuilder university(String university) {
-			this.university = university;
+		public TopicBuilder name(String name) {
+			this.name = name;
 			return this;
 		}
 
