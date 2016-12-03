@@ -1,21 +1,22 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.validator;
 
 import java.util.Arrays;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.wedevol.iclass.core.enums.GenderType;
+import com.wedevol.iclass.core.entity.constraint.CourseStatus;
+import com.wedevol.iclass.core.enums.CourseStatusType;
 
 /**
- * Gender Input Validator
+ * Course Status Validator
  *
  * @author charz
  */
-public class GenderValidator extends BaseValidator implements ConstraintValidator<Gender, String> {
+public class CourseStatusValidator extends BaseValidator implements ConstraintValidator<CourseStatus, String> {
 
 	@Override
-	public void initialize(Gender constraintAnnotation) {
+	public void initialize(CourseStatus constraintAnnotation) {
 		ignoreCase = constraintAnnotation.ignoreCase();
 		message = constraintAnnotation.message();
 	}
@@ -26,8 +27,8 @@ public class GenderValidator extends BaseValidator implements ConstraintValidato
 			return true;
 		}
 
-		final boolean isValid = Arrays	.stream(GenderType.values())
-										.filter(gender -> equal(value, gender.getDescription()))
+		final boolean isValid = Arrays	.stream(CourseStatusType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
 										.findFirst()
 										.isPresent();
 

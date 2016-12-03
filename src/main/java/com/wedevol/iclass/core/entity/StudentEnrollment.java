@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.wedevol.iclass.core.entity.constraint.CourseStatus;
 import com.wedevol.iclass.core.enums.CourseStatusType;
-import com.wedevol.iclass.core.validation.CourseStatus;
 
 /**
  * Student Enrollment Entity

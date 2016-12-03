@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.validator;
 
 /**
  * Base Input Validator

@@ -22,10 +22,10 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.wedevol.iclass.core.validation.CustomDateDeserialize;
-import com.wedevol.iclass.core.validation.CustomDateSerialize;
-import com.wedevol.iclass.core.validation.Gender;
-import com.wedevol.iclass.core.validation.PlaceOptions;
+import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
+import com.wedevol.iclass.core.entity.constraint.Gender;
+import com.wedevol.iclass.core.entity.constraint.PlaceOptions;
 
 /**
  * Student Entity

@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.validator;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.wedevol.iclass.core.entity.constraint.PlaceOptions;
 import com.wedevol.iclass.core.enums.PlaceOptionsType;
 
 /**

@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.constraint;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,23 +8,27 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.constraints.Size;
+
+import com.wedevol.iclass.core.entity.validator.GenderValidator;
 
 /**
- * Course Status Constraint
+ * Gender Constraint
  *
  * @author charz
  */
+@Size(min = 1, max = 1, message = "Gender string size must be 1")
 @Documented
-@Constraint(validatedBy = CourseStatusValidator.class)
+@Constraint(validatedBy = GenderValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CourseStatus {
+public @interface Gender {
 
-	String message() default "Course status must be free, open, pendingPayment, verifyingPayment, payed";
+	String message() default "Gender must be M or F";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
+	
 	boolean ignoreCase() default false;
 }

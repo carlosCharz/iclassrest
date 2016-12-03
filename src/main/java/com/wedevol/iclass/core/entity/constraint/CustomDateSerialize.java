@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.constraint;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

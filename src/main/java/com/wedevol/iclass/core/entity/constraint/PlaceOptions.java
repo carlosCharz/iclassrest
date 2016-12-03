@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.validation;
+package com.wedevol.iclass.core.entity.constraint;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import com.wedevol.iclass.core.entity.validator.PlaceOptionsValidator;
 
 /**
  * Place Options Constraint
