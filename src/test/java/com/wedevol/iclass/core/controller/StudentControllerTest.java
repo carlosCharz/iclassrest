@@ -79,7 +79,7 @@ public class StudentControllerTest {
 	@Test
 	public void throwExpcetionWhenGetAndStudentDoesNotExist() throws Exception {
 
-		when(studentService.findById(11L)).thenThrow(new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
+		when(studentService.findById(11L)).thenThrow(new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 
 		mvc	.perform(get("/students/11"))
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

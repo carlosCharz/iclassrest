@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 	public Student findById(Long userId) {
 		logger.info("Student service -> find by id");
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		return studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
+		return studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
 		// The student should exist
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		Student existingStudent = studentObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
+				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 		// TODO: analyze the full changed fields
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
@@ -85,7 +85,7 @@ public class StudentServiceImpl implements StudentService {
 		logger.info("Student service -> delete");
 		// The student should exist
 		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.USER_NOT_FOUND));
+		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 		studentRepository.delete(userId);
 	}
 
