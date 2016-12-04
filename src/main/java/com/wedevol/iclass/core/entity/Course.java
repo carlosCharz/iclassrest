@@ -15,8 +15,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Course Entity
@@ -27,7 +26,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "course")
 @DynamicInsert
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,8 +48,9 @@ public class Course implements Serializable {
 	private String university;
 
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Topic> topics;
-	
+
 	public static Course from(Long id) {
 		return new Course(id);
 	}

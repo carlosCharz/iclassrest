@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,8 +15,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Topic Entity
@@ -26,7 +27,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "topic")
 @DynamicInsert
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Topic implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,8 +36,9 @@ public class Topic implements Serializable {
 	private Long id;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "courseid")
+	@JsonBackReference
 	private Course course;
 
 	@NotNull
@@ -63,6 +64,11 @@ public class Topic implements Serializable {
 
 	public Course getCourse() {
 		return course;
+	}
+
+	@JsonProperty
+	public Long getCourseId() {
+		return course == null ? null : course.getId();
 	}
 
 	public void setCourse(Course course) {
