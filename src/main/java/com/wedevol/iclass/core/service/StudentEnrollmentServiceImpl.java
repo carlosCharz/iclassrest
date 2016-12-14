@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,27 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	@Override
 	public List<Course> findCourses(Long studentId) {
 		logger.info("StudentEnrollment service -> find student courses");
-		List<Course> courses = enrRepository.findCourses(studentId);
+		List<Object[]> coursesObjList = enrRepository.findCourses(studentId);
+		List<Course> courses = new ArrayList<Course>();
+		coursesObjList	.stream()
+						.forEach((row) -> {
+							final Long id = new Long((Integer) row[0]);
+							final String name = (String) row[1];
+							final String description = (String) row[2];
+							final String university = (String) row[3];
+							Course course = new Course.CourseBuilder(name)	.description(description)
+																			.university(university)
+																			.build();
+							course.setId(id);
+							courses.add(course);
+						});
+		return courses;
+	}
+
+	@Override
+	public List<Course> findCoursesComplete(Long studentId) {
+		logger.info("StudentEnrollment service -> find student courses with topic information");
+		List<Course> courses = enrRepository.findCoursesComplete(studentId);
 		return courses;
 	}
 

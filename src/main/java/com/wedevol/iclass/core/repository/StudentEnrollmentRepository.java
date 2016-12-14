@@ -29,7 +29,17 @@ public interface StudentEnrollmentRepository extends CrudRepository<StudentEnrol
 	 * @return list of courses
 	 */
 	// TODO: filter query by status
+	@Query(value="SELECT cou.* FROM student_enrollment enr, course cou WHERE cou.id = enr.courseId AND enr.studentId = :studentId", nativeQuery = true)
+	public List<Object[]> findCourses(@Param("studentId") Long studentId);
+	
+	/**
+	 * Return the student's list of courses with topic information
+	 * 
+	 * @param studentId
+	 * @return list of courses
+	 */
+	// TODO: filter query by status
 	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId")
-	public List<Course> findCourses(@Param("studentId") Long studentId);
+	public List<Course> findCoursesComplete(@Param("studentId") Long studentId);
 
 }
