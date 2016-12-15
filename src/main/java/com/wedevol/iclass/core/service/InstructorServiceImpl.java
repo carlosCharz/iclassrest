@@ -16,7 +16,7 @@ import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.repository.InstructorRepository;
-import com.wedevol.iclass.core.util.Util;
+import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Instructor Service Implementation
@@ -60,7 +60,7 @@ public class InstructorServiceImpl implements InstructorService {
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
 		instructorObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		instructor.setPassword(Util.hashSHA256(instructor.getPassword()));
+		instructor.setPassword(CommonUtil.hashSHA256(instructor.getPassword()));
 		instructorRepository.save(instructor);
 	}
 
@@ -76,7 +76,7 @@ public class InstructorServiceImpl implements InstructorService {
 		existingInstructor.setLastName(instructor.getLastName());
 		existingInstructor.setPhone(instructor.getPhone());
 		existingInstructor.setEmail(instructor.getEmail());
-		existingInstructor.setPassword(Util.hashSHA256(instructor.getPassword()));
+		existingInstructor.setPassword(CommonUtil.hashSHA256(instructor.getPassword()));
 		instructorRepository.save(existingInstructor);
 	}
 

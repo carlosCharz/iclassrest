@@ -1,8 +1,10 @@
 package com.wedevol.iclass.core.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +48,11 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	/************** Courses & Students **********************/
 	@Override
-	public List<Course> findCourses(Long studentId) {
+	public List<Course> findCourses(Long studentId, String statusFilter) {
 		logger.info("StudentEnrollment service -> find student courses");
-		List<Object[]> coursesObjList = enrRepository.findCourses(studentId);
+		// TODO: add the util validation for the status types, log the status types
+		final List<String> status = Arrays.asList(statusFilter.split(","));
+		List<Object[]> coursesObjList = enrRepository.findCourses(studentId, status);
 		List<Course> courses = new ArrayList<Course>();
 		coursesObjList	.stream()
 						.forEach((row) -> {

@@ -7,17 +7,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.hash.Hashing;
 
 /**
- * Util Class
+ * Common Util Class
  * 
  * @author charz
  * 
  */
-public class Util {
+public class CommonUtil {
 
 	public static final String DATE_FORMAT = "dd-MM-yyyy";
 
 	public static String hashSHA256(String element) {
-		return Hashing.sha256()
+		return Hashing	.sha256()
 						.hashString("your input", StandardCharsets.UTF_8)
 						.toString();
 	}

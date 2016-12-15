@@ -23,14 +23,13 @@ import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 public interface StudentEnrollmentRepository extends CrudRepository<StudentEnrollment, StudentEnrollmentId> {
 
 	/**
-	 * Return the student's list of courses
+	 * Return the student's list of courses filtered by the supplied course status
 	 * 
 	 * @param studentId
 	 * @return list of courses
 	 */
-	// TODO: filter query by status
-	@Query(value="SELECT cou.* FROM student_enrollment enr, course cou WHERE cou.id = enr.courseId AND enr.studentId = :studentId", nativeQuery = true)
-	public List<Object[]> findCourses(@Param("studentId") Long studentId);
+	@Query(value="SELECT cou.* FROM student_enrollment enr, course cou WHERE cou.id = enr.courseId AND enr.studentId = :studentId AND enr.status in :statusList", nativeQuery = true)
+	public List<Object[]> findCourses(@Param("studentId") Long studentId, @Param("statusList") List<String> statusList);
 	
 	/**
 	 * Return the student's list of courses with topic information

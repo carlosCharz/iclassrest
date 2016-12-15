@@ -16,7 +16,7 @@ import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.repository.StudentRepository;
-import com.wedevol.iclass.core.util.Util;
+import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Student Service Implementation
@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
 		// We first search by email, the student should not exist
 		Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		student.setPassword(Util.hashSHA256(student.getPassword()));
+		student.setPassword(CommonUtil.hashSHA256(student.getPassword()));
 		studentRepository.save(student);
 	}
 
@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
 		existingStudent.setLastName(student.getLastName());
 		existingStudent.setPhone(student.getPhone());
 		existingStudent.setEmail(student.getEmail());
-		existingStudent.setPassword(Util.hashSHA256(student.getPassword()));
+		existingStudent.setPassword(CommonUtil.hashSHA256(student.getPassword()));
 		studentRepository.save(existingStudent);
 	}
 

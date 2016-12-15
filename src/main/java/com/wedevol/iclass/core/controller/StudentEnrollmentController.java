@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,9 +42,9 @@ public class StudentEnrollmentController {
 	@RequestMapping(value = "/students/{studentId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCourses(@PathVariable Long studentId) {
-		logger.info("Controller -> find courses of a student");
-		return studentEnrollmentService.findCourses(studentId);
+	public List<Course> findCourses(@PathVariable Long studentId, @RequestParam(value="status", defaultValue="free,payed") String statusFilter) {
+		logger.info("Controller -> find courses of a student with course status filter: "+ statusFilter);
+		return studentEnrollmentService.findCourses(studentId, statusFilter);
 	}
 	
 	@RequestMapping(value = "/students/{studentId}/courses/full", method = RequestMethod.GET)

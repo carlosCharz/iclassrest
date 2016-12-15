@@ -31,7 +31,7 @@ import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.service.StudentServiceImpl;
-import com.wedevol.iclass.core.util.Util;
+import com.wedevol.iclass.core.util.CommonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(StudentController.class)
@@ -57,7 +57,7 @@ public class StudentControllerTest {
 		student1.setPlaceOptions(placeOptionsSet);
 		// Fix why testing is requiring the placeOptions
 
-		student1JsonString = Util.toJsonString(student1);
+		student1JsonString = CommonUtil.toJsonString(student1);
 		student1.setId(1L);
 	}
 
@@ -122,7 +122,7 @@ public class StudentControllerTest {
 
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com",
 				"12345678901234567").build();
-		student1JsonString = Util.toJsonString(student1);
+		student1JsonString = CommonUtil.toJsonString(student1);
 		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isBadRequest())
@@ -138,7 +138,7 @@ public class StudentControllerTest {
 		student1 = new Student.StudentBuilder(
 				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
 				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
-		student1JsonString = Util.toJsonString(student1);
+		student1JsonString = CommonUtil.toJsonString(student1);
 		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
 										.content(student1JsonString))
 			.andExpect(status().isBadRequest())
