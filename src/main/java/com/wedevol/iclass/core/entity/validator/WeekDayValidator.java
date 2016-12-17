@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.wedevol.iclass.core.entity.constraint.WeekDay;
-import com.wedevol.iclass.core.enums.WeekDayType;
+import com.wedevol.iclass.core.entity.enums.WeekDayType;
 
 /**
  * Week Day Validator
