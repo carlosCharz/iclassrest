@@ -4,19 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Topic Entity
@@ -36,10 +31,10 @@ public class Topic implements Serializable {
 	private Long id;
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "courseid")
-	@JsonBackReference
-	private Course course;
+	@Size(min = 1, max = 20, message = "Course id must be between 1 - 20 digits")
+	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
+	@Column(name = "courseid")
+	private Long courseId;
 
 	@NotNull
 	@Size(min = 2, max = 100, message = "Topic name must be between 2 - 100 characters")
@@ -50,7 +45,7 @@ public class Topic implements Serializable {
 	}
 
 	private Topic(TopicBuilder builder) {
-		this.course = builder.course;
+		this.courseId = builder.courseId;
 		this.name = builder.name;
 	}
 
@@ -62,17 +57,12 @@ public class Topic implements Serializable {
 		this.id = id;
 	}
 
-	public Course getCourse() {
-		return course;
-	}
-
-	@JsonProperty
 	public Long getCourseId() {
-		return course == null ? null : course.getId();
+		return courseId;
 	}
 
-	public void setCourse(Course course) {
-		this.course = course;
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
 	public String getName() {
@@ -91,16 +81,16 @@ public class Topic implements Serializable {
 	 */
 	public static class TopicBuilder {
 
-		private Course course;
+		private Long courseId;
 		private String name;
 
-		public TopicBuilder(Course course, String name) {
-			this.course = course;
+		public TopicBuilder(Long courseId, String name) {
+			this.courseId = courseId;
 			this.name = name;
 		}
 
-		public TopicBuilder course(Course course) {
-			this.course = course;
+		public TopicBuilder course(Long courseId) {
+			this.courseId = courseId;
 			return this;
 		}
 
@@ -114,6 +104,11 @@ public class Topic implements Serializable {
 			return new Topic(this);
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Topic[id=%d, courseId=%d, name='%s']%n", id, courseId, name);
 	}
 
 }

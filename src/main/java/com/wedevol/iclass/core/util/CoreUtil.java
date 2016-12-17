@@ -13,13 +13,13 @@ import com.wedevol.iclass.core.enums.CourseStatusType;
 public class CoreUtil {
 
 	public static Predicate<String> isValidCourseStatus() {
-		return course -> Arrays	.stream(CourseStatusType.values())
-								.filter(validOption -> course.equals(validOption.getDescription()))
-								.findFirst()
-								.isPresent();
+		return courseStatus -> Arrays	.stream(CourseStatusType.values())
+										.filter(validOption -> courseStatus.equals(validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 	}
 
-	public static boolean validateCourseStatusFilters(String statusFilter) {
+	public static boolean areValidCourseStatusFilters(String statusFilter) {
 		return Arrays	.asList(statusFilter.split(","))
 						.stream()
 						.allMatch(isValidCourseStatus());

@@ -1,10 +1,8 @@
 package com.wedevol.iclass.core.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +15,16 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.enums.ServerErrorType;
+import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
 import com.wedevol.iclass.core.repository.StudentRepository;
+import com.wedevol.iclass.core.util.CoreUtil;
 
 /**
  * Student Enrollment Service Implementation
@@ -50,30 +51,11 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	@Override
 	public List<Course> findCourses(Long studentId, String statusFilter) {
 		logger.info("StudentEnrollment service -> find student courses");
-		// TODO: add the util validation for the status types, log the status types
+		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
+		}
 		final List<String> status = Arrays.asList(statusFilter.split(","));
-		List<Object[]> coursesObjList = enrRepository.findCourses(studentId, status);
-		List<Course> courses = new ArrayList<Course>();
-		coursesObjList	.stream()
-						.forEach((row) -> {
-							final Long id = new Long((Integer) row[0]);
-							final String name = (String) row[1];
-							final String description = (String) row[2];
-							final String university = (String) row[3];
-							Course course = new Course.CourseBuilder(name)	.description(description)
-																			.university(university)
-																			.build();
-							course.setId(id);
-							courses.add(course);
-						});
-		return courses;
-	}
-
-	@Override
-	public List<Course> findCoursesComplete(Long studentId) {
-		logger.info("StudentEnrollment service -> find student courses with topic information");
-		List<Course> courses = enrRepository.findCoursesComplete(studentId);
-		return courses;
+		return enrRepository.findCourses(studentId, status);
 	}
 
 	@Override

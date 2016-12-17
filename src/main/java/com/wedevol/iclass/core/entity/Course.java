@@ -1,21 +1,16 @@
 package com.wedevol.iclass.core.entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * Course Entity
@@ -46,10 +41,6 @@ public class Course implements Serializable {
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	@Column(nullable = true)
 	private String university;
-
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private Set<Topic> topics;
 
 	public static Course from(Long id) {
 		return new Course(id);
@@ -100,14 +91,6 @@ public class Course implements Serializable {
 		this.university = university;
 	}
 
-	public Set<Topic> getTopics() {
-		return topics;
-	}
-
-	public void setTopics(Set<Topic> topics) {
-		this.topics = topics;
-	}
-
 	/**
 	 * Course Builder
 	 * 
@@ -143,13 +126,7 @@ public class Course implements Serializable {
 
 	@Override
 	public String toString() {
-		String result = String.format("Course[id=%d, name='%s']%n", id, name);
-		if (topics != null) {
-			for (Topic topic : topics) {
-				result += String.format("Topic[id=%d, name='%s']%n", topic.getId(), topic.getName());
-			}
-		}
-		return result;
+		return String.format("Course[id=%d, name='%s']%n", id, name);
 	}
 
 }

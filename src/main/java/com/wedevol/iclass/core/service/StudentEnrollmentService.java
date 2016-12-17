@@ -26,8 +26,6 @@ public interface StudentEnrollmentService {
 	void delete(StudentEnrollmentId id);
 
 	List<Course> findCourses(Long studentId, String statusFilter);
-	
-	List<Course> findCoursesComplete(Long studentId);
 
 	List<Student> findStudents(Long courseId);
 

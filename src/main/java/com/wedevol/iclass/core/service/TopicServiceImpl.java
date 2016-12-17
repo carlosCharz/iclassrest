@@ -65,8 +65,7 @@ public class TopicServiceImpl implements TopicService {
 		Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
 		topicObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		// Then, the course should exist
-		final Course course = topic.getCourse();
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(course.getId()));
+		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(topic.getCourseId()));
 		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 		// Create
 		topicRepository.save(topic);
@@ -80,11 +79,10 @@ public class TopicServiceImpl implements TopicService {
 		Topic existingTopic = topicObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
 		// Then, the course should exist
-		final Course course = topic.getCourse();
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(course.getId()));
+		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(topic.getCourseId()));
 		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 		// Update
-		existingTopic.setCourse(topic.getCourse());
+		existingTopic.setCourseId(topic.getCourseId());
 		existingTopic.setName(topic.getName());
 		topicRepository.save(existingTopic);
 	}

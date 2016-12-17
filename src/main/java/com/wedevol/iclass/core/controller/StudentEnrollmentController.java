@@ -46,14 +46,6 @@ public class StudentEnrollmentController {
 		logger.info("Controller -> find courses of a student with course status filter: "+ statusFilter);
 		return studentEnrollmentService.findCourses(studentId, statusFilter);
 	}
-	
-	@RequestMapping(value = "/students/{studentId}/courses/full", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Course> findCoursesComplete(@PathVariable Long studentId) {
-		logger.info("Controller -> find courses of a student with topic information");
-		return studentEnrollmentService.findCoursesComplete(studentId);
-	}
 
 	@RequestMapping(value = "/courses/{courseId}/students", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
