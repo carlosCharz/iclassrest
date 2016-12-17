@@ -34,7 +34,7 @@ public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private InstructorRepository instructorRepository;
 
-	/********************* CRUD for student ****************************/
+	/********************* CRUD for instructor ****************************/
 	@Override
 	public List<Instructor> findAll() {
 		logger.info("Instructor service -> find all");
