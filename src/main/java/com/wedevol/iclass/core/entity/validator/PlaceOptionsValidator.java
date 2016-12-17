@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.wedevol.iclass.core.entity.constraint.PlaceOptions;
-import com.wedevol.iclass.core.enums.PlaceOptionsType;
+import com.wedevol.iclass.core.entity.enums.PlaceOptionsType;
 
 /**
  * Place Options Validator

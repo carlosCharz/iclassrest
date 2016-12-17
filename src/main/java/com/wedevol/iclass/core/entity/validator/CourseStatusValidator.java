@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.wedevol.iclass.core.entity.constraint.CourseStatus;
-import com.wedevol.iclass.core.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 
 /**
  * Course Status Validator

@@ -9,8 +9,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 
 /**
  * Custom Date Deserialize

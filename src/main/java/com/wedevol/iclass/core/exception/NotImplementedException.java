@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import com.wedevol.iclass.core.enums.ServerErrorType;
+import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 
 /**
  * Not implemented exception

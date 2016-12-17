@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wedevol.iclass.core.entity.constraint.CourseStatus;
-import com.wedevol.iclass.core.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 
 /**
  * Student Enrollment Entity

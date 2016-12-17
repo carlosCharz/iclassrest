@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.wedevol.iclass.core.entity.ErrorResponse;
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 
 /**
  * Exception Controller Advice

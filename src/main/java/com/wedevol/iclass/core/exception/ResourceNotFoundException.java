@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import com.wedevol.iclass.core.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 
 /**
  * Resource not found exception

@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.service;
+package com.wedevol.iclass.core.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Topic;
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
-import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.TopicRepository;
+import com.wedevol.iclass.core.service.TopicService;
 
 /**
  * Topic Service Implementation

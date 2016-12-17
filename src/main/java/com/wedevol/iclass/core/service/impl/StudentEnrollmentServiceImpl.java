@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.service;
+package com.wedevol.iclass.core.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,15 +15,16 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
-import com.wedevol.iclass.core.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.enums.ServerErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
 import com.wedevol.iclass.core.repository.StudentRepository;
+import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.util.CoreUtil;
 
 /**
@@ -50,7 +51,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	/************** Courses & Students **********************/
 	@Override
 	public List<Course> findCourses(Long studentId, String statusFilter) {
-		logger.info("StudentEnrollment service -> find student courses");
+		logger.info("StudentEnrollment service -> find student courses filtered by the supplied course status");
 		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
@@ -60,8 +61,8 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public List<Student> findStudents(Long courseId) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
+		logger.info("StudentEnrollment service -> find students of a course");
+		return enrRepository.findStudents(courseId);
 	}
 
 	/***************** CRUD for Student Enrollment ***********************/

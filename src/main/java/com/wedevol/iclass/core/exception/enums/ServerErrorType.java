@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.enums;
+package com.wedevol.iclass.core.exception.enums;
 
 /**
  * Server Error Type Enum (5xx family)

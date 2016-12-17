@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.enums;
+package com.wedevol.iclass.core.entity.enums;
 
 /**
  * Week Day Enum

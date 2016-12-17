@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.wedevol.iclass.core.entity.constraint.Gender;
-import com.wedevol.iclass.core.enums.GenderType;
+import com.wedevol.iclass.core.entity.enums.GenderType;
 
 /**
  * Gender Input Validator

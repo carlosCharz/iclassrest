@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.enums;
+package com.wedevol.iclass.core.exception.enums;
 
 /**
  * Resource Not Found Error Type Enum (4xx family)

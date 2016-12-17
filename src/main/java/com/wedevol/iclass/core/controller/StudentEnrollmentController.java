@@ -43,7 +43,7 @@ public class StudentEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Course> findCourses(@PathVariable Long studentId, @RequestParam(value="status", defaultValue="free,payed") String statusFilter) {
-		logger.info("Controller -> find courses of a student with course status filter: "+ statusFilter);
+		logger.info("Controller -> find courses of a student filtered by the supplied course status: "+ statusFilter);
 		return studentEnrollmentService.findCourses(studentId, statusFilter);
 	}
 

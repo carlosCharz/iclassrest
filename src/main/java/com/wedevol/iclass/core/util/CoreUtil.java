@@ -3,7 +3,7 @@ package com.wedevol.iclass.core.util;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import com.wedevol.iclass.core.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 
 /**
  * Core Util Class

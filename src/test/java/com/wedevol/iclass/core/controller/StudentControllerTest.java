@@ -26,11 +26,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
-import com.wedevol.iclass.core.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
-import com.wedevol.iclass.core.service.StudentServiceImpl;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.util.CommonUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)

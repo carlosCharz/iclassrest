@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.exception;
 
-import com.wedevol.iclass.core.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 
 /**
  * Bad request exception
