@@ -24,13 +24,15 @@ import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 public interface InstructorEnrollmentRepository extends CrudRepository<InstructorEnrollment, InstructorEnrollmentId> {
 
 	/**
-	 * Return the instructor's list of courses filtered by the supplied course status
+	 * Return the instructor's list of courses filtered by the supplied course
+	 * status
 	 * 
 	 * @param instructorId
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.instructorEnrollmentId.courseId AND enr.instructorEnrollmentId.instructorId = :instructorId AND enr.status in :statusList")
-	public List<Course> findCourses(@Param("instructorId") Long instructorId, @Param("statusList") List<String> statusList);
+	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :statusList")
+	public List<Course> findCourses(@Param("instructorId") Long instructorId,
+			@Param("statusList") List<String> statusList);
 
 	/**
 	 * Return the instructor list of a course
@@ -38,7 +40,7 @@ public interface InstructorEnrollmentRepository extends CrudRepository<Instructo
 	 * @param courseId
 	 * @return list of instructors
 	 */
-	@Query("SELECT ins FROM InstructorEnrollment enr, Instructor ins WHERE ins.id = enr.instructorEnrollmentId.instructorId AND enr.instructorEnrollmentId.courseId = :courseId")
+	@Query("SELECT ins FROM InstructorEnrollment enr, Instructor ins WHERE ins.id = enr.id.instructorId AND enr.id.courseId = :courseId")
 	public List<Instructor> findInstructors(@Param("courseId") Long courseId);
 
 }

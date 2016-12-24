@@ -19,9 +19,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.InstructorEnrollmentRepository;
-import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.util.CoreUtil;
 
@@ -36,12 +34,6 @@ import com.wedevol.iclass.core.util.CoreUtil;
 public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentService {
 
 	protected static final Logger logger = LoggerFactory.getLogger(InstructorEnrollmentServiceImpl.class);
-
-	@Autowired
-	private CourseRepository courseRepository;
-
-	@Autowired
-	private InstructorRepository instructorRepository;
 
 	@Autowired
 	private InstructorEnrollmentRepository enrRepository;
@@ -75,7 +67,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	@Override
 	public InstructorEnrollment findById(InstructorEnrollmentId id) {
 		logger.info("InstructorEnrollment service -> find by id");
-		Optional<InstructorEnrollment> icObj = Optional.ofNullable(enrRepository.findOne(id));
+		final Optional<InstructorEnrollment> icObj = Optional.ofNullable(enrRepository.findOne(id));
 		return icObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_COURSE_NOT_FOUND));
 	}
 
@@ -83,8 +75,8 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	public void create(InstructorEnrollment instructorEnrollment) {
 		logger.info("InstructorEnrollment service -> create");
 		// We first search by id, the instructorEnrollment should not exist
-		Optional<InstructorEnrollment> enrObj = Optional.ofNullable(
-				enrRepository.findOne(instructorEnrollment.getInstructorEnrollmentId()));
+		final Optional<InstructorEnrollment> enrObj = Optional.ofNullable(
+				enrRepository.findOne(instructorEnrollment.getId()));
 		enrObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		enrRepository.save(instructorEnrollment);
 	}
@@ -93,7 +85,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	public void update(InstructorEnrollmentId id, InstructorEnrollment instructorEnrollment) {
 		logger.info("InstructorEnrollment service -> update");
 		// The instructorEnrollment should exist
-		final InstructorEnrollment existingEnr = findById(id);
+		InstructorEnrollment existingEnr = findById(id);
 		// TODO: analyze the full changed fields
 		existingEnr.setStatus(instructorEnrollment.getStatus());
 		existingEnr.setPrice(instructorEnrollment.getPrice());

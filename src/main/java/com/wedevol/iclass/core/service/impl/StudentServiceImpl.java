@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student findById(Long userId) {
 		logger.info("Student service -> find by id");
-		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
+		final Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
 		return studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 	}
 
@@ -59,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
 	public void create(Student student) {
 		logger.info("Student service -> create");
 		// We first search by email, the student should not exist
-		Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
+		final Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		student.setPassword(CommonUtil.hashSHA256(student.getPassword()));
 		studentRepository.save(student);
@@ -69,9 +69,7 @@ public class StudentServiceImpl implements StudentService {
 	public void update(Long userId, Student student) {
 		logger.info("Student service -> update");
 		// The student should exist
-		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		Student existingStudent = studentObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		Student existingStudent = findById(userId);
 		// TODO: analyze the full changed fields
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
@@ -85,8 +83,7 @@ public class StudentServiceImpl implements StudentService {
 	public void delete(Long userId) {
 		logger.info("Student service -> delete");
 		// The student should exist
-		Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
-		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		findById(userId);
 		studentRepository.delete(userId);
 	}
 

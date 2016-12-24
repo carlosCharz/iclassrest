@@ -10,14 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Topic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.TopicRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.TopicService;
 
 /**
@@ -36,7 +35,7 @@ public class TopicServiceImpl implements TopicService {
 	private TopicRepository topicRepository;
 
 	@Autowired
-	private CourseRepository courseRepository;
+	private CourseService courseService;
 
 	/********************* CRUD for student ****************************/
 	@Override
@@ -55,7 +54,7 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Topic findById(Long topicId) {
 		logger.info("Topic service -> find by id");
-		Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
+		final Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
 		return topicObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
 	}
 
@@ -63,11 +62,10 @@ public class TopicServiceImpl implements TopicService {
 	public void create(Topic topic) {
 		logger.info("Topic service -> create");
 		// We first search by name, the topic should not exist
-		Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
+		final Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
 		topicObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		// Then, the course should exist
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(topic.getCourseId()));
-		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
+		courseService.findById(topic.getCourseId());
 		// Create
 		topicRepository.save(topic);
 	}
@@ -76,12 +74,9 @@ public class TopicServiceImpl implements TopicService {
 	public void update(Long topicId, Topic topic) {
 		logger.info("Topic service -> update");
 		// The topic should exist
-		Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
-		Topic existingTopic = topicObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
+		Topic existingTopic = findById(topicId);
 		// Then, the course should exist
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(topic.getCourseId()));
-		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
+		courseService.findById(topic.getCourseId());
 		// Update
 		existingTopic.setCourseId(topic.getCourseId());
 		existingTopic.setName(topic.getName());
@@ -92,8 +87,7 @@ public class TopicServiceImpl implements TopicService {
 	public void delete(Long topicId) {
 		logger.info("Topic service -> delete");
 		// The topic should exist
-		Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
-		topicObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
+		findById(topicId);
 		topicRepository.delete(topicId);
 	}
 

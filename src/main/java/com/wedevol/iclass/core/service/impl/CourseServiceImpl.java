@@ -50,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Course findById(Long courseId) {
 		logger.info("Course service -> find by id");
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
+		final Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
 		return courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 	}
 
@@ -58,7 +58,7 @@ public class CourseServiceImpl implements CourseService {
 	public void create(Course course) {
 		logger.info("Course service -> create");
 		// We first search by name, the course should not exist
-		Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
+		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		courseObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		courseRepository.save(course);
 	}
@@ -67,9 +67,8 @@ public class CourseServiceImpl implements CourseService {
 	public void update(Long courseId, Course course) {
 		logger.info("Course service -> update");
 		// The course should exist
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
-		Course existingCourse = courseObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
+		Course existingCourse = findById(courseId);
+		// TODO: analyze the full changed fields
 		existingCourse.setName(course.getName());
 		existingCourse.setDescription(course.getDescription());
 		existingCourse.setUniversity(course.getUniversity());
@@ -80,8 +79,7 @@ public class CourseServiceImpl implements CourseService {
 	public void delete(Long courseId) {
 		logger.info("Course service -> delete");
 		// The course should exist
-		Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
-		courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
+		findById(courseId);
 		courseRepository.delete(courseId);
 	}
 

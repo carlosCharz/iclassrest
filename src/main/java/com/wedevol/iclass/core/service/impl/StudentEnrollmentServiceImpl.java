@@ -19,9 +19,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
-import com.wedevol.iclass.core.repository.StudentRepository;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.util.CoreUtil;
 
@@ -36,12 +34,6 @@ import com.wedevol.iclass.core.util.CoreUtil;
 public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	protected static final Logger logger = LoggerFactory.getLogger(StudentEnrollmentServiceImpl.class);
-
-	@Autowired
-	private CourseRepository courseRepository;
-
-	@Autowired
-	private StudentRepository studentRepository;
 
 	@Autowired
 	private StudentEnrollmentRepository enrRepository;
@@ -75,7 +67,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	@Override
 	public StudentEnrollment findById(StudentEnrollmentId id) {
 		logger.info("StudentEnrollment service -> find by id");
-		Optional<StudentEnrollment> scObj = Optional.ofNullable(enrRepository.findOne(id));
+		final Optional<StudentEnrollment> scObj = Optional.ofNullable(enrRepository.findOne(id));
 		return scObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_COURSE_NOT_FOUND));
 	}
 
@@ -83,7 +75,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	public void create(StudentEnrollment studentEnrollment) {
 		logger.info("StudentEnrollment service -> create");
 		// We first search by id, the studentEnrollment should not exist
-		Optional<StudentEnrollment> enrObj = Optional.ofNullable(
+		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
 				enrRepository.findOne(studentEnrollment.getStudentEnrollmentId()));
 		enrObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		enrRepository.save(studentEnrollment);
@@ -93,7 +85,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	public void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment) {
 		logger.info("StudentEnrollment service -> update");
 		// The studentEnrollment should exist
-		final StudentEnrollment existingEnr = findById(id);
+		StudentEnrollment existingEnr = findById(id);
 		// TODO: analyze the full changed fields
 		existingEnr.setStatus(studentEnrollment.getStatus());
 		enrRepository.save(existingEnr);
