@@ -36,27 +36,23 @@ public class CourseServiceImpl implements CourseService {
 	/********************* CRUD for student ****************************/
 	@Override
 	public List<Course> findAll() {
-		logger.info("Course service -> find all");
 		final Iterable<Course> coursesIterator = courseRepository.findAll();
 		return Lists.newArrayList(coursesIterator);
 	}
 
 	@Override
 	public Course findByName(String name) {
-		logger.info("Course service -> find by name");
 		return courseRepository.findByName(name);
 	}
 
 	@Override
 	public Course findById(Long courseId) {
-		logger.info("Course service -> find by id");
 		final Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
 		return courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 	}
 
 	@Override
 	public void create(Course course) {
-		logger.info("Course service -> create");
 		// We first search by name, the course should not exist
 		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		courseObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
@@ -65,7 +61,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public void update(Long courseId, Course course) {
-		logger.info("Course service -> update");
 		// The course should exist
 		Course existingCourse = findById(courseId);
 		// TODO: analyze the full changed fields
@@ -77,7 +72,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public void delete(Long courseId) {
-		logger.info("Course service -> delete");
 		// The course should exist
 		findById(courseId);
 		courseRepository.delete(courseId);

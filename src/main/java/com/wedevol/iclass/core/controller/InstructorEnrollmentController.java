@@ -44,8 +44,7 @@ public class InstructorEnrollmentController {
 	@ResponseBody
 	public List<Course> findCourses(@PathVariable Long instructorId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
-		logger.info(
-				"Controller -> find courses of an instructor filtered by the supplied course status: " + statusFilter);
+		logger.info("Find courses of an instructor filtered by the supplied course status: " + statusFilter);
 		return instructorEnrollmentService.findCourses(instructorId, statusFilter);
 	}
 
@@ -53,7 +52,6 @@ public class InstructorEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Instructor> findInstructors(@PathVariable Long courseId) {
-		logger.info("Controller -> find instructors of a course");
 		return instructorEnrollmentService.findInstructors(courseId);
 	}
 
@@ -62,7 +60,6 @@ public class InstructorEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<InstructorEnrollment> findAll() {
-		logger.info("Controller -> find all");
 		return instructorEnrollmentService.findAll();
 	}
 
@@ -70,7 +67,6 @@ public class InstructorEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public InstructorEnrollment findById(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		logger.info("Controller -> find by id");
 		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
 		return instructorEnrollmentService.findById(id);
 	}
@@ -79,7 +75,6 @@ public class InstructorEnrollmentController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody InstructorEnrollment instructorCourse) {
-		logger.info("Controller -> create");
 		instructorEnrollmentService.create(instructorCourse);
 	}
 
@@ -88,7 +83,6 @@ public class InstructorEnrollmentController {
 	@ResponseBody
 	public void update(@PathVariable Long instructorId, @PathVariable Long courseId,
 			@Valid @RequestBody InstructorEnrollment instructorCourse) {
-		logger.info("Controller -> update");
 		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
 		instructorEnrollmentService.update(id, instructorCourse);
 	}
@@ -97,7 +91,6 @@ public class InstructorEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		logger.info("Controller -> delete");
 		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
 		instructorEnrollmentService.delete(id);
 	}

@@ -40,27 +40,23 @@ public class TopicServiceImpl implements TopicService {
 	/********************* CRUD for student ****************************/
 	@Override
 	public List<Topic> findAll() {
-		logger.info("Topic service -> find all");
 		final Iterable<Topic> topicsIterator = topicRepository.findAll();
 		return Lists.newArrayList(topicsIterator);
 	}
 
 	@Override
 	public Topic findByName(String name) {
-		logger.info("Topic service -> find by name");
 		return topicRepository.findByName(name);
 	}
 
 	@Override
 	public Topic findById(Long topicId) {
-		logger.info("Topic service -> find by id");
 		final Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
 		return topicObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
 	}
 
 	@Override
 	public void create(Topic topic) {
-		logger.info("Topic service -> create");
 		// We first search by name, the topic should not exist
 		final Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
 		topicObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
@@ -72,7 +68,6 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public void update(Long topicId, Topic topic) {
-		logger.info("Topic service -> update");
 		// The topic should exist
 		Topic existingTopic = findById(topicId);
 		// Then, the course should exist
@@ -85,7 +80,6 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public void delete(Long topicId) {
-		logger.info("Topic service -> delete");
 		// The topic should exist
 		findById(topicId);
 		topicRepository.delete(topicId);

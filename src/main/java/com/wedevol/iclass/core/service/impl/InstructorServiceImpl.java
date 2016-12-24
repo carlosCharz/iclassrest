@@ -37,27 +37,23 @@ public class InstructorServiceImpl implements InstructorService {
 	/********************* CRUD for instructor ****************************/
 	@Override
 	public List<Instructor> findAll() {
-		logger.info("Instructor service -> find all");
 		final Iterable<Instructor> instructorsIterator = instructorRepository.findAll();
 		return Lists.newArrayList(instructorsIterator);
 	}
 
 	@Override
 	public Instructor findByEmail(String email) {
-		logger.info("Instructor service -> find by email");
 		return instructorRepository.findByEmail(email);
 	}
 
 	@Override
 	public Instructor findById(Long userId) {
-		logger.info("Instructor service -> find by id");
 		Optional<Instructor> instructorObj = Optional.ofNullable(instructorRepository.findOne(userId));
 		return instructorObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
 	}
 
 	@Override
 	public void create(Instructor instructor) {
-		logger.info("Instructor service -> create");
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
 		instructorObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
@@ -67,7 +63,6 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public void update(Long userId, Instructor instructor) {
-		logger.info("Instructor service -> update");
 		// The instructor should exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(instructorRepository.findOne(userId));
 		Instructor existingInstructor = instructorObj.orElseThrow(
@@ -83,7 +78,6 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public void delete(Long userId) {
-		logger.info("Instructor service -> delete");
 		// The instructor should exist
 		Optional<Instructor> studentObj = Optional.ofNullable(instructorRepository.findOne(userId));
 		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));

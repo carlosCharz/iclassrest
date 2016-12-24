@@ -41,7 +41,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	/************** Courses & Students **********************/
 	@Override
 	public List<Course> findCourses(Long studentId, String statusFilter) {
-		logger.info("StudentEnrollment service -> find student courses filtered by the supplied course status");
 		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
@@ -51,7 +50,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public List<Student> findStudents(Long courseId) {
-		logger.info("StudentEnrollment service -> find students of a course");
 		return enrRepository.findStudents(courseId);
 	}
 
@@ -59,21 +57,18 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public List<StudentEnrollment> findAll() {
-		logger.info("StudentEnrollment service -> find all");
 		final Iterable<StudentEnrollment> scIterator = enrRepository.findAll();
 		return Lists.newArrayList(scIterator);
 	}
 
 	@Override
 	public StudentEnrollment findById(StudentEnrollmentId id) {
-		logger.info("StudentEnrollment service -> find by id");
 		final Optional<StudentEnrollment> scObj = Optional.ofNullable(enrRepository.findOne(id));
 		return scObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_COURSE_NOT_FOUND));
 	}
 
 	@Override
 	public void create(StudentEnrollment studentEnrollment) {
-		logger.info("StudentEnrollment service -> create");
 		// We first search by id, the studentEnrollment should not exist
 		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
 				enrRepository.findOne(studentEnrollment.getStudentEnrollmentId()));
@@ -83,7 +78,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment) {
-		logger.info("StudentEnrollment service -> update");
 		// The studentEnrollment should exist
 		StudentEnrollment existingEnr = findById(id);
 		// TODO: analyze the full changed fields
@@ -93,7 +87,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public void delete(StudentEnrollmentId id) {
-		logger.info("StudentEnrollment service -> delete");
 		// The studentEnrollment should exist
 		findById(id);
 		enrRepository.delete(id);

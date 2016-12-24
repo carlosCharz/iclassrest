@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +27,6 @@ import com.wedevol.iclass.core.service.InstructorService;
 @RequestMapping("/instructors")
 public class InstructorController {
 
-	protected static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
-
 	@Autowired
 	private InstructorService instructorService;
 
@@ -39,7 +35,6 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Instructor> findAll() {
-		logger.info("Controller -> find all");
 		return instructorService.findAll();
 	}
 
@@ -47,7 +42,6 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Instructor findById(@PathVariable Long userId) {
-		logger.info("Controller -> find by id");
 		return instructorService.findById(userId);
 	}
 
@@ -55,7 +49,6 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody Instructor instructor) {
-		logger.info("Controller -> create");
 		instructorService.create(instructor);
 	}
 
@@ -63,7 +56,6 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void update(@PathVariable Long userId, @Valid @RequestBody Instructor instructor) {
-		logger.info("Controller -> update");
 		instructorService.update(userId, instructor);
 	}
 
@@ -71,7 +63,6 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long userId) {
-		logger.info("Controller -> delete");
 		instructorService.delete(userId);
 	}
 }

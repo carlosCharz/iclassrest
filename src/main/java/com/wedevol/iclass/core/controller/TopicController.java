@@ -39,7 +39,6 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Topic> findAll() {
-		logger.info("Controller -> find all");
 		return topicService.findAll();
 	}
 
@@ -47,7 +46,6 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Topic findById(@PathVariable Long topicId) {
-		logger.info("Controller -> find by id");
 		return topicService.findById(topicId);
 	}
 
@@ -55,7 +53,6 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody Topic topic) {
-		logger.info("Controller -> create");
 		topicService.create(topic);
 	}
 
@@ -63,7 +60,6 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void update(@PathVariable Long topicId, @Valid @RequestBody Topic topic) {
-		logger.info("Controller -> update");
 		topicService.update(topicId, topic);
 	}
 
@@ -71,7 +67,6 @@ public class TopicController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable Long topicId) {
-		logger.info("Controller -> delete");
 		topicService.delete(topicId);
 	}
 }
