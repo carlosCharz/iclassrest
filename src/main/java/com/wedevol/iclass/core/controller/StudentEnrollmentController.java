@@ -56,7 +56,7 @@ public class StudentEnrollmentController {
 	}
 
 	/************** CRUD for student enrollment **********************/
-	@RequestMapping(value = "/studentenrollment", method = RequestMethod.GET)
+	@RequestMapping(value = "/studentenrollments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<StudentEnrollment> findAll() {
@@ -73,7 +73,7 @@ public class StudentEnrollmentController {
 		return studentEnrollmentService.findById(id);
 	}
 
-	@RequestMapping(value = "/studentenrollment", method = RequestMethod.POST)
+	@RequestMapping(value = "/studentenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody StudentEnrollment studentCourse) {

@@ -16,11 +16,9 @@ import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.exception.BadRequestException;
-import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
 import com.wedevol.iclass.core.repository.StudentRepository;
@@ -76,27 +74,37 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public StudentEnrollment findById(StudentEnrollmentId id) {
-		logger.info("Student_Course service -> find by id");
+		logger.info("StudentEnrollment service -> find by id");
 		Optional<StudentEnrollment> scObj = Optional.ofNullable(enrRepository.findOne(id));
 		return scObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_COURSE_NOT_FOUND));
 	}
 
 	@Override
 	public void create(StudentEnrollment studentEnrollment) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
+		logger.info("StudentEnrollment service -> create");
+		// We first search by id, the studentEnrollment should not exist
+		Optional<StudentEnrollment> enrObj = Optional.ofNullable(
+				enrRepository.findOne(studentEnrollment.getStudentEnrollmentId()));
+		enrObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		enrRepository.save(studentEnrollment);
 	}
 
 	@Override
 	public void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
+		logger.info("StudentEnrollment service -> update");
+		// The studentEnrollment should exist
+		final StudentEnrollment existingEnr = findById(id);
+		// TODO: analyze the full changed fields
+		existingEnr.setStatus(studentEnrollment.getStatus());
+		enrRepository.save(existingEnr);
 	}
 
 	@Override
 	public void delete(StudentEnrollmentId id) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException(ServerErrorType.NOT_IMPLEMENTED);
+		logger.info("StudentEnrollment service -> delete");
+		// The studentEnrollment should exist
+		findById(id);
+		enrRepository.delete(id);
 	}
 
 }
