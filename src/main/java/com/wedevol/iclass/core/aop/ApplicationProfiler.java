@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
@@ -22,8 +23,11 @@ public class ApplicationProfiler {
 	@Around("execution(* com.wedevol.iclass.core.controller.*.*(..))")
 	public Object aroundControllers(ProceedingJoinPoint pjp) throws Throwable {
 
-		logger.info("Controller -> " + pjp	.getSignature()
-											.getName());
+		final Signature method = pjp.getSignature();
+		final String packageName = method.getDeclaringTypeName();
+		final String controllerName = packageName.substring(packageName.lastIndexOf(".") + 1);
+
+		logger.info(controllerName + " -> " + method.getName());
 
 		return pjp.proceed();
 	}
@@ -31,8 +35,11 @@ public class ApplicationProfiler {
 	@Around("execution(* com.wedevol.iclass.core.service.impl.*.*(..))")
 	public Object aroundServiceImpls(ProceedingJoinPoint pjp) throws Throwable {
 
-		logger.info("ServiceImpl -> " + pjp	.getSignature()
-											.getName());
+		final Signature method = pjp.getSignature();
+		final String packageName = method.getDeclaringTypeName();
+		final String serviceName = packageName.substring(packageName.lastIndexOf(".") + 1);
+
+		logger.info(serviceName + " -> " + method.getName());
 
 		return pjp.proceed();
 	}
