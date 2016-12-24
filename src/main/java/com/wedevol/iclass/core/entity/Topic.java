@@ -31,7 +31,6 @@ public class Topic implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Size(min = 1, max = 20, message = "Course id must be between 1 - 20 digits")
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	@Column(name = "courseid")
 	private Long courseId;
