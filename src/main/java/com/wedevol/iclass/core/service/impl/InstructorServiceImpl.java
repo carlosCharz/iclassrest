@@ -64,9 +64,7 @@ public class InstructorServiceImpl implements InstructorService {
 	@Override
 	public void update(Long userId, Instructor instructor) {
 		// The instructor should exist
-		Optional<Instructor> instructorObj = Optional.ofNullable(instructorRepository.findOne(userId));
-		Instructor existingInstructor = instructorObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
+		Instructor existingInstructor = findById(userId);
 		// TODO: analyze the full changed fields
 		existingInstructor.setFirstName(instructor.getFirstName());
 		existingInstructor.setLastName(instructor.getLastName());
@@ -79,8 +77,7 @@ public class InstructorServiceImpl implements InstructorService {
 	@Override
 	public void delete(Long userId) {
 		// The instructor should exist
-		Optional<Instructor> studentObj = Optional.ofNullable(instructorRepository.findOne(userId));
-		studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
+		findById(userId);
 		instructorRepository.delete(userId);
 	}
 
