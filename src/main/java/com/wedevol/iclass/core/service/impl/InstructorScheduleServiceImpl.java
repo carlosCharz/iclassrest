@@ -51,7 +51,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 
 	@Override
 	public void create(InstructorSchedule schedule) {
-		// Analize if the instructor schedule should not exist first
+		// TODO: Analize if the instructor schedule should not exist first
 		scheduleRepository.save(schedule);
 	}
 
@@ -62,6 +62,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		// Then, the instructor should exist
 		instructorService.findById(schedule.getInstructorId());
 		// Update
+		existingSchedule.setInstructorId(schedule.getInstructorId());
 		existingSchedule.setWeekDay(schedule.getWeekDay());
 		existingSchedule.setClassDate(schedule.getClassDate());
 		existingSchedule.setStartTime(schedule.getStartTime());
