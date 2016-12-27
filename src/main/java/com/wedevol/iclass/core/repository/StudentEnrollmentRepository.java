@@ -27,6 +27,7 @@ public interface StudentEnrollmentRepository extends CrudRepository<StudentEnrol
 	 * Return the student's list of courses filtered by the supplied course status
 	 * 
 	 * @param studentId
+	 * @param statusList
 	 * @return list of courses
 	 */
 	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId AND enr.status in :statusList")

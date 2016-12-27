@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
 /**
  * Instructor Controller
@@ -64,5 +66,15 @@ public class InstructorController {
 	@ResponseBody
 	public void delete(@PathVariable Long userId) {
 		instructorService.delete(userId);
+	}
+
+	/********* Courses & Instructors & Enrollment *************/
+	@RequestMapping(value = "/coursesbydate", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public List<InstructorBasic> findInstructorsByCourseByDate(@Valid @RequestBody InstructorCourseRequest request) {
+		//TODO: validate the view before
+		//TODO: change the http method
+		return instructorService.findInstructorsByCourseByDate(request);
 	}
 }

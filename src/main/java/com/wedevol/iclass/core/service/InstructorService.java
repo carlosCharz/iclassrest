@@ -3,6 +3,8 @@ package com.wedevol.iclass.core.service;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
 /**
  * Instructor Service Interface
@@ -23,5 +25,7 @@ public interface InstructorService {
 	void update(Long userId, Instructor instructor);
 
 	void delete(Long userId);
+
+	List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request);
 
 }

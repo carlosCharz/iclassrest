@@ -28,6 +28,7 @@ public interface InstructorEnrollmentRepository extends CrudRepository<Instructo
 	 * status
 	 * 
 	 * @param instructorId
+	 * @param statusList
 	 * @return list of courses
 	 */
 	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :statusList")
