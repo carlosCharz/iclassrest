@@ -82,12 +82,13 @@ public class InstructorServiceImpl implements InstructorService {
 		findById(userId);
 		instructorRepository.delete(userId);
 	}
-	
+
 	/********* Courses & Instructors & Enrollment *************/
 
 	@Override
 	public List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request) {
-		return instructorRepository.findInstructorsByCourseByDate(request.getCourseId(), request.getClassDate());
-	}	
+		//TODO: format the date
+		return instructorRepository.findInstructorsWithCourseWithDate(request.getCourseId(), "11/01/2017");
+	}
 
 }

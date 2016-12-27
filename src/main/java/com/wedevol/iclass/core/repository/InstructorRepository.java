@@ -1,6 +1,5 @@
 package com.wedevol.iclass.core.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -37,9 +36,9 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param courseId
 	 * @return list of courses
 	 */
-	//TODO: finish this method, add the status = available
+	// TODO: finish this method, add the status = available
 	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, 0, 'S/.') FROM Instructor ins")
 	public List<InstructorBasic> findInstructorsWithCourseWithDate(@Param("courseId") Long courseId,
-			@Param("classDate") Date classDate);
+			@Param("classDateStr") String classDateStr);
 
 }
