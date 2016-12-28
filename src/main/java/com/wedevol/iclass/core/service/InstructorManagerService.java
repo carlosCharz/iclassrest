@@ -18,7 +18,7 @@ public interface InstructorManagerService {
 	List<Course> findCoursesByInstructor(Long instructorId, String statusFilter);
 
 	List<Instructor> findInstructorsByCourse(Long courseId);
-	
+
 	List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request);
 
 }

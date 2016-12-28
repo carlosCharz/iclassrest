@@ -17,9 +17,7 @@ public class CommonUtil {
 	public static final String DATE_FORMAT = "dd-MM-yyyy";
 
 	public static String hashSHA256(String element) {
-		return Hashing	.sha256()
-						.hashString("your input", StandardCharsets.UTF_8)
-						.toString();
+		return Hashing.sha256().hashString("your input", StandardCharsets.UTF_8).toString();
 	}
 
 	public static String toJsonString(Object object) throws JsonProcessingException {

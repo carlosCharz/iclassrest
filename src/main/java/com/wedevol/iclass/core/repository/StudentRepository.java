@@ -17,8 +17,7 @@ import com.wedevol.iclass.core.entity.Student;
 public interface StudentRepository extends CrudRepository<Student, Long> {
 
 	/**
-	 * Return the student having the passed email or null if no student is
-	 * found.
+	 * Return the student having the passed email or null if no student is found.
 	 * 
 	 * @param email
 	 * @return student

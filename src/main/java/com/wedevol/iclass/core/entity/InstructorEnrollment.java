@@ -34,12 +34,12 @@ public class InstructorEnrollment implements Serializable {
 	@CourseStatus
 	@Column
 	private String status;
-	
+
 	@NotNull
 	@Digits(integer = 2, fraction = 0, message = "Price must be just digits")
 	@Column
 	private Integer price;
-	
+
 	@NotNull
 	@Currency
 	@Column
@@ -68,7 +68,7 @@ public class InstructorEnrollment implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public Integer getPrice() {
 		return price;
 	}
@@ -76,7 +76,7 @@ public class InstructorEnrollment implements Serializable {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	
+
 	public String getCurrency() {
 		return currency;
 	}

@@ -42,8 +42,9 @@ public class StudentEnrollmentController {
 	@RequestMapping(value = "/students/{studentId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCourses(@PathVariable Long studentId, @RequestParam(value="status", defaultValue="free,payed") String statusFilter) {
-		logger.info("Find courses of a student filtered by the supplied course status: "+ statusFilter);
+	public List<Course> findCourses(@PathVariable Long studentId,
+			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
+		logger.info("Find courses of a student filtered by the supplied course status: " + statusFilter);
 		return stuEnrService.findCourses(studentId, statusFilter);
 	}
 

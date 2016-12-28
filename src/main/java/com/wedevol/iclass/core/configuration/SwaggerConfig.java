@@ -20,25 +20,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 	@Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.basePackage("com.wedevol.iclass.core.controller"))           
-          .paths(PathSelectors.any())
-          .build()
-          .apiInfo(apiInfo());
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2)
+														.select()
+															.apis(RequestHandlerSelectors.basePackage(
+																	"com.wedevol.iclass.core.controller"))
+															.paths(PathSelectors.any())
+															.build()
+															.apiInfo(apiInfo());
 	}
-	 
+
 	private ApiInfo apiInfo() {
 		Contact contact = new Contact("Charz++", "http://wedevol.com/iclass", "carlos.becerra1234@gmail.com");
-	    ApiInfo apiInfo = new ApiInfo(
-	      "iClass REST API",
-	      "App to manage classes",
-	      "1.0.0",
-	      null,
-	      contact,
-	      null,
-	      null);
-	    return apiInfo;
+		ApiInfo apiInfo = new ApiInfo("iClass REST API", "App to manage classes", "1.0.0", null, contact, null, null);
+		return apiInfo;
 	}
 }

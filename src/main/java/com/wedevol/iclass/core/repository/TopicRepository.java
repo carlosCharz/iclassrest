@@ -17,8 +17,7 @@ import com.wedevol.iclass.core.entity.Topic;
 public interface TopicRepository extends CrudRepository<Topic, Long> {
 
 	/**
-	 * Return the topic having the passed topic name or null if no topic is
-	 * found.
+	 * Return the topic having the passed topic name or null if no topic is found.
 	 * 
 	 * @param topicName
 	 * @return topic

@@ -13,15 +13,14 @@ import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 public class CoreUtil {
 
 	public static Predicate<String> isValidCourseStatus() {
-		return courseStatus -> Arrays	.stream(CourseStatusType.values())
-										.filter(validOption -> courseStatus.equals(validOption.getDescription()))
-										.findFirst()
-										.isPresent();
+		return courseStatus -> Arrays
+										.stream(CourseStatusType.values())
+											.filter(validOption -> courseStatus.equals(validOption.getDescription()))
+											.findFirst()
+											.isPresent();
 	}
 
 	public static boolean areValidCourseStatusFilters(String statusFilter) {
-		return Arrays	.asList(statusFilter.split(","))
-						.stream()
-						.allMatch(isValidCourseStatus());
+		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidCourseStatus());
 	}
 }

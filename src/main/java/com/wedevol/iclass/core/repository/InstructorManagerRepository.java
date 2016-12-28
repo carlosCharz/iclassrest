@@ -20,7 +20,7 @@ import com.wedevol.iclass.core.entity.InstructorBasic;
  */
 @Repository
 @Transactional
-public interface InstructorManagerRepository extends CrudRepository<Instructor, Long>{
+public interface InstructorManagerRepository extends CrudRepository<Instructor, Long> {
 	/**
 	 * Return the instructor's list of courses filtered by the supplied course status
 	 * 
@@ -40,7 +40,7 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 */
 	@Query("SELECT ins FROM InstructorEnrollment enr, Instructor ins WHERE ins.id = enr.id.instructorId AND enr.id.courseId = :courseId")
 	public List<Instructor> findInstructorsWithCourse(@Param("courseId") Long courseId);
-	
+
 	/**
 	 * Return the instructors of a course for an specific date
 	 * 

@@ -27,15 +27,15 @@ public class CourseStatusValidator extends BaseValidator implements ConstraintVa
 			return true;
 		}
 
-		final boolean isValid = Arrays	.stream(CourseStatusType.values())
-										.filter(validOption -> equal(value, validOption.getDescription()))
-										.findFirst()
-										.isPresent();
+		final boolean isValid = Arrays
+										.stream(CourseStatusType.values())
+											.filter(validOption -> equal(value, validOption.getDescription()))
+											.findFirst()
+											.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();
-			context	.buildConstraintViolationWithTemplate(message)
-					.addConstraintViolation();
+			context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 		}
 
 		return isValid;

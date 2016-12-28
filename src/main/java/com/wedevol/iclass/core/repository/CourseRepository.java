@@ -17,8 +17,7 @@ import com.wedevol.iclass.core.entity.Course;
 public interface CourseRepository extends CrudRepository<Course, Long> {
 
 	/**
-	 * Return the course having the passed course name or null if no course is
-	 * found.
+	 * Return the course having the passed course name or null if no course is found.
 	 * 
 	 * @param courseName
 	 * @return course

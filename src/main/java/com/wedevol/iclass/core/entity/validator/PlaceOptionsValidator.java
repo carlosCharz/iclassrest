@@ -33,19 +33,18 @@ public class PlaceOptionsValidator extends BaseValidator implements ConstraintVa
 		final Set<String> placeOptionsSet = value == null ? Collections.emptySet()
 				: Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(value.split(","))));
 
-		final Predicate<String> isValidOption = option -> Arrays.stream(PlaceOptionsType.values())
-																.filter(validOption -> equal(option,
-																		validOption.getDescription()))
-																.findFirst()
-																.isPresent();
+		final Predicate<String> isValidOption = option -> Arrays
+																.stream(PlaceOptionsType.values())
+																	.filter(validOption -> equal(option,
+																			validOption.getDescription()))
+																	.findFirst()
+																	.isPresent();
 
-		final boolean isValid = placeOptionsSet	.stream()
-												.allMatch(isValidOption);
+		final boolean isValid = placeOptionsSet.stream().allMatch(isValidOption);
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();
-			context	.buildConstraintViolationWithTemplate(message)
-					.addConstraintViolation();
+			context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 		}
 
 		return isValid;

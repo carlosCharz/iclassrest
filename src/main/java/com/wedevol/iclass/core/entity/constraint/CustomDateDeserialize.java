@@ -24,8 +24,7 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
 	@Override
 	public Date deserialize(JsonParser paramJsonParser, DeserializationContext context)
 			throws IOException, JsonProcessingException {
-		final String str = paramJsonParser.getText()
-									.trim();
+		final String str = paramJsonParser.getText().trim();
 		try {
 			return dateFormat.parse(str);
 		} catch (ParseException e) {

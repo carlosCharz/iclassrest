@@ -70,8 +70,8 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	@Override
 	public void create(StudentEnrollment studentEnrollment) {
 		// We first search by id, the studentEnrollment should not exist
-		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
-				enrRepository.findOne(studentEnrollment.getStudentEnrollmentId()));
+		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(enrRepository.findOne(studentEnrollment
+																												.getStudentEnrollmentId()));
 		enrObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		enrRepository.save(studentEnrollment);
 	}

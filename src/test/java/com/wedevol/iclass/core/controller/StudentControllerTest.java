@@ -66,11 +66,12 @@ public class StudentControllerTest {
 
 		when(studentService.findById(1L)).thenReturn(student1);
 
-		mvc	.perform(get("/students/1"))
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.firstName").value("Carlos"))
-			.andExpect(jsonPath("$.lastName").value("Becerra"));
+		mvc
+			.perform(get("/students/1"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.firstName").value("Carlos"))
+				.andExpect(jsonPath("$.lastName").value("Becerra"));
 
 		verify(studentService, times(1)).findById(1L);
 		verifyNoMoreInteractions(studentService);
@@ -79,12 +80,14 @@ public class StudentControllerTest {
 	@Test
 	public void throwExpcetionWhenGetAndStudentDoesNotExist() throws Exception {
 
-		when(studentService.findById(11L)).thenThrow(new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		when(studentService.findById(11L)).thenThrow(
+				new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 
-		mvc	.perform(get("/students/11"))
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-			.andExpect(status().isNotFound())
-			.andExpect(jsonPath("$.errorCode").value(100));
+		mvc
+			.perform(get("/students/11"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.errorCode").value(100));
 
 		verify(studentService, times(1)).findById(11L);
 		verifyNoMoreInteractions(studentService);
@@ -93,14 +96,13 @@ public class StudentControllerTest {
 	@Test
 	public void throwExceptionWhenCreatingAndStudentExists() throws Exception {
 
-		Mockito	.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
-				.when(studentService)
-				.create(Mockito.any(Student.class));
+		Mockito.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION)).when(studentService).create(
+				Mockito.any(Student.class));
 
-		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
-										.content(student1JsonString))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.errorCode").value(400));
+		mvc
+			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorCode").value(400));
 
 		verify(studentService, times(1)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
@@ -109,9 +111,8 @@ public class StudentControllerTest {
 	@Test
 	public void createStudent() throws Exception {
 
-		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
-										.content(student1JsonString))
-			.andExpect(status().isCreated());
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
+				status().isCreated());
 
 		verify(studentService, times(1)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
@@ -123,10 +124,10 @@ public class StudentControllerTest {
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com",
 				"12345678901234567").build();
 		student1JsonString = CommonUtil.toJsonString(student1);
-		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
-										.content(student1JsonString))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.errorCode").value(401));
+		mvc
+			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorCode").value(401));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
@@ -139,10 +140,10 @@ public class StudentControllerTest {
 				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
 				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
 		student1JsonString = CommonUtil.toJsonString(student1);
-		mvc	.perform(post("/students")	.contentType(MediaType.APPLICATION_JSON)
-										.content(student1JsonString))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.errorCode").value(401));
+		mvc
+			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorCode").value(401));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
