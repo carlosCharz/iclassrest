@@ -4,18 +4,23 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
@@ -29,8 +34,24 @@ import com.wedevol.iclass.core.view.InstructorCourseRequest;
 @RequestMapping("/instructors")
 public class InstructorController {
 
+	protected static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+
 	@Autowired
 	private InstructorService instructorService;
+
+	@Autowired
+	private InstructorManagerService insMgrService;
+
+	/************** Instructors & Courses **********************/
+
+	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Course> findCoursesByInstructor(@PathVariable Long userId,
+			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
+		logger.info("Find courses of an instructor filtered by the supplied course status: " + statusFilter);
+		return insMgrService.findCoursesByInstructor(userId, statusFilter);
+	}
 
 	/********************* CRUD for instructor ****************************/
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -69,12 +90,13 @@ public class InstructorController {
 	}
 
 	/********* Courses & Instructors & Enrollment *************/
+	
 	@RequestMapping(value = "/coursesbydate", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public List<InstructorBasic> findInstructorsByCourseByDate(@Valid @RequestBody InstructorCourseRequest request) {
-		//TODO: validate the view before
-		//TODO: change the http method
-		return instructorService.findInstructorsByCourseByDate(request);
+		// TODO: validate the view before
+		// TODO: change the http method
+		return insMgrService.findInstructorsByCourseByDate(request);
 	}
 }

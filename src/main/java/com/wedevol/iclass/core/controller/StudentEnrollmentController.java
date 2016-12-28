@@ -36,7 +36,7 @@ public class StudentEnrollmentController {
 	protected static final Logger logger = LoggerFactory.getLogger(StudentEnrollmentController.class);
 
 	@Autowired
-	private StudentEnrollmentService studentEnrollmentService;
+	private StudentEnrollmentService stuEnrService;
 
 	/************** Courses & Students **********************/
 	@RequestMapping(value = "/students/{studentId}/courses", method = RequestMethod.GET)
@@ -44,14 +44,14 @@ public class StudentEnrollmentController {
 	@ResponseBody
 	public List<Course> findCourses(@PathVariable Long studentId, @RequestParam(value="status", defaultValue="free,payed") String statusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: "+ statusFilter);
-		return studentEnrollmentService.findCourses(studentId, statusFilter);
+		return stuEnrService.findCourses(studentId, statusFilter);
 	}
 
 	@RequestMapping(value = "/courses/{courseId}/students", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Student> findStudents(@PathVariable Long courseId) {
-		return studentEnrollmentService.findStudents(courseId);
+		return stuEnrService.findStudents(courseId);
 	}
 
 	/************** CRUD for student enrollment **********************/
@@ -59,7 +59,7 @@ public class StudentEnrollmentController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<StudentEnrollment> findAll() {
-		return studentEnrollmentService.findAll();
+		return stuEnrService.findAll();
 	}
 
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
@@ -67,14 +67,14 @@ public class StudentEnrollmentController {
 	@ResponseBody
 	public StudentEnrollment findById(@PathVariable Long studentId, @PathVariable Long courseId) {
 		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
-		return studentEnrollmentService.findById(id);
+		return stuEnrService.findById(id);
 	}
 
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public void create(@Valid @RequestBody StudentEnrollment studentCourse) {
-		studentEnrollmentService.create(studentCourse);
+		stuEnrService.create(studentCourse);
 	}
 
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
@@ -83,7 +83,7 @@ public class StudentEnrollmentController {
 	public void update(@PathVariable Long studentId, @PathVariable Long courseId,
 			@Valid @RequestBody StudentEnrollment studentCourse) {
 		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
-		studentEnrollmentService.update(id, studentCourse);
+		stuEnrService.update(id, studentCourse);
 	}
 
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
@@ -91,6 +91,6 @@ public class StudentEnrollmentController {
 	@ResponseBody
 	public void delete(@PathVariable Long studentId, @PathVariable Long courseId) {
 		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
-		studentEnrollmentService.delete(id);
+		stuEnrService.delete(id);
 	}
 }

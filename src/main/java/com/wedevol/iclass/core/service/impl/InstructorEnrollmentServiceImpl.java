@@ -1,6 +1,5 @@
 package com.wedevol.iclass.core.service.impl;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -21,7 +18,6 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorEnrollmentRepository;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
-import com.wedevol.iclass.core.util.CoreUtil;
 
 /**
  * Instructor Enrollment Service Implementation
@@ -37,21 +33,6 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 
 	@Autowired
 	private InstructorEnrollmentRepository enrRepository;
-
-	/************** Courses & Instructors **********************/
-	@Override
-	public List<Course> findCourses(Long instructorId, String statusFilter) {
-		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
-			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
-		}
-		final List<String> status = Arrays.asList(statusFilter.split(","));
-		return enrRepository.findCourses(instructorId, status);
-	}
-
-	@Override
-	public List<Instructor> findInstructors(Long courseId) {
-		return enrRepository.findInstructors(courseId);
-	}
 
 	/***************** CRUD for Instructor Enrollment ***********************/
 

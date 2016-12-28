@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -19,7 +18,6 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.util.CommonUtil;
-import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
 /**
  * Instructor Service Implementation
@@ -81,14 +79,6 @@ public class InstructorServiceImpl implements InstructorService {
 		// The instructor should exist
 		findById(userId);
 		instructorRepository.delete(userId);
-	}
-
-	/********* Courses & Instructors & Enrollment *************/
-
-	@Override
-	public List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request) {
-		//TODO: format the date
-		return instructorRepository.findInstructorsWithCourseWithDate(request.getCourseId(), "11/01/2017");
 	}
 
 }

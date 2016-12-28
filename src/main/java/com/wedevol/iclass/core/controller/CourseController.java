@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorManagerService;
 
 /**
  * Course Controller
@@ -29,6 +31,18 @@ public class CourseController {
 
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private InstructorManagerService insMgrService;
+
+	/************** Instructors & Courses **********************/
+
+	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Instructor> findInstructorsByCourse(@PathVariable Long courseId) {
+		return insMgrService.findInstructorsByCourse(courseId);
+	}
 
 	/********************* CRUD for course ****************************/
 	@RequestMapping(value = "", method = RequestMethod.GET)
