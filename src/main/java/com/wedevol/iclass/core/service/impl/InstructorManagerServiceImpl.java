@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,9 +16,10 @@ import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.InstructorManagerRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
+import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.util.CoreUtil;
-import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
 /**
  * Instructor Manager Service Implementation
@@ -34,6 +36,9 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	@Autowired
 	private InstructorManagerRepository insMgrRepository;
 
+	@Autowired
+	private CourseService courseService;
+
 	@Override
 	public List<Course> findCoursesByInstructor(Long instructorId, String statusFilter) {
 		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
@@ -49,9 +54,12 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request) {
-		// TODO: format the date
-		return insMgrRepository.findInstructorsWithCourseWithDate(request.getCourseId(), "11/01/2017");
+	public List<InstructorBasic> findInstructorsByCourseByDate(Long courseId, Date classDate) {
+		// The course should exist
+		courseService.findById(courseId);
+		final String dateStr = CommonUtil.dateToString(classDate);
+		// TODO: missing implementation
+		return insMgrRepository.findInstructorsWithCourseWithDate();
 	}
 
 }

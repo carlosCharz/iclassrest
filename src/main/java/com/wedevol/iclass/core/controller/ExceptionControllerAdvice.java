@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -69,6 +70,13 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse methodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
 		return new ErrorResponse(BadRequestErrorType.METHOD_NOT_ALLOWED.getCode(), ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ErrorResponse methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
+		return new ErrorResponse(BadRequestErrorType.ARGUMENT_TYPE_MISMATCH.getCode(), ex.getMessage());
 	}
 
 }

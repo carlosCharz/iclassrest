@@ -1,11 +1,11 @@
 package com.wedevol.iclass.core.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
-import com.wedevol.iclass.core.view.InstructorCourseRequest;
 
 /**
  * Instructor Managers Service Interface
@@ -19,6 +19,6 @@ public interface InstructorManagerService {
 
 	List<Instructor> findInstructorsByCourse(Long courseId);
 
-	List<InstructorBasic> findInstructorsByCourseByDate(InstructorCourseRequest request);
+	List<InstructorBasic> findInstructorsByCourseByDate(Long courseId, Date classDate);
 
 }

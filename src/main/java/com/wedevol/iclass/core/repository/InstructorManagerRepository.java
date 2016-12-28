@@ -49,6 +49,5 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 */
 	// TODO: finish this method, add the status = available
 	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, 0, 'S/.') FROM Instructor ins")
-	public List<InstructorBasic> findInstructorsWithCourseWithDate(@Param("courseId") Long courseId,
-			@Param("classDateStr") String classDateStr);
+	public List<InstructorBasic> findInstructorsWithCourseWithDate();
 }

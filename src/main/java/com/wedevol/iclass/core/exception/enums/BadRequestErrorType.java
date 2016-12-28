@@ -9,7 +9,8 @@ public enum BadRequestErrorType {
 	BAD_REQUEST_EXCEPTION(400, "Bad request exception"), ARGUMENT_NOT_VALID(401,
 			"Argument not valid"), WRONG_DESERIALIZATION(402,
 					"Wrong deserialization to build the bean"), METHOD_NOT_ALLOWED(403,
-							"Method not allowed"), COURSE_STATUS_NOT_VALID(404, "Course status not valid");
+							"Method not allowed"), COURSE_STATUS_NOT_VALID(404,
+									"Course status not valid"), ARGUMENT_TYPE_MISMATCH(405, "Argument type mismatch");
 
 	private final int code;
 	private final String message;
