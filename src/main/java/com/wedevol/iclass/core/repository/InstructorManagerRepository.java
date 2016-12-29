@@ -42,12 +42,14 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	public List<Instructor> findInstructorsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
-	 * Return the instructors of a course for an specific date
+	 * Return the instructors of a course for an specific date (course status: free or payed, classDate: available =
+	 * true)
 	 * 
 	 * @param courseId
+	 * @param classDateStr
 	 * @return list of courses
 	 */
-	// TODO: finish this method, add the status = available
-	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, 0, 'S/.') FROM Instructor ins")
-	public List<InstructorBasic> findInstructorsWithCourseIdWithDate();
+	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND ins.id = :instructorId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr")
+	public List<InstructorBasic> findInstructorsWithCourseIdWithDate(@Param("courseId") Long courseId,
+			@Param("classDateStr") String classDateStr);
 }

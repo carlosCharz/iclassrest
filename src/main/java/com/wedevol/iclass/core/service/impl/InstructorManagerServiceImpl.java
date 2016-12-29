@@ -59,7 +59,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		courseService.findById(courseId);
 		final String dateStr = CommonUtil.dateToString(classDate);
 		// TODO: missing implementation
-		return insMgrRepository.findInstructorsWithCourseIdWithDate();
+		return insMgrRepository.findInstructorsWithCourseIdWithDate(courseId, dateStr);
 	}
 
 }
