@@ -13,8 +13,8 @@ import com.wedevol.iclass.core.entity.Student;
  */
 public interface StudentManagerService {
 
-	List<Student> findStudentsByCourse(Long courseId);
+	List<Student> findStudentsByCourseId(Long courseId);
 	
-	List<Course> findCoursesByStudent(Long studentId, String statusFilter);
+	List<Course> findCoursesByStudentId(Long studentId, String statusFilter);
 
 }

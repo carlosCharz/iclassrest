@@ -29,7 +29,7 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @return list of courses
 	 */
 	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :statusList")
-	public List<Course> findCoursesWithInstructor(@Param("instructorId") Long instructorId,
+	public List<Course> findCoursesWithInstructorId(@Param("instructorId") Long instructorId,
 			@Param("statusList") List<String> statusList);
 
 	/**
@@ -39,7 +39,7 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @return list of instructors
 	 */
 	@Query("SELECT ins FROM InstructorEnrollment enr, Instructor ins WHERE ins.id = enr.id.instructorId AND enr.id.courseId = :courseId")
-	public List<Instructor> findInstructorsWithCourse(@Param("courseId") Long courseId);
+	public List<Instructor> findInstructorsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
 	 * Return the instructors of a course for an specific date
@@ -49,5 +49,5 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 */
 	// TODO: finish this method, add the status = available
 	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, 0, 'S/.') FROM Instructor ins")
-	public List<InstructorBasic> findInstructorsWithCourseWithDate();
+	public List<InstructorBasic> findInstructorsWithCourseIdWithDate();
 }

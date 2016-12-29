@@ -36,6 +36,7 @@ public class StudentEnrollmentController {
 	private StudentEnrollmentService stuEnrService;
 
 	/************** CRUD for student enrollment **********************/
+
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

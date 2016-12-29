@@ -31,6 +31,7 @@ public class InstructorScheduleController {
 	private InstructorScheduleService scheduleService;
 
 	/************* CRUD for instructor schedule ****************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

@@ -35,6 +35,7 @@ public class TopicController {
 	private TopicService topicService;
 
 	/********************* CRUD for topic ****************************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

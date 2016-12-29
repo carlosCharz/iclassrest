@@ -45,6 +45,7 @@ public class InstructorController {
 	private InstructorManagerService insMgrService;
 
 	/********************* CRUD for instructor ****************************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -80,25 +81,23 @@ public class InstructorController {
 		instructorService.delete(userId);
 	}
 
-	/************** Instructors & Courses **********************/
+	/********* Courses & Instructors & Enrollment *************/
 
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByInstructor(@PathVariable Long userId,
+	public List<Course> findCoursesByInstructorId(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
 		logger.info("Find courses of an instructor filtered by the supplied course status: " + statusFilter);
-		return insMgrService.findCoursesByInstructor(userId, statusFilter);
+		return insMgrService.findCoursesByInstructorId(userId, statusFilter);
 	}
-
-	/********* Courses & Instructors & Enrollment *************/
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<InstructorBasic> findInstructorsByCourseByDate(@RequestParam("courseId") Long courseId,
+	public List<InstructorBasic> findInstructorsByCourseIdByDate(@RequestParam("courseId") Long courseId,
 			@RequestParam("classDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate) {
 		logger.info("Find instructors of the course " + courseId + " in " + CommonUtil.dateToString(classDate));
-		return insMgrService.findInstructorsByCourseByDate(courseId, classDate);
+		return insMgrService.findInstructorsByCourseIdByDate(courseId, classDate);
 	}
 }

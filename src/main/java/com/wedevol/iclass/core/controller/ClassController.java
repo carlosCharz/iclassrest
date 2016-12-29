@@ -31,6 +31,7 @@ public class ClassController {
 	private ClassService classService;
 
 	/************* CRUD for class ****************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

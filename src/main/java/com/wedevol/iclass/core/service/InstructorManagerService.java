@@ -15,10 +15,10 @@ import com.wedevol.iclass.core.entity.InstructorBasic;
  */
 public interface InstructorManagerService {
 
-	List<Course> findCoursesByInstructor(Long instructorId, String statusFilter);
+	List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter);
 
-	List<Instructor> findInstructorsByCourse(Long courseId);
+	List<Instructor> findInstructorsByCourseId(Long courseId);
 
-	List<InstructorBasic> findInstructorsByCourseByDate(Long courseId, Date classDate);
+	List<InstructorBasic> findInstructorsByCourseIdByDate(Long courseId, Date classDate);
 
 }

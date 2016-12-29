@@ -40,26 +40,26 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	private CourseService courseService;
 
 	@Override
-	public List<Course> findCoursesByInstructor(Long instructorId, String statusFilter) {
+	public List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter) {
 		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
 		final List<String> status = Arrays.asList(statusFilter.split(","));
-		return insMgrRepository.findCoursesWithInstructor(instructorId, status);
+		return insMgrRepository.findCoursesWithInstructorId(instructorId, status);
 	}
 
 	@Override
-	public List<Instructor> findInstructorsByCourse(Long courseId) {
-		return insMgrRepository.findInstructorsWithCourse(courseId);
+	public List<Instructor> findInstructorsByCourseId(Long courseId) {
+		return insMgrRepository.findInstructorsWithCourseId(courseId);
 	}
 
 	@Override
-	public List<InstructorBasic> findInstructorsByCourseByDate(Long courseId, Date classDate) {
+	public List<InstructorBasic> findInstructorsByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);
 		final String dateStr = CommonUtil.dateToString(classDate);
 		// TODO: missing implementation
-		return insMgrRepository.findInstructorsWithCourseWithDate();
+		return insMgrRepository.findInstructorsWithCourseIdWithDate();
 	}
 
 }

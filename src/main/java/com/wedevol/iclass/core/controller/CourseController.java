@@ -41,6 +41,7 @@ public class CourseController {
 	private StudentManagerService stuMgrService;
 
 	/********************* CRUD for course ****************************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -81,14 +82,14 @@ public class CourseController {
 	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Instructor> findInstructorsByCourse(@PathVariable Long courseId) {
-		return insMgrService.findInstructorsByCourse(courseId);
+	public List<Instructor> findInstructorsByCourseId(@PathVariable Long courseId) {
+		return insMgrService.findInstructorsByCourseId(courseId);
 	}
 
 	@RequestMapping(value = "/{courseId}/students", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Student> findStudents(@PathVariable Long courseId) {
-		return stuMgrService.findStudentsByCourse(courseId);
+	public List<Student> findStudentsByCourseId(@PathVariable Long courseId) {
+		return stuMgrService.findStudentsByCourseId(courseId);
 	}
 }

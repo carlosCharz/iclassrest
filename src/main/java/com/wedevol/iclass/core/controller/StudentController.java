@@ -41,6 +41,7 @@ public class StudentController {
 	private StudentManagerService stuMgrService;
 
 	/********************* CRUD for student ****************************/
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -78,12 +79,12 @@ public class StudentController {
 
 	/************** Courses & Students & Enrollment *************/
 
-	@RequestMapping(value = "/{studentId}/courses", method = RequestMethod.GET)
+	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCourses(@PathVariable Long studentId,
+	public List<Course> findCoursesByStudentId(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: " + statusFilter);
-		return stuMgrService.findCoursesByStudent(studentId, statusFilter);
+		return stuMgrService.findCoursesByStudentId(userId, statusFilter);
 	}
 }
