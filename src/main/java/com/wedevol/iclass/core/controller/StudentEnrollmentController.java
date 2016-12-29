@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
@@ -37,23 +34,6 @@ public class StudentEnrollmentController {
 
 	@Autowired
 	private StudentEnrollmentService stuEnrService;
-
-	/************** Courses & Students **********************/
-	@RequestMapping(value = "/students/{studentId}/courses", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Course> findCourses(@PathVariable Long studentId,
-			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
-		logger.info("Find courses of a student filtered by the supplied course status: " + statusFilter);
-		return stuEnrService.findCourses(studentId, statusFilter);
-	}
-
-	@RequestMapping(value = "/courses/{courseId}/students", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Student> findStudents(@PathVariable Long courseId) {
-		return stuEnrService.findStudents(courseId);
-	}
 
 	/************** CRUD for student enrollment **********************/
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.GET)

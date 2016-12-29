@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
+import com.wedevol.iclass.core.service.StudentManagerService;
 
 /**
  * Course Controller
@@ -35,14 +37,8 @@ public class CourseController {
 	@Autowired
 	private InstructorManagerService insMgrService;
 
-	/************** Instructors & Courses **********************/
-
-	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Instructor> findInstructorsByCourse(@PathVariable Long courseId) {
-		return insMgrService.findInstructorsByCourse(courseId);
-	}
+	@Autowired
+	private StudentManagerService stuMgrService;
 
 	/********************* CRUD for course ****************************/
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -78,5 +74,21 @@ public class CourseController {
 	@ResponseBody
 	public void delete(@PathVariable Long courseId) {
 		courseService.delete(courseId);
+	}
+
+	/************** Instructors & Student & Courses **********************/
+
+	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Instructor> findInstructorsByCourse(@PathVariable Long courseId) {
+		return insMgrService.findInstructorsByCourse(courseId);
+	}
+
+	@RequestMapping(value = "/{courseId}/students", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Student> findStudents(@PathVariable Long courseId) {
+		return stuMgrService.findStudentsByCourse(courseId);
 	}
 }

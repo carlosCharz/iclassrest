@@ -8,7 +8,7 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 
 /**
- * Instructor Managers Service Interface
+ * Instructor Manager Service Interface
  * 
  * @author charz
  *

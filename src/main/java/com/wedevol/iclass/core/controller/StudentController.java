@@ -4,17 +4,22 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 
 /**
@@ -27,8 +32,13 @@ import com.wedevol.iclass.core.service.StudentService;
 @RequestMapping("/students")
 public class StudentController {
 
+	protected static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+
 	@Autowired
 	private StudentService studentService;
+
+	@Autowired
+	private StudentManagerService stuMgrService;
 
 	/********************* CRUD for student ****************************/
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -64,5 +74,16 @@ public class StudentController {
 	@ResponseBody
 	public void delete(@PathVariable Long userId) {
 		studentService.delete(userId);
+	}
+
+	/************** Courses & Students & Enrollment *************/
+
+	@RequestMapping(value = "/{studentId}/courses", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Course> findCourses(@PathVariable Long studentId,
+			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
+		logger.info("Find courses of a student filtered by the supplied course status: " + statusFilter);
+		return stuMgrService.findCoursesByStudent(studentId, statusFilter);
 	}
 }
