@@ -54,12 +54,16 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<InstructorBasic> findInstructorsByCourseIdByDate(Long courseId, Date classDate) {
+	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
+			Integer endTime) {
+		// Date times validation
+		if (startTime >= endTime) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
 		// The course should exist
 		courseService.findById(courseId);
 		final String dateStr = CommonUtil.dateToString(classDate);
-		// TODO: missing implementation
-		return insMgrRepository.findInstructorsWithCourseIdWithDate(courseId, dateStr);
+		return insMgrRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
 	}
 
 }

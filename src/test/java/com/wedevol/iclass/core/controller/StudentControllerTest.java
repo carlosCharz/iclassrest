@@ -30,6 +30,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.service.impl.StudentManagerServiceImpl;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.util.CommonUtil;
 
@@ -42,6 +43,9 @@ public class StudentControllerTest {
 
 	@MockBean
 	private StudentServiceImpl studentService;
+	
+	@MockBean
+	private StudentManagerServiceImpl stuMgrService;
 
 	private Student student1;
 

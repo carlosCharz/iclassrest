@@ -19,6 +19,7 @@ public interface InstructorManagerService {
 
 	List<Instructor> findInstructorsByCourseId(Long courseId);
 
-	List<InstructorBasic> findInstructorsByCourseIdByDate(Long courseId, Date classDate);
+	List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
+			Integer endTime);
 
 }

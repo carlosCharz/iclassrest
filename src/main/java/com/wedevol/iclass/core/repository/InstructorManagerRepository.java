@@ -49,7 +49,8 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @param classDateStr
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND ins.id = :instructorId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr")
-	public List<InstructorBasic> findInstructorsWithCourseIdWithDate(@Param("courseId") Long courseId,
-			@Param("classDateStr") String classDateStr);
+	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
+	public List<InstructorBasic> findInstructorsWithCourseIdWithDateTime(@Param("courseId") Long courseId,
+			@Param("classDateStr") String classDateStr, @Param("startTime") Integer startTime,
+			@Param("endTime") Integer endTime);
 }
