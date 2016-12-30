@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 
 /**
  * Instructor Manager Repository
@@ -42,15 +43,30 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	public List<Instructor> findInstructorsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
-	 * Return the instructors of a course for an specific date (course status: free or payed, classDate: available =
+	 * Return the instructors of a course for an specific date (course status: free or payed, schedule: available =
 	 * true)
 	 * 
 	 * @param courseId
 	 * @param classDateStr
+	 * @param startTime
+	 * @param endTime
 	 * @return list of courses
 	 */
 	@Query("SELECT new com.wedevol.iclass.core.entity.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
 	public List<InstructorBasic> findInstructorsWithCourseIdWithDateTime(@Param("courseId") Long courseId,
 			@Param("classDateStr") String classDateStr, @Param("startTime") Integer startTime,
 			@Param("endTime") Integer endTime);
+
+	/**
+	 * Return the available schedules of a course for an specific date (course status: free or payed, schedule:
+	 * available = true)
+	 * 
+	 * @param courseId
+	 * @param classDateStr
+	 * @return list of schedules
+	 */
+	@Query("SELECT new com.wedevol.iclass.core.entity.ScheduleBasic(sch.id, ins.id, sch.startTime, sch.endTime) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr")
+	public List<ScheduleBasic> findSchedulesWithCourseIdWithDate(@Param("courseId") Long courseId,
+			@Param("classDateStr") String classDateStr);
+
 }

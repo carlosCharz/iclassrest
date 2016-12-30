@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.InstructorManagerRepository;
@@ -64,6 +65,14 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		courseService.findById(courseId);
 		final String dateStr = CommonUtil.dateToString(classDate);
 		return insMgrRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
+	}
+
+	@Override
+	public List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate) {
+		// The course should exist
+		courseService.findById(courseId);
+		final String dateStr = CommonUtil.dateToString(classDate);
+		return insMgrRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
 	}
 
 }

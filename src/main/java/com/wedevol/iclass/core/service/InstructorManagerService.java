@@ -6,6 +6,7 @@ import java.util.List;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 
 /**
  * Instructor Manager Service Interface
@@ -21,5 +22,7 @@ public interface InstructorManagerService {
 
 	List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
 			Integer endTime);
+	
+	List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate);
 
 }
