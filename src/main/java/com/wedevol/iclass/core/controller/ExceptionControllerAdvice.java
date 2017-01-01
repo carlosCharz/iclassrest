@@ -14,6 +14,7 @@ import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.UnauthorizedException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 
 /**
@@ -47,6 +48,14 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(value = HttpStatus.NOT_IMPLEMENTED)
 	public ErrorResponse notImplementedExceptionHandler(NotImplementedException ex) {
 		// Handles all not implemented exceptions types
+		return new ErrorResponse(ex.getCode(), ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(UnauthorizedException.class)
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	public ErrorResponse unauthorizedExceptionHandler(UnauthorizedException ex) {
+		// Handles all unauthorized exceptions types
 		return new ErrorResponse(ex.getCode(), ex.getMessage());
 	}
 
