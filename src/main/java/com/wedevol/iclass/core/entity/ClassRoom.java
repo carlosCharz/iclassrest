@@ -30,7 +30,7 @@ import com.wedevol.iclass.core.entity.constraint.WeekDay;
 @Entity
 @Table(name = "class")
 @DynamicInsert
-public class ClassEntity implements Serializable {
+public class ClassRoom implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -85,10 +85,10 @@ public class ClassEntity implements Serializable {
 	@Column
 	private String status;
 
-	protected ClassEntity() {
+	protected ClassRoom() {
 	}
 
-	private ClassEntity(ClassBuilder builder) {
+	private ClassRoom(ClassBuilder builder) {
 		this.studentId = builder.studentId;
 		this.instructorId = builder.instructorId;
 		this.courseId = builder.courseId;
@@ -208,9 +208,9 @@ public class ClassEntity implements Serializable {
 			this.status = status;
 		}
 
-		public ClassEntity build() {
+		public ClassRoom build() {
 			// TODO: analyze if we need to validate here. IllegalStateException.
-			return new ClassEntity(this);
+			return new ClassRoom(this);
 		}
 
 	}

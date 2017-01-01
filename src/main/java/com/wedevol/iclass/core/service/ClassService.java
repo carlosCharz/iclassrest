@@ -2,7 +2,7 @@ package com.wedevol.iclass.core.service;
 
 import java.util.List;
 
-import com.wedevol.iclass.core.entity.ClassEntity;
+import com.wedevol.iclass.core.entity.ClassRoom;
 
 /**
  * Class Service Interface
@@ -12,13 +12,13 @@ import com.wedevol.iclass.core.entity.ClassEntity;
  */
 public interface ClassService {
 
-	List<ClassEntity> findAll();
+	List<ClassRoom> findAll();
 
-	ClassEntity findById(Long classId);
+	ClassRoom findById(Long classId);
 
-	void create(ClassEntity c);
+	void create(ClassRoom c);
 
-	void update(Long classId, ClassEntity c);
+	void update(Long classId, ClassRoom c);
 
 	void delete(Long classId);
 

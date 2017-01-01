@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.ClassEntity;
+import com.wedevol.iclass.core.entity.ClassRoom;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.ClassRepository;
@@ -46,28 +46,28 @@ public class ClassServiceImpl implements ClassService {
 
 	/********************* CRUD for class ****************************/
 	@Override
-	public List<ClassEntity> findAll() {
-		final Iterable<ClassEntity> classIterator = classRepository.findAll();
+	public List<ClassRoom> findAll() {
+		final Iterable<ClassRoom> classIterator = classRepository.findAll();
 		return Lists.newArrayList(classIterator);
 	}
 
 	@Override
-	public ClassEntity findById(Long classId) {
-		Optional<ClassEntity> classObj = Optional.ofNullable(classRepository.findOne(classId));
+	public ClassRoom findById(Long classId) {
+		Optional<ClassRoom> classObj = Optional.ofNullable(classRepository.findOne(classId));
 		return classObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.CLASS_NOT_FOUND));
 	}
 
 	@Override
-	public void create(ClassEntity c) {
+	public void create(ClassRoom c) {
 		// TODO: Analize if the class should not exist first
 		c.setRequestedAt(new Date());
 		classRepository.save(c);
 	}
 
 	@Override
-	public void update(Long classId, ClassEntity c) {
+	public void update(Long classId, ClassRoom c) {
 		// The class should exist
-		ClassEntity existingClass = findById(classId);
+		ClassRoom existingClass = findById(classId);
 		// Then, the student should exist
 		studentService.findById(c.getStudentId());
 		// Then, the instructor should exist

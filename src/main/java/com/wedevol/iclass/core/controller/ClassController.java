@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wedevol.iclass.core.entity.ClassEntity;
+import com.wedevol.iclass.core.entity.ClassRoom;
 import com.wedevol.iclass.core.service.ClassService;
 
 /**
@@ -35,28 +35,28 @@ public class ClassController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassEntity> findAll() {
+	public List<ClassRoom> findAll() {
 		return classService.findAll();
 	}
 
 	@RequestMapping(value = "/{classId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ClassEntity findById(@PathVariable Long classId) {
+	public ClassRoom findById(@PathVariable Long classId) {
 		return classService.findById(classId);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody ClassEntity c) {
+	public void create(@Valid @RequestBody ClassRoom c) {
 		classService.create(c);
 	}
 
 	@RequestMapping(value = "/{classId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void update(@PathVariable Long classId, @Valid @RequestBody ClassEntity c) {
+	public void update(@PathVariable Long classId, @Valid @RequestBody ClassRoom c) {
 		classService.update(classId, c);
 	}
 

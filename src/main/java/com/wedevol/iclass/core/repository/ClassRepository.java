@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wedevol.iclass.core.entity.ClassEntity;
+import com.wedevol.iclass.core.entity.ClassRoom;
 
 /**
  * Class Repository
@@ -14,6 +14,6 @@ import com.wedevol.iclass.core.entity.ClassEntity;
  */
 @Repository
 @Transactional
-public interface ClassRepository extends CrudRepository<ClassEntity, Long> {
+public interface ClassRepository extends CrudRepository<ClassRoom, Long> {
 
 }
