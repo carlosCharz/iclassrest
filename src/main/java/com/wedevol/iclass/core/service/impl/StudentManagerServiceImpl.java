@@ -15,7 +15,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.StudentManagerRepository;
 import com.wedevol.iclass.core.service.StudentManagerService;
-import com.wedevol.iclass.core.util.CoreUtil;
+import static com.wedevol.iclass.core.util.CoreUtil.*;
 
 /**
  * Student Manager Service Implementation
@@ -34,7 +34,7 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 
 	@Override
 	public List<Course> findCoursesByStudentId(Long studentId, String statusFilter) {
-		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
+		if (!areValidCourseStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
 		final List<String> status = Arrays.asList(statusFilter.split(","));

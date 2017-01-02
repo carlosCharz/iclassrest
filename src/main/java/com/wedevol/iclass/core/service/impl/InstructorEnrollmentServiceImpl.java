@@ -61,7 +61,6 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	public void update(InstructorEnrollmentId id, InstructorEnrollment instructorEnrollment) {
 		// The instructorEnrollment should exist
 		InstructorEnrollment existingEnr = findById(id);
-		// TODO: analyze the full changed fields
 		existingEnr.setStatus(instructorEnrollment.getStatus());
 		existingEnr.setPrice(instructorEnrollment.getPrice());
 		existingEnr.setCurrency(instructorEnrollment.getCurrency());

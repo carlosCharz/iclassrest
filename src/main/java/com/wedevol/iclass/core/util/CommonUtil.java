@@ -36,4 +36,8 @@ public class CommonUtil {
 		return CommonUtil.dateFormat.parse(dateStr);
 	}
 
+	public static boolean isNullOrEmpty(String element) {
+		return element == null || element.isEmpty();
+	}
+
 }

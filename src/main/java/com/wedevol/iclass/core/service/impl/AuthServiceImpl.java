@@ -17,7 +17,7 @@ import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Auth Service Implementation
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
 		final Optional<Student> studentObj = Optional.ofNullable(studentService.findByEmail(email));
 		final Student student = studentObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
-		final String passwordHashed = CommonUtil.hashSHA256(password);
+		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(student.getPassword())) {
 			return student;
 		} else {
@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
 		final Optional<Instructor> instructorObj = Optional.ofNullable(instructorService.findByEmail(email));
 		final Instructor instructor = instructorObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
-		final String passwordHashed = CommonUtil.hashSHA256(password);
+		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(instructor.getPassword())) {
 			return instructor;
 		} else {

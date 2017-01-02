@@ -17,7 +17,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.InstructorService;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Service Implementation
@@ -57,7 +57,7 @@ public class InstructorServiceImpl implements InstructorService {
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
 		instructorObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		instructor.setPassword(CommonUtil.hashSHA256(instructor.getPassword()));
+		instructor.setPassword(hashSHA256(instructor.getPassword()));
 		instructorRepository.save(instructor);
 	}
 
@@ -65,12 +65,24 @@ public class InstructorServiceImpl implements InstructorService {
 	public void update(Long userId, Instructor instructor) {
 		// The instructor should exist
 		Instructor existingInstructor = findById(userId);
-		// TODO: analyze the full changed fields
 		existingInstructor.setFirstName(instructor.getFirstName());
 		existingInstructor.setLastName(instructor.getLastName());
 		existingInstructor.setPhone(instructor.getPhone());
 		existingInstructor.setEmail(instructor.getEmail());
-		existingInstructor.setPassword(CommonUtil.hashSHA256(instructor.getPassword()));
+		existingInstructor.setPassword(hashSHA256(instructor.getPassword()));
+		if (instructor.getBirthday() != null) {
+			existingInstructor.setBirthday(instructor.getBirthday());
+		}
+		if (!isNullOrEmpty(instructor.getGender())) {
+			existingInstructor.setGender(instructor.getGender());
+		}
+		if (!isNullOrEmpty(instructor.getProfilePictureUrl())) {
+			existingInstructor.setProfilePictureUrl(instructor.getProfilePictureUrl());
+		}
+		existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
+		if (!isNullOrEmpty(instructor.getUniversity())) {
+			existingInstructor.setUniversity(instructor.getUniversity());
+		}
 		instructorRepository.save(existingInstructor);
 	}
 

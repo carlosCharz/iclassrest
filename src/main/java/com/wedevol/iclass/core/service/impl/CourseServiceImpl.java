@@ -63,7 +63,6 @@ public class CourseServiceImpl implements CourseService {
 	public void update(Long courseId, Course course) {
 		// The course should exist
 		Course existingCourse = findById(courseId);
-		// TODO: analyze the full changed fields
 		existingCourse.setName(course.getName());
 		existingCourse.setDescription(course.getDescription());
 		existingCourse.setUniversity(course.getUniversity());

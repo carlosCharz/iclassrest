@@ -23,7 +23,7 @@ import com.wedevol.iclass.core.entity.InstructorSchedule;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Schedule Controller
@@ -34,12 +34,12 @@ import com.wedevol.iclass.core.util.CommonUtil;
 @RestController
 @RequestMapping("/schedules")
 public class InstructorScheduleController {
-	
+
 	protected static final Logger logger = LoggerFactory.getLogger(InstructorScheduleController.class);
 
 	@Autowired
 	private InstructorScheduleService scheduleService;
-	
+
 	@Autowired
 	private InstructorManagerService insMgrService;
 
@@ -79,7 +79,7 @@ public class InstructorScheduleController {
 	public void delete(@PathVariable Long scheduleId) {
 		scheduleService.delete(scheduleId);
 	}
-	
+
 	/********* Courses & Instructors & Enrollment *************/
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class InstructorScheduleController {
 	@ResponseBody
 	public List<ScheduleBasic> findScheduleByCourseIdByDate(@RequestParam("courseId") Long courseId,
 			@RequestParam("classDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate) {
-		logger.info("Find instructors of the course " + courseId + " in " + CommonUtil.dateToString(classDate));
+		logger.info("Find instructors of the course " + courseId + " in " + dateToString(classDate));
 		return insMgrService.findScheduleByCourseIdByDate(courseId, classDate);
 	}
 }

@@ -164,7 +164,6 @@ public class InstructorSchedule implements Serializable {
 		}
 
 		public InstructorSchedule build() {
-			// TODO: analyze if we need to validate here. IllegalStateException.
 			return new InstructorSchedule(this);
 		}
 

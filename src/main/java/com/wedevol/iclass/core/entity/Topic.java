@@ -99,7 +99,6 @@ public class Topic implements Serializable {
 		}
 
 		public Topic build() {
-			// TODO: analyze if we need to validate here. IllegalStateException.
 			return new Topic(this);
 		}
 

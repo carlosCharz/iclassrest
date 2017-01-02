@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,6 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.StudentRepository;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Student Service Implementation
@@ -57,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
 		// We first search by email, the student should not exist
 		final Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
-		student.setPassword(CommonUtil.hashSHA256(student.getPassword()));
+		student.setPassword(hashSHA256(student.getPassword()));
 		studentRepository.save(student);
 	}
 
@@ -65,12 +66,24 @@ public class StudentServiceImpl implements StudentService {
 	public void update(Long userId, Student student) {
 		// The student should exist
 		Student existingStudent = findById(userId);
-		// TODO: analyze the full changed fields
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
 		existingStudent.setPhone(student.getPhone());
 		existingStudent.setEmail(student.getEmail());
-		existingStudent.setPassword(CommonUtil.hashSHA256(student.getPassword()));
+		existingStudent.setPassword(hashSHA256(student.getPassword()));
+		if (student.getBirthday() != null) {
+			existingStudent.setBirthday(student.getBirthday());
+		}
+		if (!isNullOrEmpty(student.getGender())) {
+			existingStudent.setGender(student.getGender());
+		}
+		if (!isNullOrEmpty(student.getProfilePictureUrl())) {
+			existingStudent.setProfilePictureUrl(student.getProfilePictureUrl());
+		}
+		existingStudent.setPlaceOptions(student.getPlaceOptions());
+		if (!isNullOrEmpty(student.getUniversity())) {
+			existingStudent.setUniversity(student.getUniversity());
+		}
 		studentRepository.save(existingStudent);
 	}
 

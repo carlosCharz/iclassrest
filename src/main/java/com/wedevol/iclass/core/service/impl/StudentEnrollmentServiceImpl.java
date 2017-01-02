@@ -61,7 +61,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	public void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment) {
 		// The studentEnrollment should exist
 		StudentEnrollment existingEnr = findById(id);
-		// TODO: analyze the full changed fields
 		existingEnr.setStatus(studentEnrollment.getStatus());
 		enrRepository.save(existingEnr);
 	}

@@ -24,7 +24,7 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Controller
@@ -98,8 +98,8 @@ public class InstructorController {
 	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(@RequestParam("courseId") Long courseId,
 			@RequestParam("classDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate,
 			@RequestParam("startTime") Integer startTime, @RequestParam("endTime") Integer endTime) {
-		logger.info("Find instructors of the course " + courseId + " in " + CommonUtil.dateToString(classDate)
-				+ " from " + startTime + " to " + endTime);
+		logger.info("Find instructors of the course " + courseId + " in " + dateToString(classDate) + " from "
+				+ startTime + " to " + endTime);
 		return insMgrService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
 	}
 }

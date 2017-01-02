@@ -306,7 +306,6 @@ public class Student implements Serializable {
 		}
 
 		public Student build() {
-			// TODO: analyze if we need to validate here. IllegalStateException.
 			return new Student(this);
 		}
 

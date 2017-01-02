@@ -209,7 +209,6 @@ public class ClassRoom implements Serializable {
 		}
 
 		public ClassRoom build() {
-			// TODO: analyze if we need to validate here. IllegalStateException.
 			return new ClassRoom(this);
 		}
 

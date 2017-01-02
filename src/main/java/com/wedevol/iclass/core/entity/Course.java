@@ -118,7 +118,6 @@ public class Course implements Serializable {
 		}
 
 		public Course build() {
-			// TODO: analyze if we need to validate here. IllegalStateException.
 			return new Course(this);
 		}
 

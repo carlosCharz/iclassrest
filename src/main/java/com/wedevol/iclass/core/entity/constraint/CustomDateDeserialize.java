@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Custom Date Deserialize
@@ -24,7 +24,7 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
 			throws IOException, JsonProcessingException {
 		final String str = paramJsonParser.getText().trim();
 		try {
-			return CommonUtil.stringToDate(str);
+			return stringToDate(str);
 		} catch (ParseException e) {
 			throw new BadRequestException(BadRequestErrorType.WRONG_DESERIALIZATION);
 		}

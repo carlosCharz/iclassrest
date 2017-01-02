@@ -19,8 +19,8 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.InstructorManagerRepository;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
-import com.wedevol.iclass.core.util.CommonUtil;
-import com.wedevol.iclass.core.util.CoreUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
+import static com.wedevol.iclass.core.util.CoreUtil.*;
 
 /**
  * Instructor Manager Service Implementation
@@ -42,7 +42,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 
 	@Override
 	public List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter) {
-		if (!CoreUtil.areValidCourseStatusFilters(statusFilter)) {
+		if (!areValidCourseStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
 		final List<String> status = Arrays.asList(statusFilter.split(","));
@@ -63,7 +63,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		}
 		// The course should exist
 		courseService.findById(courseId);
-		final String dateStr = CommonUtil.dateToString(classDate);
+		final String dateStr = dateToString(classDate);
 		return insMgrRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
 	}
 
@@ -71,7 +71,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	public List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);
-		final String dateStr = CommonUtil.dateToString(classDate);
+		final String dateStr = dateToString(classDate);
 		return insMgrRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
 	}
 

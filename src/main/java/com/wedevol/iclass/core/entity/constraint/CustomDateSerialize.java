@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.wedevol.iclass.core.util.CommonUtil;
+import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Custom Date Serialize
@@ -22,7 +22,7 @@ public class CustomDateSerialize extends JsonSerializer<Date> {
 		if (value == null) {
 			gen.writeNull();
 		} else {
-			gen.writeString(CommonUtil.dateToString(value));
+			gen.writeString(dateToString(value));
 		}
 	}
 }
