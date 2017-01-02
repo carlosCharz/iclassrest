@@ -95,9 +95,11 @@ public class InstructorController {
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(@RequestParam("courseId") Long courseId,
-			@RequestParam("classDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate,
-			@RequestParam("startTime") Integer startTime, @RequestParam("endTime") Integer endTime) {
+	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(
+			@RequestParam(value = "courseId", required = true) Long courseId,
+			@RequestParam(value = "classDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate,
+			@RequestParam(value = "startTime", required = true) Integer startTime,
+			@RequestParam(value = "endTime", required = true) Integer endTime) {
 		logger.info("Find instructors of the course " + courseId + " in " + dateToString(classDate) + " from "
 				+ startTime + " to " + endTime);
 		return insMgrService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);

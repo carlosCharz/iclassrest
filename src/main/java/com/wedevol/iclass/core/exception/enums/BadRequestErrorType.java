@@ -10,7 +10,8 @@ public enum BadRequestErrorType {
 	WRONG_DESERIALIZATION(400, "Wrong deserialization to build the bean"),
 	METHOD_NOT_ALLOWED(400, "Method not allowed"), COURSE_STATUS_NOT_VALID(400, "Course status not valid"),
 	ARGUMENT_TYPE_MISMATCH(400, "Argument type mismatch"),
-	DATETIMES_NOT_VALID(400, "Start time should be less than the end time");
+	DATETIMES_NOT_VALID(400, "Start time should be less than the end time"),
+	MISSING_PARAMETER(400, "Missing parameter exception");
 
 	private final int code;
 	private final String message;
