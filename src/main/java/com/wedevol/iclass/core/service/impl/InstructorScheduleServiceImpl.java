@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.InstructorSchedule;
+import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorScheduleRepository;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
@@ -51,7 +53,14 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 
 	@Override
 	public void create(InstructorSchedule schedule) {
-		// TODO: Analize if the instructor schedule should not exist first
+		// TODO: Analize if the instructor schedule should not exist first, and validate null fields
+		// Date times validation
+		if (schedule.getStartTime() >= schedule.getEndTime()) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
+		// The instructor should exist
+		instructorService.findById(schedule.getInstructorId());
+		// Save
 		scheduleRepository.save(schedule);
 	}
 
