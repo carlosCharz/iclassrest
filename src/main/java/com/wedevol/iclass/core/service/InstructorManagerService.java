@@ -3,6 +3,7 @@ package com.wedevol.iclass.core.service;
 import java.util.Date;
 import java.util.List;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
@@ -22,7 +23,10 @@ public interface InstructorManagerService {
 
 	List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
 			Integer endTime);
-	
+
 	List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate);
+
+	List<ClassFullInfo> findClassesByInstructorIdByDateTimeFilteringStatus(Long instructorId, Date actualDate,
+			Integer actualTime, String statusFilter);
 
 }

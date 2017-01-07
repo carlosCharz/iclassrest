@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.controller;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,14 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
-import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
-
-import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Controller
@@ -106,7 +106,7 @@ public class InstructorController {
 				+ startTime + " to " + endTime);
 		return insMgrService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
 	}
-	
+
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -114,9 +114,9 @@ public class InstructorController {
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
-		logger.info("Find classes of an instructor since " + actualTime + " hours "+ dateToString(actualDate) + " filtered by the supplied class status: " + statusFilter);
-		//return insMgrService.findCoursesByInstructorId(userId, statusFilter);
-		// TODO: missing implementation
-		return null;
+		logger.info("Find classes of an instructor since " + actualTime + " hours " + dateToString(actualDate)
+				+ " filtered by the supplied class status: " + statusFilter);
+		return insMgrService.findClassesByInstructorIdByDateTimeFilteringStatus(userId, actualDate, actualTime,
+				statusFilter);
 	}
 }

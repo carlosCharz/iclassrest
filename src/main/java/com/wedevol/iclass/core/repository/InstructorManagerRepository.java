@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
@@ -68,5 +69,18 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	@Query("SELECT new com.wedevol.iclass.core.entity.ScheduleBasic(sch.id, ins.id, sch.startTime, sch.endTime) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr")
 	public List<ScheduleBasic> findSchedulesWithCourseIdWithDate(@Param("courseId") Long courseId,
 			@Param("classDateStr") String classDateStr);
+
+	/**
+	 * Return classes of an instructor since hh:mm dd/MM/yyyy filtered by the supplied class status
+	 * 
+	 * @param instructorId
+	 * @param actualDateStr
+	 * @param actualTime
+	 * @param classStatusList
+	 * @return list of classes
+	 */
+	public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeFilteringStatus(
+			@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
+			@Param("startTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
 
 }

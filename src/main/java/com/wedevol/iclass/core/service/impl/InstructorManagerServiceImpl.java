@@ -1,5 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
@@ -19,8 +24,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.InstructorManagerRepository;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
-import static com.wedevol.iclass.core.util.CommonUtil.*;
-import static com.wedevol.iclass.core.util.CoreUtil.*;
+import com.wedevol.iclass.core.service.InstructorService;
 
 /**
  * Instructor Manager Service Implementation
@@ -39,6 +43,9 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private InstructorService instructorService;
 
 	@Override
 	public List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter) {
@@ -73,6 +80,21 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		courseService.findById(courseId);
 		final String dateStr = dateToString(classDate);
 		return insMgrRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
+	}
+
+	@Override
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeFilteringStatus(Long instructorId, Date actualDate,
+			Integer actualTime, String statusFilter) {
+		// The class status should be valid
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
+		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
+		// The instructor should exist
+		instructorService.findById(instructorId);
+		final String actualDateStr = dateToString(actualDate);
+		return insMgrRepository.findClassesWithInstructorIdWithDateTimeFilteringStatus(instructorId, actualDateStr,
+				actualTime, classStatusList);
 	}
 
 }

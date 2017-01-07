@@ -3,6 +3,7 @@ package com.wedevol.iclass.core.util;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 
 /**
@@ -22,5 +23,17 @@ public class CoreUtil {
 
 	public static boolean areValidCourseStatusFilters(String statusFilter) {
 		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidCourseStatus());
+	}
+
+	public static Predicate<String> isValidClassStatus() {
+		return classStatus -> Arrays
+									.stream(ClassStatusType.values())
+										.filter(validOption -> classStatus.equals(validOption.getDescription()))
+										.findFirst()
+										.isPresent();
+	}
+
+	public static boolean areValidClassStatusFilters(String statusFilter) {
+		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidClassStatus());
 	}
 }
