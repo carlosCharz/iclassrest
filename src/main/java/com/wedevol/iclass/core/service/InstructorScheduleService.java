@@ -22,4 +22,6 @@ public interface InstructorScheduleService {
 
 	void delete(Long scheduleId);
 
+	List<InstructorSchedule> findSchedulesForWeekByInstructorId(Long instructorId);
+
 }

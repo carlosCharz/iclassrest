@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.controller;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +25,6 @@ import com.wedevol.iclass.core.entity.InstructorSchedule;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
-import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Schedule Controller
@@ -78,6 +79,15 @@ public class InstructorScheduleController {
 	@ResponseBody
 	public void delete(@PathVariable Long scheduleId) {
 		scheduleService.delete(scheduleId);
+	}
+
+	@RequestMapping(value = "/week", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<InstructorSchedule> findSchedulesForWeekByInstructorId(
+			@RequestParam(value = "instructorId", required = true) Long instructorId) {
+		logger.info("Find week schedule for the instructor " + instructorId);
+		return scheduleService.findSchedulesForWeekByInstructorId(instructorId);
 	}
 
 	/********* Courses & Instructors & Enrollment *************/

@@ -87,4 +87,11 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		scheduleRepository.delete(scheduleId);
 	}
 
+	@Override
+	public List<InstructorSchedule> findSchedulesForWeekByInstructorId(Long instructorId) {
+		// Then, the instructor should exist
+		instructorService.findById(instructorId);
+		return scheduleRepository.findByInstructorIdOrderByClassDateAscStartTimeAsc(instructorId);
+	}
+
 }
