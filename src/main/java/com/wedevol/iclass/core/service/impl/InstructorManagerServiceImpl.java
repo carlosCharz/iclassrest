@@ -93,9 +93,8 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		// The instructor should exist
 		instructorService.findById(instructorId);
 		final String actualDateStr = dateToString(actualDate);
-		return null; //TODO: missing implementation
-		//return insMgrRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
-			//	actualDateStr, actualTime, classStatusList);
+		return insMgrRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
+				actualDateStr, actualTime, classStatusList);
 	}
 
 }

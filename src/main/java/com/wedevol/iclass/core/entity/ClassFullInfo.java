@@ -3,6 +3,11 @@ package com.wedevol.iclass.core.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
+
 /**
  * Class full information
  * 
@@ -16,7 +21,10 @@ public class ClassFullInfo implements Serializable {
 	private Long classId;
 	private Integer startTime;
 	private Integer endTime;
+	@JsonDeserialize(using = CustomDateDeserialize.class)
+	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date classDate;
+	private String classStatus;
 	private Long courseId;
 	private String courseName;
 	private Long studentId;
@@ -29,11 +37,23 @@ public class ClassFullInfo implements Serializable {
 	protected ClassFullInfo() {
 	}
 
-	public ClassFullInfo(Long classId, Long courseId, Long studentId) {
+	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, Date classDate, String classStatus,
+			Long courseId, String courseName, Long studentId, String studentFirstName, String studentLastName,
+			String studentPhone, Integer price, String currency) {
 		super();
 		this.classId = classId;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.classDate = classDate;
+		this.classStatus = classStatus;
 		this.courseId = courseId;
+		this.courseName = courseName;
 		this.studentId = studentId;
+		this.studentFirstName = studentFirstName;
+		this.studentLastName = studentLastName;
+		this.studentPhone = studentPhone;
+		this.price = price;
+		this.currency = currency;
 	}
 
 	public Long getClassId() {
@@ -66,6 +86,14 @@ public class ClassFullInfo implements Serializable {
 
 	public void setClassDate(Date classDate) {
 		this.classDate = classDate;
+	}
+
+	public String getClassStatus() {
+		return classStatus;
+	}
+
+	public void setClassStatus(String classStatus) {
+		this.classStatus = classStatus;
 	}
 
 	public Long getCourseId() {
