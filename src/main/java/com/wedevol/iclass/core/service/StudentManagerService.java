@@ -14,7 +14,7 @@ import com.wedevol.iclass.core.entity.Student;
 public interface StudentManagerService {
 
 	List<Student> findStudentsByCourseId(Long courseId);
-	
-	List<Course> findCoursesByStudentId(Long studentId, String statusFilter);
+
+	List<Course> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 
 }

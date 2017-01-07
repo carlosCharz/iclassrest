@@ -34,11 +34,11 @@ public interface StudentManagerRepository extends CrudRepository<Student, Long> 
 	 * Return the student's list of courses filtered by the supplied course status
 	 * 
 	 * @param studentId
-	 * @param statusList
+	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId AND enr.status in :statusList")
-	public List<Course> findCoursesWithStudentId(@Param("studentId") Long studentId,
-			@Param("statusList") List<String> statusList);
+	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId AND enr.status in :courseStatusList")
+	public List<Course> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
+			@Param("courseStatusList") List<String> courseStatusList);
 
 }

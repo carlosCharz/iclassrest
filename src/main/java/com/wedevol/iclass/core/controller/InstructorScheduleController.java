@@ -85,10 +85,11 @@ public class InstructorScheduleController {
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ScheduleBasic> findScheduleByCourseIdByDate(
+	public List<ScheduleBasic> findSchedulesByCourseIdByDate(
 			@RequestParam(value = "courseId", required = true) Long courseId,
 			@RequestParam(value = "classDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate) {
-		logger.info("Find instructors of the course " + courseId + " in " + dateToString(classDate));
-		return insMgrService.findScheduleByCourseIdByDate(courseId, classDate);
+		logger.info("Find available schedules of the course " + courseId + " for an specific date: "
+				+ dateToString(classDate));
+		return insMgrService.findSchedulesByCourseIdByDate(courseId, classDate);
 	}
 }

@@ -17,16 +17,16 @@ import com.wedevol.iclass.core.entity.ScheduleBasic;
  */
 public interface InstructorManagerService {
 
-	List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter);
+	List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 
 	List<Instructor> findInstructorsByCourseId(Long courseId);
 
 	List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
 			Integer endTime);
 
-	List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate);
+	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
 
-	List<ClassFullInfo> findClassesByInstructorIdByDateTimeFilteringStatus(Long instructorId, Date actualDate,
-			Integer actualTime, String statusFilter);
+	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
+			Integer actualTime, String classStatusFilter);
 
 }

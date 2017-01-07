@@ -88,10 +88,11 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByInstructorId(@PathVariable Long userId,
-			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
-		logger.info("Find courses of an instructor filtered by the supplied course status: " + statusFilter);
-		return insMgrService.findCoursesByInstructorId(userId, statusFilter);
+	public List<Course> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
+			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
+		logger.info("Find courses of the instructor " + userId + " filtered by the supplied course status: "
+				+ courseStatusFilter);
+		return insMgrService.findCoursesByInstructorIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
@@ -110,13 +111,13 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeFilteringStatus(@PathVariable Long userId,
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
 		logger.info("Find classes of an instructor since " + actualTime + " hours " + dateToString(actualDate)
 				+ " filtered by the supplied class status: " + statusFilter);
-		return insMgrService.findClassesByInstructorIdByDateTimeFilteringStatus(userId, actualDate, actualTime,
+		return insMgrService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
 				statusFilter);
 	}
 }

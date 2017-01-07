@@ -33,12 +33,12 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 	private StudentManagerRepository stuMgrRepository;
 
 	@Override
-	public List<Course> findCoursesByStudentId(Long studentId, String statusFilter) {
-		if (!areValidCourseStatusFilters(statusFilter)) {
+	public List<Course> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter) {
+		if (!areValidCourseStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
-		final List<String> status = Arrays.asList(statusFilter.split(","));
-		return stuMgrRepository.findCoursesWithStudentId(studentId, status);
+		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));
+		return stuMgrRepository.findCoursesWithStudentIdWithCourseStatusFilter(studentId, courseStatusList);
 	}
 
 	@Override

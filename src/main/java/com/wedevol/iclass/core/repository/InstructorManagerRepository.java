@@ -27,12 +27,12 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * Return the instructor's list of courses filtered by the supplied course status
 	 * 
 	 * @param instructorId
-	 * @param statusList
+	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :statusList")
-	public List<Course> findCoursesWithInstructorId(@Param("instructorId") Long instructorId,
-			@Param("statusList") List<String> statusList);
+	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
+	public List<Course> findCoursesWithInstructorIdWithCourseStatusFilter(@Param("instructorId") Long instructorId,
+			@Param("courseStatusList") List<String> courseStatusList);
 
 	/**
 	 * Return the instructor list of a course
@@ -79,8 +79,8 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @param classStatusList
 	 * @return list of classes
 	 */
-	public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeFilteringStatus(
-			@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
-			@Param("startTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
+	//public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(
+		//	@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
+			//@Param("startTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
 
 }

@@ -82,9 +82,9 @@ public class StudentController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByStudentId(@PathVariable Long userId,
-			@RequestParam(value = "status", defaultValue = "free,payed") String statusFilter) {
-		logger.info("Find courses of a student filtered by the supplied course status: " + statusFilter);
-		return stuMgrService.findCoursesByStudentId(userId, statusFilter);
+	public List<Course> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
+			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
+		logger.info("Find courses of a student filtered by the supplied course status: " + courseStatusFilter);
+		return stuMgrService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 }

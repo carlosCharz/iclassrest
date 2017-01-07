@@ -48,12 +48,12 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	private InstructorService instructorService;
 
 	@Override
-	public List<Course> findCoursesByInstructorId(Long instructorId, String statusFilter) {
-		if (!areValidCourseStatusFilters(statusFilter)) {
+	public List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter) {
+		if (!areValidCourseStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
-		final List<String> status = Arrays.asList(statusFilter.split(","));
-		return insMgrRepository.findCoursesWithInstructorId(instructorId, status);
+		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));
+		return insMgrRepository.findCoursesWithInstructorIdWithCourseStatusFilter(instructorId, courseStatusList);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<ScheduleBasic> findScheduleByCourseIdByDate(Long courseId, Date classDate) {
+	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);
 		final String dateStr = dateToString(classDate);
@@ -83,8 +83,8 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeFilteringStatus(Long instructorId, Date actualDate,
-			Integer actualTime, String statusFilter) {
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
@@ -93,8 +93,9 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		// The instructor should exist
 		instructorService.findById(instructorId);
 		final String actualDateStr = dateToString(actualDate);
-		return insMgrRepository.findClassesWithInstructorIdWithDateTimeFilteringStatus(instructorId, actualDateStr,
-				actualTime, classStatusList);
+		return null; //TODO: missing implementation
+		//return insMgrRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
+			//	actualDateStr, actualTime, classStatusList);
 	}
 
 }
