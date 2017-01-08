@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.controller;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentManagerService;
@@ -86,5 +91,18 @@ public class StudentController {
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: " + courseStatusFilter);
 		return stuMgrService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
+	}
+
+	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
+			@RequestParam(value = "actualTime", required = true) Integer actualTime,
+			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
+		logger.info("Find classes of a student since " + actualTime + " hours " + dateToString(actualDate)
+				+ " filtered by the supplied class status: " + statusFilter);
+		return stuMgrService.findClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
+				statusFilter);
 	}
 }

@@ -27,10 +27,11 @@ public class ClassFullInfo implements Serializable {
 	private String classStatus;
 	private Long courseId;
 	private String courseName;
-	private Long studentId;
-	private String studentFirstName;
-	private String studentLastName;
-	private String studentPhone;
+	private String userType;
+	private Long userId;
+	private String firstName;
+	private String lastName;
+	private String phone;
 	private Integer price;
 	private String currency;
 
@@ -38,8 +39,8 @@ public class ClassFullInfo implements Serializable {
 	}
 
 	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, Date classDate, String classStatus,
-			Long courseId, String courseName, Long studentId, String studentFirstName, String studentLastName,
-			String studentPhone, Integer price, String currency) {
+			Long courseId, String courseName, String userType, Long userId, String firstName, String lastName,
+			String phone, Integer price, String currency) {
 		super();
 		this.classId = classId;
 		this.startTime = startTime;
@@ -48,10 +49,11 @@ public class ClassFullInfo implements Serializable {
 		this.classStatus = classStatus;
 		this.courseId = courseId;
 		this.courseName = courseName;
-		this.studentId = studentId;
-		this.studentFirstName = studentFirstName;
-		this.studentLastName = studentLastName;
-		this.studentPhone = studentPhone;
+		this.userType = userType;
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
 		this.price = price;
 		this.currency = currency;
 	}
@@ -112,36 +114,44 @@ public class ClassFullInfo implements Serializable {
 		this.courseName = courseName;
 	}
 
-	public Long getStudentId() {
-		return studentId;
+	public String getUserType() {
+		return userType;
 	}
 
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 
-	public String getStudentFirstName() {
-		return studentFirstName;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setStudentFirstName(String studentFirstName) {
-		this.studentFirstName = studentFirstName;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public String getStudentLastName() {
-		return studentLastName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setStudentLastName(String studentLastName) {
-		this.studentLastName = studentLastName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getStudentPhone() {
-		return studentPhone;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setStudentPhone(String studentPhone) {
-		this.studentPhone = studentPhone;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public Integer getPrice() {
