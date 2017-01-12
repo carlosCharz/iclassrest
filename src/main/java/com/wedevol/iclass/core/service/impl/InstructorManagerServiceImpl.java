@@ -1,8 +1,8 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -80,6 +80,13 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		courseService.findById(courseId);
 		final String dateStr = dateToString(classDate);
 		return insMgrRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
+	}
+
+	@Override
+	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
+		// The course should exist
+		courseService.findById(courseId);
+		return insMgrRepository.findSchedulesByCourseIdWithWeekDay(courseId, weekDayStr);
 	}
 
 	@Override

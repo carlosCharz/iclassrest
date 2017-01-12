@@ -28,7 +28,7 @@ public interface StudentManagerRepository extends CrudRepository<Student, Long> 
 	 * @param courseId
 	 * @return list of students
 	 */
-	@Query("SELECT stu FROM StudentEnrollment enr, Student stu WHERE stu.id = enr.studentEnrollmentId.studentId AND enr.studentEnrollmentId.courseId = :courseId")
+	@Query("SELECT stu FROM StudentEnrollment enr, Student stu WHERE stu.id = enr.id.studentId AND enr.id.courseId = :courseId")
 	public List<Student> findStudentsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
@@ -38,7 +38,7 @@ public interface StudentManagerRepository extends CrudRepository<Student, Long> 
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.studentEnrollmentId.courseId AND enr.studentEnrollmentId.studentId = :studentId AND enr.status in :courseStatusList")
+	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
 	public List<Course> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 

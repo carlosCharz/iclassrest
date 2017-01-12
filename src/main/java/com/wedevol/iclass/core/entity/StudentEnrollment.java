@@ -25,7 +25,7 @@ public class StudentEnrollment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private StudentEnrollmentId studentEnrollmentId;
+	private StudentEnrollmentId id;
 
 	@NotNull
 	@CourseStatus
@@ -35,12 +35,12 @@ public class StudentEnrollment implements Serializable {
 	protected StudentEnrollment() {
 	}
 
-	public StudentEnrollmentId getStudentEnrollmentId() {
-		return studentEnrollmentId;
+	public StudentEnrollmentId getId() {
+		return id;
 	}
 
-	public void setStudentEnrollmentId(StudentEnrollmentId studentEnrollmentId) {
-		this.studentEnrollmentId = studentEnrollmentId;
+	public void setId(StudentEnrollmentId id) {
+		this.id = id;
 	}
 
 	public String getStatus() {

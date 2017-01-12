@@ -92,7 +92,7 @@ public class InstructorScheduleController {
 
 	/********* Courses & Instructors & Enrollment *************/
 
-	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
+	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(
@@ -101,5 +101,15 @@ public class InstructorScheduleController {
 		logger.info("Find available schedules of the course " + courseId + " for an specific date: "
 				+ dateToString(classDate));
 		return insMgrService.findSchedulesByCourseIdByDate(courseId, classDate);
+	}
+	
+	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(
+			@RequestParam(value = "courseId", required = true) Long courseId,
+			@RequestParam(value = "weekDay", required = true) String weekDay) {
+		logger.info("Find available schedules of the course " + courseId + " for week day");
+		return insMgrService.findSchedulesByCourseIdByWeekDay(courseId, weekDay);
 	}
 }
