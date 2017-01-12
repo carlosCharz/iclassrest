@@ -24,8 +24,11 @@ public interface InstructorManagerService {
 	List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
 			Integer endTime);
 
+	List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(Long courseId, String weekDayStr, Integer startTime,
+			Integer endTime);
+
 	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
-	
+
 	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 
 	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,

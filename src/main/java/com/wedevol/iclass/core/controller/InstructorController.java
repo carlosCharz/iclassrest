@@ -95,7 +95,7 @@ public class InstructorController {
 		return insMgrService.findCoursesByInstructorIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
-	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
+	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(
@@ -108,10 +108,24 @@ public class InstructorController {
 		return insMgrService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
 	}
 
+	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(
+			@RequestParam(value = "courseId", required = true) Long courseId,
+			@RequestParam(value = "weekDay", required = true) String weekDay,
+			@RequestParam(value = "startTime", required = true) Integer startTime,
+			@RequestParam(value = "endTime", required = true) Integer endTime) {
+		logger.info("Find instructors of the course " + courseId + " for the week day '" + weekDay + "' from "
+				+ startTime + " to " + endTime);
+		return insMgrService.findInstructorsByCourseIdByWeekDayByTime(courseId, weekDay, startTime, endTime);
+	}
+
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(
+			@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {

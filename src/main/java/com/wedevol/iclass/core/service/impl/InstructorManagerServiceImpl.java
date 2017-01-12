@@ -104,4 +104,16 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 				actualDateStr, actualTime, classStatusList);
 	}
 
+	@Override
+	public List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(Long courseId, String weekDayStr,
+			Integer startTime, Integer endTime) {
+		// Date times validation
+		if (startTime >= endTime) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
+		// The course should exist
+		courseService.findById(courseId);
+		return insMgrRepository.findInstructorsWithCourseIdWithWeekDayWithTime(courseId, weekDayStr, startTime, endTime);
+	}
+
 }
