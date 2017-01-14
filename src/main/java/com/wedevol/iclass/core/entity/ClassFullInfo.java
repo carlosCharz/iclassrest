@@ -21,6 +21,7 @@ public class ClassFullInfo implements Serializable {
 	private Long classId;
 	private Integer startTime;
 	private Integer endTime;
+	private String weekDay;
 	@JsonDeserialize(using = CustomDateDeserialize.class)
 	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date classDate;
@@ -38,13 +39,14 @@ public class ClassFullInfo implements Serializable {
 	protected ClassFullInfo() {
 	}
 
-	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, Date classDate, String classStatus,
-			Long courseId, String courseName, String userType, Long userId, String firstName, String lastName,
-			String phone, Integer price, String currency) {
+	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, String weekDay, Date classDate,
+			String classStatus, Long courseId, String courseName, String userType, Long userId, String firstName,
+			String lastName, String phone, Integer price, String currency) {
 		super();
 		this.classId = classId;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.weekDay = weekDay;
 		this.classDate = classDate;
 		this.classStatus = classStatus;
 		this.courseId = courseId;
@@ -80,6 +82,14 @@ public class ClassFullInfo implements Serializable {
 
 	public void setEndTime(Integer endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getWeekDay() {
+		return weekDay;
+	}
+
+	public void setWeekDay(String weekDay) {
+		this.weekDay = weekDay;
 	}
 
 	public Date getClassDate() {
