@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
 
@@ -22,6 +23,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.StudentManagerRepository;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.StudentView;
 
 /**
  * Student Manager Service Implementation
@@ -40,6 +42,17 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 
 	@Autowired
 	private StudentManagerRepository stuMgrRepository;
+	
+	@Override
+	public void createStudentWithCourse(StudentView studentView) {
+		// Create the user
+		Student student = new Student.StudentBuilder(studentView.getFirstName(), studentView.getLastName(),
+				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword()))
+																										.build();
+		// Create the course
+		// TODO: move other fields to the student object
+		studentService.create(student);
+	}
 
 	@Override
 	public List<Course> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter) {

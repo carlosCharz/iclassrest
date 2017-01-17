@@ -26,6 +26,7 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.StudentView;
 
 /**
  * Student Controller
@@ -64,8 +65,8 @@ public class StudentController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody Student student) {
-		studentService.create(student);
+	public void create(@Valid @RequestBody StudentView studentView) {
+		stuMgrService.createStudentWithCourse(studentView);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
@@ -105,4 +106,5 @@ public class StudentController {
 		return stuMgrService.findClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
 				statusFilter);
 	}
+
 }
