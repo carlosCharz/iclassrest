@@ -30,8 +30,6 @@ public class StudentView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-
 	@NotNull
 	@Size(min = 2, max = 45, message = "First name must be between 2 - 45 characters")
 	private String firstName;
@@ -59,29 +57,23 @@ public class StudentView implements Serializable {
 	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date birthday;
 
-	@Gender // It has size validation, gender validation and default message
+	@Gender
+	// It has size validation, gender validation and default message
 	private String gender;
 
 	@Size(min = 2, max = 100, message = "Profile picture url must be between 2 - 100 characters")
 	private String profilePictureUrl;
 
-	@PlaceOptions // It has place options validation and default message
+	@PlaceOptions
+	// It has place options validation and default message
 	private String placeOptions;
 
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	private String university;
-	
+
 	private Long courseId;
 
 	protected StudentView() {
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -149,8 +141,8 @@ public class StudentView implements Serializable {
 	}
 
 	public Set<String> getPlaceOptions() {
-		return placeOptions == null ? Collections.emptySet()
-				: Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(placeOptions.split(","))));
+		return placeOptions == null ? Collections.emptySet() : Collections.unmodifiableSet(new HashSet<String>(
+				Arrays.asList(placeOptions.split(","))));
 	}
 
 	public void setPlaceOptions(Set<String> placeOptionsSet) {

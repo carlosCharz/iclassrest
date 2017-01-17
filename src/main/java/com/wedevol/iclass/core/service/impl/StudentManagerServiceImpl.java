@@ -18,9 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.StudentEnrollment;
+import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.StudentManagerRepository;
+import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.StudentView;
@@ -41,17 +45,27 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 	private StudentService studentService;
 
 	@Autowired
+	private StudentEnrollmentService studentEnrollmentService;
+
+	@Autowired
 	private StudentManagerRepository stuMgrRepository;
-	
+
 	@Override
-	public void createStudentWithCourse(StudentView studentView) {
+	public Student createStudentWithCourse(StudentView studentView) {
 		// Create the user
-		Student student = new Student.StudentBuilder(studentView.getFirstName(), studentView.getLastName(),
-				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword()))
-																										.build();
-		// Create the course
+		Student studentNew = new Student.StudentBuilder(studentView.getFirstName(), studentView.getLastName(),
+				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword())).build();
 		// TODO: move other fields to the student object
-		studentService.create(student);
+		final Student studentSaved = studentService.create(studentNew);
+
+		// Create the course
+		final Long courseId = studentView.getCourseId();
+		if (courseId != null) {
+			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
+			final StudentEnrollment enr = new StudentEnrollment(enrId, CourseStatusType.FREE.getDescription());
+			studentEnrollmentService.create(enr);
+		}
+		return studentSaved;
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public interface StudentService {
 
 	Student findById(Long userId);
 
-	void create(Student student);
+	Student create(Student student);
 
 	void update(Long userId, Student student);
 

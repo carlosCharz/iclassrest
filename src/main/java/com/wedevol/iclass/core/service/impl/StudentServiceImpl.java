@@ -54,12 +54,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void create(Student student) {
+	public Student create(Student student) {
 		// We first search by email, the student should not exist
 		final Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
 		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		student.setPassword(hashSHA256(student.getPassword()));
-		studentRepository.save(student);
+		return studentRepository.save(student);
 	}
 
 	@Override
