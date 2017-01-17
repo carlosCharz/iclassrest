@@ -71,6 +71,7 @@ public class StudentView implements Serializable {
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	private String university;
 
+	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	private Long courseId;
 
 	protected StudentView() {
