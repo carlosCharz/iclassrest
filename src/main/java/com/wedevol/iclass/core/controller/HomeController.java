@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * Home Controller
  * 
  * @author charz
  *
  */
+@ApiIgnore
 @RestController
 @RequestMapping("/home")
 public class HomeController {

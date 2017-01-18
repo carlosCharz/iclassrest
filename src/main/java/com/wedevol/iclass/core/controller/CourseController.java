@@ -59,7 +59,6 @@ public class CourseController {
 		return courseService.findById(courseId);
 	}
 
-	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody

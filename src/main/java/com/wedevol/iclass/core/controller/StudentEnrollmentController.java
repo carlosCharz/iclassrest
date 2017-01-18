@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
@@ -37,6 +39,7 @@ public class StudentEnrollmentController {
 
 	/************** CRUD for student enrollment **********************/
 
+	@ApiIgnore
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -44,6 +47,7 @@ public class StudentEnrollmentController {
 		return stuEnrService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -68,6 +72,7 @@ public class StudentEnrollmentController {
 		stuEnrService.update(id, studentCourse);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

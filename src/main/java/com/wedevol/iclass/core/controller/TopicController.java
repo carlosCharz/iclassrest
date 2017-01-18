@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.Topic;
 import com.wedevol.iclass.core.service.TopicService;
 
@@ -43,6 +45,7 @@ public class TopicController {
 		return topicService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{topicId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -57,6 +60,7 @@ public class TopicController {
 		topicService.create(topic);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{topicId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -64,6 +68,7 @@ public class TopicController {
 		topicService.update(topicId, topic);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{topicId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.InstructorSchedule;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
@@ -46,6 +48,7 @@ public class InstructorScheduleController {
 
 	/************* CRUD for instructor schedule ****************/
 
+	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -53,6 +56,7 @@ public class InstructorScheduleController {
 		return scheduleService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -74,6 +78,7 @@ public class InstructorScheduleController {
 		scheduleService.update(scheduleId, schedule);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -92,6 +97,7 @@ public class InstructorScheduleController {
 
 	/********* Courses & Instructors & Enrollment *************/
 
+	@ApiIgnore
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

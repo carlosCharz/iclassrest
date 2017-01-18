@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.controller;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import io.swagger.annotations.ApiOperation;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
@@ -28,17 +31,12 @@ import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.StudentView;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
-
 /**
  * Student Controller
  * 
  * @author charz
  *
  */
-@Api
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -54,7 +52,6 @@ public class StudentController {
 	/********************* CRUD for student ****************************/
 
 	@ApiIgnore
-	@ApiOperation(value = "Find all students")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -70,7 +67,6 @@ public class StudentController {
 		return studentService.findById(userId);
 	}
 
-	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -78,7 +74,6 @@ public class StudentController {
 		stuMgrService.createStudentWithCourse(studentView);
 	}
 
-	@ApiIgnore
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

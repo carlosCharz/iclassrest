@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.ClassRoom;
 import com.wedevol.iclass.core.service.ClassService;
 
@@ -32,6 +34,7 @@ public class ClassController {
 
 	/************* CRUD for class ****************/
 
+	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -39,6 +42,7 @@ public class ClassController {
 		return classService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{classId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -60,6 +64,7 @@ public class ClassController {
 		classService.update(classId, c);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{classId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
