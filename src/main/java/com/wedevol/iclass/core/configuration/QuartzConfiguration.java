@@ -28,10 +28,9 @@ public class QuartzConfiguration {
 		CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
 		stFactory.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
 		stFactory.setStartDelay(3000);
-		stFactory.setName("fiestaTrigger");
-		stFactory.setGroup("fiestaGroup");
-		stFactory.setCronExpression("0 59 23 ? * *");// Job is scheduled every day at 23:59pm
-		//stFactory.setCronExpression("0/5 * * 1/1 * ? *");// Job is scheduled after every 10 seconds
+		stFactory.setName("classTrigger");
+		stFactory.setGroup("classGroup");
+		stFactory.setCronExpression("0 0/1 * * * ? *");// Job is scheduled after every 1 minute
 		return stFactory;
 	}
 

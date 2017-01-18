@@ -21,6 +21,8 @@ import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.StudentManagerService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * Course Controller
  * 
@@ -49,6 +51,7 @@ public class CourseController {
 		return courseService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -56,6 +59,7 @@ public class CourseController {
 		return courseService.findById(courseId);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -63,6 +67,7 @@ public class CourseController {
 		courseService.create(course);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -70,6 +75,7 @@ public class CourseController {
 		courseService.update(courseId, course);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -79,6 +85,7 @@ public class CourseController {
 
 	/************** Instructors & Student & Courses **********************/
 
+	@ApiIgnore
 	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -86,6 +93,7 @@ public class CourseController {
 		return insMgrService.findInstructorsByCourseId(courseId);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{courseId}/students", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

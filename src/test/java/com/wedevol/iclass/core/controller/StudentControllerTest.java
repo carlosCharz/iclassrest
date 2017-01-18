@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.controller;
 
+import static com.wedevol.iclass.core.util.CommonUtil.toJsonString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -32,7 +33,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.service.impl.StudentManagerServiceImpl;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
-import static com.wedevol.iclass.core.util.CommonUtil.*;
+import com.wedevol.iclass.core.view.StudentView;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(StudentController.class)
@@ -100,16 +101,18 @@ public class StudentControllerTest {
 	@Test
 	public void throwExceptionWhenCreatingAndStudentExists() throws Exception {
 
-		Mockito.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION)).when(studentService).create(
-				Mockito.any(Student.class));
+		Mockito
+				.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
+					.when(stuMgrService)
+					.createStudentWithCourse(Mockito.any(StudentView.class));
 
 		mvc
 			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.errorCode").value(400));
 
-		verify(studentService, times(1)).create(Mockito.any(Student.class));
-		verifyNoMoreInteractions(studentService);
+		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(StudentView.class));
+		verifyNoMoreInteractions(stuMgrService);
 	}
 
 	@Test
@@ -118,8 +121,8 @@ public class StudentControllerTest {
 		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
 				status().isCreated());
 
-		verify(studentService, times(1)).create(Mockito.any(Student.class));
-		verifyNoMoreInteractions(studentService);
+		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(StudentView.class));
+		verifyNoMoreInteractions(stuMgrService);
 	}
 
 	@Test

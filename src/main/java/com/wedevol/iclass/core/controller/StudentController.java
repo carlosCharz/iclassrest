@@ -28,12 +28,17 @@ import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.StudentView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
  * Student Controller
  * 
  * @author charz
  *
  */
+@Api
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -48,6 +53,8 @@ public class StudentController {
 
 	/********************* CRUD for student ****************************/
 
+	@ApiIgnore
+	@ApiOperation(value = "Find all students")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -55,6 +62,7 @@ public class StudentController {
 		return studentService.findAll();
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -62,6 +70,7 @@ public class StudentController {
 		return studentService.findById(userId);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -69,6 +78,7 @@ public class StudentController {
 		stuMgrService.createStudentWithCourse(studentView);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -76,6 +86,7 @@ public class StudentController {
 		studentService.update(userId, student);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
