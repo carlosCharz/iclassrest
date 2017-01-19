@@ -1,9 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -73,6 +73,7 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 		}
 		final Student studentSaved = studentService.create(studentNew);
 
+		// Validate that the course exists
 		// Create the course
 		final Long courseId = studentView.getCourseId();
 		if (courseId != null) {
