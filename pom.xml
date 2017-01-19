@@ -47,6 +47,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<!-- FCM -->
+		<dependency>
+			<groupId>com.google.gcm</groupId>
+			<artifactId>gcm-server</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<!-- Google Guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
