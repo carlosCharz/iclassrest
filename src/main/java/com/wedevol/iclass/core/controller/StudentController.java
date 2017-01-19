@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.controller;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import io.swagger.annotations.ApiOperation;
 
 import java.util.Date;
 import java.util.List;
@@ -22,14 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.view.StudentView;
+import com.wedevol.iclass.core.view.UserView;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Student Controller
@@ -70,8 +69,8 @@ public class StudentController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody StudentView studentView) {
-		stuMgrService.createStudentWithCourse(studentView);
+	public Student create(@Valid @RequestBody UserView studentView) {
+		return stuMgrService.createStudentWithCourse(studentView);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)

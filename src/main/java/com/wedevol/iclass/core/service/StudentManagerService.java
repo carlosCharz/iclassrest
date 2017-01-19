@@ -6,7 +6,7 @@ import java.util.List;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.view.StudentView;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Student Manager Service Interface
@@ -16,7 +16,7 @@ import com.wedevol.iclass.core.view.StudentView;
  */
 public interface StudentManagerService {
 	
-	Student createStudentWithCourse(StudentView studentView);
+	Student createStudentWithCourse(UserView studentView);
 
 	List<Student> findStudentsByCourseId(Long courseId);
 

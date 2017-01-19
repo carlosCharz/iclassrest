@@ -27,7 +27,7 @@ import com.wedevol.iclass.core.repository.StudentManagerRepository;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.view.StudentView;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Student Manager Service Implementation
@@ -51,11 +51,26 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 	private StudentManagerRepository stuMgrRepository;
 
 	@Override
-	public Student createStudentWithCourse(StudentView studentView) {
+	public Student createStudentWithCourse(UserView studentView) {
 		// Create the user
 		Student studentNew = new Student.StudentBuilder(studentView.getFirstName(), studentView.getLastName(),
-				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword())).build();
-		// TODO: move other fields to the student object
+				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword()))
+																										.build();
+		if (studentView.getBirthday() != null) {
+			studentNew.setBirthday(studentView.getBirthday());
+		}
+		if (studentView.getGender() != null) {
+			studentNew.setGender(studentView.getGender());
+		}
+		if (studentView.getProfilePictureUrl() != null) {
+			studentNew.setProfilePictureUrl(studentView.getProfilePictureUrl());
+		}
+		if (studentView.getPlaceOptions() != null) {
+			studentNew.setPlaceOptions(studentView.getPlaceOptions());
+		}
+		if (studentView.getUniversity() != null) {
+			studentNew.setUniversity(studentView.getUniversity());
+		}
 		final Student studentSaved = studentService.create(studentNew);
 
 		// Create the course

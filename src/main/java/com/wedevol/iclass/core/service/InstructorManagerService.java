@@ -8,6 +8,7 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Instructor Manager Service Interface
@@ -16,6 +17,8 @@ import com.wedevol.iclass.core.entity.ScheduleBasic;
  *
  */
 public interface InstructorManagerService {
+	
+	Instructor createInstructorWithCourse(UserView instructorView);
 
 	List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 

@@ -21,14 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.view.UserView;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Instructor Controller
@@ -69,8 +70,8 @@ public class InstructorController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody Instructor instructor) {
-		instructorService.create(instructor);
+	public Instructor create(@Valid @RequestBody UserView instructorView) {
+		return insMgrService.createInstructorWithCourse(instructorView);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)

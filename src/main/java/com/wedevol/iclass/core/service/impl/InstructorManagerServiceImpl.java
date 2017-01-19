@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
 
@@ -18,13 +19,18 @@ import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.InstructorEnrollment;
+import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.InstructorManagerRepository;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Instructor Manager Service Implementation
@@ -42,10 +48,51 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	private InstructorManagerRepository insMgrRepository;
 
 	@Autowired
+	private InstructorEnrollmentService instructorEnrollmentService;
+
+	@Autowired
 	private CourseService courseService;
 
 	@Autowired
 	private InstructorService instructorService;
+
+	@Override
+	public Instructor createInstructorWithCourse(UserView instructorView) {
+		// Create the user
+		Instructor instructorNew = new Instructor.InstructorBuilder(instructorView.getFirstName(),
+				instructorView.getLastName(), instructorView.getPhone(), instructorView.getEmail(),
+				hashSHA256(instructorView
+											.getPassword()))
+															.build();
+		if (instructorView.getBirthday() != null) {
+			instructorNew.setBirthday(instructorView.getBirthday());
+		}
+		if (instructorView.getGender() != null) {
+			instructorNew.setGender(instructorView.getGender());
+		}
+		if (instructorView.getProfilePictureUrl() != null) {
+			instructorNew.setProfilePictureUrl(instructorView.getProfilePictureUrl());
+		}
+		if (instructorView.getPlaceOptions() != null) {
+			instructorNew.setPlaceOptions(instructorView.getPlaceOptions());
+		}
+		if (instructorView.getUniversity() != null) {
+			instructorNew.setUniversity(instructorView.getUniversity());
+		}
+		final Instructor instructorSaved = instructorService.create(instructorNew);
+
+		// Create the course
+		final Long courseId = instructorView.getCourseId();
+		if (courseId != null) {
+			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.FREE.getDescription());
+			// TODO: stop hardcoding
+			enr.setPrice(15);
+			enr.setCurrency("S/.");
+			instructorEnrollmentService.create(enr);
+		}
+		return instructorSaved;
+	}
 
 	@Override
 	public List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter) {
@@ -113,7 +160,8 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		}
 		// The course should exist
 		courseService.findById(courseId);
-		return insMgrRepository.findInstructorsWithCourseIdWithWeekDayWithTime(courseId, weekDayStr, startTime, endTime);
+		return insMgrRepository.findInstructorsWithCourseIdWithWeekDayWithTime(courseId, weekDayStr, startTime,
+				endTime);
 	}
 
 }

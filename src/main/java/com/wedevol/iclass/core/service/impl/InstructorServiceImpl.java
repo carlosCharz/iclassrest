@@ -53,12 +53,12 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public void create(Instructor instructor) {
+	public Instructor create(Instructor instructor) {
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
 		instructorObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
 		instructor.setPassword(hashSHA256(instructor.getPassword()));
-		instructorRepository.save(instructor);
+		return instructorRepository.save(instructor);
 	}
 
 	@Override

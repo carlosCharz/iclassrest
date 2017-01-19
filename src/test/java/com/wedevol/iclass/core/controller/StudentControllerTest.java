@@ -33,7 +33,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.service.impl.StudentManagerServiceImpl;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
-import com.wedevol.iclass.core.view.StudentView;
+import com.wedevol.iclass.core.view.UserView;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(StudentController.class)
@@ -104,14 +104,14 @@ public class StudentControllerTest {
 		Mockito
 				.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
 					.when(stuMgrService)
-					.createStudentWithCourse(Mockito.any(StudentView.class));
+					.createStudentWithCourse(Mockito.any(UserView.class));
 
 		mvc
 			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.errorCode").value(400));
 
-		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(StudentView.class));
+		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
 		verifyNoMoreInteractions(stuMgrService);
 	}
 
@@ -121,7 +121,7 @@ public class StudentControllerTest {
 		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
 				status().isCreated());
 
-		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(StudentView.class));
+		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
 		verifyNoMoreInteractions(stuMgrService);
 	}
 

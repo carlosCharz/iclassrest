@@ -21,12 +21,12 @@ import com.wedevol.iclass.core.entity.constraint.Gender;
 import com.wedevol.iclass.core.entity.constraint.PlaceOptions;
 
 /**
- * Student View
+ * User View
  * 
  * @author charz
  *
  */
-public class StudentView implements Serializable {
+public class UserView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -74,7 +74,7 @@ public class StudentView implements Serializable {
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	private Long courseId;
 
-	protected StudentView() {
+	protected UserView() {
 	}
 
 	public String getFirstName() {

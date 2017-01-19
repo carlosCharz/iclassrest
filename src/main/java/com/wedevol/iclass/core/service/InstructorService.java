@@ -18,7 +18,7 @@ public interface InstructorService {
 
 	Instructor findById(Long userId);
 
-	void create(Instructor instructor);
+	Instructor create(Instructor instructor);
 
 	void update(Long userId, Instructor instructor);
 
