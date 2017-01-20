@@ -1,9 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
-import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -24,6 +24,7 @@ import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.repository.StudentManagerRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
@@ -43,6 +44,9 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 
 	@Autowired
 	private StudentService studentService;
+
+	@Autowired
+	private CourseService courseService;
 
 	@Autowired
 	private StudentEnrollmentService studentEnrollmentService;
@@ -71,12 +75,18 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 		if (studentView.getUniversity() != null) {
 			studentNew.setUniversity(studentView.getUniversity());
 		}
+		if (studentView.getFcmToken() != null) {
+			studentNew.setFcmToken(studentView.getFcmToken());
+		}
+		studentNew.setActive(true);
 		final Student studentSaved = studentService.create(studentNew);
 
-		// Validate that the course exists
-		// Create the course
+		// Create the enrollment if there is courseId
 		final Long courseId = studentView.getCourseId();
 		if (courseId != null) {
+			// The course should exist
+			courseService.findById(courseId);
+			// Create the enrollment
 			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
 			final StudentEnrollment enr = new StudentEnrollment(enrId, CourseStatusType.FREE.getDescription());
 			studentEnrollmentService.create(enr);

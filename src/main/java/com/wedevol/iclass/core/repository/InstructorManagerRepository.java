@@ -30,7 +30,7 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.university, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.faculty, cou.university, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
 	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 

@@ -79,12 +79,18 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		if (instructorView.getUniversity() != null) {
 			instructorNew.setUniversity(instructorView.getUniversity());
 		}
+		if (instructorView.getFcmToken() != null) {
+			instructorNew.setFcmToken(instructorView.getFcmToken());
+		}
+		instructorNew.setActive(true);
 		final Instructor instructorSaved = instructorService.create(instructorNew);
 
-		// TODO: Validate that the course exists
-		// Create the course
+		// Create the enrollment if there is courseId
 		final Long courseId = instructorView.getCourseId();
 		if (courseId != null) {
+			// The course should exist
+			courseService.findById(courseId);
+			// Create the enrollment
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
 			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.FREE.getDescription());
 			// TODO: stop hardcoding
@@ -96,7 +102,8 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter) {
+	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+			String courseStatusFilter) {
 		if (!areValidCourseStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}

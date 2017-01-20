@@ -103,6 +103,13 @@ public class Student implements Serializable {
 	@Column(name = "totalhours")
 	private Integer totalHours;
 
+	// TODO: validate fcmToken
+	@Column(name = "fcmtoken")
+	private String fcmToken;
+
+	@Column
+	private boolean active;
+
 	protected Student() {
 	}
 
@@ -120,6 +127,8 @@ public class Student implements Serializable {
 		this.rating = builder.rating;
 		this.level = builder.level;
 		this.totalHours = builder.totalHours;
+		this.active = builder.active;
+		this.fcmToken = builder.fcmToken;
 	}
 
 	public Long getId() {
@@ -235,6 +244,22 @@ public class Student implements Serializable {
 		this.totalHours = totalHours;
 	}
 
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	/**
 	 * Student Builder
 	 * 
@@ -256,6 +281,8 @@ public class Student implements Serializable {
 		private Float rating;
 		private Integer level;
 		private Integer totalHours;
+		private String fcmToken;
+		private boolean active;
 
 		public StudentBuilder(String firstName, String lastName, String phone, String email, String password) {
 			this.firstName = firstName;
@@ -302,6 +329,16 @@ public class Student implements Serializable {
 
 		public StudentBuilder totalHours(Integer totalHours) {
 			this.totalHours = totalHours;
+			return this;
+		}
+
+		public StudentBuilder fcmToken(String fcmToken) {
+			this.fcmToken = fcmToken;
+			return this;
+		}
+
+		public StudentBuilder isActive(boolean active) {
+			this.active = active;
 			return this;
 		}
 

@@ -15,6 +15,7 @@ public class CourseFullInfo implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	private String faculty;
 	private String university;
 	private String status;
 	private Integer price;
@@ -23,11 +24,12 @@ public class CourseFullInfo implements Serializable {
 	protected CourseFullInfo() {
 	}
 
-	public CourseFullInfo(Long id, String name, String description, String university, String status, Integer price,
-			String currency) {
+	public CourseFullInfo(Long id, String name, String description, String faculty, String university, String status,
+			Integer price, String currency) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.faculty = faculty;
 		this.university = university;
 		this.status = status;
 		this.price = price;
@@ -56,6 +58,14 @@ public class CourseFullInfo implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
 	}
 
 	public String getUniversity() {

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -73,6 +74,9 @@ public class UserView implements Serializable {
 
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	private Long courseId;
+
+	@Column(name = "fcmtoken")
+	private String fcmToken;
 
 	protected UserView() {
 	}
@@ -142,8 +146,8 @@ public class UserView implements Serializable {
 	}
 
 	public Set<String> getPlaceOptions() {
-		return placeOptions == null ? Collections.emptySet() : Collections.unmodifiableSet(new HashSet<String>(
-				Arrays.asList(placeOptions.split(","))));
+		return placeOptions == null ? Collections.emptySet()
+				: Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(placeOptions.split(","))));
 	}
 
 	public void setPlaceOptions(Set<String> placeOptionsSet) {
@@ -164,6 +168,14 @@ public class UserView implements Serializable {
 
 	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
+	}
+
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
 	}
 
 }

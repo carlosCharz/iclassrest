@@ -38,6 +38,10 @@ public class Course implements Serializable {
 	@Column
 	private String description;
 
+	@Size(min = 2, max = 100, message = "Faculty name must be between 2 - 100 characters")
+	@Column(nullable = true)
+	private String faculty;
+
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
 	@Column(nullable = true)
 	private String university;
@@ -56,6 +60,7 @@ public class Course implements Serializable {
 	private Course(CourseBuilder builder) {
 		this.name = builder.name;
 		this.description = builder.description;
+		this.faculty = builder.faculty;
 		this.university = builder.university;
 	}
 
@@ -83,6 +88,14 @@ public class Course implements Serializable {
 		this.description = description;
 	}
 
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
 	public String getUniversity() {
 		return university;
 	}
@@ -101,6 +114,7 @@ public class Course implements Serializable {
 
 		private String name;
 		private String description;
+		private String faculty;
 		private String university;
 
 		public CourseBuilder(String name) {
@@ -109,6 +123,11 @@ public class Course implements Serializable {
 
 		public CourseBuilder description(String description) {
 			this.description = description;
+			return this;
+		}
+
+		public CourseBuilder faculty(String faculty) {
+			this.faculty = faculty;
 			return this;
 		}
 
