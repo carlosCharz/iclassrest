@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
@@ -20,7 +20,7 @@ public interface InstructorManagerService {
 	
 	Instructor createInstructorWithCourse(UserView instructorView);
 
-	List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
+	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 
 	List<Instructor> findInstructorsByCourseId(Long courseId);
 

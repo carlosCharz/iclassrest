@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
@@ -30,9 +30,9 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
-	public List<Course> findCoursesWithInstructorIdWithCourseStatusFilter(@Param("instructorId") Long instructorId,
-			@Param("courseStatusList") List<String> courseStatusList);
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.university, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
+	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
+			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 
 	/**
 	 * Return the instructor list of a course
@@ -95,7 +95,7 @@ public interface InstructorManagerRepository extends CrudRepository<Instructor, 
 	public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
 			@Param("actualTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
-	
+
 	/**
 	 * Return the instructors of a course for an specific week day (course status: free or payed, schedule: available =
 	 * true)

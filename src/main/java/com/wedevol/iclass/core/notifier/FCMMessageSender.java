@@ -58,8 +58,7 @@ public class FCMMessageSender implements IFCMMessageSender {
 	}
 
 	private Notification createNotificationPayload(NotificationRequest notificationRequest) {
-		final String message = notificationRequest.getContent()
-													.get("message");
+		final String message = notificationRequest.getMessage();
 		final String notificationType = notificationRequest.getNotificationTypeName();
 		return new Notification.Builder("").body(message)
 											.badge(1)

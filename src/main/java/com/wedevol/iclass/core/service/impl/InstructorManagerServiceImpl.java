@@ -1,9 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
-import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
@@ -96,7 +96,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<Course> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter) {
+	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter) {
 		if (!areValidCourseStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}

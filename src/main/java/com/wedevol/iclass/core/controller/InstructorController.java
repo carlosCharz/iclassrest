@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorManagerService;
@@ -94,7 +94,7 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
+	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of the instructor " + userId + " filtered by the supplied course status: "
 				+ courseStatusFilter);
