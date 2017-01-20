@@ -35,6 +35,15 @@ public class CourseFullInfo implements Serializable {
 		this.price = price;
 		this.currency = currency;
 	}
+	
+	public CourseFullInfo(Long id, String name, String description, String faculty, String university, String status) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.faculty = faculty;
+		this.university = university;
+		this.status = status;
+	}
 
 	public Long getId() {
 		return id;

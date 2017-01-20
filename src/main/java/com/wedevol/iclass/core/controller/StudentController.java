@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.UserView;
-
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Student Controller
@@ -93,7 +93,7 @@ public class StudentController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
+	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: " + courseStatusFilter);
 		return stuMgrService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);

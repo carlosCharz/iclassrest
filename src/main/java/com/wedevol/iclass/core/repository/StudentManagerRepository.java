@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 
 /**
@@ -38,8 +38,8 @@ public interface StudentManagerRepository extends CrudRepository<Student, Long> 
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
-	public List<Course> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.faculty, cou.university, enr.status) FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
+	public List<CourseFullInfo> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 
 	/**
