@@ -34,8 +34,8 @@ public class StudentEnrollment implements Serializable {
 
 	protected StudentEnrollment() {
 	}
-	
-	public StudentEnrollment(StudentEnrollmentId id, String status){
+
+	public StudentEnrollment(StudentEnrollmentId id, String status) {
 		this.id = id;
 		this.status = status;
 	}

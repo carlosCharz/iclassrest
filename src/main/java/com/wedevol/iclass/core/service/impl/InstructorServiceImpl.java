@@ -56,7 +56,7 @@ public class InstructorServiceImpl implements InstructorService {
 	public Instructor create(Instructor instructor) {
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
-		if (instructorObj.isPresent()){
+		if (instructorObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.USER_ALREADY_EXISTS);
 		}
 		return instructorRepository.save(instructor);
@@ -71,7 +71,7 @@ public class InstructorServiceImpl implements InstructorService {
 		existingInstructor.setPhone(instructor.getPhone());
 		existingInstructor.setEmail(instructor.getEmail());
 		// TODO: validate that the password has changed
-		//existingInstructor.setPassword(hashSHA256(instructor.getPassword()));
+		// existingInstructor.setPassword(hashSHA256(instructor.getPassword()));
 		if (instructor.getBirthday() != null) {
 			existingInstructor.setBirthday(instructor.getBirthday());
 		}

@@ -27,8 +27,8 @@ public class FCMMessageSender implements IFCMMessageSender {
 	public void send(NotificationRequest notification, String token) throws IOException {
 		Message message = createMessage(notification);
 		connection.send(message, token, 3/*
-										 * Settings.fcm() .getRetries()
-										 */);
+											 * Settings.fcm() .getRetries()
+											 */);
 
 	}
 
@@ -36,23 +36,25 @@ public class FCMMessageSender implements IFCMMessageSender {
 	public void send(NotificationRequest notification, List<String> tokens) throws IOException {
 		Message message = createMessage(notification);
 		connection.send(message, tokens, 3/*
-										 * Settings.fcm() .getRetries()
-										 */);
+											 * Settings.fcm() .getRetries()
+											 */);
 	}
 
 	private Message createMessage(NotificationRequest notification) {
 		// final FcmConfiguration config = Settings.fcm();
 		final String notificationType = notification.getNotificationTypeName();
 		final Notification notificationPayload = createNotificationPayload(notification);
-		Message message = new Message.Builder().collapseKey("xxx"/* config.getCollapseKey() */)
-												.timeToLive(4/* config.getTimeToLive() */)
-												.addData("senderId", String.valueOf(notification.getSenderId()))
-												.addData("receiverId", String.valueOf(notification.getReceiverId()))
-												.addData("type", notificationType)
-												.addData("message", notification.getMessage())
-												.notification(notificationPayload)
-												.priority(Priority.HIGH)
-												.build();
+		Message message = new Message.Builder()
+												.collapseKey("xxx"/* config.getCollapseKey() */)
+													.timeToLive(4/* config.getTimeToLive() */)
+													.addData("senderId", String.valueOf(notification.getSenderId()))
+													.addData("receiverId", String.valueOf(notification
+																										.getReceiverId()))
+													.addData("type", notificationType)
+													.addData("message", notification.getMessage())
+													.notification(notificationPayload)
+													.priority(Priority.HIGH)
+													.build();
 		logger.info(message.toString());
 		return message;
 	}
@@ -60,11 +62,12 @@ public class FCMMessageSender implements IFCMMessageSender {
 	private Notification createNotificationPayload(NotificationRequest notificationRequest) {
 		final String message = notificationRequest.getMessage();
 		final String notificationType = notificationRequest.getNotificationTypeName();
-		return new Notification.Builder("").body(message)
-											.badge(1)
-											.clickAction(notificationType)
-											.sound("default")
-											.build();
+		return new Notification.Builder("")
+											.body(message)
+												.badge(1)
+												.clickAction(notificationType)
+												.sound("default")
+												.build();
 	}
 
 }

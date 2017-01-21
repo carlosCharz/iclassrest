@@ -108,7 +108,7 @@ public class InstructorScheduleController {
 				+ dateToString(classDate));
 		return insMgrService.findSchedulesByCourseIdByDate(courseId, classDate);
 	}
-	
+
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

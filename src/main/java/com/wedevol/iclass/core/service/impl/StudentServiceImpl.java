@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
 	public Student create(Student student) {
 		// We first search by email, the student should not exist
 		final Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
-		if (studentObj.isPresent()){
+		if (studentObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.USER_ALREADY_EXISTS);
 		}
 		return studentRepository.save(student);
@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
 		existingStudent.setPhone(student.getPhone());
 		existingStudent.setEmail(student.getEmail());
 		// TODO: validate that the password has changed
-		//existingStudent.setPassword(hashSHA256(student.getPassword()));
+		// existingStudent.setPassword(hashSHA256(student.getPassword()));
 		if (student.getBirthday() != null) {
 			existingStudent.setBirthday(student.getBirthday());
 		}

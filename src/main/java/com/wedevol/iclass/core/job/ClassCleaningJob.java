@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 @DisallowConcurrentExecution
 public class ClassCleaningJob {
-	
+
 	protected static final Logger logger = LoggerFactory.getLogger(ClassCleaningJob.class);
 
 	public void execute() {

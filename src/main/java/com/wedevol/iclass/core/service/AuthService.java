@@ -12,7 +12,7 @@ import com.wedevol.iclass.core.entity.Student;
 public interface AuthService {
 
 	Student loginStudent(String email, String password);
-	
+
 	Instructor loginInstructor(String email, String password);
 
 }

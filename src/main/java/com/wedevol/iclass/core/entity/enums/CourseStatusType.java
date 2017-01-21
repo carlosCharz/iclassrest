@@ -6,8 +6,8 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum CourseStatusType {
-	FREE("free"), OPEN("open"), PENDING_PAYMENT("pendingPayment"), VERIFYING_PAYMENT("verifyingPayment"), PAYED(
-			"payed");
+	FREE("free"), OPEN("open"), PENDING_PAYMENT("pendingPayment"), VERIFYING_PAYMENT("verifyingPayment"),
+	PAYED("payed");
 
 	private final String description;
 

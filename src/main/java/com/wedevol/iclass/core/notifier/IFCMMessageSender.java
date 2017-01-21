@@ -14,7 +14,8 @@ public interface IFCMMessageSender {
 	/**
 	 * Send a notification to a token.
 	 * 
-	 * @param notification request
+	 * @param notification
+	 *            request
 	 * @param token
 	 * @throws IOException
 	 */
@@ -23,7 +24,8 @@ public interface IFCMMessageSender {
 	/**
 	 * Send a notification to the token list.
 	 * 
-	 * @param notification request
+	 * @param notification
+	 *            request
 	 * @param tokens
 	 * @throws IOException
 	 */

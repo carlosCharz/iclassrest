@@ -17,7 +17,7 @@ import com.wedevol.iclass.core.view.UserView;
  *
  */
 public interface InstructorManagerService {
-	
+
 	Instructor createInstructorWithCourse(UserView instructorView);
 
 	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);

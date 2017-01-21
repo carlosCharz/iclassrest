@@ -59,7 +59,7 @@ public class TopicServiceImpl implements TopicService {
 	public void create(Topic topic) {
 		// We first search by name, the topic should not exist
 		final Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
-		if (topicObj.isPresent()){
+		if (topicObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.TOPIC_ALREADY_EXISTS);
 		}
 		// Then, the course should exist

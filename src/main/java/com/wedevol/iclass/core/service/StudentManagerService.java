@@ -15,7 +15,7 @@ import com.wedevol.iclass.core.view.UserView;
  *
  */
 public interface StudentManagerService {
-	
+
 	Student createStudentWithCourse(UserView studentView);
 
 	List<Student> findStudentsByCourseId(Long courseId);

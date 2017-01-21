@@ -131,8 +131,7 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(
-			@PathVariable Long userId,
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
