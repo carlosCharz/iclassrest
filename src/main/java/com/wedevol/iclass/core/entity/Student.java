@@ -103,7 +103,7 @@ public class Student implements Serializable {
 	@Column(name = "totalhours")
 	private Integer totalHours;
 
-	// TODO: validate fcmToken
+	@Size(min = 2, max = 100, message = "FCM token must be between 2 - 300 characters")
 	@Column(name = "fcmtoken")
 	private String fcmToken;
 
