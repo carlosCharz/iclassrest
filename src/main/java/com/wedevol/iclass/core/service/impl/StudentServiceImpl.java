@@ -57,7 +57,9 @@ public class StudentServiceImpl implements StudentService {
 	public Student create(Student student) {
 		// We first search by email, the student should not exist
 		final Optional<Student> studentObj = Optional.ofNullable(findByEmail(student.getEmail()));
-		studentObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		if (studentObj.isPresent()){
+			throw new BadRequestException(BadRequestErrorType.USER_ALREADY_EXISTS);
+		}
 		return studentRepository.save(student);
 	}
 

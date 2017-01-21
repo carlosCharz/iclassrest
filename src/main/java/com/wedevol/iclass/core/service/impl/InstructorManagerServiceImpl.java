@@ -73,7 +73,7 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		if (instructorView.getProfilePictureUrl() != null) {
 			instructorNew.setProfilePictureUrl(instructorView.getProfilePictureUrl());
 		}
-		if (instructorView.getPlaceOptions() != null) {
+		if (!instructorView.getPlaceOptions().isEmpty()) {
 			instructorNew.setPlaceOptions(instructorView.getPlaceOptions());
 		}
 		if (instructorView.getUniversity() != null) {

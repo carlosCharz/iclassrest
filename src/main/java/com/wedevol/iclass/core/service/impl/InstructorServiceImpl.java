@@ -56,7 +56,9 @@ public class InstructorServiceImpl implements InstructorService {
 	public Instructor create(Instructor instructor) {
 		// We first search by email, the instructor should not exist
 		Optional<Instructor> instructorObj = Optional.ofNullable(findByEmail(instructor.getEmail()));
-		instructorObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		if (instructorObj.isPresent()){
+			throw new BadRequestException(BadRequestErrorType.USER_ALREADY_EXISTS);
+		}
 		return instructorRepository.save(instructor);
 	}
 

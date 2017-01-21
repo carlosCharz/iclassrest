@@ -11,7 +11,10 @@ public enum BadRequestErrorType {
 	METHOD_NOT_ALLOWED(400, "Method not allowed"), COURSE_STATUS_NOT_VALID(400, "Course status not valid"),
 	ARGUMENT_TYPE_MISMATCH(400, "Argument type mismatch"),
 	DATETIMES_NOT_VALID(400, "Start time should be less than the end time"),
-	MISSING_PARAMETER(400, "Missing parameter exception"), CLASS_STATUS_NOT_VALID(400, "Class status not valid");
+	MISSING_PARAMETER(400, "Missing parameter exception"), CLASS_STATUS_NOT_VALID(400, "Class status not valid"),
+	USER_ALREADY_EXISTS(400, "The user already exists"),
+	ENROLLMENT_ALREADY_EXISTS(400, "The enrollment already exists"),
+	COURSE_ALREADY_EXISTS(400, "The course already exists"), TOPIC_ALREADY_EXISTS(400, "The topic already exists");
 
 	private final int code;
 	private final String message;

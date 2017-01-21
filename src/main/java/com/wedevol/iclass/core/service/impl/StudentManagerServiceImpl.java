@@ -69,7 +69,7 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 		if (studentView.getProfilePictureUrl() != null) {
 			studentNew.setProfilePictureUrl(studentView.getProfilePictureUrl());
 		}
-		if (studentView.getPlaceOptions() != null) {
+		if (!studentView.getPlaceOptions().isEmpty()) {
 			studentNew.setPlaceOptions(studentView.getPlaceOptions());
 		}
 		if (studentView.getUniversity() != null) {
@@ -95,7 +95,8 @@ public class StudentManagerServiceImpl implements StudentManagerService {
 	}
 
 	@Override
-	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter) {
+	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
+			String courseStatusFilter) {
 		if (!areValidCourseStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}

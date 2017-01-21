@@ -55,7 +55,9 @@ public class CourseServiceImpl implements CourseService {
 	public void create(Course course) {
 		// We first search by name, the course should not exist
 		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
-		courseObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		if (courseObj.isPresent()){
+			throw new BadRequestException(BadRequestErrorType.COURSE_ALREADY_EXISTS);
+		}
 		courseRepository.save(course);
 	}
 

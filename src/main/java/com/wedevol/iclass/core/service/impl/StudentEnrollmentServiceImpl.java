@@ -53,7 +53,9 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 		// We first search by id, the studentEnrollment should not exist
 		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
 				enrRepository.findOne(studentEnrollment.getId()));
-		enrObj.ifPresent(s -> new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION));
+		if (enrObj.isPresent()){
+			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
+		}
 		enrRepository.save(studentEnrollment);
 	}
 
