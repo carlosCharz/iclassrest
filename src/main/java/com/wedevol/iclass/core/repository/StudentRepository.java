@@ -1,6 +1,10 @@
 package com.wedevol.iclass.core.repository;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,5 +27,15 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	 * @return student
 	 */
 	public Student findByEmail(String email);
+	
+	/**
+	 * Return the students of a course
+	 * 
+	 * @param courseId
+	 * @return list of students
+	 */
+	@Query("SELECT stu FROM StudentEnrollment enr, Student stu WHERE stu.id = enr.id.studentId AND enr.id.courseId = :courseId")
+	public List<Student> findStudentsWithCourseId(@Param("courseId") Long courseId);
+
 
 }

@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,12 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Course Service Implementation
@@ -33,7 +39,9 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	private CourseRepository courseRepository;
 
-	/********************* CRUD for student ****************************/
+	@Autowired
+	private StudentService studentService;
+
 	@Override
 	public List<Course> findAll() {
 		final Iterable<Course> coursesIterator = courseRepository.findAll();
@@ -77,6 +85,24 @@ public class CourseServiceImpl implements CourseService {
 		// The course should exist
 		findById(courseId);
 		courseRepository.delete(courseId);
+	}
+
+	@Override
+	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
+			String courseStatusFilter) {
+		// The student should exist
+		studentService.findById(studentId);
+		// The course status should be valid
+		if (!areValidCourseStatusFilters(courseStatusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
+		}
+		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));
+		return courseRepository.findCoursesWithStudentIdWithCourseStatusFilter(studentId, courseStatusList);
+	}
+
+	@Override
+	public List<Student> findStudentsByCourseId(Long courseId) {
+		return studentService.findStudentsByCourseId(courseId);
 	}
 
 }

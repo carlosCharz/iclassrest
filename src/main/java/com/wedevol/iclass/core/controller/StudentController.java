@@ -21,14 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.service.StudentManagerService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.UserView;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Student Controller
@@ -44,11 +43,6 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
-
-	@Autowired
-	private StudentManagerService stuMgrService;
-
-	/********************* CRUD for student ****************************/
 
 	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -70,7 +64,7 @@ public class StudentController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public Student create(@Valid @RequestBody UserView studentView) {
-		return stuMgrService.createStudentWithCourse(studentView);
+		return studentService.createStudentWithCourse(studentView);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
@@ -88,15 +82,13 @@ public class StudentController {
 		studentService.delete(userId);
 	}
 
-	/************** Courses & Students & Enrollment *************/
-
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: " + courseStatusFilter);
-		return stuMgrService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
+		return studentService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
@@ -108,7 +100,7 @@ public class StudentController {
 			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
 		logger.info("Find classes of a student since " + actualTime + " hours " + dateToString(actualDate)
 				+ " filtered by the supplied class status: " + statusFilter);
-		return stuMgrService.findClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
+		return studentService.findClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
 				statusFilter);
 	}
 

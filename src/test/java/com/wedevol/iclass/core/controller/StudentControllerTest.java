@@ -31,7 +31,6 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.service.impl.StudentManagerServiceImpl;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.view.UserView;
 
@@ -44,9 +43,6 @@ public class StudentControllerTest {
 
 	@MockBean
 	private StudentServiceImpl studentService;
-
-	@MockBean
-	private StudentManagerServiceImpl stuMgrService;
 
 	private Student student1;
 
@@ -103,7 +99,7 @@ public class StudentControllerTest {
 
 		Mockito
 				.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
-					.when(stuMgrService)
+					.when(studentService)
 					.createStudentWithCourse(Mockito.any(UserView.class));
 
 		mvc
@@ -111,8 +107,8 @@ public class StudentControllerTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.errorCode").value(400));
 
-		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
-		verifyNoMoreInteractions(stuMgrService);
+		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
+		verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
@@ -121,8 +117,8 @@ public class StudentControllerTest {
 		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
 				status().isCreated());
 
-		verify(stuMgrService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
-		verifyNoMoreInteractions(stuMgrService);
+		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
+		verifyNoMoreInteractions(studentService);
 	}
 
 	@Test

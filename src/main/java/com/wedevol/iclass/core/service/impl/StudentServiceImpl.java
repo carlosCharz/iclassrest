@@ -1,7 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CommonUtil.*;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,13 +14,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.ClassFullInfo;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.StudentEnrollment;
+import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.StudentRepository;
+import com.wedevol.iclass.core.service.ClassService;
+import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Student Service Implementation
@@ -35,7 +46,15 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	/********************* CRUD for student ****************************/
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
+	private ClassService classService;
+
+	@Autowired
+	private StudentEnrollmentService studentEnrollmentService;
+
 	@Override
 	public List<Student> findAll() {
 		final Iterable<Student> studentsIterator = studentRepository.findAll();
@@ -94,6 +113,66 @@ public class StudentServiceImpl implements StudentService {
 		// The student should exist
 		findById(userId);
 		studentRepository.delete(userId);
+	}
+
+	@Override
+	public List<Student> findStudentsByCourseId(Long courseId) {
+		// The course should exist
+		courseService.findById(courseId);
+		return studentRepository.findStudentsWithCourseId(courseId);
+	}
+
+	@Override
+	public Student createStudentWithCourse(UserView studentView) {
+		// Create the user
+		Student studentNew = new Student.StudentBuilder(studentView.getFirstName(), studentView.getLastName(),
+				studentView.getPhone(), studentView.getEmail(), hashSHA256(studentView.getPassword()))
+																										.build();
+		if (studentView.getBirthday() != null) {
+			studentNew.setBirthday(studentView.getBirthday());
+		}
+		if (studentView.getGender() != null) {
+			studentNew.setGender(studentView.getGender());
+		}
+		if (studentView.getProfilePictureUrl() != null) {
+			studentNew.setProfilePictureUrl(studentView.getProfilePictureUrl());
+		}
+		if (!studentView.getPlaceOptions().isEmpty()) {
+			studentNew.setPlaceOptions(studentView.getPlaceOptions());
+		}
+		if (studentView.getUniversity() != null) {
+			studentNew.setUniversity(studentView.getUniversity());
+		}
+		if (studentView.getFcmToken() != null) {
+			studentNew.setFcmToken(studentView.getFcmToken());
+		}
+		studentNew.setActive(true);
+		final Student studentSaved = this.create(studentNew);
+
+		// Create the enrollment if there is courseId
+		final Long courseId = studentView.getCourseId();
+		if (courseId != null) {
+			// The course should exist
+			courseService.findById(courseId);
+			// Create the enrollment
+			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
+			final StudentEnrollment enr = new StudentEnrollment(enrId, CourseStatusType.FREE.getDescription());
+			studentEnrollmentService.create(enr);
+		}
+		return studentSaved;
+	}
+
+	@Override
+	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
+			String courseStatusFilter) {
+		return courseService.findCoursesByStudentIdWithCourseStatusFilter(studentId, courseStatusFilter);
+	}
+
+	@Override
+	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+			Integer actualTime, String statusFilter) {
+		return classService.findClassesByStudentIdByDateTimeWithClassStatusFilter(studentId, actualDate, actualTime,
+				statusFilter);
 	}
 
 }

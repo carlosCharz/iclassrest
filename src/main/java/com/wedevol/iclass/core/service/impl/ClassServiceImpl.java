@@ -1,5 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -11,8 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.ClassRoom;
+import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.ClassRepository;
 import com.wedevol.iclass.core.service.ClassService;
@@ -44,7 +51,6 @@ public class ClassServiceImpl implements ClassService {
 	@Autowired
 	private CourseService courseService;
 
-	/********************* CRUD for class ****************************/
 	@Override
 	public List<ClassRoom> findAll() {
 		final Iterable<ClassRoom> classIterator = classRepository.findAll();
@@ -91,6 +97,21 @@ public class ClassServiceImpl implements ClassService {
 		// The class should exist
 		findById(classId);
 		classRepository.delete(classId);
+	}
+
+	@Override
+	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+			Integer actualTime, String statusFilter) {
+		// The student should exist
+		studentService.findById(studentId);
+		// The class status should be valid
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
+		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
+		final String actualDateStr = dateToString(actualDate);
+		return classRepository.findClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
+				actualTime, classStatusList);
 	}
 
 }

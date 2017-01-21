@@ -19,7 +19,6 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorManagerService;
-import com.wedevol.iclass.core.service.StudentManagerService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -38,11 +37,6 @@ public class CourseController {
 
 	@Autowired
 	private InstructorManagerService insMgrService;
-
-	@Autowired
-	private StudentManagerService stuMgrService;
-
-	/********************* CRUD for course ****************************/
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -97,6 +91,6 @@ public class CourseController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Student> findStudentsByCourseId(@PathVariable Long courseId) {
-		return stuMgrService.findStudentsByCourseId(courseId);
+		return courseService.findStudentsByCourseId(courseId);
 	}
 }

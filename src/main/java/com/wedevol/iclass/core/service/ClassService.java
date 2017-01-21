@@ -1,7 +1,9 @@
 package com.wedevol.iclass.core.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.ClassRoom;
 
 /**
@@ -21,5 +23,8 @@ public interface ClassService {
 	void update(Long classId, ClassRoom c);
 
 	void delete(Long classId);
+
+	List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+			Integer actualTime, String statusFilter);
 
 }
