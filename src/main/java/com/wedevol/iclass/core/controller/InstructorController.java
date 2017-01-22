@@ -49,8 +49,6 @@ public class InstructorController {
 	@Autowired
 	private InstructorManagerService insMgrService;
 
-	/********************* CRUD for instructor ****************************/
-
 	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -102,6 +100,7 @@ public class InstructorController {
 	}
 
 	@ApiIgnore
+	@Deprecated
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

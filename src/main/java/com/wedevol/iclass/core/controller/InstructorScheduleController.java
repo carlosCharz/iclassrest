@@ -98,6 +98,7 @@ public class InstructorScheduleController {
 	/********* Courses & Instructors & Enrollment *************/
 
 	@ApiIgnore
+	@Deprecated
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
