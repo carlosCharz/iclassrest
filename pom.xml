@@ -6,8 +6,8 @@
 	<groupId>com.wedevol.iclass</groupId>
 	<artifactId>api-rest-iclass</artifactId>
 	<packaging>war</packaging>
-	<version>2.0.0</version>
-	<name>iClass Rest WS</name>
+	<version>1.3.0</version>
+	<name>iClass Api Rest</name>
 
 	<properties>
 		<java.version>1.8</java.version>
