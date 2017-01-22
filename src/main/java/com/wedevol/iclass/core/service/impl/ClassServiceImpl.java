@@ -1,8 +1,8 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -76,7 +76,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public void create(Clase c) {
+	public Clase create(Clase c) {
 		// Fields missing validation
 		if (c.getStudentId() == null || c.getInstructorId() == null || c.getCourseId() == null || c.getWeekDay() == null
 				|| c.getClassDate() == null || c.getStartTime() == null || c.getEndTime() == null) {
@@ -99,7 +99,7 @@ public class ClassServiceImpl implements ClassService {
 		final StudentEnrollmentId stuEnrId = new StudentEnrollmentId(c.getStudentId(), c.getCourseId());
 		studentEnrollmentService.findById(stuEnrId);
 		// Save the class
-		classRepository.save(c);
+		return classRepository.save(c);
 	}
 
 	@Override

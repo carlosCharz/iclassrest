@@ -18,7 +18,7 @@ public interface ClassService {
 
 	Clase findById(Long classId);
 
-	void create(Clase c);
+	Clase create(Clase c);
 
 	void update(Long classId, Clase c);
 

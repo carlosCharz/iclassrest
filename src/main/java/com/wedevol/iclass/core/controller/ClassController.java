@@ -53,8 +53,8 @@ public class ClassController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody Clase c) {
-		classService.create(c);
+	public Clase create(@Valid @RequestBody Clase c) {
+		return classService.create(c);
 	}
 
 	@RequestMapping(value = "/{classId}", method = RequestMethod.PUT)
