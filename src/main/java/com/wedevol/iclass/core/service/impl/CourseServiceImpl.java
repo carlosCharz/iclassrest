@@ -114,5 +114,15 @@ public class CourseServiceImpl implements CourseService {
 	public List<Instructor> findInstructorsByCourseId(Long courseId) {
 		return instructorService.findInstructorsByCourseId(courseId);
 	}
+	
+	@Override
+	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+			String courseStatusFilter) {
+		if (!areValidCourseStatusFilters(courseStatusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
+		}
+		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));
+		return courseRepository.findCoursesWithInstructorIdWithCourseStatusFilter(instructorId, courseStatusList);
+	}
 
 }

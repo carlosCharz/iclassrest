@@ -32,5 +32,7 @@ public interface CourseService {
 	List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 	
 	List<Student> findStudentsByCourseId(Long courseId);
+	
+	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 
 }

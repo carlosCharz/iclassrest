@@ -69,7 +69,7 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public Instructor create(@Valid @RequestBody UserView instructorView) {
-		return insMgrService.createInstructorWithCourse(instructorView);
+		return instructorService.createInstructorWithCourse(instructorView);
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
@@ -87,8 +87,6 @@ public class InstructorController {
 		instructorService.delete(userId);
 	}
 
-	/********* Courses & Instructors & Enrollment *************/
-
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -96,7 +94,7 @@ public class InstructorController {
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of the instructor " + userId + " filtered by the supplied course status: "
 				+ courseStatusFilter);
-		return insMgrService.findCoursesByInstructorIdWithCourseStatusFilter(userId, courseStatusFilter);
+		return instructorService.findCoursesByInstructorIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
 	@ApiIgnore

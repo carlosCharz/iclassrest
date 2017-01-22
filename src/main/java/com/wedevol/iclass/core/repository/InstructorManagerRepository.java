@@ -23,16 +23,6 @@ import com.wedevol.iclass.core.entity.ScheduleBasic;
 @Repository
 @Transactional
 public interface InstructorManagerRepository extends CrudRepository<Instructor, Long> {
-	/**
-	 * Return the instructor's list of courses filtered by the supplied course status
-	 * 
-	 * @param instructorId
-	 * @param courseStatusList
-	 * @return list of courses
-	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.faculty, cou.university, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
-	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
-			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 
 
 	/**

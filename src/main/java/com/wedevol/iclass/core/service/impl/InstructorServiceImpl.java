@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
 import java.util.Date;
@@ -14,15 +15,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.InstructorEnrollment;
+import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.view.UserView;
 
 /**
  * Instructor Service Implementation
@@ -41,6 +48,9 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private InstructorEnrollmentService instructorEnrollmentService;
 
 	@Override
 	public List<Instructor> findAll() {
@@ -131,6 +141,57 @@ public class InstructorServiceImpl implements InstructorService {
 		courseService.findById(courseId);
 		final String dateStr = dateToString(classDate);
 		return instructorRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
+	}
+
+	@Override
+	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+			String courseStatusFilter) {
+		return courseService.findCoursesByInstructorIdWithCourseStatusFilter(instructorId, courseStatusFilter);
+	}
+
+	@Override
+	public Instructor createInstructorWithCourse(UserView instructorView) {
+		// Create the user
+		Instructor instructorNew = new Instructor.InstructorBuilder(instructorView.getFirstName(),
+				instructorView.getLastName(), instructorView.getPhone(), instructorView.getEmail(),
+				hashSHA256(instructorView
+											.getPassword()))
+															.build();
+		if (instructorView.getBirthday() != null) {
+			instructorNew.setBirthday(instructorView.getBirthday());
+		}
+		if (instructorView.getGender() != null) {
+			instructorNew.setGender(instructorView.getGender());
+		}
+		if (instructorView.getProfilePictureUrl() != null) {
+			instructorNew.setProfilePictureUrl(instructorView.getProfilePictureUrl());
+		}
+		if (!instructorView.getPlaceOptions().isEmpty()) {
+			instructorNew.setPlaceOptions(instructorView.getPlaceOptions());
+		}
+		if (instructorView.getUniversity() != null) {
+			instructorNew.setUniversity(instructorView.getUniversity());
+		}
+		if (instructorView.getFcmToken() != null) {
+			instructorNew.setFcmToken(instructorView.getFcmToken());
+		}
+		instructorNew.setActive(true);
+		final Instructor instructorSaved = this.create(instructorNew);
+
+		// Create the enrollment if there is courseId
+		final Long courseId = instructorView.getCourseId();
+		if (courseId != null) {
+			// The course should exist
+			courseService.findById(courseId);
+			// Create the enrollment
+			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.FREE.getDescription());
+			// TODO: stop hardcoding
+			enr.setPrice(15);
+			enr.setCurrency("S/.");
+			instructorEnrollmentService.create(enr);
+		}
+		return instructorSaved;
 	}
 
 }
