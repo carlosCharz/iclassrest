@@ -55,8 +55,8 @@ public class InstructorEnrollmentController {
 	@RequestMapping(value = "/instructorenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody InstructorEnrollment instructorCourse) {
-		insEnrService.create(instructorCourse);
+	public InstructorEnrollment create(@Valid @RequestBody InstructorEnrollment instructorCourse) {
+		return insEnrService.create(instructorCourse);
 	}
 
 	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)

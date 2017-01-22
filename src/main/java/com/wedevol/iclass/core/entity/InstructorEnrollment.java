@@ -7,13 +7,12 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
 import com.wedevol.iclass.core.entity.constraint.Currency;
-import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
+import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
 import com.wedevol.iclass.core.entity.enums.CurrencyType;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 
 /**
  * Instructor Enrollment Entity
@@ -30,17 +29,14 @@ public class InstructorEnrollment implements Serializable {
 	@EmbeddedId
 	private InstructorEnrollmentId id;
 
-	@NotNull
 	@EnrollmentStatus
 	@Column
 	private String status;
 
-	@NotNull
 	@Digits(integer = 2, fraction = 2, message = "Price must be just digits with maximum 2 decimals")
 	@Column
 	private Float price;
 
-	@NotNull
 	@Currency
 	@Column
 	private String currency;

@@ -17,7 +17,7 @@ public interface InstructorEnrollmentService {
 
 	InstructorEnrollment findById(InstructorEnrollmentId id);
 
-	void create(InstructorEnrollment instructorEnrollment);
+	InstructorEnrollment create(InstructorEnrollment instructorEnrollment);
 
 	void update(InstructorEnrollmentId id, InstructorEnrollment instructorEnrollment);
 

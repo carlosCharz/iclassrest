@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -51,23 +53,39 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	}
 
 	@Override
-	public void create(InstructorEnrollment instructorEnrollment) {
+	public InstructorEnrollment create(InstructorEnrollment instructorEnrollment) {
+		// Fields missing validation
+		if (instructorEnrollment.getId() == null
+				|| (instructorEnrollment.getId() != null && instructorEnrollment.getId().getInstructorId() == null)
+				|| (instructorEnrollment.getId() != null && instructorEnrollment.getId().getCourseId() == null)
+				|| instructorEnrollment.getStatus() == null || instructorEnrollment.getPrice() == null
+				|| instructorEnrollment.getCurrency() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
 		// We first search by id, the instructorEnrollment should not exist
 		final Optional<InstructorEnrollment> enrObj = Optional.ofNullable(enrRepository.findOne(instructorEnrollment
 																													.getId()));
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
-		enrRepository.save(instructorEnrollment);
+		// Save
+		return enrRepository.save(instructorEnrollment);
 	}
 
 	@Override
 	public void update(InstructorEnrollmentId id, InstructorEnrollment instructorEnrollment) {
 		// The instructorEnrollment should exist
 		InstructorEnrollment existingEnr = findById(id);
-		existingEnr.setStatus(instructorEnrollment.getStatus());
-		existingEnr.setPrice(instructorEnrollment.getPrice());
-		existingEnr.setCurrency(instructorEnrollment.getCurrency());
+		if (!isNullOrEmpty(instructorEnrollment.getStatus())) {
+			existingEnr.setStatus(instructorEnrollment.getStatus());
+		}
+		if (instructorEnrollment.getPrice() != null) {
+			existingEnr.setPrice(instructorEnrollment.getPrice());
+		}
+		if (instructorEnrollment.getCurrency() != null) {
+			existingEnr.setCurrency(instructorEnrollment.getCurrency());
+		}
+		// Save
 		enrRepository.save(existingEnr);
 	}
 
