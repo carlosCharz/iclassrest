@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.constraint.ClassStatus;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDatetimeDeserialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDatetimeSerialize;
 import com.wedevol.iclass.core.entity.constraint.WeekDay;
 
 /**
@@ -67,8 +69,8 @@ public class Clase implements Serializable {
 	@Column(name = "endtime")
 	private Integer endTime;
 
-	@JsonDeserialize(using = CustomDateDeserialize.class)
-	@JsonSerialize(using = CustomDateSerialize.class)
+	@JsonDeserialize(using = CustomDatetimeDeserialize.class)
+	@JsonSerialize(using = CustomDatetimeSerialize.class)
 	@Column(name = "requestedat")
 	private Date requestedAt;
 

@@ -17,8 +17,8 @@ import org.hibernate.annotations.DynamicInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.constraint.CourseSuggestionStatus;
-import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
-import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDatetimeDeserialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDatetimeSerialize;
 
 /**
  * Course Suggestion
@@ -66,9 +66,8 @@ public class CourseSuggestion implements Serializable {
 	@Column(nullable = true)
 	private String university;
 
-	// TODO: Analize if past or future
-	@JsonDeserialize(using = CustomDateDeserialize.class)
-	@JsonSerialize(using = CustomDateSerialize.class)
+	@JsonDeserialize(using = CustomDatetimeDeserialize.class)
+	@JsonSerialize(using = CustomDatetimeSerialize.class)
 	@Column(name = "requestedat", nullable = true)
 	private Date requestedAt;
 

@@ -17,9 +17,10 @@ import com.google.common.hash.Hashing;
  */
 public class CommonUtil {
 
-	public static final String DATE_FORMAT = "dd/MM/yyyy";
+	public static final String DATETIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+	public static final String DATE_FORMAT_PRETTY = "dd/MM/yyyy";
 	public static final String DATE_FORMAT_QUERY_DB = "yyyyMMdd";
-	public static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+	public static final SimpleDateFormat dateFormatPretty = new SimpleDateFormat(DATE_FORMAT_PRETTY);
 
 	public static String hashSHA256(String element) {
 		return Hashing.sha256().hashString(element, StandardCharsets.UTF_8).toString();
@@ -30,7 +31,7 @@ public class CommonUtil {
 	}
 
 	public static String dateToString(Date date) {
-		return CommonUtil.dateFormat.format(date.getTime());
+		return CommonUtil.dateFormatPretty.format(date.getTime());
 	}
 
 	public static String dateToString(Date date, String dateFormatStr) {
@@ -39,7 +40,12 @@ public class CommonUtil {
 	}
 
 	public static Date stringToDate(String dateStr) throws ParseException {
-		return CommonUtil.dateFormat.parse(dateStr);
+		return CommonUtil.dateFormatPretty.parse(dateStr);
+	}
+	
+	public static Date stringToDate(String dateStr, String dateFormatStr) throws ParseException {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
+		return dateFormat.parse(dateStr);
 	}
 
 	public static boolean isNullOrEmpty(String element) {
