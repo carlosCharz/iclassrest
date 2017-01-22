@@ -25,7 +25,6 @@ import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
-import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.UserView;
 
@@ -45,9 +44,6 @@ public class InstructorController {
 
 	@Autowired
 	private InstructorService instructorService;
-
-	@Autowired
-	private InstructorManagerService insMgrService;
 
 	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -134,7 +130,7 @@ public class InstructorController {
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
 		logger.info("Find classes of an instructor since " + actualTime + " hours " + dateToString(actualDate)
 				+ " filtered by the supplied class status: " + statusFilter);
-		return insMgrService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
+		return instructorService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
 				statusFilter);
 	}
 }

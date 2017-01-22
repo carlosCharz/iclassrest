@@ -114,4 +114,19 @@ public class ClassServiceImpl implements ClassService {
 				actualTime, classStatusList);
 	}
 
+	@Override
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String statusFilter) {
+		// The class status should be valid
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
+		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
+		// The instructor should exist
+		instructorService.findById(instructorId);
+		final String actualDateStr = dateToString(actualDate);
+		return classRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId, actualDateStr,
+				actualTime, classStatusList);
+	}
+
 }

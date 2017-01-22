@@ -3,8 +3,8 @@ package com.wedevol.iclass.core.service;
 import java.util.Date;
 import java.util.List;
 
-import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Clase;
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 
 /**
  * Class Service Interface
@@ -26,5 +26,8 @@ public interface ClassService {
 
 	List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
+	
+	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
+			Integer actualTime, String classStatusFilter);
 
 }

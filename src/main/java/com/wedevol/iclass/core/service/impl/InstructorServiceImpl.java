@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
@@ -27,6 +28,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
+import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
@@ -52,8 +54,11 @@ public class InstructorServiceImpl implements InstructorService {
 	private CourseService courseService;
 
 	@Autowired
+	private ClassService classService;
+
+	@Autowired
 	private InstructorEnrollmentService instructorEnrollmentService;
-	
+
 	@Autowired
 	private InstructorScheduleService instructorScheduleService;
 
@@ -207,6 +212,13 @@ public class InstructorServiceImpl implements InstructorService {
 	@Override
 	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
 		return instructorScheduleService.findSchedulesByCourseIdByWeekDay(courseId, weekDayStr);
+	}
+
+	@Override
+	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String classStatusFilter) {
+		return classService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
+				actualTime, classStatusFilter);
 	}
 
 }
