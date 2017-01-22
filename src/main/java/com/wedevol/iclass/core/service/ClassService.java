@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.ClassRoom;
+import com.wedevol.iclass.core.entity.Clase;
 
 /**
  * Class Service Interface
@@ -14,13 +14,13 @@ import com.wedevol.iclass.core.entity.ClassRoom;
  */
 public interface ClassService {
 
-	List<ClassRoom> findAll();
+	List<Clase> findAll();
 
-	ClassRoom findById(Long classId);
+	Clase findById(Long classId);
 
-	void create(ClassRoom c);
+	void create(Clase c);
 
-	void update(Long classId, ClassRoom c);
+	void update(Long classId, Clase c);
 
 	void delete(Long classId);
 

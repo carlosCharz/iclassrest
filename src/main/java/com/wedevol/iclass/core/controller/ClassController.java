@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-import com.wedevol.iclass.core.entity.ClassRoom;
+import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.service.ClassService;
 
 /**
@@ -38,7 +38,7 @@ public class ClassController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassRoom> findAll() {
+	public List<Clase> findAll() {
 		return classService.findAll();
 	}
 
@@ -46,21 +46,21 @@ public class ClassController {
 	@RequestMapping(value = "/{classId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ClassRoom findById(@PathVariable Long classId) {
+	public Clase findById(@PathVariable Long classId) {
 		return classService.findById(classId);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody ClassRoom c) {
+	public void create(@Valid @RequestBody Clase c) {
 		classService.create(c);
 	}
 
 	@RequestMapping(value = "/{classId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void update(@PathVariable Long classId, @Valid @RequestBody ClassRoom c) {
+	public void update(@PathVariable Long classId, @Valid @RequestBody Clase c) {
 		classService.update(classId, c);
 	}
 
