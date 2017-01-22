@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -34,7 +35,8 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	@Autowired
 	private InstructorEnrollmentRepository enrRepository;
 
-	/***************** CRUD for Instructor Enrollment ***********************/
+	@Autowired
+	private BusinessSetting bussinessSetting;
 
 	@Override
 	public List<InstructorEnrollment> findAll() {
@@ -74,6 +76,12 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 		// The instructorEnrollment should exist
 		findById(id);
 		enrRepository.delete(id);
+	}
+
+	@Override
+	public Float getAveragePriceForCourse(Long courseId) {
+		final Optional<Float> priceObj = Optional.ofNullable(enrRepository.findAveragePriceForCourseId(courseId));
+		return priceObj.orElse(bussinessSetting.getInstructorDefaultPrice());
 	}
 
 }

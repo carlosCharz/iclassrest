@@ -34,7 +34,7 @@ public interface ClassRepository extends CrudRepository<Clase, Long> {
 	public List<ClassFullInfo> findClassesWithStudentIdWithDateTimeWithClassStatusFilter(
 			@Param("studentId") Long studentId, @Param("actualDateStr") String actualDateStr,
 			@Param("actualTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
-	
+
 	/**
 	 * Return classes of an instructor since hh:mm dd/MM/yyyy filtered by the supplied class status
 	 * 
@@ -44,7 +44,7 @@ public interface ClassRepository extends CrudRepository<Clase, Long> {
 	 * @param classStatusList
 	 * @return list of classes
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.ClassFullInfo(cla.id AS classId, cla.startTime, cla.endTime, cla.weekDay, cla.classDate, cla.status AS classStatus, cou.id AS courseId, cou.name AS courseName, 'student', stu.id AS userId, stu.firstName, stu.lastName, stu.phone, enr.price, enr.currency) FROM ClassRoom cla, Course cou, Student stu, InstructorEnrollment enr WHERE stu.id = cla.studentId AND cou.id = cla.courseId AND enr.id.courseId = cou.id AND enr.id.instructorId = cla.instructorId AND enr.id.instructorId = :instructorId AND cla.status in :classStatusList AND (:actualDateStr < DATE_FORMAT(classDate, '%d/%m/%Y') OR (:actualDateStr = DATE_FORMAT(classDate, '%d/%m/%Y') AND :actualTime <= cla.startTime)) order by cla.classDate asc, cla.startTime asc")
+	@Query("SELECT new com.wedevol.iclass.core.entity.ClassFullInfo(cla.id AS classId, cla.startTime, cla.endTime, cla.weekDay, cla.classDate, cla.status AS classStatus, cou.id AS courseId, cou.name AS courseName, 'student', stu.id AS userId, stu.firstName, stu.lastName, stu.phone, enr.price, enr.currency) FROM Clase cla, Course cou, Student stu, InstructorEnrollment enr WHERE stu.id = cla.studentId AND cou.id = cla.courseId AND enr.id.courseId = cou.id AND enr.id.instructorId = cla.instructorId AND enr.id.instructorId = :instructorId AND cla.status in :classStatusList AND (:actualDateStr < DATE_FORMAT(classDate, '%d/%m/%Y') OR (:actualDateStr = DATE_FORMAT(classDate, '%d/%m/%Y') AND :actualTime <= cla.startTime)) order by cla.classDate asc, cla.startTime asc")
 	public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
 			@Param("actualTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);

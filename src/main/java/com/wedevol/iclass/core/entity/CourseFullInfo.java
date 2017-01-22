@@ -18,14 +18,14 @@ public class CourseFullInfo implements Serializable {
 	private String faculty;
 	private String university;
 	private String status;
-	private Integer price;
+	private Float price;
 	private String currency;
 
 	protected CourseFullInfo() {
 	}
 
 	public CourseFullInfo(Long id, String name, String description, String faculty, String university, String status,
-			Integer price, String currency) {
+			Float price, String currency) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -93,11 +93,11 @@ public class CourseFullInfo implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 

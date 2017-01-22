@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
@@ -61,6 +62,9 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorScheduleService instructorScheduleService;
+
+	@Autowired
+	private BusinessSetting bussinessSetting;
 
 	@Override
 	public List<Instructor> findAll() {
@@ -195,10 +199,9 @@ public class InstructorServiceImpl implements InstructorService {
 			courseService.findById(courseId);
 			// Create the enrollment
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
-			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.FREE.getDescription());
-			// TODO: stop hardcoding
-			enr.setPrice(15);
-			enr.setCurrency("S/.");
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.OPEN.getDescription());
+			enr.setPrice(instructorEnrollmentService.getAveragePriceForCourse(courseId));
+			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);
 		}
 		return instructorSaved;

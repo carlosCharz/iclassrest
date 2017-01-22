@@ -36,9 +36,9 @@ public class InstructorEnrollment implements Serializable {
 	private String status;
 
 	@NotNull
-	@Digits(integer = 2, fraction = 0, message = "Price must be just digits")
+	@Digits(integer = 2, fraction = 2, message = "Price must be just digits with maximum 2 decimals")
 	@Column
-	private Integer price;
+	private Float price;
 
 	@NotNull
 	@Currency
@@ -74,11 +74,11 @@ public class InstructorEnrollment implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 

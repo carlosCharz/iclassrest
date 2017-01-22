@@ -33,7 +33,7 @@ public class ClassFullInfo implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String phone;
-	private Integer price;
+	private Float price;
 	private String currency;
 
 	protected ClassFullInfo() {
@@ -41,7 +41,7 @@ public class ClassFullInfo implements Serializable {
 
 	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, String weekDay, Date classDate,
 			String classStatus, Long courseId, String courseName, String userType, Long userId, String firstName,
-			String lastName, String phone, Integer price, String currency) {
+			String lastName, String phone, Float price, String currency) {
 		super();
 		this.classId = classId;
 		this.startTime = startTime;
@@ -164,11 +164,11 @@ public class ClassFullInfo implements Serializable {
 		this.phone = phone;
 	}
 
-	public Integer getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 

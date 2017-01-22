@@ -17,13 +17,13 @@ public class InstructorBasic implements Serializable {
 	private String lastName;
 	private Float rating;
 	private Integer level;
-	private Integer price;
+	private Float price;
 	private String currency;
 
 	protected InstructorBasic() {
 	}
 
-	public InstructorBasic(Long id, String firstName, String lastName, Float rating, Integer level, Integer price,
+	public InstructorBasic(Long id, String firstName, String lastName, Float rating, Integer level, Float price,
 			String currency) {
 		super();
 		this.id = id;
@@ -75,11 +75,11 @@ public class InstructorBasic implements Serializable {
 		this.level = level;
 	}
 
-	public Integer getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 
