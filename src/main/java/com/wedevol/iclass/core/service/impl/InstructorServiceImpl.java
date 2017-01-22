@@ -1,5 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorService;
-import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Instructor Service Implementation
@@ -34,7 +39,9 @@ public class InstructorServiceImpl implements InstructorService {
 	@Autowired
 	private InstructorRepository instructorRepository;
 
-	/********************* CRUD for instructor ****************************/
+	@Autowired
+	private CourseService courseService;
+
 	@Override
 	public List<Instructor> findAll() {
 		final Iterable<Instructor> instructorsIterator = instructorRepository.findAll();
@@ -93,6 +100,37 @@ public class InstructorServiceImpl implements InstructorService {
 		// The instructor should exist
 		findById(userId);
 		instructorRepository.delete(userId);
+	}
+
+	@Override
+	public List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(Long courseId, String weekDayStr,
+			Integer startTime, Integer endTime) {
+		// Date times validation
+		if (startTime >= endTime) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
+		// The course should exist
+		courseService.findById(courseId);
+		return instructorRepository.findInstructorsWithCourseIdWithWeekDayWithTime(courseId, weekDayStr, startTime,
+				endTime);
+	}
+
+	@Override
+	public List<Instructor> findInstructorsByCourseId(Long courseId) {
+		return instructorRepository.findInstructorsWithCourseId(courseId);
+	}
+
+	@Override
+	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
+			Integer endTime) {
+		// Date times validation
+		if (startTime >= endTime) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
+		// The course should exist
+		courseService.findById(courseId);
+		final String dateStr = dateToString(classDate);
+		return instructorRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
 	}
 
 }

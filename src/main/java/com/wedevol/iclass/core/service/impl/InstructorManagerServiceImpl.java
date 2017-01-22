@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
@@ -112,24 +111,6 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	}
 
 	@Override
-	public List<Instructor> findInstructorsByCourseId(Long courseId) {
-		return insMgrRepository.findInstructorsWithCourseId(courseId);
-	}
-
-	@Override
-	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
-			Integer endTime) {
-		// Date times validation
-		if (startTime >= endTime) {
-			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
-		}
-		// The course should exist
-		courseService.findById(courseId);
-		final String dateStr = dateToString(classDate);
-		return insMgrRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
-	}
-
-	@Override
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);
@@ -157,19 +138,6 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 		final String actualDateStr = dateToString(actualDate);
 		return insMgrRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
 				actualDateStr, actualTime, classStatusList);
-	}
-
-	@Override
-	public List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(Long courseId, String weekDayStr,
-			Integer startTime, Integer endTime) {
-		// Date times validation
-		if (startTime >= endTime) {
-			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
-		}
-		// The course should exist
-		courseService.findById(courseId);
-		return insMgrRepository.findInstructorsWithCourseIdWithWeekDayWithTime(courseId, weekDayStr, startTime,
-				endTime);
 	}
 
 }

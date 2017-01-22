@@ -111,7 +111,7 @@ public class InstructorController {
 			@RequestParam(value = "endTime", required = true) Integer endTime) {
 		logger.info("Find instructors of the course " + courseId + " in " + dateToString(classDate) + " from "
 				+ startTime + " to " + endTime);
-		return insMgrService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
+		return instructorService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
 	}
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
@@ -124,7 +124,7 @@ public class InstructorController {
 			@RequestParam(value = "endTime", required = true) Integer endTime) {
 		logger.info("Find instructors of the course " + courseId + " for the week day '" + weekDay + "' from "
 				+ startTime + " to " + endTime);
-		return insMgrService.findInstructorsByCourseIdByWeekDayByTime(courseId, weekDay, startTime, endTime);
+		return instructorService.findInstructorsByCourseIdByWeekDayByTime(courseId, weekDay, startTime, endTime);
 	}
 
 	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)

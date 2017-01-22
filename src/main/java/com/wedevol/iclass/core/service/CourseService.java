@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 
 /**
@@ -25,6 +26,8 @@ public interface CourseService {
 	void update(Long courseId, Course course);
 
 	void delete(Long courseId);
+	
+	List<Instructor> findInstructorsByCourseId(Long courseId);
 	
 	List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 	

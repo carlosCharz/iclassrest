@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
@@ -22,6 +23,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
 
 /**
@@ -41,6 +43,9 @@ public class CourseServiceImpl implements CourseService {
 
 	@Autowired
 	private StudentService studentService;
+
+	@Autowired
+	private InstructorService instructorService;
 
 	@Override
 	public List<Course> findAll() {
@@ -103,6 +108,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<Student> findStudentsByCourseId(Long courseId) {
 		return studentService.findStudentsByCourseId(courseId);
+	}
+
+	@Override
+	public List<Instructor> findInstructorsByCourseId(Long courseId) {
+		return instructorService.findInstructorsByCourseId(courseId);
 	}
 
 }

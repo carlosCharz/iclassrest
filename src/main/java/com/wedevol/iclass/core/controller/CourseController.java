@@ -18,7 +18,6 @@ import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.CourseService;
-import com.wedevol.iclass.core.service.InstructorManagerService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -34,9 +33,6 @@ public class CourseController {
 
 	@Autowired
 	private CourseService courseService;
-
-	@Autowired
-	private InstructorManagerService insMgrService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -76,14 +72,12 @@ public class CourseController {
 		courseService.delete(courseId);
 	}
 
-	/************** Instructors & Student & Courses **********************/
-
 	@ApiIgnore
 	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Instructor> findInstructorsByCourseId(@PathVariable Long courseId) {
-		return insMgrService.findInstructorsByCourseId(courseId);
+		return courseService.findInstructorsByCourseId(courseId);
 	}
 
 	@ApiIgnore
