@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import com.wedevol.iclass.core.entity.enums.ClassStatusType;
+import com.wedevol.iclass.core.entity.enums.CourseSuggestionStatusType;
 import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 
 /**
@@ -35,5 +36,18 @@ public class CoreUtil {
 
 	public static boolean areValidClassStatusFilters(String statusFilter) {
 		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidClassStatus());
+	}
+
+	public static Predicate<String> isValidCourseSuggestionStatus() {
+		return courseSuggestionStatus -> Arrays
+												.stream(CourseSuggestionStatusType.values())
+													.filter(validOption -> courseSuggestionStatus.equals(
+															validOption.getDescription()))
+													.findFirst()
+													.isPresent();
+	}
+
+	public static boolean areValidCourseSuggestionStatusFilters(String statusFilter) {
+		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidCourseSuggestionStatus());
 	}
 }

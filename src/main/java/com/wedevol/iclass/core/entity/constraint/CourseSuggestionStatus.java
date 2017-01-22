@@ -9,20 +9,20 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.wedevol.iclass.core.entity.validator.EnrollmentStatusValidator;
+import com.wedevol.iclass.core.entity.validator.CourseSuggestionStatusValidator;
 
 /**
- * Enrollment Status Constraint
+ * Course Suggestion Status Constraint
  *
  * @author charz
  */
 @Documented
-@Constraint(validatedBy = EnrollmentStatusValidator.class)
+@Constraint(validatedBy = CourseSuggestionStatusValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EnrollmentStatus {
+public @interface CourseSuggestionStatus {
 
-	String message() default "Enrollment status must be free, open, pendingPayment, verifyingPayment, payed";
+	String message() default "Course suggestion status must be suggested, accepted, rejected";
 
 	Class<?>[] groups() default {};
 
