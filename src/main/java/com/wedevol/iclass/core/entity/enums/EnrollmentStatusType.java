@@ -7,7 +7,7 @@ package com.wedevol.iclass.core.entity.enums;
  */
 public enum EnrollmentStatusType {
 	FREE("free"), OPEN("open"), PENDING_PAYMENT("pendingPayment"), VERIFYING_PAYMENT("verifyingPayment"),
-	PAYED("payed");
+	PAYED("payed"), DENIED("denied");
 
 	private final String description;
 

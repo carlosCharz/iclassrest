@@ -1,6 +1,5 @@
 package com.wedevol.iclass.core.service.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +60,6 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	public void create(CourseSuggestion courseSuggestion) {
 		// The user should exist
 		validateUser(courseSuggestion.getUserId(), courseSuggestion.getUserType());
-		courseSuggestion.setRequestedAt(new Date());
 		courseSuggestionRepository.save(courseSuggestion);
 	}
 

@@ -66,7 +66,6 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public void create(Clase c) {
 		// TODO: Analize if the class should not exist first
-		c.setRequestedAt(new Date());
 		classRepository.save(c);
 	}
 
