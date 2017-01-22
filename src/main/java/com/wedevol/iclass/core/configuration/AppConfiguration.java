@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  *
  * @author Charz++
  */
-@EnableConfigurationProperties({ FcmSetting.class })
+@EnableConfigurationProperties({ FcmSetting.class, EnvironmentSetting.class })
 public class AppConfiguration {
 
 }

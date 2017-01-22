@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
@@ -15,6 +17,9 @@ import com.wedevol.iclass.core.job.ClassCleaningJob;
  */
 @Configuration
 public class QuartzConfiguration {
+
+	protected static final Logger logger = LoggerFactory.getLogger(QuartzConfiguration.class);
+
 	@Bean
 	public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
 		MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
@@ -31,6 +36,7 @@ public class QuartzConfiguration {
 		stFactory.setName("classTrigger");
 		stFactory.setGroup("classGroup");
 		stFactory.setCronExpression("0 0/1 * * * ? *");// Job is scheduled after every 1 minute
+		logger.info("Setting up the classes cleaning job to be every 1 minute");
 		return stFactory;
 	}
 
