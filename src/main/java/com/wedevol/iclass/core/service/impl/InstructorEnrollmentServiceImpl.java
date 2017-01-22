@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -58,8 +59,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 		if (instructorEnrollment.getId() == null
 				|| (instructorEnrollment.getId() != null && instructorEnrollment.getId().getInstructorId() == null)
 				|| (instructorEnrollment.getId() != null && instructorEnrollment.getId().getCourseId() == null)
-				|| instructorEnrollment.getStatus() == null || instructorEnrollment.getPrice() == null
-				|| instructorEnrollment.getCurrency() == null) {
+				|| instructorEnrollment.getPrice() == null || instructorEnrollment.getCurrency() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// We first search by id, the instructorEnrollment should not exist
@@ -68,6 +68,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
+		instructorEnrollment.setStatus(EnrollmentStatusType.REQUESTED.getDescription());
 		// Save
 		return enrRepository.save(instructorEnrollment);
 	}

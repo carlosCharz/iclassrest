@@ -20,6 +20,7 @@ import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -98,6 +99,7 @@ public class ClassServiceImpl implements ClassService {
 		// The student enrollment should exist
 		final StudentEnrollmentId stuEnrId = new StudentEnrollmentId(c.getStudentId(), c.getCourseId());
 		studentEnrollmentService.findById(stuEnrId);
+		c.setStatus(ClassStatusType.REQUESTED.getDescription());
 		// Save the class
 		return classRepository.save(c);
 	}
@@ -152,9 +154,9 @@ public class ClassServiceImpl implements ClassService {
 	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter) {
 		// The class status should be valid
-				if (!areValidClassStatusFilters(statusFilter)) {
-					throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
-				}
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
 		// The student should exist
 		studentService.findById(studentId);
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Student Enrollment Controller
@@ -59,8 +59,8 @@ public class StudentEnrollmentController {
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody StudentEnrollment studentCourse) {
-		stuEnrService.create(studentCourse);
+	public StudentEnrollment create(@Valid @RequestBody StudentEnrollment studentCourse) {
+		return stuEnrService.create(studentCourse);
 	}
 
 	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)

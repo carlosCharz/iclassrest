@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -49,14 +50,22 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	}
 
 	@Override
-	public void create(StudentEnrollment studentEnrollment) {
+	public StudentEnrollment create(StudentEnrollment studentEnrollment) {
+		// Fields missing validation
+		if (studentEnrollment.getId() == null
+				|| (studentEnrollment.getId() != null && studentEnrollment.getId().getStudentId() == null)
+				|| (studentEnrollment.getId() != null && studentEnrollment.getId().getCourseId() == null)) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
 		// We first search by id, the studentEnrollment should not exist
 		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
 				enrRepository.findOne(studentEnrollment.getId()));
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
-		enrRepository.save(studentEnrollment);
+		studentEnrollment.setStatus(EnrollmentStatusType.REQUESTED.getDescription());
+		// Save
+		return enrRepository.save(studentEnrollment);
 	}
 
 	@Override

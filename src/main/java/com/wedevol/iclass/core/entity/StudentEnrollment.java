@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
@@ -27,7 +26,6 @@ public class StudentEnrollment implements Serializable {
 	@EmbeddedId
 	private StudentEnrollmentId id;
 
-	@NotNull
 	@EnrollmentStatus
 	@Column
 	private String status;

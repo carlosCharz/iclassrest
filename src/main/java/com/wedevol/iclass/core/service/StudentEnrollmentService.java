@@ -17,7 +17,7 @@ public interface StudentEnrollmentService {
 
 	StudentEnrollment findById(StudentEnrollmentId id);
 
-	void create(StudentEnrollment studentEnrollment);
+	StudentEnrollment create(StudentEnrollment studentEnrollment);
 
 	void update(StudentEnrollmentId id, StudentEnrollment studentEnrollment);
 
