@@ -18,6 +18,7 @@ import com.google.common.hash.Hashing;
 public class CommonUtil {
 
 	public static final String DATE_FORMAT = "dd/MM/yyyy";
+	public static final String DATE_FORMAT_QUERY_DB = "yyyyMMdd";
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
 	public static String hashSHA256(String element) {
@@ -30,6 +31,11 @@ public class CommonUtil {
 
 	public static String dateToString(Date date) {
 		return CommonUtil.dateFormat.format(date.getTime());
+	}
+
+	public static String dateToString(Date date, String dateFormatStr) {
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
+		return dateFormat.format(date.getTime());
 	}
 
 	public static Date stringToDate(String dateStr) throws ParseException {

@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Clase;
+import com.wedevol.iclass.core.entity.ClassFullInfo;
+import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
+import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -24,8 +26,11 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.ClassRepository;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Class Service Implementation
@@ -49,6 +54,12 @@ public class ClassServiceImpl implements ClassService {
 	private InstructorService instructorService;
 
 	@Autowired
+	private InstructorEnrollmentService instructorEnrollmentService;
+
+	@Autowired
+	private StudentEnrollmentService studentEnrollmentService;
+
+	@Autowired
 	private CourseService courseService;
 
 	@Override
@@ -65,7 +76,20 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void create(Clase c) {
-		// TODO: Analize if the class should not exist first
+		// TODO: Analize if the class should not exist first by other fields
+		// The student should exist
+		studentService.findById(c.getStudentId());
+		// The instructor should exist
+		instructorService.findById(c.getInstructorId());
+		// The course should exist
+		courseService.findById(c.getCourseId());
+		// The instructor enrollment should exist
+		final InstructorEnrollmentId insEnrId = new InstructorEnrollmentId(c.getInstructorId(), c.getCourseId());
+		instructorEnrollmentService.findById(insEnrId);
+		// The student enrollment should exist
+		final StudentEnrollmentId stuEnrId = new StudentEnrollmentId(c.getStudentId(), c.getCourseId());
+		studentEnrollmentService.findById(stuEnrId);
+		// Save the class
 		classRepository.save(c);
 	}
 
@@ -73,11 +97,12 @@ public class ClassServiceImpl implements ClassService {
 	public void update(Long classId, Clase c) {
 		// The class should exist
 		Clase existingClass = findById(classId);
-		// Then, the student should exist
+		// TODO: analyze if we need to update the student, instructor, course
+		// The student should exist
 		studentService.findById(c.getStudentId());
-		// Then, the instructor should exist
+		// The instructor should exist
 		instructorService.findById(c.getInstructorId());
-		// Then, the course should exist
+		// The course should exist
 		courseService.findById(c.getCourseId());
 		// Update
 		existingClass.setStudentId(c.getStudentId());
@@ -108,7 +133,7 @@ public class ClassServiceImpl implements ClassService {
 			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
 		}
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
-		final String actualDateStr = dateToString(actualDate);
+		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
 		return classRepository.findClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
 				actualTime, classStatusList);
 	}
@@ -123,7 +148,7 @@ public class ClassServiceImpl implements ClassService {
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
 		// The instructor should exist
 		instructorService.findById(instructorId);
-		final String actualDateStr = dateToString(actualDate);
+		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
 		return classRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId, actualDateStr,
 				actualTime, classStatusList);
 	}

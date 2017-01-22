@@ -34,6 +34,7 @@ import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.UserView;
 
 /**
@@ -153,7 +154,7 @@ public class InstructorServiceImpl implements InstructorService {
 		}
 		// The course should exist
 		courseService.findById(courseId);
-		final String dateStr = dateToString(classDate);
+		final String dateStr = dateToString(classDate, CommonUtil.DATE_FORMAT_QUERY_DB);
 		return instructorRepository.findInstructorsWithCourseIdWithDateTime(courseId, dateStr, startTime, endTime);
 	}
 
@@ -200,7 +201,8 @@ public class InstructorServiceImpl implements InstructorService {
 			courseService.findById(courseId);
 			// Create the enrollment
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
-			final InstructorEnrollment enr = new InstructorEnrollment(enrId, EnrollmentStatusType.REQUESTED.getDescription());
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId,
+					EnrollmentStatusType.REQUESTED.getDescription());
 			enr.setPrice(instructorEnrollmentService.getAveragePriceForCourse(courseId));
 			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);
