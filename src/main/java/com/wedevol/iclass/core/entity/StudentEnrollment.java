@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wedevol.iclass.core.entity.constraint.CourseStatus;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 
 /**
  * Student Enrollment Entity
@@ -28,7 +28,7 @@ public class StudentEnrollment implements Serializable {
 	private StudentEnrollmentId id;
 
 	@NotNull
-	@CourseStatus
+	@EnrollmentStatus
 	@Column
 	private String status;
 
@@ -53,8 +53,8 @@ public class StudentEnrollment implements Serializable {
 	}
 
 	@JsonIgnore
-	public CourseStatusType getStatusType() {
-		return CourseStatusType.valueOf(status);
+	public EnrollmentStatusType getStatusType() {
+		return EnrollmentStatusType.valueOf(status);
 	}
 
 	public void setStatus(String status) {

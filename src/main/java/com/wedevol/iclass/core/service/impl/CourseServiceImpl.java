@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CoreUtil.areValidCourseStatusFilters;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidEnrollmentStatusFilters;
 
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +98,7 @@ public class CourseServiceImpl implements CourseService {
 		// The student should exist
 		studentService.findById(studentId);
 		// The course status should be valid
-		if (!areValidCourseStatusFilters(courseStatusFilter)) {
+		if (!areValidEnrollmentStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
 		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));
@@ -118,7 +118,7 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
 			String courseStatusFilter) {
-		if (!areValidCourseStatusFilters(courseStatusFilter)) {
+		if (!areValidEnrollmentStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);
 		}
 		final List<String> courseStatusList = Arrays.asList(courseStatusFilter.split(","));

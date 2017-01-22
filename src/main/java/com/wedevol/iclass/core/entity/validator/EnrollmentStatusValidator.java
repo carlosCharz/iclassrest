@@ -5,18 +5,18 @@ import java.util.Arrays;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.wedevol.iclass.core.entity.constraint.CourseStatus;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 
 /**
- * Course Status Validator
+ * Enrollment Status Validator
  *
  * @author charz
  */
-public class CourseStatusValidator extends BaseValidator implements ConstraintValidator<CourseStatus, String> {
+public class EnrollmentStatusValidator extends BaseValidator implements ConstraintValidator<EnrollmentStatus, String> {
 
 	@Override
-	public void initialize(CourseStatus constraintAnnotation) {
+	public void initialize(EnrollmentStatus constraintAnnotation) {
 		ignoreCase = constraintAnnotation.ignoreCase();
 		message = constraintAnnotation.message();
 	}
@@ -28,7 +28,7 @@ public class CourseStatusValidator extends BaseValidator implements ConstraintVa
 		}
 
 		final boolean isValid = Arrays
-										.stream(CourseStatusType.values())
+										.stream(EnrollmentStatusType.values())
 											.filter(validOption -> equal(value, validOption.getDescription()))
 											.findFirst()
 											.isPresent();

@@ -23,7 +23,7 @@ import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -199,7 +199,7 @@ public class InstructorServiceImpl implements InstructorService {
 			courseService.findById(courseId);
 			// Create the enrollment
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
-			final InstructorEnrollment enr = new InstructorEnrollment(enrId, CourseStatusType.OPEN.getDescription());
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId, EnrollmentStatusType.OPEN.getDescription());
 			enr.setPrice(instructorEnrollmentService.getAveragePriceForCourse(courseId));
 			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 import com.wedevol.iclass.core.entity.enums.ClassStatusType;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 
 /**
  * Core Util Class
@@ -13,16 +13,16 @@ import com.wedevol.iclass.core.entity.enums.CourseStatusType;
  */
 public class CoreUtil {
 
-	public static Predicate<String> isValidCourseStatus() {
+	public static Predicate<String> isValidEnrollmentStatus() {
 		return courseStatus -> Arrays
-										.stream(CourseStatusType.values())
+										.stream(EnrollmentStatusType.values())
 											.filter(validOption -> courseStatus.equals(validOption.getDescription()))
 											.findFirst()
 											.isPresent();
 	}
 
-	public static boolean areValidCourseStatusFilters(String statusFilter) {
-		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidCourseStatus());
+	public static boolean areValidEnrollmentStatusFilters(String statusFilter) {
+		return Arrays.asList(statusFilter.split(",")).stream().allMatch(isValidEnrollmentStatus());
 	}
 
 	public static Predicate<String> isValidClassStatus() {

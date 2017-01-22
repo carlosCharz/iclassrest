@@ -10,9 +10,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wedevol.iclass.core.entity.constraint.CourseStatus;
+import com.wedevol.iclass.core.entity.constraint.EnrollmentStatus;
 import com.wedevol.iclass.core.entity.constraint.Currency;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.entity.enums.CurrencyType;
 
 /**
@@ -31,7 +31,7 @@ public class InstructorEnrollment implements Serializable {
 	private InstructorEnrollmentId id;
 
 	@NotNull
-	@CourseStatus
+	@EnrollmentStatus
 	@Column
 	private String status;
 
@@ -66,8 +66,8 @@ public class InstructorEnrollment implements Serializable {
 	}
 
 	@JsonIgnore
-	public CourseStatusType getStatusType() {
-		return CourseStatusType.valueOf(status);
+	public EnrollmentStatusType getStatusType() {
+		return EnrollmentStatusType.valueOf(status);
 	}
 
 	public void setStatus(String status) {

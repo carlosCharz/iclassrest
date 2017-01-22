@@ -19,7 +19,7 @@ import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
-import com.wedevol.iclass.core.entity.enums.CourseStatusType;
+import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -156,7 +156,7 @@ public class StudentServiceImpl implements StudentService {
 			courseService.findById(courseId);
 			// Create the enrollment
 			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
-			final StudentEnrollment enr = new StudentEnrollment(enrId, CourseStatusType.FREE.getDescription());
+			final StudentEnrollment enr = new StudentEnrollment(enrId, EnrollmentStatusType.FREE.getDescription());
 			studentEnrollmentService.create(enr);
 		}
 		return studentSaved;
