@@ -24,31 +24,6 @@ import com.wedevol.iclass.core.entity.ScheduleBasic;
 @Transactional
 public interface InstructorManagerRepository extends CrudRepository<Instructor, Long> {
 
-
-	/**
-	 * Return the available schedules of a course for an specific date (course status: free or payed, schedule:
-	 * available = true)
-	 * 
-	 * @param courseId
-	 * @param classDateStr
-	 * @return list of schedules
-	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.ScheduleBasic(sch.id, ins.id, sch.startTime, sch.endTime) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND DATE_FORMAT(classDate, '%d/%m/%Y') = :classDateStr")
-	public List<ScheduleBasic> findSchedulesWithCourseIdWithDate(@Param("courseId") Long courseId,
-			@Param("classDateStr") String classDateStr);
-
-	/**
-	 * Return the available schedules of a course for a week day (course status: free or payed, schedule: available =
-	 * true)
-	 * 
-	 * @param courseId
-	 * @param weekDay
-	 * @return list of schedules
-	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.ScheduleBasic(sch.id, ins.id, sch.startTime, sch.endTime) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND sch.available = true AND (enr.status = 'free' OR enr.status = 'payed') AND sch.weekDay = :weekDayStr")
-	public List<ScheduleBasic> findSchedulesByCourseIdWithWeekDay(@Param("courseId") Long courseId,
-			@Param("weekDayStr") String weekDayStr);
-
 	/**
 	 * Return classes of an instructor since hh:mm dd/MM/yyyy filtered by the supplied class status
 	 * 

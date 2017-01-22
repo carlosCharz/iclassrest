@@ -6,6 +6,7 @@ import java.util.List;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.view.UserView;
 
 /**
@@ -39,4 +40,8 @@ public interface InstructorService {
 			Integer endTime);
 	
 	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
+	
+	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
+
+	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 }

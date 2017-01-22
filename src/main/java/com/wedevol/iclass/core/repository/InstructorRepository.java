@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 
 /**
  * Instructor Repository
@@ -67,6 +68,5 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	public List<InstructorBasic> findInstructorsWithCourseIdWithWeekDayWithTime(@Param("courseId") Long courseId,
 			@Param("weekDayStr") String weekDayStr, @Param("startTime") Integer startTime,
 			@Param("endTime") Integer endTime);
-
 
 }

@@ -44,21 +44,6 @@ public class InstructorManagerServiceImpl implements InstructorManagerService {
 	private InstructorService instructorService;
 
 	@Override
-	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
-		// The course should exist
-		courseService.findById(courseId);
-		final String dateStr = dateToString(classDate);
-		return insMgrRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
-	}
-
-	@Override
-	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
-		// The course should exist
-		courseService.findById(courseId);
-		return insMgrRepository.findSchedulesByCourseIdWithWeekDay(courseId, weekDayStr);
-	}
-
-	@Override
 	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid

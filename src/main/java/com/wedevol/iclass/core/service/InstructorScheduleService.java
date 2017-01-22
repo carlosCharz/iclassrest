@@ -1,8 +1,10 @@
 package com.wedevol.iclass.core.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.InstructorSchedule;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 
 /**
  * Instructor Schedule Service Interface
@@ -23,5 +25,9 @@ public interface InstructorScheduleService {
 	void delete(Long scheduleId);
 
 	List<InstructorSchedule> findSchedulesForWeekByInstructorId(Long instructorId);
+	
+	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
+
+	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 
 }

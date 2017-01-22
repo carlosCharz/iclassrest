@@ -21,12 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.InstructorSchedule;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
-import com.wedevol.iclass.core.service.InstructorManagerService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Instructor Schedule Controller
@@ -42,11 +41,6 @@ public class InstructorScheduleController {
 
 	@Autowired
 	private InstructorScheduleService scheduleService;
-
-	@Autowired
-	private InstructorManagerService insMgrService;
-
-	/************* CRUD for instructor schedule ****************/
 
 	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -95,8 +89,6 @@ public class InstructorScheduleController {
 		return scheduleService.findSchedulesForWeekByInstructorId(instructorId);
 	}
 
-	/********* Courses & Instructors & Enrollment *************/
-
 	@ApiIgnore
 	@Deprecated
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
@@ -107,7 +99,7 @@ public class InstructorScheduleController {
 			@RequestParam(value = "classDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate) {
 		logger.info("Find available schedules of the course " + courseId + " for an specific date: "
 				+ dateToString(classDate));
-		return insMgrService.findSchedulesByCourseIdByDate(courseId, classDate);
+		return scheduleService.findSchedulesByCourseIdByDate(courseId, classDate);
 	}
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
@@ -117,6 +109,6 @@ public class InstructorScheduleController {
 			@RequestParam(value = "courseId", required = true) Long courseId,
 			@RequestParam(value = "weekDay", required = true) String weekDay) {
 		logger.info("Find available schedules of the course " + courseId + " for week day: " + weekDay);
-		return insMgrService.findSchedulesByCourseIdByWeekDay(courseId, weekDay);
+		return scheduleService.findSchedulesByCourseIdByWeekDay(courseId, weekDay);
 	}
 }

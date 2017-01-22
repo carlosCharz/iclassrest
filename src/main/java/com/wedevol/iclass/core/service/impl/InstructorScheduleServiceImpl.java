@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,11 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.InstructorSchedule;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorScheduleRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
 
@@ -36,8 +41,10 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 
 	@Autowired
 	private InstructorService instructorService;
+	
+	@Autowired
+	private CourseService courseService;
 
-	/********************* CRUD for instructor ****************************/
 	@Override
 	public List<InstructorSchedule> findAll() {
 		final Iterable<InstructorSchedule> scheduleIterator = scheduleRepository.findAll();
@@ -92,6 +99,21 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		// Then, the instructor should exist
 		instructorService.findById(instructorId);
 		return scheduleRepository.findByInstructorIdOrderByClassDateAscStartTimeAsc(instructorId);
+	}
+	
+	@Override
+	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
+		// The course should exist
+		courseService.findById(courseId);
+		final String dateStr = dateToString(classDate);
+		return scheduleRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
+	}
+
+	@Override
+	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
+		// The course should exist
+		courseService.findById(courseId);
+		return scheduleRepository.findSchedulesByCourseIdWithWeekDay(courseId, weekDayStr);
 	}
 
 }

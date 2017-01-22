@@ -14,10 +14,6 @@ import com.wedevol.iclass.core.entity.ScheduleBasic;
  */
 public interface InstructorManagerService {
 
-	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
-
-	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
-
 	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
 			Integer actualTime, String classStatusFilter);
 

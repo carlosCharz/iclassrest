@@ -20,6 +20,7 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
+import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.entity.enums.CourseStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
@@ -28,6 +29,7 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
+import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.UserView;
 
@@ -51,6 +53,9 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorEnrollmentService instructorEnrollmentService;
+	
+	@Autowired
+	private InstructorScheduleService instructorScheduleService;
 
 	@Override
 	public List<Instructor> findAll() {
@@ -192,6 +197,16 @@ public class InstructorServiceImpl implements InstructorService {
 			instructorEnrollmentService.create(enr);
 		}
 		return instructorSaved;
+	}
+
+	@Override
+	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
+		return instructorScheduleService.findSchedulesByCourseIdByDate(courseId, classDate);
+	}
+
+	@Override
+	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
+		return instructorScheduleService.findSchedulesByCourseIdByWeekDay(courseId, weekDayStr);
 	}
 
 }
