@@ -10,7 +10,8 @@ public enum NotFoundErrorType {
 	COURSE_NOT_FOUND(404, "Course not found"), TOPIC_NOT_FOUND(404, "Topic not found"),
 	INSTRUCTOR_NOT_FOUND(404, "Instructor not found"),
 	INSTRUCTOR_COURSE_NOT_FOUND(404, "Instructor enrollment not found"),
-	INSTRUCTOR_SCHEDULE_NOT_FOUND(404, "Instructor schedule not found"), CLASS_NOT_FOUND(404, "Class not found");
+	INSTRUCTOR_SCHEDULE_NOT_FOUND(404, "Instructor schedule not found"), CLASS_NOT_FOUND(404, "Class not found"),
+	COURSE_SUGGESTION_NOT_FOUND(404, "Course suggestion not found");
 
 	private final int code;
 	private final String message;

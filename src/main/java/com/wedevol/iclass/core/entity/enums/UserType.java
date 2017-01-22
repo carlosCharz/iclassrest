@@ -1,17 +1,16 @@
 package com.wedevol.iclass.core.entity.enums;
 
 /**
- * Gender Type Enum
+ * User Type Enum
  *
  * @author charz
  */
-public enum GenderType {
-	// TODO: add enum in database
-	MALE("M"), FEMALE("F");
+public enum UserType {
+	STUDENT("student"), INSTRUCTOR("instructor"), ADMIN("admin");
 
 	private final String description;
 
-	GenderType(String description) {
+	UserType(String description) {
 		this.description = description;
 	}
 
