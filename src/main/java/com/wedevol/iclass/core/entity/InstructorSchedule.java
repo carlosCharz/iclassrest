@@ -63,9 +63,6 @@ public class InstructorSchedule implements Serializable {
 	@Column(name = "endtime")
 	private Integer endTime;
 
-	@Column(nullable = true)
-	private Boolean available;
-
 	protected InstructorSchedule() {
 	}
 
@@ -75,7 +72,6 @@ public class InstructorSchedule implements Serializable {
 		this.classDate = builder.classDate;
 		this.startTime = builder.startTime;
 		this.endTime = builder.endTime;
-		this.available = builder.available;
 	}
 
 	public Long getId() {
@@ -126,14 +122,6 @@ public class InstructorSchedule implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public Boolean getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(Boolean available) {
-		this.available = available;
-	}
-
 	/**
 	 * Instructor Schedule Builder
 	 * 
@@ -147,7 +135,6 @@ public class InstructorSchedule implements Serializable {
 		private final Date classDate;
 		private final Integer startTime;
 		private final Integer endTime;
-		private Boolean available;
 
 		public InstructorScheduleBuilder(Long instructorId, String weekDay, Date classDate, Integer startTime,
 				Integer endTime) {
@@ -156,11 +143,6 @@ public class InstructorSchedule implements Serializable {
 			this.classDate = classDate;
 			this.startTime = startTime;
 			this.endTime = endTime;
-		}
-
-		public InstructorScheduleBuilder available(Boolean available) {
-			this.available = available;
-			return this;
 		}
 
 		public InstructorSchedule build() {

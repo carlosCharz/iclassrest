@@ -164,6 +164,7 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
+	@Deprecated
 	public Instructor createInstructorWithCourse(UserView instructorView) {
 		// Create the user
 		Instructor instructorNew = new Instructor.InstructorBuilder(instructorView.getFirstName(),
@@ -199,7 +200,7 @@ public class InstructorServiceImpl implements InstructorService {
 			courseService.findById(courseId);
 			// Create the enrollment
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
-			final InstructorEnrollment enr = new InstructorEnrollment(enrId, EnrollmentStatusType.OPEN.getDescription());
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId, EnrollmentStatusType.REQUESTED.getDescription());
 			enr.setPrice(instructorEnrollmentService.getAveragePriceForCourse(courseId));
 			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);

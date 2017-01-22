@@ -97,8 +97,7 @@ public class InstructorScheduleController {
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(
 			@RequestParam(value = "courseId", required = true) Long courseId,
 			@RequestParam(value = "classDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date classDate) {
-		logger.info("Find available schedules of the course " + courseId + " for an specific date: "
-				+ dateToString(classDate));
+		logger.info("Find schedules of the course " + courseId + " for an specific date: " + dateToString(classDate));
 		return scheduleService.findSchedulesByCourseIdByDate(courseId, classDate);
 	}
 
@@ -108,7 +107,7 @@ public class InstructorScheduleController {
 	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(
 			@RequestParam(value = "courseId", required = true) Long courseId,
 			@RequestParam(value = "weekDay", required = true) String weekDay) {
-		logger.info("Find available schedules of the course " + courseId + " for week day: " + weekDay);
+		logger.info("Find schedules of the course " + courseId + " for week day: " + weekDay);
 		return scheduleService.findSchedulesByCourseIdByWeekDay(courseId, weekDay);
 	}
 }

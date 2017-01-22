@@ -87,7 +87,7 @@ public class InstructorController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
-			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
+			@RequestParam(value = "status", defaultValue = "payed") String courseStatusFilter) {
 		logger.info("Find courses of the instructor " + userId + " filtered by the supplied course status: "
 				+ courseStatusFilter);
 		return instructorService.findCoursesByInstructorIdWithCourseStatusFilter(userId, courseStatusFilter);
@@ -130,7 +130,7 @@ public class InstructorController {
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
 		logger.info("Find classes of an instructor since " + actualTime + " hours " + dateToString(actualDate)
 				+ " filtered by the supplied class status: " + statusFilter);
-		return instructorService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
-				statusFilter);
+		return instructorService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate,
+				actualTime, statusFilter);
 	}
 }

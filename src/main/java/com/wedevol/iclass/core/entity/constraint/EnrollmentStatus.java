@@ -22,7 +22,7 @@ import com.wedevol.iclass.core.entity.validator.EnrollmentStatusValidator;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnrollmentStatus {
 
-	String message() default "Enrollment status must be free, open, pendingPayment, verifyingPayment, payed";
+	String message() default "Enrollment status must be free, requested, pendingPayment, verifyingPayment, payed";
 
 	Class<?>[] groups() default {};
 

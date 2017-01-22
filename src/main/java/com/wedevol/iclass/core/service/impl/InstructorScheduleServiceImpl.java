@@ -83,7 +83,6 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		existingSchedule.setClassDate(schedule.getClassDate());
 		existingSchedule.setStartTime(schedule.getStartTime());
 		existingSchedule.setEndTime(schedule.getEndTime());
-		existingSchedule.setAvailable(schedule.getAvailable());
 		scheduleRepository.save(existingSchedule);
 	}
 
