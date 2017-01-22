@@ -165,7 +165,6 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	@Deprecated
 	public Instructor createInstructorWithCourse(UserView instructorView) {
 		// Create the user
 		Instructor instructorNew = new Instructor.InstructorBuilder(instructorView.getFirstName(),

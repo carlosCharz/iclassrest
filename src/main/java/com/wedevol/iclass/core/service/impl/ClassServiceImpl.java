@@ -2,6 +2,7 @@ package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -76,7 +77,15 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void create(Clase c) {
-		// TODO: Analize if the class should not exist first by other fields
+		// Fields missing validation
+		if (c.getStudentId() == null || c.getInstructorId() == null || c.getCourseId() == null || c.getWeekDay() == null
+				|| c.getClassDate() == null || c.getStartTime() == null || c.getEndTime() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
+		// Date times validation
+		if (c.getStartTime() >= c.getEndTime()) {
+			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
+		}
 		// The student should exist
 		studentService.findById(c.getStudentId());
 		// The instructor should exist
@@ -98,21 +107,37 @@ public class ClassServiceImpl implements ClassService {
 		// The class should exist
 		Clase existingClass = findById(classId);
 		// TODO: analyze if we need to update the student, instructor, course
-		// The student should exist
-		studentService.findById(c.getStudentId());
-		// The instructor should exist
-		instructorService.findById(c.getInstructorId());
-		// The course should exist
-		courseService.findById(c.getCourseId());
+		if (c.getStudentId() != null) {
+			// The student should exist
+			studentService.findById(c.getStudentId());
+			existingClass.setStudentId(c.getStudentId());
+		}
+		if (c.getInstructorId() != null) {
+			// The instructor should exist
+			instructorService.findById(c.getInstructorId());
+			existingClass.setInstructorId(c.getInstructorId());
+		}
+		if (c.getCourseId() != null) {
+			// The course should exist
+			courseService.findById(c.getCourseId());
+			existingClass.setCourseId(c.getCourseId());
+		}
+		if (!isNullOrEmpty(c.getWeekDay())) {
+			existingClass.setWeekDay(c.getWeekDay());
+		}
+		if (c.getClassDate() != null) {
+			existingClass.setClassDate(c.getClassDate());
+		}
+		if (c.getStartTime() != null) {
+			existingClass.setStartTime(c.getStartTime());
+		}
+		if (c.getEndTime() != null) {
+			existingClass.setEndTime(c.getEndTime());
+		}
+		if (!isNullOrEmpty(c.getStatus())) {
+			existingClass.setStatus(c.getStatus());
+		}
 		// Update
-		existingClass.setStudentId(c.getStudentId());
-		existingClass.setInstructorId(c.getInstructorId());
-		existingClass.setCourseId(c.getCourseId());
-		existingClass.setWeekDay(c.getWeekDay());
-		existingClass.setClassDate(c.getClassDate());
-		existingClass.setStartTime(c.getStartTime());
-		existingClass.setEndTime(c.getEndTime());
-		existingClass.setStatus(c.getStatus());
 		classRepository.save(existingClass);
 	}
 
@@ -126,12 +151,12 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter) {
+		// The class status should be valid
+				if (!areValidClassStatusFilters(statusFilter)) {
+					throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+				}
 		// The student should exist
 		studentService.findById(studentId);
-		// The class status should be valid
-		if (!areValidClassStatusFilters(statusFilter)) {
-			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
-		}
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
 		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
 		return classRepository.findClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
