@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -30,12 +29,10 @@ public class Topic implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	@Column(name = "courseid")
 	private Long courseId;
 
-	@NotNull
 	@Size(min = 2, max = 100, message = "Topic name must be between 2 - 100 characters")
 	@Column
 	private String name;

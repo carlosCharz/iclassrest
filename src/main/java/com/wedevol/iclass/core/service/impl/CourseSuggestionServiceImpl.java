@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.CourseSuggestion;
+import com.wedevol.iclass.core.entity.enums.CourseSuggestionStatusType;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
@@ -58,8 +61,13 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 
 	@Override
 	public CourseSuggestion create(CourseSuggestion courseSuggestion) {
+		// Fields missing validation
+		if (courseSuggestion.getName() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
 		// The user should exist
 		validateUser(courseSuggestion.getUserId(), courseSuggestion.getUserType());
+		courseSuggestion.setStatus(CourseSuggestionStatusType.SUGGESTED.getDescription());
 		return courseSuggestionRepository.save(courseSuggestion);
 	}
 
@@ -78,7 +86,22 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	public void update(Long courseSuggestionId, CourseSuggestion courseSuggestion) {
 		// The course suggestion should exist
 		CourseSuggestion existingCourse = findById(courseSuggestionId);
-		existingCourse.setStatus(courseSuggestion.getStatus());
+		// TODO: analyze if the we can modify the user and userType
+		if (!isNullOrEmpty(courseSuggestion.getName())) {
+			existingCourse.setName(courseSuggestion.getName());
+		}
+		if (!isNullOrEmpty(courseSuggestion.getDescription())) {
+			existingCourse.setDescription(courseSuggestion.getDescription());
+		}
+		if (!isNullOrEmpty(courseSuggestion.getFaculty())) {
+			existingCourse.setFaculty(courseSuggestion.getFaculty());
+		}
+		if (!isNullOrEmpty(courseSuggestion.getUniversity())) {
+			existingCourse.setUniversity(courseSuggestion.getUniversity());
+		}
+		if (courseSuggestion.getStatus()!= null){
+			existingCourse.setStatus(courseSuggestion.getStatus());
+		}
 		courseSuggestionRepository.save(existingCourse);
 	}
 

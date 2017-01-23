@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +59,11 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Topic create(Topic topic) {
-		// We first search by name, the topic should not exist
+		// Fields missing validation
+		if (topic.getName() == null || topic.getCourseId() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
+		// The topic should not exist
 		final Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
 		if (topicObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.TOPIC_ALREADY_EXISTS);
@@ -72,11 +78,15 @@ public class TopicServiceImpl implements TopicService {
 	public void update(Long topicId, Topic topic) {
 		// The topic should exist
 		Topic existingTopic = findById(topicId);
-		// Then, the course should exist
-		courseService.findById(topic.getCourseId());
+		if (!isNullOrEmpty(topic.getName())) {
+			existingTopic.setName(topic.getName());
+		}
+		if (topic.getCourseId()!=null) {
+			// The course should exist
+			courseService.findById(topic.getCourseId());
+			existingTopic.setCourseId(topic.getCourseId());
+		}
 		// Update
-		existingTopic.setCourseId(topic.getCourseId());
-		existingTopic.setName(topic.getName());
 		topicRepository.save(existingTopic);
 	}
 

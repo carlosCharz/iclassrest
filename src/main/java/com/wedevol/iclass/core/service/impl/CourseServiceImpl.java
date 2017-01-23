@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CoreUtil.areValidEnrollmentStatusFilters;
+import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,7 +67,11 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course create(Course course) {
-		// We first search by name, the course should not exist
+		// Fields missing validation
+		if (course.getName() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
+		// The course should not exist by name
 		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		if (courseObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_ALREADY_EXISTS);
@@ -78,10 +83,18 @@ public class CourseServiceImpl implements CourseService {
 	public void update(Long courseId, Course course) {
 		// The course should exist
 		Course existingCourse = findById(courseId);
-		existingCourse.setName(course.getName());
-		existingCourse.setDescription(course.getDescription());
-		existingCourse.setFaculty(course.getFaculty());
-		existingCourse.setUniversity(course.getUniversity());
+		if (!isNullOrEmpty(course.getName())) {
+			existingCourse.setName(course.getName());
+		}
+		if (!isNullOrEmpty(course.getDescription())) {
+			existingCourse.setDescription(course.getDescription());
+		}
+		if (!isNullOrEmpty(course.getFaculty())) {
+			existingCourse.setFaculty(course.getFaculty());
+		}
+		if (!isNullOrEmpty(course.getUniversity())) {
+			existingCourse.setUniversity(course.getUniversity());
+		}
 		courseRepository.save(existingCourse);
 	}
 
@@ -114,7 +127,7 @@ public class CourseServiceImpl implements CourseService {
 	public List<Instructor> findInstructorsByCourseId(Long courseId) {
 		return instructorService.findInstructorsByCourseId(courseId);
 	}
-	
+
 	@Override
 	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
 			String courseStatusFilter) {

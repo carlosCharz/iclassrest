@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -37,19 +36,15 @@ public class CourseSuggestion implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
-	// TODO: remove not nulls
 	@Size(min = 2, max = 100, message = "User type must be between 2 - 50 characters")
 	@Column(name = "usertype")
 	// TODO: analyze enum
 	private String userType;
 
-	@NotNull
 	@Digits(integer = 20, fraction = 0, message = "User id must be just digits")
 	@Column(name = "userid")
 	private Long userId;
 
-	@NotNull
 	@Size(min = 2, max = 100, message = "Course name must be between 2 - 100 characters")
 	@Column
 	private String name;
