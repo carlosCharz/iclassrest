@@ -75,7 +75,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
-		studentEnrollment.setStatus(EnrollmentStatusType.REQUESTED.getDescription());
+		studentEnrollment.setStatus(EnrollmentStatusType.FREE.getDescription());
 		// Save
 		return enrRepository.save(studentEnrollment);
 	}

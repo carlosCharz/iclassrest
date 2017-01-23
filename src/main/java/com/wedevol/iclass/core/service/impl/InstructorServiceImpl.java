@@ -211,8 +211,7 @@ public class InstructorServiceImpl implements InstructorService {
 		if (courseId != null) {
 			// Build the enrollment object
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
-			final InstructorEnrollment enr = new InstructorEnrollment(enrId,
-					EnrollmentStatusType.REQUESTED.getDescription());
+			final InstructorEnrollment enr = new InstructorEnrollment(enrId);
 			enr.setPrice(instructorEnrollmentService.getAveragePriceForCourse(courseId));
 			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);

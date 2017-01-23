@@ -44,9 +44,8 @@ public class InstructorEnrollment implements Serializable {
 	protected InstructorEnrollment() {
 	}
 
-	public InstructorEnrollment(InstructorEnrollmentId id, String status) {
+	public InstructorEnrollment(InstructorEnrollmentId id) {
 		this.id = id;
-		this.status = status;
 	}
 
 	public InstructorEnrollmentId getId() {

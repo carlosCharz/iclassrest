@@ -163,7 +163,7 @@ public class StudentServiceImpl implements StudentService {
 		if (courseId != null) {
 			/// Build the enrollment object
 			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
-			final StudentEnrollment enr = new StudentEnrollment(enrId, EnrollmentStatusType.FREE.getDescription());
+			final StudentEnrollment enr = new StudentEnrollment(enrId);
 			studentEnrollmentService.create(enr);
 		}
 		return studentSaved;
