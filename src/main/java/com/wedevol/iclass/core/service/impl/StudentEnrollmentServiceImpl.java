@@ -18,7 +18,9 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.StudentEnrollmentRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
+import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Student Enrollment Service Implementation
@@ -34,6 +36,12 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Autowired
 	private StudentEnrollmentRepository enrRepository;
+
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
+	private StudentService studentService;
 
 	/***************** CRUD for Student Enrollment ***********************/
 
@@ -57,7 +65,11 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 				|| (studentEnrollment.getId() != null && studentEnrollment.getId().getCourseId() == null)) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
-		// We first search by id, the studentEnrollment should not exist
+		// The course should exist
+		courseService.findById(studentEnrollment.getId().getCourseId());
+		// The student should exist
+		studentService.findById(studentEnrollment.getId().getStudentId());
+		// The studentEnrollment should not exist
 		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
 				enrRepository.findOne(studentEnrollment.getId()));
 		if (enrObj.isPresent()) {

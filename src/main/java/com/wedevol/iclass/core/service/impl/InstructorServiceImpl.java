@@ -98,12 +98,19 @@ public class InstructorServiceImpl implements InstructorService {
 	public void update(Long userId, Instructor instructor) {
 		// The instructor should exist
 		Instructor existingInstructor = findById(userId);
-		existingInstructor.setFirstName(instructor.getFirstName());
-		existingInstructor.setLastName(instructor.getLastName());
-		existingInstructor.setPhone(instructor.getPhone());
-		existingInstructor.setEmail(instructor.getEmail());
-		// TODO: validate that the password has changed
-		// existingInstructor.setPassword(hashSHA256(instructor.getPassword()));
+		if (!isNullOrEmpty(instructor.getFirstName())) {
+			existingInstructor.setFirstName(instructor.getFirstName());
+		}
+		if (!isNullOrEmpty(instructor.getLastName())) {
+			existingInstructor.setLastName(instructor.getLastName());
+		}
+		if (!isNullOrEmpty(instructor.getPhone())) {
+			existingInstructor.setPhone(instructor.getPhone());
+		}
+		// TODO: analyze if we allow to change the email
+		if (!isNullOrEmpty(instructor.getPassword())) {
+			existingInstructor.setPassword(hashSHA256(instructor.getPassword()));
+		}
 		if (instructor.getBirthday() != null) {
 			existingInstructor.setBirthday(instructor.getBirthday());
 		}
@@ -113,10 +120,16 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!isNullOrEmpty(instructor.getProfilePictureUrl())) {
 			existingInstructor.setProfilePictureUrl(instructor.getProfilePictureUrl());
 		}
-		existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
+		if (!instructor.getPlaceOptions().isEmpty()){
+			existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
+		}
 		if (!isNullOrEmpty(instructor.getUniversity())) {
 			existingInstructor.setUniversity(instructor.getUniversity());
 		}
+		if (!isNullOrEmpty(instructor.getFcmToken())) {
+			existingInstructor.setFcmToken(instructor.getFcmToken());
+		}
+		// Save
 		instructorRepository.save(existingInstructor);
 	}
 
@@ -196,9 +209,7 @@ public class InstructorServiceImpl implements InstructorService {
 		// Create the enrollment if there is courseId
 		final Long courseId = instructorView.getCourseId();
 		if (courseId != null) {
-			// The course should exist
-			courseService.findById(courseId);
-			// Create the enrollment
+			// Build the enrollment object
 			final InstructorEnrollmentId enrId = new InstructorEnrollmentId(instructorSaved.getId(), courseId);
 			final InstructorEnrollment enr = new InstructorEnrollment(enrId,
 					EnrollmentStatusType.REQUESTED.getDescription());

@@ -86,12 +86,16 @@ public class StudentServiceImpl implements StudentService {
 	public void update(Long userId, Student student) {
 		// The student should exist
 		Student existingStudent = findById(userId);
-		existingStudent.setFirstName(student.getFirstName());
-		existingStudent.setLastName(student.getLastName());
-		existingStudent.setPhone(student.getPhone());
-		existingStudent.setEmail(student.getEmail());
-		// TODO: validate that the password has changed
-		// existingStudent.setPassword(hashSHA256(student.getPassword()));
+		if (!isNullOrEmpty(student.getFirstName())) {
+			existingStudent.setFirstName(student.getFirstName());
+		}
+		if (!isNullOrEmpty(student.getLastName())) {
+			existingStudent.setLastName(student.getLastName());
+		}
+		if (!isNullOrEmpty(student.getPhone())) {
+			existingStudent.setPhone(student.getPhone());
+		}
+		// TODO: analyze if we allow to change the email
 		if (student.getBirthday() != null) {
 			existingStudent.setBirthday(student.getBirthday());
 		}
@@ -101,10 +105,15 @@ public class StudentServiceImpl implements StudentService {
 		if (!isNullOrEmpty(student.getProfilePictureUrl())) {
 			existingStudent.setProfilePictureUrl(student.getProfilePictureUrl());
 		}
-		existingStudent.setPlaceOptions(student.getPlaceOptions());
-		if (!isNullOrEmpty(student.getUniversity())) {
+		if (!student.getPlaceOptions().isEmpty()){
+			existingStudent.setPlaceOptions(student.getPlaceOptions());
+		}		if (!isNullOrEmpty(student.getUniversity())) {
 			existingStudent.setUniversity(student.getUniversity());
 		}
+		if (!isNullOrEmpty(student.getFcmToken())) {
+			existingStudent.setFcmToken(student.getFcmToken());
+		}
+		// Save
 		studentRepository.save(existingStudent);
 	}
 
@@ -152,9 +161,7 @@ public class StudentServiceImpl implements StudentService {
 		// Create the enrollment if there is courseId
 		final Long courseId = studentView.getCourseId();
 		if (courseId != null) {
-			// The course should exist
-			courseService.findById(courseId);
-			// Create the enrollment
+			/// Build the enrollment object
 			final StudentEnrollmentId enrId = new StudentEnrollmentId(studentSaved.getId(), courseId);
 			final StudentEnrollment enr = new StudentEnrollment(enrId, EnrollmentStatusType.FREE.getDescription());
 			studentEnrollmentService.create(enr);

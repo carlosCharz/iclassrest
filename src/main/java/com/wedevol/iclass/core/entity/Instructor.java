@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -44,29 +43,24 @@ public class Instructor implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
 	@Size(min = 2, max = 45, message = "First name must be between 2 - 45 characters")
 	@Column(name = "firstname")
 	private String firstName;
 
-	@NotNull
 	@Size(min = 2, max = 45, message = "Last name must be between 2 - 45 characters")
 	@Column(name = "lastname")
 	private String lastName;
 
-	@NotNull
 	@Size(min = 7, max = 20, message = "Phone number must be between 7 - 20 digits")
 	@Digits(integer = 20, fraction = 0, message = "Phone number must be just digits")
 	@Column
 	private String phone;
 
-	@NotNull
 	@Size(max = 80, message = "Email must be maximum 80 characters")
 	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email invalid format")
 	@Column
 	private String email;
 
-	@NotNull
 	@Size(min = 6, max = 64, message = "Password must be 6 characters minimum")
 	@Column
 	private String password;
@@ -74,23 +68,23 @@ public class Instructor implements Serializable {
 	@Past
 	@JsonDeserialize(using = CustomDateDeserialize.class)
 	@JsonSerialize(using = CustomDateSerialize.class)
-	@Column(nullable = true)
+	@Column
 	private Date birthday;
 
 	@Gender // It has size validation, gender validation and default message
-	@Column(nullable = true)
+	@Column
 	private String gender;
 
 	@Size(min = 2, max = 100, message = "Profile picture url must be between 2 - 100 characters")
-	@Column(name = "profilepictureurl", nullable = true)
+	@Column(name = "profilepictureurl")
 	private String profilePictureUrl;
 
 	@PlaceOptions // It has place options validation and default message
-	@Column(name = "placeoptions", nullable = true)
+	@Column(name = "placeoptions")
 	private String placeOptions;
 
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column(nullable = true)
+	@Column
 	private String university;
 
 	@Column

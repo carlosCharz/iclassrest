@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 
 import java.util.Arrays;
@@ -124,7 +123,7 @@ public class ClassServiceImpl implements ClassService {
 			courseService.findById(c.getCourseId());
 			existingClass.setCourseId(c.getCourseId());
 		}
-		if (!isNullOrEmpty(c.getWeekDay())) {
+		if (c.getWeekDay() != null) {
 			existingClass.setWeekDay(c.getWeekDay());
 		}
 		if (c.getClassDate() != null) {
@@ -136,7 +135,7 @@ public class ClassServiceImpl implements ClassService {
 		if (c.getEndTime() != null) {
 			existingClass.setEndTime(c.getEndTime());
 		}
-		if (!isNullOrEmpty(c.getStatus())) {
+		if (c.getStatus()!= null) {
 			existingClass.setStatus(c.getStatus());
 		}
 		// Update

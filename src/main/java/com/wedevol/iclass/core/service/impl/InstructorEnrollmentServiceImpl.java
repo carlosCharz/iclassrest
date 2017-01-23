@@ -21,7 +21,9 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorEnrollmentRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
+import com.wedevol.iclass.core.service.InstructorService;
 
 /**
  * Instructor Enrollment Service Implementation
@@ -41,6 +43,12 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	@Autowired
 	private BusinessSetting bussinessSetting;
 
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private InstructorService instructorService;
+	
 	@Override
 	public List<InstructorEnrollment> findAll() {
 		final Iterable<InstructorEnrollment> icIterator = enrRepository.findAll();
@@ -62,7 +70,11 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 				|| instructorEnrollment.getPrice() == null || instructorEnrollment.getCurrency() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
-		// We first search by id, the instructorEnrollment should not exist
+		// The course should exist
+		courseService.findById(instructorEnrollment.getId().getCourseId());
+		// The instructor should exist
+		instructorService.findById(instructorEnrollment.getId().getInstructorId());
+		// The instructorEnrollment should not exist
 		final Optional<InstructorEnrollment> enrObj = Optional.ofNullable(enrRepository.findOne(instructorEnrollment
 																													.getId()));
 		if (enrObj.isPresent()) {

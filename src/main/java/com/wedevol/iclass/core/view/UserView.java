@@ -75,6 +75,7 @@ public class UserView implements Serializable {
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	private Long courseId;
 
+	@NotNull
 	@Column(name = "fcmtoken")
 	private String fcmToken;
 
