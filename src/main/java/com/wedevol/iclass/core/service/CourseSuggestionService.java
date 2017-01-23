@@ -16,7 +16,7 @@ public interface CourseSuggestionService {
 
 	CourseSuggestion findById(Long courseSuggestionId);
 
-	void create(CourseSuggestion courseSuggestion);
+	CourseSuggestion create(CourseSuggestion courseSuggestion);
 
 	void update(Long courseSuggestionId, CourseSuggestion courseSuggestion);
 

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -37,12 +36,10 @@ public class InstructorSchedule implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@NotNull
 	@Digits(integer = 20, fraction = 0, message = "Instructor id must be just digits")
 	@Column(name = "instructorid")
 	private Long instructorId;
 
-	@NotNull
 	@WeekDay
 	@Column(name = "weekday")
 	private String weekDay;
@@ -53,12 +50,10 @@ public class InstructorSchedule implements Serializable {
 	@Column(name = "classdate")
 	private Date classDate;
 
-	@NotNull
 	@Digits(integer = 2, fraction = 0, message = "Start time must be just digits")
 	@Column(name = "starttime")
 	private Integer startTime;
 
-	@NotNull
 	@Digits(integer = 2, fraction = 0, message = "End time must be just digits")
 	@Column(name = "endtime")
 	private Integer endTime;

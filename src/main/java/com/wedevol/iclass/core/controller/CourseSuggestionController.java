@@ -50,8 +50,8 @@ public class CourseSuggestionController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody CourseSuggestion courseSuggestion) {
-		courseSuggestionService.create(courseSuggestion);
+	public CourseSuggestion create(@Valid @RequestBody CourseSuggestion courseSuggestion) {
+		return courseSuggestionService.create(courseSuggestion);
 	}
 
 	@RequestMapping(value = "/{courseSuggestionId}", method = RequestMethod.PUT)

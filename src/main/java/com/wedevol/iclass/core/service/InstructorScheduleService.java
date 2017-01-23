@@ -18,7 +18,7 @@ public interface InstructorScheduleService {
 
 	InstructorSchedule findById(Long scheduleId);
 
-	void create(InstructorSchedule schedule);
+	InstructorSchedule create(InstructorSchedule schedule);
 
 	void update(Long scheduleId, InstructorSchedule schedule);
 

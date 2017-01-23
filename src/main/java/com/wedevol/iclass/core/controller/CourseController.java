@@ -52,8 +52,8 @@ public class CourseController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody Course course) {
-		courseService.create(course);
+	public Course create(@Valid @RequestBody Course course) {
+		return courseService.create(course);
 	}
 
 	@ApiIgnore

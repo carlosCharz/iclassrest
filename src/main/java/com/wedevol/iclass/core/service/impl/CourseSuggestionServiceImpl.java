@@ -57,10 +57,10 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	}
 
 	@Override
-	public void create(CourseSuggestion courseSuggestion) {
+	public CourseSuggestion create(CourseSuggestion courseSuggestion) {
 		// The user should exist
 		validateUser(courseSuggestion.getUserId(), courseSuggestion.getUserType());
-		courseSuggestionRepository.save(courseSuggestion);
+		return courseSuggestionRepository.save(courseSuggestion);
 	}
 
 	private void validateUser(Long userId, String userTypeStr) {

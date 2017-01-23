@@ -56,7 +56,7 @@ public class TopicServiceImpl implements TopicService {
 	}
 
 	@Override
-	public void create(Topic topic) {
+	public Topic create(Topic topic) {
 		// We first search by name, the topic should not exist
 		final Optional<Topic> topicObj = Optional.ofNullable(findByName(topic.getName()));
 		if (topicObj.isPresent()) {
@@ -64,8 +64,8 @@ public class TopicServiceImpl implements TopicService {
 		}
 		// Then, the course should exist
 		courseService.findById(topic.getCourseId());
-		// Create
-		topicRepository.save(topic);
+		// Save
+		return topicRepository.save(topic);
 	}
 
 	@Override

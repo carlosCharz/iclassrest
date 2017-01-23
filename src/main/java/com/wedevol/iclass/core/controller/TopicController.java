@@ -56,8 +56,8 @@ public class TopicController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody Topic topic) {
-		topicService.create(topic);
+	public Topic create(@Valid @RequestBody Topic topic) {
+		return topicService.create(topic);
 	}
 
 	@ApiIgnore

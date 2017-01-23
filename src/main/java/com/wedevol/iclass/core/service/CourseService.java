@@ -21,7 +21,7 @@ public interface CourseService {
 
 	Course findById(Long courseId);
 
-	void create(Course course);
+	Course create(Course course);
 
 	void update(Long courseId, Course course);
 

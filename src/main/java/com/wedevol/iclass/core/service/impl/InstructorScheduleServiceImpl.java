@@ -42,7 +42,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 
 	@Autowired
 	private InstructorService instructorService;
-	
+
 	@Autowired
 	private CourseService courseService;
 
@@ -60,8 +60,12 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 	}
 
 	@Override
-	public void create(InstructorSchedule schedule) {
-		// TODO: Analize if the instructor schedule should not exist first, and validate null fields
+	public InstructorSchedule create(InstructorSchedule schedule) {
+		// Fields missing validation
+		if (schedule.getInstructorId() == null || schedule.getWeekDay() == null || schedule.getClassDate() == null
+				|| schedule.getStartTime() == null || schedule.getEndTime() == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
 		// Date times validation
 		if (schedule.getStartTime() >= schedule.getEndTime()) {
 			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
@@ -69,21 +73,32 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		// The instructor should exist
 		instructorService.findById(schedule.getInstructorId());
 		// Save
-		scheduleRepository.save(schedule);
+		return scheduleRepository.save(schedule);
 	}
 
 	@Override
 	public void update(Long scheduleId, InstructorSchedule schedule) {
 		// The instructor schedule should exist
 		InstructorSchedule existingSchedule = findById(scheduleId);
-		// Then, the instructor should exist
-		instructorService.findById(schedule.getInstructorId());
+		if (schedule.getInstructorId() != null) {
+			// TODO: analyze if we need to validate this
+			// The instructor should exist
+			instructorService.findById(schedule.getInstructorId());
+			existingSchedule.setInstructorId(schedule.getInstructorId());
+		}
+		if (schedule.getWeekDay() != null) {
+			existingSchedule.setWeekDay(schedule.getWeekDay());
+		}
+		if (schedule.getClassDate() != null) {
+			existingSchedule.setClassDate(schedule.getClassDate());
+		}
+		if (schedule.getStartTime() != null) {
+			existingSchedule.setStartTime(schedule.getStartTime());
+		}
+		if (schedule.getEndTime() != null) {
+			existingSchedule.setEndTime(schedule.getEndTime());
+		}
 		// Update
-		existingSchedule.setInstructorId(schedule.getInstructorId());
-		existingSchedule.setWeekDay(schedule.getWeekDay());
-		existingSchedule.setClassDate(schedule.getClassDate());
-		existingSchedule.setStartTime(schedule.getStartTime());
-		existingSchedule.setEndTime(schedule.getEndTime());
 		scheduleRepository.save(existingSchedule);
 	}
 
@@ -100,7 +115,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 		instructorService.findById(instructorId);
 		return scheduleRepository.findByInstructorIdOrderByClassDateAscStartTimeAsc(instructorId);
 	}
-	
+
 	@Override
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
@@ -113,6 +128,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 	public List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr) {
 		// The course should exist
 		courseService.findById(courseId);
+		// TODO: missing validation for the weekDay
 		return scheduleRepository.findSchedulesByCourseIdWithWeekDay(courseId, weekDayStr);
 	}
 

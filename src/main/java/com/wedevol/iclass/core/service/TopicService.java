@@ -18,7 +18,7 @@ public interface TopicService {
 
 	Topic findById(Long topicId);
 
-	void create(Topic topic);
+	Topic create(Topic topic);
 
 	void update(Long topicId, Topic topic);
 

@@ -61,8 +61,8 @@ public class InstructorScheduleController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public void create(@Valid @RequestBody InstructorSchedule schedule) {
-		scheduleService.create(schedule);
+	public InstructorSchedule create(@Valid @RequestBody InstructorSchedule schedule) {
+		return scheduleService.create(schedule);
 	}
 
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.PUT)

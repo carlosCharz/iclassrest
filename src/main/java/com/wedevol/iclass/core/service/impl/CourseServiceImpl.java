@@ -65,13 +65,13 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void create(Course course) {
+	public Course create(Course course) {
 		// We first search by name, the course should not exist
 		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		if (courseObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_ALREADY_EXISTS);
 		}
-		courseRepository.save(course);
+		return courseRepository.save(course);
 	}
 
 	@Override
