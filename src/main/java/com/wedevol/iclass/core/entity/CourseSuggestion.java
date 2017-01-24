@@ -137,11 +137,6 @@ public class CourseSuggestion implements Serializable {
 		this.university = university;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Course[id=%d, name='%s']%n", id, name);
-	}
-
 	public Date getRequestedAt() {
 		return requestedAt;
 	}
@@ -156,5 +151,10 @@ public class CourseSuggestion implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("CourseSuggestion[id=%d, name='%s']%n", id, name);
 	}
 }

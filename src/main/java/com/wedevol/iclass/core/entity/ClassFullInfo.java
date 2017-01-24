@@ -180,4 +180,10 @@ public class ClassFullInfo implements Serializable {
 		this.currency = currency;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("ClassFullInfo[classId=%d, startTime='%d', endTime='%d', weekDay='%s']%n", classId,
+				startTime, endTime, weekDay);
+	}
+
 }

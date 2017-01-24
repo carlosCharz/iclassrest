@@ -161,4 +161,10 @@ public class Clase implements Serializable {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Clase[id=%d, studentId='%d', instructorId='%d', courseId='%d']%n", id, studentId,
+				instructorId, courseId);
+	}
+
 }

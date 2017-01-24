@@ -108,5 +108,10 @@ public class CourseFullInfo implements Serializable {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("CourseFullInfo[id=%d, name='%s']%n", id, name);
+	}
 
 }
