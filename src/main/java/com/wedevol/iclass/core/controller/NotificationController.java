@@ -41,18 +41,18 @@ public class NotificationController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void sendDirectNotificationToStudent(@RequestParam(value = "message", required = true) String message,
-			@RequestParam(value = "studentId", required = true) Long studentId) {
-		logger.info("Sending the message '{}' to the student id '{}'", message, studentId);
-		notificationService.sendDirectNotificationToStudent(studentId, message);
+			@RequestParam(value = "id", required = true) Long id) {
+		logger.info("Sending the message '{}' to the student id '{}'", message, id);
+		notificationService.sendDirectNotificationToStudent(id, message);
 	}
 	
 	@RequestMapping(value = "/send/instructor", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void sendDirectNotificationToInstructor(@RequestParam(value = "message", required = true) String message,
-			@RequestParam(value = "instructorId", required = true) Long instructorId) {
-		logger.info("Sending the message '{}' to the instructor id '{}'", message, instructorId);
-		notificationService.sendDirectNotificationToInstructor(instructorId, message);
+			@RequestParam(value = "id", required = true) Long id) {
+		logger.info("Sending the message '{}' to the instructor id '{}'", message, id);
+		notificationService.sendDirectNotificationToInstructor(id, message);
 	}
 
 }

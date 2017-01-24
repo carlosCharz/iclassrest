@@ -29,6 +29,8 @@ public interface InstructorService {
 	void update(Long userId, Instructor instructor);
 
 	void delete(Long userId);
+	
+	void setUserInactive(Long userId);
 
 	Instructor createInstructorWithCourse(UserView instructorView);
 

@@ -26,6 +26,7 @@ import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.view.UserBasicView;
 import com.wedevol.iclass.core.view.UserView;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -81,6 +82,13 @@ public class InstructorController {
 	@ResponseBody
 	public void delete(@PathVariable Long userId) {
 		instructorService.delete(userId);
+	}
+
+	@RequestMapping(value = "/inactive", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void setUserInactive(@Valid @RequestBody UserBasicView user) {
+		instructorService.setUserInactive(user.getUserId());
 	}
 
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)

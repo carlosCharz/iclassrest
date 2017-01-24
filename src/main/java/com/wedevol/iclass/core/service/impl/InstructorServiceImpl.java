@@ -244,5 +244,14 @@ public class InstructorServiceImpl implements InstructorService {
 		return classService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
+	
+	@Override
+	public void setUserInactive(Long userId) {
+		// The instructor should exist
+		Instructor existingInstructor = findById(userId);
+		existingInstructor.setActive(false);
+		// Save
+		instructorRepository.save(existingInstructor);
+	}
 
 }

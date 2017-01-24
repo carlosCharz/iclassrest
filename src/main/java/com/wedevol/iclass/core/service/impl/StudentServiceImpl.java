@@ -194,4 +194,13 @@ public class StudentServiceImpl implements StudentService {
 				statusFilter);
 	}
 
+	@Override
+	public void setUserInactive(Long userId) {
+		// The student should exist
+		Student existingStudent = findById(userId);
+		existingStudent.setActive(false);
+		// Save
+		studentRepository.save(existingStudent);
+	}
+
 }

@@ -28,6 +28,8 @@ public interface StudentService {
 
 	void delete(Long userId);
 	
+	void setUserInactive(Long userId);
+	
 	Student createStudentWithCourse(UserView studentView);
 
 	List<Student> findStudentsByCourseId(Long courseId);
