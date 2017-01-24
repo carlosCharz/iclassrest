@@ -19,7 +19,6 @@ import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
-import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -96,6 +95,9 @@ public class StudentServiceImpl implements StudentService {
 			existingStudent.setPhone(student.getPhone());
 		}
 		// TODO: analyze if we allow to change the email
+		if (!isNullOrEmpty(student.getPassword())) {
+			existingStudent.setPassword(hashSHA256(student.getPassword()));
+		}
 		if (student.getBirthday() != null) {
 			existingStudent.setBirthday(student.getBirthday());
 		}
@@ -105,9 +107,10 @@ public class StudentServiceImpl implements StudentService {
 		if (!isNullOrEmpty(student.getProfilePictureUrl())) {
 			existingStudent.setProfilePictureUrl(student.getProfilePictureUrl());
 		}
-		if (!student.getPlaceOptions().isEmpty()){
+		if (!student.getPlaceOptions().isEmpty()) {
 			existingStudent.setPlaceOptions(student.getPlaceOptions());
-		}		if (!isNullOrEmpty(student.getUniversity())) {
+		}
+		if (!isNullOrEmpty(student.getUniversity())) {
 			existingStudent.setUniversity(student.getUniversity());
 		}
 		if (!isNullOrEmpty(student.getFcmToken())) {

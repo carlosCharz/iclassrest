@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.AuthService;
@@ -47,6 +48,13 @@ public class AuthController {
 	@ResponseBody
 	public Instructor loginInstructor(@Valid @RequestBody LoginRequestView request) {
 		return authService.loginInstructor(request.getEmail(), request.getPassword());
+	}
+	
+	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Admin loginAdmin(@Valid @RequestBody LoginRequestView request) {
+		return authService.loginAdmin(request.getEmail(), request.getPassword());
 	}
 
 }

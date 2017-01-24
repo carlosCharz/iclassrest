@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
+
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -8,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.UnauthorizedException;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
+import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
-import static com.wedevol.iclass.core.util.CommonUtil.*;
 
 /**
  * Auth Service Implementation
@@ -36,6 +39,9 @@ public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private InstructorService instructorService;
+	
+	@Autowired
+	private AdminService adminService;
 
 	/********************* Authentication logic ****************************/
 
@@ -60,6 +66,19 @@ public class AuthServiceImpl implements AuthService {
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(instructor.getPassword())) {
 			return instructor;
+		} else {
+			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
+		}
+	}
+	
+	@Override
+	public Admin loginAdmin(String email, String password) {
+		final Optional<Admin> adminObj = Optional.ofNullable(adminService.findByEmail(email));
+		final Admin admin = adminObj.orElseThrow(
+				() -> new ResourceNotFoundException(NotFoundErrorType.ADMIN_NOT_FOUND));
+		final String passwordHashed = hashSHA256(password);
+		if (passwordHashed.equals(admin.getPassword())) {
+			return admin;
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}
