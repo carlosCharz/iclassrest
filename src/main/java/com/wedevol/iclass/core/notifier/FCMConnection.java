@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.springframework.stereotype.Component;
+
 import com.google.android.gcm.server.Sender;
 
 /**
@@ -11,6 +13,7 @@ import com.google.android.gcm.server.Sender;
  * 
  * @author Charz
  */
+@Component
 public class FCMConnection extends Sender {
 
 	public FCMConnection(String key) {
@@ -19,7 +22,6 @@ public class FCMConnection extends Sender {
 
 	@Override
 	protected HttpURLConnection getConnection(String url) throws IOException {
-		// TODO: get this parameter from a property file
 		String fcmUrl = "https://fcm.googleapis.com/fcm/send";
 		return (HttpURLConnection) new URL(fcmUrl).openConnection();
 	}

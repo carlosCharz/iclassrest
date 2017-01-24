@@ -13,6 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.exception.BadRequestException;
+import com.wedevol.iclass.core.exception.InternalServerException;
 import com.wedevol.iclass.core.exception.NotImplementedException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.UnauthorizedException;
@@ -57,6 +58,14 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 	public ErrorResponse unauthorizedExceptionHandler(UnauthorizedException ex) {
 		// Handles all unauthorized exceptions types
+		return new ErrorResponse(ex.getCode(), ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(InternalServerException.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public ErrorResponse internalServerErrorExceptionHandler(InternalServerException ex) {
+		// Handles all internal server exceptions types
 		return new ErrorResponse(ex.getCode(), ex.getMessage());
 	}
 

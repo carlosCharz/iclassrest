@@ -8,19 +8,19 @@ import java.util.List;
  * 
  * @author charz
  */
-public class NotificationMessageContent {
+public class MessageContent {
 
 	private String messageBase;
 	private List<String> variables;
 	private String content;
 
-	public NotificationMessageContent() {
+	public MessageContent() {
 		this.messageBase = "";
 		this.variables = new ArrayList<>();
 		this.content = null;
 	}
 
-	public NotificationMessageContent(String messageBase) {
+	public MessageContent(String messageBase) {
 		this.messageBase = messageBase;
 		this.variables = new ArrayList<>();
 		this.content = null;
@@ -43,7 +43,11 @@ public class NotificationMessageContent {
 	}
 
 	public void setVariables(List<String> variables) {
-		this.variables = variables;
+		if (variables == null) {
+			this.variables = new ArrayList<>();
+		} else {
+			this.variables = variables;
+		}
 	}
 
 	public String build() {

@@ -7,15 +7,17 @@ package com.wedevol.iclass.core.notifier;
  */
 public enum NotificationType {
 
-	CLASS_CONFIRMED("%s has confirmed the class."), CLASS_REJECTED("%s has rejected the class.");
+	WELCOME_STUDENT("Bienvenido a iClass! Tienes un curso gratis para este semestre."),
+	WELCOME_INSTRUCTOR("Bienvenido a iClass!"), CLASS_CONFIRMED("%s ha confirmado la clase."),
+	CLASS_REJECTED("%s ha rechazado la clase.");
 
-	private String messageContent;
+	private String message;
 
-	NotificationType(String messageContent) {
-		this.messageContent = messageContent;
+	NotificationType(String message) {
+		this.message = message;
 	}
 
-	public String getMessageContent() {
-		return messageContent;
+	public String getMessage() {
+		return message;
 	}
 }

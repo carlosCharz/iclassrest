@@ -27,12 +27,14 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.notifier.NotificationType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.UserView;
 
@@ -62,6 +64,9 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorScheduleService instructorScheduleService;
+
+	@Autowired
+	private NotificationService notificationService;
 
 	@Autowired
 	private BusinessSetting bussinessSetting;
@@ -119,7 +124,7 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!isNullOrEmpty(instructor.getProfilePictureUrl())) {
 			existingInstructor.setProfilePictureUrl(instructor.getProfilePictureUrl());
 		}
-		if (!instructor.getPlaceOptions().isEmpty()){
+		if (!instructor.getPlaceOptions().isEmpty()) {
 			existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
 		}
 		if (!isNullOrEmpty(instructor.getUniversity())) {
@@ -199,10 +204,10 @@ public class InstructorServiceImpl implements InstructorService {
 		if (instructorView.getUniversity() != null) {
 			instructorNew.setUniversity(instructorView.getUniversity());
 		}
-		if (instructorView.getFcmToken() != null) {
-			instructorNew.setFcmToken(instructorView.getFcmToken());
-		}
+		instructorNew.setFcmToken(instructorView.getFcmToken());
 		instructorNew.setActive(true);
+
+		// Create the instructor
 		final Instructor instructorSaved = this.create(instructorNew);
 
 		// Create the enrollment if there is courseId
@@ -215,6 +220,11 @@ public class InstructorServiceImpl implements InstructorService {
 			enr.setCurrency(bussinessSetting.getInstructorDefaultCurrency());
 			instructorEnrollmentService.create(enr);
 		}
+
+		// Send notification
+		notificationService.sendInstructorWelcomeNotification(instructorNew.getFcmToken(),
+				NotificationType.WELCOME_INSTRUCTOR);
+
 		return instructorSaved;
 	}
 

@@ -6,7 +6,8 @@ package com.wedevol.iclass.core.exception.enums;
  * @author charz
  */
 public enum ServerErrorType {
-	NOT_IMPLEMENTED(500, "Method not implemented"), INTERNAL_SERVER_ERROR(500, "Internal server error");
+	NOT_IMPLEMENTED(500, "Method not implemented"), INTERNAL_SERVER_ERROR(500, "Internal server error"),
+	FCM_NOTIFICATION_CONNECTION_ERROR(500, "FCM notification connection error");
 
 	private final int code;
 	private final String message;

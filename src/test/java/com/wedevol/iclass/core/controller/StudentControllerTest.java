@@ -56,6 +56,7 @@ public class StudentControllerTest {
 
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com", "123456").build();
 		student1.setPlaceOptions(placeOptionsSet);
+		student1.setFcmToken("abc");
 		// Fix why testing is requiring the placeOptions
 
 		student1JsonString = toJsonString(student1);

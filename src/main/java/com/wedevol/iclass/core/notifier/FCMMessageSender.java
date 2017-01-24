@@ -5,51 +5,58 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Message.Priority;
 import com.google.android.gcm.server.Notification;
+import com.wedevol.iclass.core.configuration.FcmSetting;
 
 /**
  * Class that sends messages to FCM to be sent to the client devices
  * 
- * @author Charz
+ * @author charz
  *
  */
+@Component
 public class FCMMessageSender implements IFCMMessageSender {
 
 	protected static final Logger logger = LoggerFactory.getLogger(FCMMessageSender.class);
 
-	// @Inject
+	@Autowired
 	private FCMConnection connection;
 
+	@Autowired
+	private FcmSetting fcmSetting;
+
 	@Override
-	public void send(NotificationRequest notification, String token) throws IOException {
+	public void send(NotificationRequest notification, String token) {
 		Message message = createMessage(notification);
-		connection.send(message, token, 3/*
-											 * Settings.fcm() .getRetries()
-											 */);
+		try {
+			connection.send(message, token, fcmSetting.getRetries());
+		} catch (IOException e) {
+			logger.info("The message could not be sent due to a FCM connection error!");
+		}
 
 	}
 
 	@Override
-	public void send(NotificationRequest notification, List<String> tokens) throws IOException {
+	public void send(NotificationRequest notification, List<String> tokens) {
 		Message message = createMessage(notification);
-		connection.send(message, tokens, 3/*
-											 * Settings.fcm() .getRetries()
-											 */);
+		try {
+			connection.send(message, tokens, fcmSetting.getRetries());
+		} catch (IOException e) {
+			logger.info("The message could not be sent due to a FCM connection error!");
+		}
 	}
 
 	private Message createMessage(NotificationRequest notification) {
-		// final FcmConfiguration config = Settings.fcm();
 		final String notificationType = notification.getNotificationTypeName();
 		final Notification notificationPayload = createNotificationPayload(notification);
 		Message message = new Message.Builder()
-												.collapseKey("xxx"/* config.getCollapseKey() */)
-													.timeToLive(4/* config.getTimeToLive() */)
-													.addData("senderId", String.valueOf(notification.getSenderId()))
-													.addData("receiverId", String.valueOf(notification
-																										.getReceiverId()))
+												.collapseKey(fcmSetting.getCollapseKey())
+													.timeToLive(fcmSetting.getTimeToLive())
 													.addData("type", notificationType)
 													.addData("message", notification.getMessage())
 													.notification(notificationPayload)

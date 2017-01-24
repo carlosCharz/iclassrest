@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Message Sender Interface
  * 
- * @author Charz
+ * @author charz
  *
  */
 public interface IFCMMessageSender {
@@ -14,21 +14,19 @@ public interface IFCMMessageSender {
 	/**
 	 * Send a notification to a token.
 	 * 
-	 * @param notification
-	 *            request
+	 * @param notificationRequest
 	 * @param token
 	 * @throws IOException
 	 */
-	public void send(NotificationRequest notificationRequest, String token) throws IOException;
+	public void send(NotificationRequest notificationRequest, String token);
 
 	/**
 	 * Send a notification to the token list.
 	 * 
-	 * @param notification
-	 *            request
+	 * @param notificationRequest
 	 * @param tokens
 	 * @throws IOException
 	 */
-	public void send(NotificationRequest notificationRequest, List<String> tokens) throws IOException;
+	public void send(NotificationRequest notificationRequest, List<String> tokens);
 
 }

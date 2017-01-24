@@ -23,9 +23,11 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.notifier.NotificationType;
 import com.wedevol.iclass.core.repository.StudentRepository;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.UserView;
@@ -53,6 +55,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentEnrollmentService studentEnrollmentService;
+
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public List<Student> findAll() {
@@ -155,10 +160,10 @@ public class StudentServiceImpl implements StudentService {
 		if (studentView.getUniversity() != null) {
 			studentNew.setUniversity(studentView.getUniversity());
 		}
-		if (studentView.getFcmToken() != null) {
-			studentNew.setFcmToken(studentView.getFcmToken());
-		}
+		studentNew.setFcmToken(studentView.getFcmToken());
 		studentNew.setActive(true);
+
+		// Save the student
 		final Student studentSaved = this.create(studentNew);
 
 		// Create the enrollment if there is courseId
@@ -169,6 +174,10 @@ public class StudentServiceImpl implements StudentService {
 			final StudentEnrollment enr = new StudentEnrollment(enrId);
 			studentEnrollmentService.create(enr);
 		}
+
+		// Send notification
+		notificationService.sendStudentWelcomeNotification(studentNew.getFcmToken(), NotificationType.WELCOME_STUDENT);
+
 		return studentSaved;
 	}
 
