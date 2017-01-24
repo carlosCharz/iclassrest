@@ -1,12 +1,14 @@
 package com.wedevol.iclass.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.notifier.FCMMessageSender;
@@ -49,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public void sendInstructorWelcomeNotification(String tokenTo) {
 		// TODO: send notification to the admins
-		NotificationType notificationType = NotificationType.WELCOME_INSTRUCTOR;
+		final NotificationType notificationType = NotificationType.WELCOME_INSTRUCTOR;
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, new ArrayList<>());
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
@@ -84,6 +86,18 @@ public class NotificationServiceImpl implements NotificationService {
 			fcmMessageSender.send(request, tokenTo);
 		};
 		new Thread(runnable).start();
+	}
+
+	@Override
+	public void sendInstructorNewClassRequestNotification(String tokenTo, Student student, Course course) {
+		// TODO: send notification to the admins
+		final NotificationType notificationType = NotificationType.NEW_CLASS_REQUEST_FOR_INSTRUCTOR;
+		final List<String> data = new ArrayList<String>();
+		data.add(student.getFullName());
+		data.add(course.getName());
+		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
+		final NotificationRequest request = new NotificationRequest(message, notificationType);
+		sendNotificationInThread(request, tokenTo);
 	}
 
 }

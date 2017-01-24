@@ -17,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
+import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -29,6 +32,7 @@ import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.util.CommonUtil;
@@ -62,6 +66,9 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public List<Clase> findAll() {
@@ -87,11 +94,11 @@ public class ClassServiceImpl implements ClassService {
 			throw new BadRequestException(BadRequestErrorType.DATETIMES_NOT_VALID);
 		}
 		// The student should exist
-		studentService.findById(c.getStudentId());
+		final Student student = studentService.findById(c.getStudentId());
 		// The instructor should exist
-		instructorService.findById(c.getInstructorId());
+		final Instructor instructor = instructorService.findById(c.getInstructorId());
 		// The course should exist
-		courseService.findById(c.getCourseId());
+		final Course course = courseService.findById(c.getCourseId());
 		// The instructor enrollment should exist
 		final InstructorEnrollmentId insEnrId = new InstructorEnrollmentId(c.getInstructorId(), c.getCourseId());
 		instructorEnrollmentService.findById(insEnrId);
@@ -100,7 +107,10 @@ public class ClassServiceImpl implements ClassService {
 		studentEnrollmentService.findById(stuEnrId);
 		c.setStatus(ClassStatusType.REQUESTED.getDescription());
 		// Save the class
-		return classRepository.save(c);
+		final Clase clase = classRepository.save(c);
+		// Send notification
+		notificationService.sendInstructorNewClassRequestNotification(instructor.getFcmToken(), student, course);
+		return clase;	
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
@@ -344,6 +345,11 @@ public class Instructor implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("Instructor[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
+	}
+	
+	@JsonIgnore
+	public String getFullName(){
+		return this.firstName + " " + this.lastName;
 	}
 
 }

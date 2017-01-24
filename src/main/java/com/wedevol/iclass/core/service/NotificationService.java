@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.service;
 
+import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Student;
+
 
 /**
  * Notification Service Interface
@@ -18,5 +21,7 @@ public interface NotificationService {
 	void sendDirectNotificationToStudent(Long studentId , String message);
 	
 	void sendDirectNotificationToInstructor(Long instructorId , String message);
+	
+	void sendInstructorNewClassRequestNotification(String tokenTo, Student student, Course course);
 
 }
