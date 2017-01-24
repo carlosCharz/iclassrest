@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.notifier.FCMMessageSender;
 import com.wedevol.iclass.core.notifier.MessageContentBuilder;
 import com.wedevol.iclass.core.notifier.NotificationRequest;
@@ -49,6 +51,26 @@ public class NotificationServiceImpl implements NotificationService {
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, new ArrayList<>());
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		fcmMessageSender.send(request, tokenTo);
+	}
+
+	@Override
+	public void sendDirectNotificationToToken(String tokenTo, String message) {
+		final NotificationRequest request = new NotificationRequest(message, NotificationType.DIRECT_MESSAGE);
+		fcmMessageSender.send(request, tokenTo);
+	}
+
+	@Override
+	public void sendDirectNotificationToStudent(Long studentId, String message) {
+		final Student student = studentService.findById(studentId);
+		final NotificationRequest request = new NotificationRequest(message, NotificationType.DIRECT_MESSAGE);
+		fcmMessageSender.send(request, student.getFcmToken());
+	}
+
+	@Override
+	public void sendDirectNotificationToInstructor(Long instructorId, String message) {
+		final Instructor instructor = instructorService.findById(instructorId);
+		final NotificationRequest request = new NotificationRequest(message, NotificationType.DIRECT_MESSAGE);
+		fcmMessageSender.send(request, instructor.getFcmToken());
 	}
 
 }

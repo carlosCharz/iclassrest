@@ -7,7 +7,7 @@ package com.wedevol.iclass.core.notifier;
  */
 public enum NotificationType {
 
-	WELCOME_STUDENT("Bienvenido a iClass! Tienes un curso gratis para este semestre."),
+	DIRECT_MESSAGE("Direct message!"), WELCOME_STUDENT("Bienvenido a iClass! Tienes un curso gratis para este semestre."),
 	WELCOME_INSTRUCTOR("Bienvenido a iClass!"), CLASS_CONFIRMED("%s ha confirmado la clase."),
 	CLASS_REJECTED("%s ha rechazado la clase.");
 

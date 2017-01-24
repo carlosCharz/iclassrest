@@ -5,7 +5,10 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import com.wedevol.iclass.core.notifier.FCMConnection;
 
 /**
  * FCM settings loaded from a property file
@@ -66,6 +69,11 @@ public class FcmSetting {
 
 	public void setRetries(Integer retries) {
 		this.retries = retries;
+	}
+	
+	@Bean
+	public FCMConnection fcmConnection(){
+		return new FCMConnection(serverKey);
 	}
 
 }

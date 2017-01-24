@@ -62,7 +62,7 @@ public class FCMMessageSender implements IFCMMessageSender {
 													.notification(notificationPayload)
 													.priority(Priority.HIGH)
 													.build();
-		logger.info(message.toString());
+		logger.info("Full message attributes: {}", message.toString());
 		return message;
 	}
 
