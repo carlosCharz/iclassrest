@@ -176,7 +176,7 @@ public class StudentServiceImpl implements StudentService {
 		}
 
 		// Send notification
-		notificationService.sendStudentWelcomeNotification(studentNew.getFcmToken(), NotificationType.WELCOME_STUDENT);
+		notificationService.sendStudentWelcomeNotification(studentNew.getFcmToken());
 
 		return studentSaved;
 	}

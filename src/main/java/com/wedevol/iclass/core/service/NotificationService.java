@@ -1,6 +1,5 @@
 package com.wedevol.iclass.core.service;
 
-import com.wedevol.iclass.core.notifier.NotificationType;
 
 /**
  * Notification Service Interface
@@ -10,9 +9,9 @@ import com.wedevol.iclass.core.notifier.NotificationType;
  */
 public interface NotificationService {
 
-	void sendStudentWelcomeNotification(String tokenTo, NotificationType notificationType);
+	void sendStudentWelcomeNotification(String tokenTo);
 
-	void sendInstructorWelcomeNotification(String tokenTo, NotificationType notificationType);
+	void sendInstructorWelcomeNotification(String tokenTo);
 
 	void sendDirectNotificationToToken(String tokenTo, String message);
 	
