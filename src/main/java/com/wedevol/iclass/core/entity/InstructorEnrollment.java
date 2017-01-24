@@ -89,4 +89,9 @@ public class InstructorEnrollment implements Serializable {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("InstructorEnrollment[id=%d, status='%s']%n", id, status);
+	}
 }

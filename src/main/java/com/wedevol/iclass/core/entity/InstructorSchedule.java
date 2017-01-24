@@ -145,5 +145,10 @@ public class InstructorSchedule implements Serializable {
 		}
 
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("InstructorSchedule[id=%d, instructorId='%d', startTime='%d', endTime='%d']%n", id, instructorId, startTime, endTime);
+	}
 
 }

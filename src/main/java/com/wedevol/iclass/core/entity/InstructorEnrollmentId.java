@@ -48,5 +48,10 @@ public class InstructorEnrollmentId implements Serializable {
 	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("InstructorEnrollmentId[studentId=%d, courseId=%d]%n", instructorId, courseId);
+	}
 
 }

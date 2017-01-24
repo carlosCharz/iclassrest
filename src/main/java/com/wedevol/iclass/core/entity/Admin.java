@@ -178,5 +178,10 @@ public class Admin implements Serializable {
 		}
 
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Admin[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
+	}
 
 }

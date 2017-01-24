@@ -340,5 +340,10 @@ public class Instructor implements Serializable {
 		}
 
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Instructor[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
+	}
 
 }

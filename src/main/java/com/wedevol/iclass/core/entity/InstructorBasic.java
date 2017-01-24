@@ -90,4 +90,9 @@ public class InstructorBasic implements Serializable {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("InstructorBasic[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
+	}
 }

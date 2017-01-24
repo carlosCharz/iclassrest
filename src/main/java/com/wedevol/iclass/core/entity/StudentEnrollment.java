@@ -57,4 +57,9 @@ public class StudentEnrollment implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("StudentEnrollment[id=%d, status='%s']%n", id, status);
+	}
 }

@@ -341,5 +341,10 @@ public class Student implements Serializable {
 		}
 
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Student[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
+	}
 
 }

@@ -59,5 +59,10 @@ public class ScheduleBasic implements Serializable {
 	public void setEndTime(Integer endTime) {
 		this.endTime = endTime;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("ScheduleBasic[id=%d, instructorId='%d', startTime='%d', endTime='%d']%n", id, instructorId, startTime, endTime);
+	}
 
 }
