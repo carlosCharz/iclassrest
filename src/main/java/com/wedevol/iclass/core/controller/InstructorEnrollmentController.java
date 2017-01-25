@@ -76,4 +76,11 @@ public class InstructorEnrollmentController {
 		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
 		insEnrService.delete(id);
 	}
+
+	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/approved", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void approveCourseInstructorEnrollment(@PathVariable Long instructorId, @PathVariable Long courseId) {
+		insEnrService.approveCourseInstructorEnrollment(instructorId, courseId);
+	}
 }

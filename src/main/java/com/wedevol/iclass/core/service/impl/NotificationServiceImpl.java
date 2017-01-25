@@ -124,4 +124,15 @@ public class NotificationServiceImpl implements NotificationService {
 		sendNotificationInThread(request, tokenTo);
 	}
 
+	@Override
+	public void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course) {
+		// TODO: send notification to the admins
+		final NotificationType notificationType = NotificationType.NEW_COURSE_APPROVED_FOR_INSTRUCTOR;
+		final List<String> data = new ArrayList<String>();
+		data.add(course.getName());
+		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
+		final NotificationRequest request = new NotificationRequest(message, notificationType);
+		sendNotificationInThread(request, tokenTo);
+	}
+
 }

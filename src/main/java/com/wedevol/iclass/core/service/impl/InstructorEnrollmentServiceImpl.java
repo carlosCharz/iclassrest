@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.configuration.BusinessSetting;
+import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.enums.EnrollmentStatusType;
@@ -24,6 +26,7 @@ import com.wedevol.iclass.core.repository.InstructorEnrollmentRepository;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.NotificationService;
 
 /**
  * Instructor Enrollment Service Implementation
@@ -45,10 +48,13 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private InstructorService instructorService;
-	
+
+	@Autowired
+	private NotificationService notificationService;
+
 	@Override
 	public List<InstructorEnrollment> findAll() {
 		final Iterable<InstructorEnrollment> icIterator = enrRepository.findAll();
@@ -113,6 +119,23 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	public Float getAveragePriceForCourse(Long courseId) {
 		final Optional<Float> priceObj = Optional.ofNullable(enrRepository.findAveragePriceForCourseId(courseId));
 		return priceObj.orElse(bussinessSetting.getInstructorDefaultPrice());
+	}
+
+	@Override
+	public void approveCourseInstructorEnrollment(Long instructorId, Long courseId) {
+		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
+		// The instructorEnrollment should exist
+		InstructorEnrollment existingEnr = findById(id);
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(instructorId);
+		// The course should exist
+		final Course course = courseService.findById(courseId);
+		// Change status
+		existingEnr.setStatus(EnrollmentStatusType.PENDING_PAYMENT.getDescription());
+		// Update
+		enrRepository.save(existingEnr);
+		// Send notification
+		notificationService.sendCourseApprovedNotificationToInstructor(instructor.getFcmToken(), course);
 	}
 
 }

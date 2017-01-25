@@ -22,7 +22,9 @@ public interface InstructorEnrollmentService {
 	void update(InstructorEnrollmentId id, InstructorEnrollment instructorEnrollment);
 
 	void delete(InstructorEnrollmentId id);
-	
+
 	Float getAveragePriceForCourse(Long courseId);
+
+	void approveCourseInstructorEnrollment(Long instructorId, Long courseId);
 
 }
