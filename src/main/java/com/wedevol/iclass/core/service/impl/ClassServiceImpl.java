@@ -66,7 +66,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private CourseService courseService;
-	
+
 	@Autowired
 	private NotificationService notificationService;
 
@@ -109,8 +109,8 @@ public class ClassServiceImpl implements ClassService {
 		// Save the class
 		final Clase clase = classRepository.save(c);
 		// Send notification
-		notificationService.sendInstructorNewClassRequestNotification(instructor.getFcmToken(), student, course);
-		return clase;	
+		notificationService.sendNewClassRequestNotificationToInstructor(instructor.getFcmToken(), student, course);
+		return clase;
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class ClassServiceImpl implements ClassService {
 		if (c.getEndTime() != null) {
 			existingClass.setEndTime(c.getEndTime());
 		}
-		if (c.getStatus()!= null) {
+		if (c.getStatus() != null) {
 			existingClass.setStatus(c.getStatus());
 		}
 		// Update
@@ -187,6 +187,42 @@ public class ClassServiceImpl implements ClassService {
 		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
 		return classRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId, actualDateStr,
 				actualTime, classStatusList);
+	}
+
+	@Override
+	public void instructorConfirmClass(Long classId, Long instructorId) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// The student should exist
+		final Student student = studentService.findById(existingClass.getStudentId());
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
+		// The course should exist
+		final Course course = courseService.findById(existingClass.getCourseId());
+		// Change status
+		existingClass.setStatus(ClassStatusType.CONFIRMED.getDescription());
+		// Update
+		classRepository.save(existingClass);
+		// Send notification
+		notificationService.sendClassConfirmedNotificationToStudent(student.getFcmToken(), instructor, course);
+	}
+
+	@Override
+	public void instructorRejectClass(Long classId, Long instructorId) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// The student should exist
+		final Student student = studentService.findById(existingClass.getStudentId());
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
+		// The course should exist
+		final Course course = courseService.findById(existingClass.getCourseId());
+		// Change status
+		existingClass.setStatus(ClassStatusType.CONFIRMED.getDescription());
+		// Update
+		classRepository.save(existingClass);
+		// Send notification
+		notificationService.sendClassRejectedNotificationToStudent(student.getFcmToken(), instructor, course);
 	}
 
 }

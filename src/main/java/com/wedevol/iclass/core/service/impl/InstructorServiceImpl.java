@@ -221,7 +221,7 @@ public class InstructorServiceImpl implements InstructorService {
 		}
 
 		// Send notification
-		notificationService.sendInstructorWelcomeNotification(instructorNew.getFcmToken());
+		notificationService.sendWelcomeNotificationToInstructor(instructorNew.getFcmToken());
 
 		return instructorSaved;
 	}

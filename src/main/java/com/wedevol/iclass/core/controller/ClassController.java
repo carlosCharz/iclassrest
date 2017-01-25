@@ -71,4 +71,19 @@ public class ClassController {
 	public void delete(@PathVariable Long classId) {
 		classService.delete(classId);
 	}
+
+	@RequestMapping(value = "/{classId}/instructors/{instructorId}/confirm", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void instructorConfirmClass(@PathVariable Long classId, @PathVariable Long instructorId) {
+		classService.instructorConfirmClass(classId, instructorId);
+	}
+
+	@RequestMapping(value = "/{classId}/instructors/{instructorId}/reject", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long instructorId) {
+		classService.instructorRejectClass(classId, instructorId);
+	}
+
 }

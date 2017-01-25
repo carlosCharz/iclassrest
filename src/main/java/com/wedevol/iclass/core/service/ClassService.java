@@ -29,5 +29,9 @@ public interface ClassService {
 	
 	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
 			Integer actualTime, String classStatusFilter);
+	
+	void instructorConfirmClass(Long classId, Long instructorId);
+	
+	void instructorRejectClass(Long classId, Long instructorId);
 
 }
