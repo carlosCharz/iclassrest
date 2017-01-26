@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import com.wedevol.iclass.core.entity.University;
+import com.wedevol.iclass.core.service.UniversityService;
 
 /**
  * University Controller
