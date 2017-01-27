@@ -36,7 +36,7 @@ public class CourseSuggestion implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@Size(min = 2, max = 100, message = "User type must be between 2 - 50 characters")
+	@Size(min = 2, max = 50, message = "User type must be between 2 - 50 characters")
 	@Column(name = "usertype")
 	// TODO: analyze enum
 	private String userType;
@@ -54,16 +54,16 @@ public class CourseSuggestion implements Serializable {
 	private String description;
 
 	@Size(min = 2, max = 100, message = "Faculty name must be between 2 - 100 characters")
-	@Column(nullable = true)
+	@Column
 	private String faculty;
 
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column(nullable = true)
+	@Column
 	private String university;
 
 	@JsonDeserialize(using = CustomDatetimeDeserialize.class)
 	@JsonSerialize(using = CustomDatetimeSerialize.class)
-	@Column(name = "requestedat", nullable = true)
+	@Column(name = "requestedat")
 	private Date requestedAt;
 
 	@CourseSuggestionStatus

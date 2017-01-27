@@ -37,11 +37,11 @@ public class Course implements Serializable {
 	private String description;
 
 	@Size(min = 2, max = 100, message = "Faculty name must be between 2 - 100 characters")
-	@Column(nullable = true)
+	@Column
 	private String faculty;
 
 	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column(nullable = true)
+	@Column
 	private String university;
 
 	public static Course from(Long id) {
