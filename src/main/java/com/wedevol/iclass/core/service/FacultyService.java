@@ -23,5 +23,7 @@ public interface FacultyService {
 	void update(Long facultyId, Faculty faculty);
 
 	void delete(Long facultyId);
+	
+	List<Faculty> findFacultiesByUniversityId(Long universityId);
 
 }

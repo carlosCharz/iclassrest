@@ -38,7 +38,7 @@ public class Faculty implements Serializable {
 	private String name;
 
 	@Size(min = 2, max = 50, message = "Faculty short name must be between 2 - 50 characters")
-	@Column
+	@Column(name = "shortname")
 	private String shortName;
 
 	protected Faculty() {

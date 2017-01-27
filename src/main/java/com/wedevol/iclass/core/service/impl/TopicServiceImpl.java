@@ -39,7 +39,7 @@ public class TopicServiceImpl implements TopicService {
 	@Autowired
 	private CourseService courseService;
 
-	/********************* CRUD for student ****************************/
+	/********************* CRUD for topic ****************************/
 	@Override
 	public List<Topic> findAll() {
 		final Iterable<Topic> topicsIterator = topicRepository.findAll();
