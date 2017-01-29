@@ -20,6 +20,7 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.AdminRepository;
 import com.wedevol.iclass.core.service.AdminService;
+import com.wedevol.iclass.core.service.UniversityService;
 
 /**
  * Admin Service Implementation
@@ -35,6 +36,9 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private UniversityService universityService;
 
 	@Override
 	public List<Admin> findAll() {
@@ -56,7 +60,8 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin create(Admin admin) {
 		// Fields missing validation
-		if (admin.getFirstName() == null || admin.getLastName() == null || admin.getPassword() == null) {
+		if (admin.getFirstName() == null || admin.getLastName() == null || admin.getPassword() == null 
+				|| admin.getUniversityId() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// The admin should not exist
@@ -64,6 +69,8 @@ public class AdminServiceImpl implements AdminService {
 		if (adminObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.USER_ALREADY_EXISTS);
 		}
+		// The university should exist
+		universityService.findById(admin.getUniversityId());
 		admin.setPassword(hashSHA256(admin.getPassword()));
 		admin.setActive(true);
 		return adminRepository.save(admin);
@@ -82,8 +89,10 @@ public class AdminServiceImpl implements AdminService {
 		if (!isNullOrEmpty(admin.getPassword())) {
 			existingAdmin.setPassword(hashSHA256(admin.getPassword()));
 		}
-		if (!isNullOrEmpty(admin.getUniversity())) {
-			existingAdmin.setUniversity(admin.getUniversity());
+		if (admin.getUniversityId()!=null) {
+			// The university should exist
+			universityService.findById(admin.getUniversityId());
+			existingAdmin.setUniversityId(admin.getUniversityId());
 		}
 		if (!isNullOrEmpty(admin.getFcmToken())) {
 			existingAdmin.setFcmToken(admin.getFcmToken());

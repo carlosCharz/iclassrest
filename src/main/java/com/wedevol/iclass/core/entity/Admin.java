@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -47,9 +48,9 @@ public class Admin implements Serializable {
 	@Column
 	private String password;
 
-	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column
-	private String university;
+	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
+	@Column(name = "universityid")
+	private Long universityId;
 
 	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
 	@Column(name = "fcmtoken")
@@ -66,7 +67,7 @@ public class Admin implements Serializable {
 		this.lastName = builder.lastName;
 		this.email = builder.email;
 		this.password = builder.password;
-		this.university = builder.university;
+		this.universityId = builder.universityId;
 		this.active = builder.active;
 		this.fcmToken = builder.fcmToken;
 	}
@@ -111,12 +112,12 @@ public class Admin implements Serializable {
 		this.password = password;
 	}
 
-	public String getUniversity() {
-		return university;
+	public Long getUniversityId() {
+		return universityId;
 	}
 
-	public void setUniversity(String university) {
-		this.university = university;
+	public void setUniversityId(Long universityId) {
+		this.universityId = universityId;
 	}
 
 	public String getFcmToken() {
@@ -147,7 +148,7 @@ public class Admin implements Serializable {
 		private final String lastName;
 		private final String email;
 		private final String password;
-		private String university;
+		private Long universityId;
 		private String fcmToken;
 		private boolean active;
 
@@ -158,8 +159,8 @@ public class Admin implements Serializable {
 			this.password = password;
 		}
 
-		public StudentBuilder university(String university) {
-			this.university = university;
+		public StudentBuilder university(Long universityId) {
+			this.universityId = universityId;
 			return this;
 		}
 
