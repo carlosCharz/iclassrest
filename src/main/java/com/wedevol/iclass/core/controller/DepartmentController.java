@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.Department;
 import com.wedevol.iclass.core.entity.DepartmentId;
+import com.wedevol.iclass.core.service.DepartmentService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -60,6 +61,7 @@ public class DepartmentController {
 		return depaService.create(department);
 	}
 
+	@ApiIgnore
 	@RequestMapping(value = "/universities/{universityId}/faculties/{facultyId}/department", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

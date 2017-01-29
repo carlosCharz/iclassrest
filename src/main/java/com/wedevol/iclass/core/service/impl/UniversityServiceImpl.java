@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.UniversityRepository;
+import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.UniversityService;
 
 /**
@@ -34,6 +36,9 @@ public class UniversityServiceImpl implements UniversityService {
 
 	@Autowired
 	private UniversityRepository universityRepository;
+	
+	@Autowired
+	private FacultyService facultyService;
 
 	/********************* CRUD for university ****************************/
 	@Override
@@ -87,6 +92,11 @@ public class UniversityServiceImpl implements UniversityService {
 		// The university should exist
 		findById(universityId);
 		universityRepository.delete(universityId);
+	}
+
+	@Override
+	public List<Faculty> findFacultiesByUniversityId(Long universityId) {
+		return facultyService.findFacultiesByUniversityId(universityId);
 	}
 
 }

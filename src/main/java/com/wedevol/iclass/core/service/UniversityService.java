@@ -2,6 +2,7 @@ package com.wedevol.iclass.core.service;
 
 import java.util.List;
 
+import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.University;
 
 /**
@@ -23,5 +24,7 @@ public interface UniversityService {
 	void update(Long universityId, University university);
 
 	void delete(Long universityId);
+	
+	List<Faculty> findFacultiesByUniversityId(Long universityId);
 
 }

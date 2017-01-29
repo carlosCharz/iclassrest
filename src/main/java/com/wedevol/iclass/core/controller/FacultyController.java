@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,14 +72,5 @@ public class FacultyController {
 	@ResponseBody
 	public void delete(@PathVariable Long facultyId) {
 		facultyService.delete(facultyId);
-	}
-
-	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<Faculty> findFacultiesByUniversityId(
-			@RequestParam(value = "universityId", required = true) Long universityId) {
-		logger.info("Find faculties of the university " + universityId);
-		return facultyService.findFacultiesByUniversityId(universityId);
 	}
 }

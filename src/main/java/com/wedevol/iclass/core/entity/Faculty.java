@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -28,10 +27,6 @@ public class Faculty implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
-	@Column(name = "universityid")
-	private Long universityId;
 
 	@Size(min = 2, max = 100, message = "Faculty name must be between 2 - 100 characters")
 	@Column
@@ -50,14 +45,6 @@ public class Faculty implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getUniversityId() {
-		return universityId;
-	}
-
-	public void setUniversityId(Long universityId) {
-		this.universityId = universityId;
 	}
 
 	public String getName() {

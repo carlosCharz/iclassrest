@@ -59,7 +59,7 @@ public class FacultyServiceImpl implements FacultyService {
 	@Override
 	public Faculty create(Faculty faculty) {
 		// Fields missing validation
-		if (faculty.getName() == null || faculty.getShortName() == null || faculty.getUniversityId() == null) {
+		if (faculty.getName() == null || faculty.getShortName() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// The faculty should not exist
@@ -67,8 +67,6 @@ public class FacultyServiceImpl implements FacultyService {
 		if (facultyObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.FACULTY_ALREADY_EXISTS);
 		}
-		// Then, the university should exist
-		universityService.findById(faculty.getUniversityId());
 		// Save
 		return facultyRepository.save(faculty);
 	}
@@ -82,11 +80,6 @@ public class FacultyServiceImpl implements FacultyService {
 		}
 		if (!isNullOrEmpty(faculty.getShortName())) {
 			existingFaculty.setShortName(faculty.getShortName());
-		}
-		if (faculty.getUniversityId() != null) {
-			// The university should exist
-			universityService.findById(faculty.getUniversityId());
-			existingFaculty.setUniversityId(faculty.getUniversityId());
 		}
 		// Update
 		facultyRepository.save(existingFaculty);

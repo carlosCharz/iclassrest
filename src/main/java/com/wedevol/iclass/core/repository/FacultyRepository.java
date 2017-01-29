@@ -27,15 +27,14 @@ public interface FacultyRepository extends CrudRepository<Faculty, Long> {
 	 * @return faculty
 	 */
 	public Faculty findByName(String name);
-	
+
 	/**
 	 * Return the faculties of a university
 	 * 
 	 * @param universityId
 	 * @return list of faculties
 	 */
-	@Query("SELECT fac FROM Faculty fac WHERE fac.universityId = :universityId")
+	@Query("SELECT fac FROM Department depa, Faculty fac WHERE fac.id = depa.id.facultyId AND depa.id.universityId = :universityId")
 	public List<Faculty> findFacultiesWithUniversityId(@Param("universityId") Long universityId);
-
 
 }
