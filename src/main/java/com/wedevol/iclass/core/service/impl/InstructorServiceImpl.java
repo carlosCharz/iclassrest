@@ -30,10 +30,12 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.InstructorRepository;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
+import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.UserView;
 
@@ -63,6 +65,12 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorScheduleService instructorScheduleService;
+	
+	@Autowired
+	private UniversityService universityService;
+
+	@Autowired
+	private FacultyService facultyService;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -126,8 +134,15 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!instructor.getPlaceOptions().isEmpty()) {
 			existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
 		}
-		if (!isNullOrEmpty(instructor.getUniversity())) {
-			existingInstructor.setUniversity(instructor.getUniversity());
+		if (instructor.getUniversityId()!=null) {
+			// The university should exist
+			universityService.findById(instructor.getUniversityId());
+			existingInstructor.setUniversityId(instructor.getUniversityId());
+		}
+		if (instructor.getFacultyId()!=null) {
+			// The faculty should exist
+			facultyService.findById(instructor.getFacultyId());
+			existingInstructor.setFacultyId(instructor.getFacultyId());
 		}
 		if (!isNullOrEmpty(instructor.getFcmToken())) {
 			existingInstructor.setFcmToken(instructor.getFcmToken());
@@ -200,8 +215,15 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!instructorView.getPlaceOptions().isEmpty()) {
 			instructorNew.setPlaceOptions(instructorView.getPlaceOptions());
 		}
-		if (instructorView.getUniversity() != null) {
-			instructorNew.setUniversity(instructorView.getUniversity());
+		if (instructorView.getUniversityId() != null) {
+			// The university should exist
+			universityService.findById(instructorView.getUniversityId());
+			instructorNew.setUniversityId(instructorView.getUniversityId());
+		}
+		if (instructorView.getFacultyId() != null) {
+			// The faculty should exist
+			facultyService.findById(instructorView.getFacultyId());
+			instructorNew.setFacultyId(instructorView.getFacultyId());
 		}
 		instructorNew.setFcmToken(instructorView.getFcmToken());
 		instructorNew.setActive(true);

@@ -26,9 +26,11 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.StudentRepository;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.view.UserView;
 
 /**
@@ -54,6 +56,12 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentEnrollmentService studentEnrollmentService;
+	
+	@Autowired
+	private UniversityService universityService;
+
+	@Autowired
+	private FacultyService facultyService;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -114,8 +122,15 @@ public class StudentServiceImpl implements StudentService {
 		if (!student.getPlaceOptions().isEmpty()) {
 			existingStudent.setPlaceOptions(student.getPlaceOptions());
 		}
-		if (!isNullOrEmpty(student.getUniversity())) {
-			existingStudent.setUniversity(student.getUniversity());
+		if (student.getUniversityId()!=null) {
+			// The university should exist
+			universityService.findById(student.getUniversityId());
+			existingStudent.setUniversityId(student.getUniversityId());
+		}
+		if (student.getFacultyId()!=null) {
+			// The faculty should exist
+			facultyService.findById(student.getFacultyId());
+			existingStudent.setFacultyId(student.getFacultyId());
 		}
 		if (!isNullOrEmpty(student.getFcmToken())) {
 			existingStudent.setFcmToken(student.getFcmToken());
@@ -156,8 +171,15 @@ public class StudentServiceImpl implements StudentService {
 		if (!studentView.getPlaceOptions().isEmpty()) {
 			studentNew.setPlaceOptions(studentView.getPlaceOptions());
 		}
-		if (studentView.getUniversity() != null) {
-			studentNew.setUniversity(studentView.getUniversity());
+		if (studentView.getUniversityId() != null) {
+			// The university should exist
+			universityService.findById(studentView.getUniversityId());
+			studentNew.setUniversityId(studentView.getUniversityId());
+		}
+		if (studentView.getFacultyId() != null) {
+			// The faculty should exist
+			facultyService.findById(studentView.getFacultyId());
+			studentNew.setFacultyId(studentView.getFacultyId());
 		}
 		studentNew.setFcmToken(studentView.getFcmToken());
 		studentNew.setActive(true);

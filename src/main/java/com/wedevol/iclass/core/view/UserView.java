@@ -69,8 +69,11 @@ public class UserView implements Serializable {
 	// It has place options validation and default message
 	private String placeOptions;
 
-	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	private String university;
+	@Digits(integer = 20, fraction = 0, message = "Faculty id must be just digits")
+	private Long facultyId;
+
+	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
+	private Long universityId;
 
 	@Digits(integer = 20, fraction = 0, message = "Course id must be just digits")
 	private Long courseId;
@@ -155,12 +158,20 @@ public class UserView implements Serializable {
 		placeOptions = placeOptionsSet == null ? null : String.join(",", placeOptionsSet);
 	}
 
-	public String getUniversity() {
-		return university;
+	public Long getFacultyId() {
+		return facultyId;
 	}
 
-	public void setUniversity(String university) {
-		this.university = university;
+	public void setFacultyId(Long facultyId) {
+		this.facultyId = facultyId;
+	}
+
+	public Long getUniversityId() {
+		return universityId;
+	}
+
+	public void setUniversityId(Long universityId) {
+		this.universityId = universityId;
 	}
 
 	public Long getCourseId() {

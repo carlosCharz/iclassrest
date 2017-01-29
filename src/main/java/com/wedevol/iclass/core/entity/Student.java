@@ -85,9 +85,13 @@ public class Student implements Serializable {
 	@Column(name = "placeoptions")
 	private String placeOptions;
 
-	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column
-	private String university;
+	@Digits(integer = 20, fraction = 0, message = "Faculty id must be just digits")
+	@Column(name = "facultyid")
+	private Long facultyId;
+
+	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
+	@Column(name = "universityid")
+	private Long universityId;
 
 	@Column
 	private Float rating;
@@ -118,7 +122,8 @@ public class Student implements Serializable {
 		this.gender = builder.gender;
 		this.profilePictureUrl = builder.profilePictureUrl;
 		this.placeOptions = builder.placeOptions;
-		this.university = builder.university;
+		this.universityId = builder.universityId;
+		this.facultyId = builder.facultyId;
 		this.rating = builder.rating;
 		this.level = builder.level;
 		this.totalHours = builder.totalHours;
@@ -207,12 +212,20 @@ public class Student implements Serializable {
 		placeOptions = placeOptionsSet == null ? null : String.join(",", placeOptionsSet);
 	}
 
-	public String getUniversity() {
-		return university;
+	public Long getFacultyId() {
+		return facultyId;
 	}
 
-	public void setUniversity(String university) {
-		this.university = university;
+	public void setFacultyId(Long facultyId) {
+		this.facultyId = facultyId;
+	}
+
+	public Long getUniversityId() {
+		return universityId;
+	}
+
+	public void setUniversityId(Long universityId) {
+		this.universityId = universityId;
 	}
 
 	public Float getRating() {
@@ -272,7 +285,8 @@ public class Student implements Serializable {
 		private String gender;
 		private String profilePictureUrl;
 		private String placeOptions;
-		private String university;
+		private Long universityId;
+		private Long facultyId;
 		private Float rating;
 		private Integer level;
 		private Integer totalHours;
@@ -307,8 +321,12 @@ public class Student implements Serializable {
 			return this;
 		}
 
-		public StudentBuilder university(String university) {
-			this.university = university;
+		public StudentBuilder universityId(Long universityId) {
+			this.universityId = universityId;
+			return this;
+		}
+		public StudentBuilder facultyId(Long facultyId) {
+			this.facultyId = facultyId;
 			return this;
 		}
 
