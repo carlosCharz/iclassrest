@@ -163,4 +163,16 @@ public class CourseServiceImpl implements CourseService {
 		return courseRepository.findCoursesWithInstructorIdWithCourseStatusFilter(instructorId, courseStatusList);
 	}
 
+	@Override
+	public List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId) {
+		// The faculty should exist
+		facultyService.findById(facultyId);				
+		// The university should exist
+		universityService.findById(universityId);
+		// The department should exist
+		final DepartmentId id = new DepartmentId(universityId, facultyId);
+		departmentService.findById(id);
+		return courseRepository.findCoursesWithFacultyIdWithUniversityId(facultyId, universityId);
+	}
+
 }

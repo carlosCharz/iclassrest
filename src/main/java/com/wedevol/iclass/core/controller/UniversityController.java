@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.service.UniversityService;
-
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * University Controller
@@ -83,5 +84,13 @@ public class UniversityController {
 	public List<Faculty> findFacultiesByUniversityId(@PathVariable Long universityId) {
 		logger.info("Find faculties of the university " + universityId);
 		return universityService.findFacultiesByUniversityId(universityId);
+	}
+	
+	@RequestMapping(value = "/{universityId}/faculties/{facultyId}/courses", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Course> findCoursesByFacultyIdByUniversityId(@PathVariable Long facultyId, @PathVariable Long universityId) {
+		logger.info("Find courses of the faculty "+facultyId+" of the university " + universityId);
+		return universityService.findCoursesByFacultyIdByUniversityId(facultyId, universityId);
 	}
 }

@@ -34,5 +34,7 @@ public interface CourseService {
 	List<Student> findStudentsByCourseId(Long courseId);
 	
 	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
+	
+	List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId);
 
 }

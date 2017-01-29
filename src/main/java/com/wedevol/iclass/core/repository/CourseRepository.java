@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Faculty;
 
 /**
  * Course Repository
@@ -50,5 +51,15 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
 	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
+	
+	/**
+	 * Return the courses of a faculty of a university
+	 * 
+	 * @param facultyId
+	 * @param universityId
+	 * @return list of courses
+	 */
+	@Query("SELECT cou FROM Course cou WHERE cou.facultyId = :facultyId AND cou.universityId = :universityId")
+	public List<Course> findCoursesWithFacultyIdWithUniversityId(@Param("facultyId") Long facultyId, @Param("universityId") Long universityId);
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -19,6 +20,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.UniversityRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.UniversityService;
 
@@ -39,8 +41,10 @@ public class UniversityServiceImpl implements UniversityService {
 	
 	@Autowired
 	private FacultyService facultyService;
+	
+	@Autowired
+	private CourseService courseService;
 
-	/********************* CRUD for university ****************************/
 	@Override
 	public List<University> findAll() {
 		final Iterable<University> universityIterator = universityRepository.findAll();
@@ -97,6 +101,11 @@ public class UniversityServiceImpl implements UniversityService {
 	@Override
 	public List<Faculty> findFacultiesByUniversityId(Long universityId) {
 		return facultyService.findFacultiesByUniversityId(universityId);
+	}
+
+	@Override
+	public List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId) {
+		return courseService.findCoursesByFacultyIdByUniversityId(facultyId, universityId);
 	}
 
 }
