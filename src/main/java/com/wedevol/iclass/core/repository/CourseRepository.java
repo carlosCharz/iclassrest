@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
-import com.wedevol.iclass.core.entity.Faculty;
 
 /**
  * Course Repository

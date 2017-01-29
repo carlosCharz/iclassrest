@@ -21,8 +21,10 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.CourseSuggestionRepository;
 import com.wedevol.iclass.core.service.CourseSuggestionService;
+import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.service.UniversityService;
 
 /**
  * Course Suggestion Service Implementation
@@ -44,6 +46,12 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 
 	@Autowired
 	private InstructorService instructorService;
+	
+	@Autowired
+	private UniversityService universityService;
+	
+	@Autowired
+	private FacultyService facultyService;
 
 	@Override
 	public List<CourseSuggestion> findAll() {
@@ -62,9 +70,13 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	@Override
 	public CourseSuggestion create(CourseSuggestion courseSuggestion) {
 		// Fields missing validation
-		if (courseSuggestion.getName() == null) {
+		if (courseSuggestion.getName() == null || courseSuggestion.getUniversityId() == null || courseSuggestion.getFacultyId() == null ) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
+		// The university should exist
+		universityService.findById(courseSuggestion.getUniversityId());
+		// The faculty should exist
+		facultyService.findById(courseSuggestion.getFacultyId());
 		// The user should exist
 		validateUser(courseSuggestion.getUserId(), courseSuggestion.getUserType());
 		courseSuggestion.setStatus(CourseSuggestionStatusType.SUGGESTED.getDescription());
@@ -93,11 +105,15 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 		if (!isNullOrEmpty(courseSuggestion.getDescription())) {
 			existingCourse.setDescription(courseSuggestion.getDescription());
 		}
-		if (!isNullOrEmpty(courseSuggestion.getFaculty())) {
-			existingCourse.setFaculty(courseSuggestion.getFaculty());
+		if (courseSuggestion.getFacultyId()!=null) {
+			// The faculty should exist
+			facultyService.findById(courseSuggestion.getFacultyId());
+			existingCourse.setFacultyId(courseSuggestion.getFacultyId());
 		}
-		if (!isNullOrEmpty(courseSuggestion.getUniversity())) {
-			existingCourse.setUniversity(courseSuggestion.getUniversity());
+		if (courseSuggestion.getUniversityId()!=null) {
+			// The university should exist
+			universityService.findById(courseSuggestion.getUniversityId());
+			existingCourse.setUniversityId(courseSuggestion.getUniversityId());
 		}
 		if (courseSuggestion.getStatus()!= null){
 			existingCourse.setStatus(courseSuggestion.getStatus());
