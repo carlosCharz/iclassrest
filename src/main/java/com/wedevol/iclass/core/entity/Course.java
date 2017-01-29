@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -36,13 +37,13 @@ public class Course implements Serializable {
 	@Column
 	private String description;
 
-	@Size(min = 2, max = 100, message = "Faculty name must be between 2 - 100 characters")
-	@Column
-	private String faculty;
+	@Digits(integer = 20, fraction = 0, message = "Faculty id must be just digits")
+	@Column(name = "facultyid")
+	private Long facultyId;
 
-	@Size(min = 2, max = 100, message = "University name must be between 2 - 100 characters")
-	@Column
-	private String university;
+	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
+	@Column(name = "universityid")
+	private Long universityId;
 
 	public static Course from(Long id) {
 		return new Course(id);
@@ -58,8 +59,8 @@ public class Course implements Serializable {
 	private Course(CourseBuilder builder) {
 		this.name = builder.name;
 		this.description = builder.description;
-		this.faculty = builder.faculty;
-		this.university = builder.university;
+		this.facultyId = builder.facultyId;
+		this.universityId = builder.universityId;
 	}
 
 	public Long getId() {
@@ -86,20 +87,20 @@ public class Course implements Serializable {
 		this.description = description;
 	}
 
-	public String getFaculty() {
-		return faculty;
+	public Long getFacultyId() {
+		return facultyId;
 	}
 
-	public void setFaculty(String faculty) {
-		this.faculty = faculty;
+	public void setFacultyId(Long facultyId) {
+		this.facultyId = facultyId;
 	}
 
-	public String getUniversity() {
-		return university;
+	public Long getUniversityId() {
+		return universityId;
 	}
 
-	public void setUniversity(String university) {
-		this.university = university;
+	public void setUniversityId(Long universityId) {
+		this.universityId = universityId;
 	}
 
 	/**
@@ -112,8 +113,8 @@ public class Course implements Serializable {
 
 		private String name;
 		private String description;
-		private String faculty;
-		private String university;
+		private Long facultyId;
+		private Long universityId;
 
 		public CourseBuilder(String name) {
 			this.name = name;
@@ -124,13 +125,13 @@ public class Course implements Serializable {
 			return this;
 		}
 
-		public CourseBuilder faculty(String faculty) {
-			this.faculty = faculty;
+		public CourseBuilder faculty(Long facultyId) {
+			this.facultyId = facultyId;
 			return this;
 		}
 
-		public CourseBuilder university(String university) {
-			this.university = university;
+		public CourseBuilder university(Long universityId) {
+			this.universityId = universityId;
 			return this;
 		}
 

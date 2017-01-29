@@ -1,7 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CoreUtil.areValidEnrollmentStatusFilters;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
+import static com.wedevol.iclass.core.util.CoreUtil.areValidEnrollmentStatusFilters;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.DepartmentId;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -24,8 +25,11 @@ import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.CourseRepository;
 import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.DepartmentService;
+import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.service.UniversityService;
 
 /**
  * Course Service Implementation
@@ -48,6 +52,15 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	private InstructorService instructorService;
 
+	@Autowired
+	private UniversityService universityService;
+
+	@Autowired
+	private FacultyService facultyService;
+
+	@Autowired
+	private DepartmentService departmentService;
+
 	@Override
 	public List<Course> findAll() {
 		final Iterable<Course> coursesIterator = courseRepository.findAll();
@@ -68,9 +81,13 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Course create(Course course) {
 		// Fields missing validation
-		if (course.getName() == null) {
+		if (course.getName() == null || course.getUniversityId() == null || course.getFacultyId() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
+		// The department should exist
+		final DepartmentId id = new DepartmentId(course.getUniversityId(), course.getFacultyId());
+		departmentService.findById(id);
+		// TODO: analyze this restriction
 		// The course should not exist by name
 		final Optional<Course> courseObj = Optional.ofNullable(findByName(course.getName()));
 		if (courseObj.isPresent()) {
@@ -89,12 +106,20 @@ public class CourseServiceImpl implements CourseService {
 		if (!isNullOrEmpty(course.getDescription())) {
 			existingCourse.setDescription(course.getDescription());
 		}
-		if (!isNullOrEmpty(course.getFaculty())) {
-			existingCourse.setFaculty(course.getFaculty());
+		if (course.getFacultyId() != null) {
+			// The faculty should exist
+			facultyService.findById(course.getFacultyId());
+			existingCourse.setFacultyId(course.getFacultyId());
 		}
-		if (!isNullOrEmpty(course.getUniversity())) {
-			existingCourse.setUniversity(course.getUniversity());
+		if (course.getUniversityId() != null) {
+			// The university should exist
+			universityService.findById(course.getUniversityId());
+			existingCourse.setUniversityId(course.getUniversityId());
 		}
+		// The department should exist
+		final DepartmentId id = new DepartmentId(course.getUniversityId(), course.getFacultyId());
+		departmentService.findById(id);
+		// Save
 		courseRepository.save(existingCourse);
 	}
 

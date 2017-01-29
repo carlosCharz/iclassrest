@@ -28,7 +28,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @return course
 	 */
 	public Course findByName(String name);
-	
+
 	/**
 	 * Return the student's list of courses filtered by the supplied course status
 	 * 
@@ -36,7 +36,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.faculty, cou.university, enr.status) FROM StudentEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
 	public List<CourseFullInfo> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 
@@ -47,7 +47,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, cou.faculty, cou.university, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou WHERE cou.id = enr.id.courseId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
 	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 
