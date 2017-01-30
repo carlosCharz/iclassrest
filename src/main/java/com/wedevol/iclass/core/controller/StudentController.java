@@ -25,8 +25,8 @@ import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.view.UserBasicView;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserBasicView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 import springfox.documentation.annotations.ApiIgnore;
 

@@ -8,7 +8,7 @@ import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 /**
  * Instructor Service Interface

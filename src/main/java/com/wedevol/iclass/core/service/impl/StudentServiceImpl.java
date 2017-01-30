@@ -31,7 +31,7 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 /**
  * Student Service Implementation

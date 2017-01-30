@@ -32,7 +32,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(StudentController.class)

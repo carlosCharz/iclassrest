@@ -6,7 +6,7 @@ import java.util.List;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 /**
  * Student Service Interface

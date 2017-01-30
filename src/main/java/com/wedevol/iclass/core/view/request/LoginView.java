@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.view;
+package com.wedevol.iclass.core.view.request;
 
 import java.io.Serializable;
 
@@ -7,12 +7,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * Login request view
+ * Login view
  * 
  * @author charz
  *
  */
-public class LoginRequestView implements Serializable {
+public class LoginView implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,10 +25,10 @@ public class LoginRequestView implements Serializable {
 	@Size(min = 6, max = 64, message = "Password must be 6 characters minimum")
 	private String password;
 
-	protected LoginRequestView() {
+	protected LoginView() {
 	}
 
-	public LoginRequestView(String email, String password) {
+	public LoginView(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;

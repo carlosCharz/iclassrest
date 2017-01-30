@@ -17,7 +17,7 @@ import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.AuthService;
-import com.wedevol.iclass.core.view.LoginRequestView;
+import com.wedevol.iclass.core.view.request.LoginView;
 
 /**
  * Auth Controller
@@ -39,21 +39,21 @@ public class AuthController {
 	@RequestMapping(value = "/student/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Student loginStudent(@Valid @RequestBody LoginRequestView request) {
+	public Student loginStudent(@Valid @RequestBody LoginView request) {
 		return authService.loginStudent(request.getEmail(), request.getPassword());
 	}
 
 	@RequestMapping(value = "/instructor/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Instructor loginInstructor(@Valid @RequestBody LoginRequestView request) {
+	public Instructor loginInstructor(@Valid @RequestBody LoginView request) {
 		return authService.loginInstructor(request.getEmail(), request.getPassword());
 	}
 	
 	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Admin loginAdmin(@Valid @RequestBody LoginRequestView request) {
+	public Admin loginAdmin(@Valid @RequestBody LoginView request) {
 		return authService.loginAdmin(request.getEmail(), request.getPassword());
 	}
 

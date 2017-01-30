@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.view;
+package com.wedevol.iclass.core.view.request;
 
 import java.io.Serializable;
 

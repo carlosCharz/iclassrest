@@ -37,7 +37,7 @@ import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.util.CommonUtil;
-import com.wedevol.iclass.core.view.UserView;
+import com.wedevol.iclass.core.view.request.UserView;
 
 /**
  * Instructor Service Implementation
