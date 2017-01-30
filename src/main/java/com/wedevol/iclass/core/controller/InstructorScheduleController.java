@@ -72,7 +72,6 @@ public class InstructorScheduleController {
 		scheduleService.update(scheduleId, schedule);
 	}
 
-	@ApiIgnore
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
