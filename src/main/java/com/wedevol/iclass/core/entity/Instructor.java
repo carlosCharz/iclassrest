@@ -22,7 +22,6 @@ import org.hibernate.annotations.DynamicInsert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.wedevol.iclass.core.entity.Student.StudentBuilder;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
 import com.wedevol.iclass.core.entity.constraint.Gender;

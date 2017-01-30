@@ -38,8 +38,6 @@ public class UniversityController {
 	@Autowired
 	private UniversityService universityService;
 
-	/********************* CRUD for university ****************************/
-
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -77,7 +75,7 @@ public class UniversityController {
 	public void delete(@PathVariable Long universityId) {
 		universityService.delete(universityId);
 	}
-	
+
 	@RequestMapping(value = "/{universityId}/faculties", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -85,12 +83,13 @@ public class UniversityController {
 		logger.info("Find faculties of the university " + universityId);
 		return universityService.findFacultiesByUniversityId(universityId);
 	}
-	
+
 	@RequestMapping(value = "/{universityId}/faculties/{facultyId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Course> findCoursesByFacultyIdByUniversityId(@PathVariable Long facultyId, @PathVariable Long universityId) {
-		logger.info("Find courses of the faculty "+facultyId+" of the university " + universityId);
+	public List<Course> findCoursesByFacultyIdByUniversityId(@PathVariable Long facultyId,
+			@PathVariable Long universityId) {
+		logger.info("Find courses of the faculty " + facultyId + " of the university " + universityId);
 		return universityService.findCoursesByFacultyIdByUniversityId(facultyId, universityId);
 	}
 }
