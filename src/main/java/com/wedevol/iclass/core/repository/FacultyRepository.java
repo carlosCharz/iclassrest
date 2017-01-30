@@ -29,12 +29,12 @@ public interface FacultyRepository extends CrudRepository<Faculty, Long> {
 	public Faculty findByName(String name);
 
 	/**
-	 * Return the faculties of a university
+	 * Return the faculties of a university order by faculty asc
 	 * 
 	 * @param universityId
 	 * @return list of faculties
 	 */
-	@Query("SELECT fac FROM Department depa, Faculty fac WHERE fac.id = depa.id.facultyId AND depa.id.universityId = :universityId")
+	@Query("SELECT fac FROM Department depa, Faculty fac WHERE fac.id = depa.id.facultyId AND depa.id.universityId = :universityId order by fac.name asc")
 	public List<Faculty> findFacultiesWithUniversityId(@Param("universityId") Long universityId);
 
 }

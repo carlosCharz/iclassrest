@@ -47,7 +47,7 @@ public class UniversityServiceImpl implements UniversityService {
 
 	@Override
 	public List<University> findAll() {
-		final Iterable<University> universityIterator = universityRepository.findAll();
+		final Iterable<University> universityIterator = universityRepository.findAllByOrderByNameAsc();
 		return Lists.newArrayList(universityIterator);
 	}
 

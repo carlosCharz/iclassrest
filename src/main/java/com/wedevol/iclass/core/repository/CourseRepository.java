@@ -30,35 +30,35 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	public Course findByName(String name);
 
 	/**
-	 * Return the student's list of courses filtered by the supplied course status
+	 * Return the student's list of courses filtered by the supplied course status order by course name asc
 	 * 
 	 * @param studentId
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList")
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList order by cou.name asc")
 	public List<CourseFullInfo> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 
 	/**
-	 * Return the instructor's list of courses filtered by the supplied course status
+	 * Return the instructor's list of courses filtered by the supplied course status order by course name asc
 	 * 
 	 * @param instructorId
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList")
+	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList order by cou.name asc")
 	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 	
 	/**
-	 * Return the courses of a faculty of a university
+	 * Return the courses of a faculty of a university order by course name asc
 	 * 
 	 * @param facultyId
 	 * @param universityId
 	 * @return list of courses
 	 */
-	@Query("SELECT cou FROM Course cou WHERE cou.facultyId = :facultyId AND cou.universityId = :universityId")
+	@Query("SELECT cou FROM Course cou WHERE cou.facultyId = :facultyId AND cou.universityId = :universityId order by cou.name asc")
 	public List<Course> findCoursesWithFacultyIdWithUniversityId(@Param("facultyId") Long facultyId, @Param("universityId") Long universityId);
 
 }
