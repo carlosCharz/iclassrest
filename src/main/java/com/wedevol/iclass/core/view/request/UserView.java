@@ -81,6 +81,10 @@ public class UserView implements Serializable {
 	@NotNull
 	@Column(name = "fcmtoken")
 	private String fcmToken;
+	
+	@NotNull
+	@Column(name = "deviceid")
+	private String deviceId;
 
 	protected UserView() {
 	}
@@ -188,6 +192,14 @@ public class UserView implements Serializable {
 
 	public void setFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 }

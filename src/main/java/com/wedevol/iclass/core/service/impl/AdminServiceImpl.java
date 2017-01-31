@@ -99,6 +99,9 @@ public class AdminServiceImpl implements AdminService {
 		if (!isNullOrEmpty(admin.getFcmToken())) {
 			existingAdmin.setFcmToken(admin.getFcmToken());
 		}
+		if (!isNullOrEmpty(admin.getDeviceId())) {
+			existingAdmin.setDeviceId(admin.getDeviceId());
+		}
 		// Save
 		adminRepository.save(existingAdmin);
 	}

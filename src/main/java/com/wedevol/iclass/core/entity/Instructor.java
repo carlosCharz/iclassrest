@@ -104,6 +104,10 @@ public class Instructor implements Serializable {
 	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
 	@Column(name = "fcmtoken")
 	private String fcmToken;
+	
+	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
+	@Column(name = "deviceid")
+	private String deviceId;
 
 	@Column
 	private boolean active;
@@ -128,6 +132,7 @@ public class Instructor implements Serializable {
 		this.totalHours = builder.totalHours;
 		this.active = builder.active;
 		this.fcmToken = builder.fcmToken;
+		this.deviceId = builder.deviceId;
 	}
 
 	public Long getId() {
@@ -259,6 +264,14 @@ public class Instructor implements Serializable {
 		this.fcmToken = fcmToken;
 	}
 
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -290,6 +303,7 @@ public class Instructor implements Serializable {
 		private Integer level;
 		private Integer totalHours;
 		private String fcmToken;
+		private String deviceId;
 		private boolean active;
 
 		public InstructorBuilder(String firstName, String lastName, String phone, String email, String password) {
@@ -346,6 +360,11 @@ public class Instructor implements Serializable {
 
 		public InstructorBuilder fcmToken(String fcmToken) {
 			this.fcmToken = fcmToken;
+			return this;
+		}
+		
+		public InstructorBuilder deviceId(String deviceId) {
+			this.deviceId = deviceId;
 			return this;
 		}
 

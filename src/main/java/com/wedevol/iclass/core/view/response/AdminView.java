@@ -23,6 +23,7 @@ public class AdminView implements Serializable {
 	private Long universityId;
 	private String universityName;
 	private String fcmToken;
+	private String deviceId;
 	private boolean active;
 
 	protected AdminView() {
@@ -95,6 +96,14 @@ public class AdminView implements Serializable {
 	public void setFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;
 	}
+	
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
 
 	public boolean isActive() {
 		return active;
@@ -113,6 +122,7 @@ public class AdminView implements Serializable {
 		adminView.setUniversityId(admin.getUniversityId());
 		adminView.setActive(admin.isActive());
 		adminView.setFcmToken(admin.getFcmToken());
+		adminView.setDeviceId(admin.getDeviceId());
 		return adminView;
 	}
 

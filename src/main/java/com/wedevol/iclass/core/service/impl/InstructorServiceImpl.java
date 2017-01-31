@@ -150,6 +150,9 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!isNullOrEmpty(instructor.getFcmToken())) {
 			existingInstructor.setFcmToken(instructor.getFcmToken());
 		}
+		if (!isNullOrEmpty(instructor.getDeviceId())) {
+			existingInstructor.setDeviceId(instructor.getDeviceId());
+		}
 		// Save
 		instructorRepository.save(existingInstructor);
 	}
@@ -229,6 +232,7 @@ public class InstructorServiceImpl implements InstructorService {
 			instructorNew.setFacultyId(instructorView.getFacultyId());
 		}
 		instructorNew.setFcmToken(instructorView.getFcmToken());
+		instructorNew.setDeviceId(instructorView.getDeviceId());
 		instructorNew.setActive(true);
 
 		// Create the instructor

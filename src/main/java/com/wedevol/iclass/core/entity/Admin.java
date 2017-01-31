@@ -55,6 +55,10 @@ public class Admin implements Serializable {
 	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
 	@Column(name = "fcmtoken")
 	private String fcmToken;
+	
+	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
+	@Column(name = "deviceid")
+	private String deviceId;
 
 	@Column
 	private boolean active;
@@ -62,7 +66,7 @@ public class Admin implements Serializable {
 	protected Admin() {
 	}
 
-	private Admin(StudentBuilder builder) {
+	private Admin(AdminBuilder builder) {
 		this.firstName = builder.firstName;
 		this.lastName = builder.lastName;
 		this.email = builder.email;
@@ -70,6 +74,7 @@ public class Admin implements Serializable {
 		this.universityId = builder.universityId;
 		this.active = builder.active;
 		this.fcmToken = builder.fcmToken;
+		this.deviceId = builder.deviceId;
 	}
 
 	public Long getId() {
@@ -128,6 +133,14 @@ public class Admin implements Serializable {
 		this.fcmToken = fcmToken;
 	}
 
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -137,12 +150,12 @@ public class Admin implements Serializable {
 	}
 
 	/**
-	 * Student Builder
+	 * Admin Builder
 	 * 
 	 * @author charz
 	 *
 	 */
-	public static class StudentBuilder {
+	public static class AdminBuilder {
 
 		private final String firstName;
 		private final String lastName;
@@ -150,26 +163,32 @@ public class Admin implements Serializable {
 		private final String password;
 		private Long universityId;
 		private String fcmToken;
+		private String deviceId;
 		private boolean active;
 
-		public StudentBuilder(String firstName, String lastName, String email, String password) {
+		public AdminBuilder(String firstName, String lastName, String email, String password) {
 			this.firstName = firstName;
 			this.lastName = lastName;
 			this.email = email;
 			this.password = password;
 		}
 
-		public StudentBuilder university(Long universityId) {
+		public AdminBuilder university(Long universityId) {
 			this.universityId = universityId;
 			return this;
 		}
 
-		public StudentBuilder fcmToken(String fcmToken) {
+		public AdminBuilder fcmToken(String fcmToken) {
 			this.fcmToken = fcmToken;
 			return this;
 		}
+		
+		public AdminBuilder deviceId(String deviceId) {
+			this.deviceId = deviceId;
+			return this;
+		}
 
-		public StudentBuilder isActive(boolean active) {
+		public AdminBuilder isActive(boolean active) {
 			this.active = active;
 			return this;
 		}

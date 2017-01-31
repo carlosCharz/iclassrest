@@ -138,6 +138,9 @@ public class StudentServiceImpl implements StudentService {
 		if (!isNullOrEmpty(student.getFcmToken())) {
 			existingStudent.setFcmToken(student.getFcmToken());
 		}
+		if (!isNullOrEmpty(student.getDeviceId())) {
+			existingStudent.setDeviceId(student.getDeviceId());
+		}
 		// Save
 		studentRepository.save(existingStudent);
 	}
@@ -185,6 +188,7 @@ public class StudentServiceImpl implements StudentService {
 			studentNew.setFacultyId(studentView.getFacultyId());
 		}
 		studentNew.setFcmToken(studentView.getFcmToken());
+		studentNew.setDeviceId(studentView.getDeviceId());
 		studentNew.setActive(true);
 
 		// Save the student

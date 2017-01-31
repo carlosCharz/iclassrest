@@ -42,6 +42,10 @@ public class StudentView implements Serializable {
 	private Long universityId;
 	private String universityName;
 	private String fcmToken;
+	private String deviceId;
+	private Float rating;
+	private Integer level;
+	private Integer totalHours;
 
 	protected StudentView() {
 	}
@@ -170,6 +174,38 @@ public class StudentView implements Serializable {
 	public void setUniversityName(String universityName) {
 		this.universityName = universityName;
 	}
+	
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getTotalHours() {
+		return totalHours;
+	}
+
+	public void setTotalHours(Integer totalHours) {
+		this.totalHours = totalHours;
+	}
 
 	public static StudentView from(Student student) {
 		StudentView studentView = new StudentView(student.getId());
@@ -185,6 +221,10 @@ public class StudentView implements Serializable {
 		studentView.setFacultyId(student.getFacultyId());
 		studentView.setUniversityId(student.getUniversityId());
 		studentView.setFcmToken(student.getFcmToken());
+		studentView.setDeviceId(student.getDeviceId());
+		studentView.setRating(student.getRating());
+		studentView.setLevel(student.getLevel());
+		studentView.setTotalHours(student.getTotalHours());
 		return studentView;
 	}
 
