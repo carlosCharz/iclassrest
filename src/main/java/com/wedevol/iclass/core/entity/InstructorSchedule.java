@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Future;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -44,7 +43,7 @@ public class InstructorSchedule implements Serializable {
 	@Column(name = "weekday")
 	private String weekDay;
 
-	@Future
+	// TODO: validate future
 	@JsonDeserialize(using = CustomDateDeserialize.class)
 	@JsonSerialize(using = CustomDateSerialize.class)
 	@Column(name = "classdate")
