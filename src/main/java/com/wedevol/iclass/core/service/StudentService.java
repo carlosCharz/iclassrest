@@ -7,6 +7,7 @@ import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.StudentView;
 
 /**
  * Student Service Interface
@@ -38,5 +39,8 @@ public interface StudentService {
 	
 	List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
-
+	
+	StudentView getStudentByIdWithFullInfo(Long userId);
+	
+	Student getStudentByEmail(String email);
 }

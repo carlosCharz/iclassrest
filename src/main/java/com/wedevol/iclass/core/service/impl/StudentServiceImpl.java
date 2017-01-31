@@ -16,9 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -32,6 +34,7 @@ import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.StudentView;
 
 /**
  * Student Service Implementation
@@ -56,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentEnrollmentService studentEnrollmentService;
-	
+
 	@Autowired
 	private UniversityService universityService;
 
@@ -122,12 +125,12 @@ public class StudentServiceImpl implements StudentService {
 		if (!student.getPlaceOptions().isEmpty()) {
 			existingStudent.setPlaceOptions(student.getPlaceOptions());
 		}
-		if (student.getUniversityId()!=null) {
+		if (student.getUniversityId() != null) {
 			// The university should exist
 			universityService.findById(student.getUniversityId());
 			existingStudent.setUniversityId(student.getUniversityId());
 		}
-		if (student.getFacultyId()!=null) {
+		if (student.getFacultyId() != null) {
 			// The faculty should exist
 			facultyService.findById(student.getFacultyId());
 			existingStudent.setFacultyId(student.getFacultyId());
@@ -222,6 +225,24 @@ public class StudentServiceImpl implements StudentService {
 		existingStudent.setActive(false);
 		// Save
 		studentRepository.save(existingStudent);
+	}
+
+	@Override
+	public StudentView getStudentByIdWithFullInfo(Long userId) {
+		Student student = this.findById(userId);
+		// The university should exist
+		final University university= universityService.findById(student.getUniversityId());
+		// The faculty should exist
+		final Faculty faculty = facultyService.findById(student.getFacultyId());
+		return StudentView.from(student, university, faculty);
+	}
+	
+	@Override
+	public Student getStudentByEmail(String email) {
+		final Optional<Student> studentObj = Optional.ofNullable(this.findByEmail(email));
+		final Student student = studentObj.orElseThrow(
+				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		return student;
 	}
 
 }

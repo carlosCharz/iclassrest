@@ -48,13 +48,10 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public StudentView loginStudent(String email, String password) {
-		final Optional<Student> studentObj = Optional.ofNullable(studentService.findByEmail(email));
-		final Student student = studentObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		final Student student = studentService.getStudentByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(student.getPassword())) {
-			// TODO: call the studentServive to get everything
-			return StudentView.from(student);
+			return studentService.getStudentByIdWithFullInfo(student.getId());
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}

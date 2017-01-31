@@ -7,9 +7,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.University;
+import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
 
 /**
  * Student Response View
@@ -27,6 +31,8 @@ public class StudentView implements Serializable {
 	private String phone;
 	private String email;
 	private String password;
+	@JsonDeserialize(using = CustomDateDeserialize.class)
+	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date birthday;
 	private String gender;
 	private String profilePictureUrl;
@@ -39,7 +45,7 @@ public class StudentView implements Serializable {
 
 	protected StudentView() {
 	}
-	
+
 	public StudentView(Long id) {
 		this.id = id;
 	}
@@ -164,7 +170,7 @@ public class StudentView implements Serializable {
 	public void setUniversityName(String universityName) {
 		this.universityName = universityName;
 	}
-	
+
 	public static StudentView from(Student student) {
 		StudentView studentView = new StudentView(student.getId());
 		studentView.setFirstName(student.getFirstName());
@@ -175,13 +181,13 @@ public class StudentView implements Serializable {
 		studentView.setBirthday(student.getBirthday());
 		studentView.setGender(student.getGender());
 		studentView.setProfilePictureUrl(student.getProfilePictureUrl());
-		studentView.setPlaceOptions(student.getPlaceOptions());
+		studentView.setPlaceOptions(student.getPlaceOptions().isEmpty() ? null : student.getPlaceOptions());
 		studentView.setFacultyId(student.getFacultyId());
 		studentView.setUniversityId(student.getUniversityId());
 		studentView.setFcmToken(student.getFcmToken());
 		return studentView;
 	}
-	
+
 	public static StudentView from(Student student, University university, Faculty faculty) {
 		StudentView studentView = StudentView.from(student);
 		studentView.setUniversityName(university.getShortName());
