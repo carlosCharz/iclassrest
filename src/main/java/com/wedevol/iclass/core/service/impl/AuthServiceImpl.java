@@ -21,6 +21,7 @@ import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.response.InstructorView;
 import com.wedevol.iclass.core.view.response.StudentView;
 
 /**
@@ -40,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private InstructorService instructorService;
-	
+
 	@Autowired
 	private AdminService adminService;
 
@@ -58,18 +59,16 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public Instructor loginInstructor(String email, String password) {
-		final Optional<Instructor> instructorObj = Optional.ofNullable(instructorService.findByEmail(email));
-		final Instructor instructor = instructorObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
+	public InstructorView loginInstructor(String email, String password) {
+		final Instructor instructor = instructorService.getInstructorByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(instructor.getPassword())) {
-			return instructor;
+			return instructorService.getInstructorByIdWithFullInfo(instructor.getId());
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}
 	}
-	
+
 	@Override
 	public Admin loginAdmin(String email, String password) {
 		final Optional<Admin> adminObj = Optional.ofNullable(adminService.findByEmail(email));

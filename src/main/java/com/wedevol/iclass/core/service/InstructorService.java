@@ -9,6 +9,7 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.InstructorView;
 
 /**
  * Instructor Service Interface
@@ -29,7 +30,7 @@ public interface InstructorService {
 	void update(Long userId, Instructor instructor);
 
 	void delete(Long userId);
-	
+
 	void setUserInactive(Long userId);
 
 	Instructor createInstructorWithCourse(UserView instructorView);
@@ -50,4 +51,8 @@ public interface InstructorService {
 
 	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
 			Integer actualTime, String classStatusFilter);
+
+	InstructorView getInstructorByIdWithFullInfo(Long userId);
+
+	Instructor getInstructorByEmail(String email);
 }

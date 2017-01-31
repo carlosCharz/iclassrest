@@ -18,11 +18,13 @@ import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.CourseFullInfo;
+import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.ScheduleBasic;
+import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -38,6 +40,7 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.InstructorView;
 
 /**
  * Instructor Service Implementation
@@ -65,7 +68,7 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorScheduleService instructorScheduleService;
-	
+
 	@Autowired
 	private UniversityService universityService;
 
@@ -134,12 +137,12 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!instructor.getPlaceOptions().isEmpty()) {
 			existingInstructor.setPlaceOptions(instructor.getPlaceOptions());
 		}
-		if (instructor.getUniversityId()!=null) {
+		if (instructor.getUniversityId() != null) {
 			// The university should exist
 			universityService.findById(instructor.getUniversityId());
 			existingInstructor.setUniversityId(instructor.getUniversityId());
 		}
-		if (instructor.getFacultyId()!=null) {
+		if (instructor.getFacultyId() != null) {
 			// The faculty should exist
 			facultyService.findById(instructor.getFacultyId());
 			existingInstructor.setFacultyId(instructor.getFacultyId());
@@ -264,7 +267,7 @@ public class InstructorServiceImpl implements InstructorService {
 		return classService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
-	
+
 	@Override
 	public void setUserInactive(Long userId) {
 		// The instructor should exist
@@ -272,6 +275,24 @@ public class InstructorServiceImpl implements InstructorService {
 		existingInstructor.setActive(false);
 		// Save
 		instructorRepository.save(existingInstructor);
+	}
+
+	@Override
+	public InstructorView getInstructorByIdWithFullInfo(Long userId) {
+		Instructor instructor = this.findById(userId);
+		// The university should exist
+		final University university = universityService.findById(instructor.getUniversityId());
+		// The faculty should exist
+		final Faculty faculty = facultyService.findById(instructor.getFacultyId());
+		return InstructorView.from(instructor, university, faculty);
+	}
+
+	@Override
+	public Instructor getInstructorByEmail(String email) {
+		final Optional<Instructor> instructorObj = Optional.ofNullable(this.findByEmail(email));
+		final Instructor instructor = instructorObj.orElseThrow(
+				() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
+		return instructor;
 	}
 
 }
