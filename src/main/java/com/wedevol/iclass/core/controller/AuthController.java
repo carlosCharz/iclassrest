@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.service.AuthService;
+import com.wedevol.iclass.core.view.request.FCMTokenView;
 import com.wedevol.iclass.core.view.request.LoginView;
 import com.wedevol.iclass.core.view.response.AdminView;
 import com.wedevol.iclass.core.view.response.InstructorView;
@@ -55,6 +56,13 @@ public class AuthController {
 	@ResponseBody
 	public AdminView loginAdmin(@Valid @RequestBody LoginView request) {
 		return authService.loginAdmin(request.getEmail(), request.getPassword());
+	}
+	
+	@RequestMapping(value = "/token/refresh", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void refreshFCMToken(@Valid @RequestBody FCMTokenView tokenView) {
+		return authService.refreshFCMToken(tokenView.getFcmToken(), tokenView.getDeviceId());
 	}
 
 }

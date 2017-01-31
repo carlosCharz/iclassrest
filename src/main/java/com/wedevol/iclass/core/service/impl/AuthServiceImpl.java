@@ -77,4 +77,10 @@ public class AuthServiceImpl implements AuthService {
 		}
 	}
 
+	@Override
+	public void refreshFCMToken(String fcmToken, String deviceId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

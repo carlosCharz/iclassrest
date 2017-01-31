@@ -79,11 +79,11 @@ public class UserView implements Serializable {
 	private Long courseId;
 
 	@NotNull
-	@Column(name = "fcmtoken")
+	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
 	private String fcmToken;
 	
 	@NotNull
-	@Column(name = "deviceid")
+	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
 	private String deviceId;
 
 	protected UserView() {

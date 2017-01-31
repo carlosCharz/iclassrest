@@ -17,5 +17,7 @@ public interface AuthService {
 	InstructorView loginInstructor(String email, String password);
 	
 	AdminView loginAdmin(String email, String password);
+	
+	void refreshFCMToken(String fcmToken, String deviceId);
 
 }
