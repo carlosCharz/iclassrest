@@ -2,8 +2,6 @@ package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.UnauthorizedException;
-import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
 import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.response.AdminView;
 import com.wedevol.iclass.core.view.response.InstructorView;
 import com.wedevol.iclass.core.view.response.StudentView;
 
@@ -70,13 +67,11 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public Admin loginAdmin(String email, String password) {
-		final Optional<Admin> adminObj = Optional.ofNullable(adminService.findByEmail(email));
-		final Admin admin = adminObj.orElseThrow(
-				() -> new ResourceNotFoundException(NotFoundErrorType.ADMIN_NOT_FOUND));
+	public AdminView loginAdmin(String email, String password) {
+		final Admin admin = adminService.getAdminByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(admin.getPassword())) {
-			return admin;
+			return adminService.getAdminByIdWithFullInfo(admin.getId());
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}

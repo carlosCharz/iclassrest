@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.service;
 
-import com.wedevol.iclass.core.entity.Admin;
+import com.wedevol.iclass.core.view.response.AdminView;
 import com.wedevol.iclass.core.view.response.InstructorView;
 import com.wedevol.iclass.core.view.response.StudentView;
 
@@ -16,6 +16,6 @@ public interface AuthService {
 
 	InstructorView loginInstructor(String email, String password);
 	
-	Admin loginAdmin(String email, String password);
+	AdminView loginAdmin(String email, String password);
 
 }
