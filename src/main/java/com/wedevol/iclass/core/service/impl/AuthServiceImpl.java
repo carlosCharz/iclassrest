@@ -21,6 +21,7 @@ import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
+import com.wedevol.iclass.core.view.response.StudentView;
 
 /**
  * Auth Service Implementation
@@ -46,13 +47,14 @@ public class AuthServiceImpl implements AuthService {
 	/********************* Authentication logic ****************************/
 
 	@Override
-	public Student loginStudent(String email, String password) {
+	public StudentView loginStudent(String email, String password) {
 		final Optional<Student> studentObj = Optional.ofNullable(studentService.findByEmail(email));
 		final Student student = studentObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(student.getPassword())) {
-			return student;
+			// TODO: call the studentServive to get everything
+			return StudentView.from(student);
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}

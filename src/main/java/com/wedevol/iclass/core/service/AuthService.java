@@ -2,7 +2,7 @@ package com.wedevol.iclass.core.service;
 
 import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.view.response.StudentView;
 
 /**
  * Auth Service Interface
@@ -12,7 +12,7 @@ import com.wedevol.iclass.core.entity.Student;
  */
 public interface AuthService {
 
-	Student loginStudent(String email, String password);
+	StudentView loginStudent(String email, String password);
 
 	Instructor loginInstructor(String email, String password);
 	
