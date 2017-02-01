@@ -23,5 +23,13 @@ public interface AdminRepository extends CrudRepository<Admin, Long> {
 	 * @return admin
 	 */
 	public Admin findByEmail(String email);
+	
+	/**
+	 * Return the admin having the passed deviceId or null if no deviceId is found.
+	 * 
+	 * @param deviceId
+	 * @return admin
+	 */
+	public Admin findByDeviceId(String deviceId);
 
 }

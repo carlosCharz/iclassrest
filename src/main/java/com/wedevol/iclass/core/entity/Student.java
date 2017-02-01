@@ -105,7 +105,7 @@ public class Student implements Serializable {
 	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
 	@Column(name = "fcmtoken")
 	private String fcmToken;
-	
+
 	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
 	@Column(name = "deviceid")
 	private String deviceId;
@@ -114,6 +114,14 @@ public class Student implements Serializable {
 	private boolean active;
 
 	protected Student() {
+	}
+
+	private Student(Long id) {
+		this.id = id;
+	}
+
+	public static Student from(Long id) {
+		return new Student(id);
 	}
 
 	private Student(StudentBuilder builder) {
@@ -264,7 +272,7 @@ public class Student implements Serializable {
 	public void setFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;
 	}
-	
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -339,6 +347,7 @@ public class Student implements Serializable {
 			this.universityId = universityId;
 			return this;
 		}
+
 		public StudentBuilder facultyId(Long facultyId) {
 			this.facultyId = facultyId;
 			return this;
@@ -363,7 +372,7 @@ public class Student implements Serializable {
 			this.fcmToken = fcmToken;
 			return this;
 		}
-		
+
 		public StudentBuilder deviceId(String deviceId) {
 			this.deviceId = deviceId;
 			return this;
@@ -379,14 +388,14 @@ public class Student implements Serializable {
 		}
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("Student[id=%d, firstName='%s', lastName='%s']%n", id, firstName, lastName);
 	}
-	
+
 	@JsonIgnore
-	public String getFullName(){
+	public String getFullName() {
 		return this.firstName + " " + this.lastName;
 	}
 

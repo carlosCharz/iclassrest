@@ -2,6 +2,8 @@ package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +81,27 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public void refreshFCMToken(String fcmToken, String deviceId) {
-		// TODO Auto-generated method stub
-		
+		// Search in the student repo
+		final Optional<Student> studentObj = Optional.ofNullable(studentService.findByDeviceId(deviceId));
+		if (studentObj.isPresent()) {
+			Student student = Student.from(studentObj.get().getId());
+			student.setFcmToken(fcmToken);
+			studentService.update(student.getId(), student);
+		}
+		// Search in the instructor repo
+		final Optional<Instructor> instructorObj = Optional.ofNullable(instructorService.findByDeviceId(deviceId));
+		if (instructorObj.isPresent()) {
+			Instructor instructor = Instructor.from(instructorObj.get().getId());
+			instructor.setFcmToken(fcmToken);
+			instructorService.update(instructor.getId(), instructor);
+		}
+		// Search in the admin repo
+		final Optional<Admin> adminObj = Optional.ofNullable(adminService.findByDeviceId(deviceId));
+		if (adminObj.isPresent()) {
+			Admin admin = Admin.from(adminObj.get().getId());
+			admin.setFcmToken(fcmToken);
+			adminService.update(admin.getId(), admin);
+		}
 	}
 
 }

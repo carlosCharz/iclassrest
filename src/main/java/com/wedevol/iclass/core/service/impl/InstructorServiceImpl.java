@@ -299,4 +299,9 @@ public class InstructorServiceImpl implements InstructorService {
 		return instructor;
 	}
 
+	@Override
+	public Instructor findByDeviceId(String deviceId) {
+		return instructorRepository.findByDeviceId(deviceId);
+	}
+
 }

@@ -20,6 +20,8 @@ public interface StudentService {
 	List<Student> findAll();
 
 	Student findByEmail(String email);
+	
+	Student findByDeviceId(String deviceId);
 
 	Student findById(Long userId);
 

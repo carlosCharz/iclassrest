@@ -114,6 +114,14 @@ public class Instructor implements Serializable {
 
 	protected Instructor() {
 	}
+	
+	private Instructor(Long id) {
+		this.id = id;
+	}
+
+	public static Instructor from(Long id) {
+		return new Instructor(id);
+	}
 
 	private Instructor(InstructorBuilder builder) {
 		this.firstName = builder.firstName;

@@ -29,6 +29,14 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	public Student findByEmail(String email);
 	
 	/**
+	 * Return the student having the passed deviceId or null if no deviceId is found.
+	 * 
+	 * @param deviceId
+	 * @return student
+	 */
+	public Student findByDeviceId(String deviceId);
+	
+	/**
 	 * Return the students of a course
 	 * 
 	 * @param courseId

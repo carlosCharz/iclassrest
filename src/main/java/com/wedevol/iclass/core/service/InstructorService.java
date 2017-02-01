@@ -22,6 +22,8 @@ public interface InstructorService {
 	List<Instructor> findAll();
 
 	Instructor findByEmail(String email);
+	
+	Instructor findByDeviceId(String deviceId);
 
 	Instructor findById(Long userId);
 

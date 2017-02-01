@@ -249,4 +249,9 @@ public class StudentServiceImpl implements StudentService {
 		return student;
 	}
 
+	@Override
+	public Student findByDeviceId(String deviceId) {
+		return studentRepository.findByDeviceId(deviceId);
+	}
+
 }

@@ -28,6 +28,14 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @return instructor
 	 */
 	public Instructor findByEmail(String email);
+	
+	/**
+	 * Return the instructor having the passed deviceId or null if no deviceId is found.
+	 * 
+	 * @param deviceId
+	 * @return instructor
+	 */
+	public Instructor findByDeviceId(String deviceId);
 
 	/**
 	 * Return the instructor list of a course

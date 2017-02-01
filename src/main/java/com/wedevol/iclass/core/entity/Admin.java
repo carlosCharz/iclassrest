@@ -65,6 +65,14 @@ public class Admin implements Serializable {
 
 	protected Admin() {
 	}
+	
+	private Admin(Long id) {
+		this.id = id;
+	}
+
+	public static Admin from(Long id) {
+		return new Admin(id);
+	}
 
 	private Admin(AdminBuilder builder) {
 		this.firstName = builder.firstName;

@@ -129,4 +129,9 @@ public class AdminServiceImpl implements AdminService {
 		return admin;
 	}
 
+	@Override
+	public Admin findByDeviceId(String deviceId) {
+		return adminRepository.findByDeviceId(deviceId);
+	}
+
 }

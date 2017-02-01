@@ -62,7 +62,7 @@ public class AuthController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void refreshFCMToken(@Valid @RequestBody FCMTokenView tokenView) {
-		return authService.refreshFCMToken(tokenView.getFcmToken(), tokenView.getDeviceId());
+		authService.refreshFCMToken(tokenView.getFcmToken(), tokenView.getDeviceId());
 	}
 
 }

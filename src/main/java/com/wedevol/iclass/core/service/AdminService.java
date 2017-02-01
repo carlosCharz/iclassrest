@@ -16,6 +16,8 @@ public interface AdminService {
 	List<Admin> findAll();
 
 	Admin findByEmail(String email);
+	
+	Admin findByDeviceId(String deviceId);
 
 	Admin findById(Long userId);
 
