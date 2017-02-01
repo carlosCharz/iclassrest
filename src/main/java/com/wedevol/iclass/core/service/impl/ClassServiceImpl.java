@@ -28,6 +28,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.ClassRepository;
+import com.wedevol.iclass.core.service.BatchNotificationService;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
@@ -69,6 +70,9 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired
+	private BatchNotificationService batchNotificationService;
 
 	@Override
 	public List<Clase> findAll() {
@@ -110,6 +114,8 @@ public class ClassServiceImpl implements ClassService {
 		final Clase clase = classRepository.save(c);
 		// Send notification
 		notificationService.sendNewClassRequestNotificationToInstructor(instructor.getFcmToken(), student, course);
+		// Save batch notification
+		batchNotificationService.saveClassComingSoonReminder(student, instructor, clase);
 		return clase;
 	}
 
@@ -223,6 +229,11 @@ public class ClassServiceImpl implements ClassService {
 		classRepository.save(existingClass);
 		// Send notification
 		notificationService.sendClassRejectedNotificationToStudent(student.getFcmToken(), instructor, course);
+	}
+
+	@Override
+	public List<Clase> getFinishedClasses() {
+
 	}
 
 }

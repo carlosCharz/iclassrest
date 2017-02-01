@@ -94,4 +94,9 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 		batchRepository.delete(batchId);
 	}
 
+	@Override
+	public List<BatchNotification> getNotificationsToBeSent() {
+
+	}
+
 }

@@ -21,5 +21,7 @@ public interface BatchNotificationService {
 	void update(Long batchId, BatchNotification batch);
 
 	void delete(Long batchId);
-
+	
+	List<BatchNotification> getNotificationsToBeSent();
+	
 }

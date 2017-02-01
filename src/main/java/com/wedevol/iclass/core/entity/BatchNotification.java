@@ -69,6 +69,14 @@ public class BatchNotification implements Serializable {
 	private BatchNotification(Long id) {
 		this.id = id;
 	}
+	
+	public BatchNotification(String message, String tokenTo, Date scheduledAt, Long classId, String notificationType) {
+		this.message = message;
+		this.tokenTo = tokenTo;
+		this.scheduledAt = scheduledAt;
+		this.classId = classId;
+		this.notificationType = notificationType;
+	}
 
 	protected BatchNotification() {
 	}

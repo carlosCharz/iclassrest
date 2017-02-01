@@ -36,7 +36,7 @@ public class QuartzConfiguration {
 		stFactory.setName("classTrigger");
 		stFactory.setGroup("classGroup");
 		// TODO: make it work for every 1 hour
-		stFactory.setCronExpression("0 0/5 * * * ? *");// Job is scheduled after every 1 minute
+		stFactory.setCronExpression("0 0/1 * * * ? *");// Job is scheduled after every 1 minute
 		logger.info("Setting up the classes cleaning job to be every 1 minute");
 		return stFactory;
 	}
