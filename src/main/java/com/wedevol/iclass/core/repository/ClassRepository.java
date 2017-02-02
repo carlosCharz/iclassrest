@@ -48,5 +48,13 @@ public interface ClassRepository extends CrudRepository<Clase, Long> {
 	public List<ClassFullInfo> findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("actualDateStr") String actualDateStr,
 			@Param("actualTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
+	
+	/**
+	 * Return the finished classes to change the status to DONE
+	 * 
+	 * @return list of classes
+	 */
+	@Query("SELECT cla FROM Clase cla WHERE ADDTIME(classDate, ) < NOW()")
+	public List<Clase> getFinishedClasses();
 
 }

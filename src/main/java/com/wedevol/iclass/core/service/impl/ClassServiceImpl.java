@@ -233,7 +233,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public List<Clase> getFinishedClasses() {
-
+		return classRepository.getFinishedClasses();
 	}
 
 }
