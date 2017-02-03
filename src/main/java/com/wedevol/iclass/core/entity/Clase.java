@@ -79,6 +79,14 @@ public class Clase implements Serializable {
 
 	protected Clase() {
 	}
+	
+	private Clase(Long id) {
+		this.id = id;
+	}
+
+	public static Clase from(Long id) {
+		return new Clase(id);
+	}
 
 	public Long getId() {
 		return id;

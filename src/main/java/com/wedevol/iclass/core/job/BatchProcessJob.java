@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.entity.Clase;
+import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.service.BatchNotificationService;
 import com.wedevol.iclass.core.service.ClassService;
+import com.wedevol.iclass.core.service.CourseService;
+import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
 
 /**
@@ -32,6 +36,12 @@ public class BatchProcessJob {
 	
 	@Autowired
 	private ClassService classService;
+	
+	@Autowired
+	private InstructorService instructorService;
+	
+	@Autowired
+	private CourseService courseService;
 
 	public void execute() {
 		logger.info("Batch process job executed");
@@ -48,8 +58,15 @@ public class BatchProcessJob {
 		final List<Clase> classes = classService.getConfirmedFinishedClasses();
 		classes.forEach(clase -> {
 			// Update class to DONE
+			Clase newClase = Clase.from(clase.getId());
 			clase.setStatus(ClassStatusType.DONE.getDescription());
+			classService.update(newClase.getId(), newClase);
+			// The instructor should exist
+			final Instructor instructor = instructorService.findById(clase.getInstructorId());
+			// The course should exist
+			final Course course = courseService.findById(clase.getCourseId());
 			// Send notification to student to rate the instructor
+			notificationService.
 		});
 	}
 

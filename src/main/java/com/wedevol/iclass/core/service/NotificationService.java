@@ -34,5 +34,7 @@ public interface NotificationService {
 	void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course);
 	
 	void sendBatchNotifications(List<BatchNotification> batchs);
+	
+	void sendClassRejectedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
 
 }
