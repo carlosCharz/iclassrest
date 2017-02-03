@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
@@ -127,6 +128,18 @@ public class NotificationServiceImpl implements NotificationService {
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
+	}
+	
+	private void sendBatchNotification(String tokenTo, String message, String notiTypeStr) {
+		final NotificationRequest request = new NotificationRequest(message, NotificationType.valueOf(notiTypeStr));
+		sendNotificationInThread(request, tokenTo);
+	}
+
+	@Override
+	public void sendBatchNotifications(List<BatchNotification> batchs) {
+		batchs.forEach(batch -> {
+			sendBatchNotification(batch.getTokenTo(), batch.getMessage(), batch.getNotificationType());
+		});
 	}
 
 }

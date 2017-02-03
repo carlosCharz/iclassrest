@@ -8,7 +8,7 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import com.wedevol.iclass.core.job.ClassCleaningJob;
+import com.wedevol.iclass.core.job.BatchProcessJob;
 
 /**
  * Quartz configuration file
@@ -23,7 +23,7 @@ public class QuartzConfiguration {
 	@Bean
 	public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
 		MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
-		obj.setTargetBeanName("classCleaningJob");
+		obj.setTargetBeanName("batchProcessJob");
 		obj.setTargetMethod("execute");
 		return obj;
 	}
@@ -33,11 +33,11 @@ public class QuartzConfiguration {
 		CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
 		stFactory.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
 		stFactory.setStartDelay(3000);
-		stFactory.setName("classTrigger");
-		stFactory.setGroup("classGroup");
+		stFactory.setName("batchTrigger");
+		stFactory.setGroup("batchGroup");
 		// TODO: make it work for every 1 hour
 		stFactory.setCronExpression("0 0/1 * * * ? *");// Job is scheduled after every 1 minute
-		logger.info("Setting up the classes cleaning job to be every 1 minute");
+		logger.info("Setting up the batch process job to be every 1 minute");
 		return stFactory;
 	}
 
@@ -48,8 +48,8 @@ public class QuartzConfiguration {
 		return scheduler;
 	}
 
-	@Bean(name = "classCleaningJob")
-	public ClassCleaningJob classCleaningJobBean() {
-		return new ClassCleaningJob();
+	@Bean(name = "batchProcessJob")
+	public BatchProcessJob batchProcessJobBean() {
+		return new BatchProcessJob();
 	}
 }

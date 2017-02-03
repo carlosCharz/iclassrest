@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.service;
 
+import java.util.List;
+
+import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
@@ -29,5 +32,7 @@ public interface NotificationService {
 	void sendClassRejectedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
 
 	void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course);
+	
+	void sendBatchNotifications(List<BatchNotification> batchs);
 
 }
