@@ -1,5 +1,8 @@
 package com.wedevol.iclass.core.repository;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,5 +19,12 @@ import com.wedevol.iclass.core.entity.BatchNotification;
 @Transactional
 public interface BatchNotificationRepository extends CrudRepository<BatchNotification, Long> {
 
+	/**
+	 * Return the notifications to be sent (now -5h > scheduledAt)
+	 * 
+	 * @return list of batch notifications
+	 */
+	@Query("SELECT bat FROM BatchNotification bat WHERE DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d %H') > DATE_FORMAT(bat.scheduledAt, '%Y%m%d %H')")
+	public List<BatchNotification> getNotificationsToBeSent();
 
 }

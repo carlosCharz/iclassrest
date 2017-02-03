@@ -50,11 +50,11 @@ public interface ClassRepository extends CrudRepository<Clase, Long> {
 			@Param("actualTime") Integer actualTime, @Param("classStatusList") List<String> classStatusList);
 	
 	/**
-	 * Return the finished classes to change the status to DONE
+	 * Return the finished classes to change the status to DONE (now - 5h > classDate + endTime)
 	 * 
 	 * @return list of classes
 	 */
-	@Query("SELECT cla FROM Clase cla WHERE ADDTIME(classDate, ) < NOW()")
+	@Query("SELECT cla FROM Clase cla WHERE DATE_FORMAT(cla.classDate, '%Y%m%d') = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d') and CAST(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%H') AS SIGNED)>=cla.endTime")
 	public List<Clase> getFinishedClasses();
 
 }
