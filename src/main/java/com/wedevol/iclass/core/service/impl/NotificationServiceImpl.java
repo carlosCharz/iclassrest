@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -92,9 +93,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public void sendNewClassRequestNotificationToInstructor(String tokenTo, Student student, Course course) {
 		// TODO: send notification to the admins
 		final NotificationType notificationType = NotificationType.NEW_CLASS_REQUEST_FOR_INSTRUCTOR;
-		final List<String> data = new ArrayList<String>();
-		data.add(student.getFullName());
-		data.add(course.getName());
+		final List<String> data = Arrays.asList(student.getFullName(), course.getName());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
@@ -104,9 +103,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public void sendClassConfirmedNotificationToStudent(String tokenTo, Instructor instructor, Course course) {
 		// TODO: send notification to the admins
 		final NotificationType notificationType = NotificationType.CLASS_CONFIRMED_FOR_STUDENT;
-		final List<String> data = new ArrayList<String>();
-		data.add(instructor.getFullName());
-		data.add(course.getName());
+		final List<String> data = Arrays.asList(instructor.getFullName(), course.getName());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
@@ -116,9 +113,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public void sendClassRejectedNotificationToStudent(String tokenTo, Instructor instructor, Course course) {
 		// TODO: send notification to the admins
 		final NotificationType notificationType = NotificationType.CLASS_REJECTED_FOR_STUDENT;
-		final List<String> data = new ArrayList<String>();
-		data.add(instructor.getFullName());
-		data.add(course.getName());
+		final List<String> data = Arrays.asList(instructor.getFullName(), course.getName());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
@@ -128,8 +123,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course) {
 		// TODO: send notification to the admins
 		final NotificationType notificationType = NotificationType.NEW_COURSE_APPROVED_FOR_INSTRUCTOR;
-		final List<String> data = new ArrayList<String>();
-		data.add(course.getName());
+		final List<String> data = Arrays.asList(course.getName());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);

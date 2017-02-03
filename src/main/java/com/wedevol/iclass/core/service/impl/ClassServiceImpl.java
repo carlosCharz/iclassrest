@@ -115,7 +115,7 @@ public class ClassServiceImpl implements ClassService {
 		// Send notification
 		notificationService.sendNewClassRequestNotificationToInstructor(instructor.getFcmToken(), student, course);
 		// Save batch notification
-		batchNotificationService.saveClassComingSoonReminder(student, instructor, clase);
+		batchNotificationService.saveClassComingSoonReminder(student, instructor, course, clase);
 		return clase;
 	}
 

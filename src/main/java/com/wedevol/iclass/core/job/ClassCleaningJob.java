@@ -30,7 +30,7 @@ public class ClassCleaningJob {
 	public void execute() {
 		logger.info("Class cleaning job executed");
 		final List<BatchNotification> batchList = batchNotificationService.getNotificationsToBeSent();
-		batchList.forEach(batch -> );
+		batchList.forEach(batch -> notificationService.send);
 		
 	}
 

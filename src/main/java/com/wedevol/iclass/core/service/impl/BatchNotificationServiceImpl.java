@@ -1,7 +1,10 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.HOUR;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,13 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.BatchNotification;
+import com.wedevol.iclass.core.entity.Clase;
+import com.wedevol.iclass.core.entity.Course;
+import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.notifier.MessageContentBuilder;
+import com.wedevol.iclass.core.notifier.NotificationType;
 import com.wedevol.iclass.core.repository.BatchNotificationRepository;
 import com.wedevol.iclass.core.service.BatchNotificationService;
-import com.wedevol.iclass.core.service.NotificationService;
 
 /**
  * Batch Notification Service Implementation
@@ -35,9 +43,6 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 
 	@Autowired
 	private BatchNotificationRepository batchRepository;
-	
-	@Autowired
-	private NotificationService notificationService;
 
 	/********************* CRUD for batch notification ****************************/
 	@Override
@@ -96,7 +101,21 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 
 	@Override
 	public List<BatchNotification> getNotificationsToBeSent() {
+		return batchRepository.getNotificationsToBeSent();
+	}
 
+	@Override
+	public void saveClassComingSoonReminder(Student student, Instructor instructor, Course course, Clase clase) {
+		final NotificationType notificationType = NotificationType.CLASS_COMING_SOON;
+		final List<String> data = Arrays.asList(course.getName(), clase.getStartTime().toString());
+		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
+		final Date scheduledAt = new Date(clase.getClassDate().getTime() - 1 * HOUR);
+		// Reminder for the student
+		BatchNotification studentBatch = new BatchNotification(message, student.getFcmToken(), scheduledAt, clase.getId(), notificationType.name());
+		batchRepository.save(studentBatch);
+		// Reminder for the instructor
+		BatchNotification instructorBatch = new BatchNotification(message, instructor.getFcmToken(), scheduledAt, clase.getId(), notificationType.name());
+		batchRepository.save(instructorBatch);
 	}
 
 }

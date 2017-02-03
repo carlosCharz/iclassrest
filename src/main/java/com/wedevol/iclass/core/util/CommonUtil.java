@@ -21,6 +21,7 @@ public class CommonUtil {
 	public static final String DATE_FORMAT_PRETTY = "dd/MM/yyyy";
 	public static final String DATE_FORMAT_QUERY_DB = "yyyyMMdd";
 	public static final SimpleDateFormat dateFormatPretty = new SimpleDateFormat(DATE_FORMAT_PRETTY);
+	public static final long HOUR = 3600*1000; // in milli-seconds
 
 	public static String hashSHA256(String element) {
 		return Hashing.sha256().hashString(element, StandardCharsets.UTF_8).toString();
