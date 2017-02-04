@@ -84,7 +84,7 @@ public class ClassController {
 		classService.instructorRejectClass(classId, instructorId);
 	}
 	
-	@RequestMapping(value = "/{classId}/rate/{rating}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/rating/{rating}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void rateInstructorClass(@PathVariable Long classId, @PathVariable Float rating) {
