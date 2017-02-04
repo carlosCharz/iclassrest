@@ -141,6 +141,12 @@ public class StudentServiceImpl implements StudentService {
 		if (!isNullOrEmpty(student.getDeviceId())) {
 			existingStudent.setDeviceId(student.getDeviceId());
 		}
+		if (student.getRating() != null) {
+			existingStudent.setRating(student.getRating());
+		}
+		if (student.getRatingCount() != null) {
+			existingStudent.setRatingCount(student.getRatingCount());
+		}
 		// Save
 		studentRepository.save(existingStudent);
 	}

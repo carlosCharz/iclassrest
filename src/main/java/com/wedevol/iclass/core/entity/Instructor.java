@@ -115,7 +115,7 @@ public class Instructor implements Serializable {
 	@Column
 	private boolean active;
 
-	protected Instructor() {
+	public Instructor() {
 	}
 	
 	private Instructor(Long id) {

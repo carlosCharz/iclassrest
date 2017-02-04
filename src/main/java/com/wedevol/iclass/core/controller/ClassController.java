@@ -32,8 +32,6 @@ public class ClassController {
 	@Autowired
 	private ClassService classService;
 
-	/************* CRUD for class ****************/
-
 	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -84,6 +82,13 @@ public class ClassController {
 	@ResponseBody
 	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long instructorId) {
 		classService.instructorRejectClass(classId, instructorId);
+	}
+	
+	@RequestMapping(value = "/{classId}/rate/{rating}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void rateInstructorClass(@PathVariable Long classId, @PathVariable Float rating) {
+		classService.rateInstructorClass(classId, rating);
 	}
 	
 	@ApiIgnore

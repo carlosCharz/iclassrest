@@ -153,6 +153,12 @@ public class InstructorServiceImpl implements InstructorService {
 		if (!isNullOrEmpty(instructor.getDeviceId())) {
 			existingInstructor.setDeviceId(instructor.getDeviceId());
 		}
+		if (instructor.getRating() != null) {
+			existingInstructor.setRating(instructor.getRating());
+		}
+		if (instructor.getRatingCount() != null) {
+			existingInstructor.setRatingCount(instructor.getRatingCount());
+		}
 		// Save
 		instructorRepository.save(existingInstructor);
 	}

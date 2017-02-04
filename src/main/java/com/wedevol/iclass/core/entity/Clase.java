@@ -76,8 +76,8 @@ public class Clase implements Serializable {
 	@ClassStatus
 	@Column
 	private String status;
-
-	protected Clase() {
+	
+	public Clase() {
 	}
 	
 	private Clase(Long id) {

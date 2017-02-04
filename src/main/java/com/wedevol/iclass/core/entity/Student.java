@@ -116,7 +116,7 @@ public class Student implements Serializable {
 	@Column
 	private boolean active;
 
-	protected Student() {
+	public Student() {
 	}
 
 	private Student(Long id) {

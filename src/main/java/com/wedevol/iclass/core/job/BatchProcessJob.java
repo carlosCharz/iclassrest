@@ -66,16 +66,24 @@ public class BatchProcessJob {
 		final List<Clase> classes = classService.getConfirmedFinishedClasses();
 		classes.forEach(clase -> {
 			// Update class to DONE
-			Clase newClase = Clase.from(clase.getId());
+			Clase newClase = new Clase();
 			newClase.setStatus(ClassStatusType.DONE.getDescription());
 			classService.update(newClase.getId(), newClase);
-			// The instructor should exist
-			final Instructor instructor = instructorService.findById(clase.getInstructorId());
 			// The course should exist
 			final Course course = courseService.findById(clase.getCourseId());
+			// The instructor should exist
+			final Instructor instructor = instructorService.findById(clase.getInstructorId());
 			// The student should exist
 			final Student student = studentService.findById(clase.getStudentId());
-			// Send notification to student to rate the instructor
+			// Update the total hours
+			final Integer diffHours = clase.getEndTime() - clase.getStartTime();
+			Student newStudent = new Student();
+			newStudent.setTotalHours(student.getTotalHours() + diffHours);
+			Instructor newInstructor = new Instructor();
+			newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
+			studentService.update(student.getId(), newStudent);
+			instructorService.update(instructor.getId(), newInstructor);
+			// Send notification to student to rate the; instructor
 			notificationService.sendRateFinishedClassNotificationToStudent(student.getFcmToken(), instructor, course);
 		});
 	}

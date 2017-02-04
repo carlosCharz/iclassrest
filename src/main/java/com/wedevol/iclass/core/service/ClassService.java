@@ -34,6 +34,8 @@ public interface ClassService {
 	
 	void instructorRejectClass(Long classId, Long instructorId);
 	
+	void rateInstructorClass(Long classId, Float rating);
+	
 	List<Clase> getConfirmedFinishedClasses();
 
 }

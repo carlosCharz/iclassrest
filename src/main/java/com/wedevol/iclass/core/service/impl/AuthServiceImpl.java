@@ -84,21 +84,21 @@ public class AuthServiceImpl implements AuthService {
 		// Search in the student repo
 		final Optional<Student> studentObj = Optional.ofNullable(studentService.findByDeviceId(deviceId));
 		if (studentObj.isPresent()) {
-			Student student = Student.from(studentObj.get().getId());
+			Student student = new Student();
 			student.setFcmToken(fcmToken);
 			studentService.update(student.getId(), student);
 		}
 		// Search in the instructor repo
 		final Optional<Instructor> instructorObj = Optional.ofNullable(instructorService.findByDeviceId(deviceId));
 		if (instructorObj.isPresent()) {
-			Instructor instructor = Instructor.from(instructorObj.get().getId());
+			Instructor instructor = new Instructor();
 			instructor.setFcmToken(fcmToken);
 			instructorService.update(instructor.getId(), instructor);
 		}
 		// Search in the admin repo
 		final Optional<Admin> adminObj = Optional.ofNullable(adminService.findByDeviceId(deviceId));
 		if (adminObj.isPresent()) {
-			Admin admin = Admin.from(adminObj.get().getId());
+			Admin admin = new Admin();
 			admin.setFcmToken(fcmToken);
 			adminService.update(admin.getId(), admin);
 		}

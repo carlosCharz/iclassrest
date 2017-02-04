@@ -63,7 +63,7 @@ public class Admin implements Serializable {
 	@Column
 	private boolean active;
 
-	protected Admin() {
+	public Admin() {
 	}
 	
 	private Admin(Long id) {

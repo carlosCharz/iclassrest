@@ -237,4 +237,18 @@ public class ClassServiceImpl implements ClassService {
 		return classRepository.getConfirmedFinishedClasses();
 	}
 
+	@Override
+	public void rateInstructorClass(Long classId, Float rating) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
+		// Update the rating and rating count
+		final Float newRating = (instructor.getRatingCount()*instructor.getRating() + rating)/(instructor.getRatingCount() +1);
+		Instructor newInstructor = new Instructor();
+		newInstructor.setRating(newRating);
+		newInstructor.setRatingCount(instructor.getRatingCount() +1);
+		instructorService.update(instructor.getId(), newInstructor);
+	}
+
 }
