@@ -56,7 +56,10 @@ public class BatchProcessJob {
 
 	private void processNotificationsToBeSent() {
 		final List<BatchNotification> batchList = batchNotificationService.getNotificationsToBeSent();
-		batchList.forEach(batch -> notificationService.sendBatchNotifications(batchList));
+		notificationService.sendBatchNotifications(batchList);
+		batchList.forEach(batch -> {
+			batchNotificationService.delete(batch.getId());
+		});
 	}
 
 	private void processConfirmedFinishedClasses() {
@@ -64,7 +67,7 @@ public class BatchProcessJob {
 		classes.forEach(clase -> {
 			// Update class to DONE
 			Clase newClase = Clase.from(clase.getId());
-			clase.setStatus(ClassStatusType.DONE.getDescription());
+			newClase.setStatus(ClassStatusType.DONE.getDescription());
 			classService.update(newClase.getId(), newClase);
 			// The instructor should exist
 			final Instructor instructor = instructorService.findById(clase.getInstructorId());
