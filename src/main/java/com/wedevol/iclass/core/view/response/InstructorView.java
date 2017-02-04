@@ -44,6 +44,7 @@ public class InstructorView implements Serializable {
 	private String fcmToken;
 	private String deviceId;
 	private Float rating;
+	private Integer ratingCount;
 	private Integer level;
 	private Integer totalHours;
 
@@ -190,6 +191,14 @@ public class InstructorView implements Serializable {
 	public void setRating(Float rating) {
 		this.rating = rating;
 	}
+	
+	public Integer getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
 
 	public Integer getLevel() {
 		return level;
@@ -223,6 +232,7 @@ public class InstructorView implements Serializable {
 		instructorView.setFcmToken(instructor.getFcmToken());
 		instructorView.setDeviceId(instructor.getDeviceId());
 		instructorView.setRating(instructor.getRating());
+		instructorView.setRatingCount(instructor.getRatingCount());
 		instructorView.setLevel(instructor.getLevel());
 		instructorView.setTotalHours(instructor.getTotalHours());
 		return instructorView;

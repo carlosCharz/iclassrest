@@ -95,6 +95,9 @@ public class Student implements Serializable {
 
 	@Column
 	private Float rating;
+	
+	@Column(name = "ratingcount")
+	private Integer ratingCount;
 
 	@Column
 	private Integer level;
@@ -137,6 +140,7 @@ public class Student implements Serializable {
 		this.universityId = builder.universityId;
 		this.facultyId = builder.facultyId;
 		this.rating = builder.rating;
+		this.ratingCount = builder.ratingCount;
 		this.level = builder.level;
 		this.totalHours = builder.totalHours;
 		this.active = builder.active;
@@ -249,6 +253,14 @@ public class Student implements Serializable {
 		this.rating = rating;
 	}
 
+	public Integer getRatingCount() {
+		return ratingCount;
+	}
+
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
+
 	public Integer getLevel() {
 		return level;
 	}
@@ -309,6 +321,7 @@ public class Student implements Serializable {
 		private Long universityId;
 		private Long facultyId;
 		private Float rating;
+		private Integer ratingCount;
 		private Integer level;
 		private Integer totalHours;
 		private String fcmToken;
@@ -355,6 +368,11 @@ public class Student implements Serializable {
 
 		public StudentBuilder rating(Float rating) {
 			this.rating = rating;
+			return this;
+		}
+		
+		public StudentBuilder ratingCount(Integer ratingCount) {
+			this.ratingCount = ratingCount;
 			return this;
 		}
 
