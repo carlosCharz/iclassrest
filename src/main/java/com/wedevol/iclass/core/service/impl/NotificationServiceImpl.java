@@ -129,7 +129,7 @@ public class NotificationServiceImpl implements NotificationService {
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
 	}
-	
+
 	private void sendBatchNotification(String tokenTo, String message, String notiTypeStr) {
 		final NotificationRequest request = new NotificationRequest(message, NotificationType.valueOf(notiTypeStr));
 		sendNotificationInThread(request, tokenTo);
@@ -140,6 +140,16 @@ public class NotificationServiceImpl implements NotificationService {
 		batchs.forEach(batch -> {
 			sendBatchNotification(batch.getTokenTo(), batch.getMessage(), batch.getNotificationType());
 		});
+	}
+
+	@Override
+	public void sendRateFinishedClassNotificationToStudent(String tokenTo, Instructor instructor, Course course) {
+		// TODO: send notification to the admins
+		final NotificationType notificationType = NotificationType.RATE_FINISHED_CLASS_FOR_STUDENT;
+		final List<String> data = Arrays.asList(course.getName(), instructor.getFullName());
+		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
+		final NotificationRequest request = new NotificationRequest(message, notificationType);
+		sendNotificationInThread(request, tokenTo);
 	}
 
 }

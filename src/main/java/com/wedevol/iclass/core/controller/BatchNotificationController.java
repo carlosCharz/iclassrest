@@ -36,8 +36,6 @@ public class BatchNotificationController {
 	@Autowired
 	private BatchNotificationService batchService;
 
-	/********************* CRUD for batch notification ****************************/
-
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -74,5 +72,13 @@ public class BatchNotificationController {
 	@ResponseBody
 	public void delete(@PathVariable Long batchId) {
 		batchService.delete(batchId);
+	}
+	
+	@ApiIgnore
+	@RequestMapping(value = "/getNotificationsToBeSent", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<BatchNotification> getNotificationsToBeSent() {
+		return batchService.getNotificationsToBeSent();
 	}
 }

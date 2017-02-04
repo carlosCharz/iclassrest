@@ -29,7 +29,7 @@ public interface NotificationService {
 
 	void sendClassConfirmedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
 
-	void sendClassRejectedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
+	void sendRateFinishedClassNotificationToStudent(String tokenTo, Instructor instructor, Course course);
 
 	void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course);
 	

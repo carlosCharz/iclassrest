@@ -85,5 +85,13 @@ public class ClassController {
 	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long instructorId) {
 		classService.instructorRejectClass(classId, instructorId);
 	}
+	
+	@ApiIgnore
+	@RequestMapping(value = "/getConfirmedFinishedClasses", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Clase> getConfirmedFinishedClasses() {
+		return classService.getConfirmedFinishedClasses();
+	}
 
 }

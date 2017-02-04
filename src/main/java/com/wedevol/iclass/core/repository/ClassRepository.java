@@ -54,7 +54,7 @@ public interface ClassRepository extends CrudRepository<Clase, Long> {
 	 * 
 	 * @return list of classes
 	 */
-	@Query("SELECT cla FROM Clase cla WHERE DATE_FORMAT(cla.classDate, '%Y%m%d') = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d') and CAST(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%H') AS SIGNED) >= cla.endTime AND cla.status = 'confirmed'")
+	@Query(value = "SELECT cla FROM Clase cla WHERE DATE_FORMAT(cla.classDate, '%Y%m%d') = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d') AND CAST(DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%H') AS SIGNED) >= cla.endTime AND cla.status = 'confirmed'", nativeQuery = true)
 	public List<Clase> getConfirmedFinishedClasses();
 
 }

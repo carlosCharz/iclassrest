@@ -11,12 +11,14 @@ import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.service.BatchNotificationService;
 import com.wedevol.iclass.core.service.ClassService;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
+import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Batch process job
@@ -27,34 +29,37 @@ import com.wedevol.iclass.core.service.NotificationService;
 public class BatchProcessJob {
 
 	protected static final Logger logger = LoggerFactory.getLogger(BatchProcessJob.class);
-	
+
 	@Autowired
 	private NotificationService notificationService;
-	
+
 	@Autowired
 	private BatchNotificationService batchNotificationService;
-	
+
 	@Autowired
 	private ClassService classService;
-	
+
 	@Autowired
 	private InstructorService instructorService;
-	
+
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private StudentService studentService;
 
 	public void execute() {
 		logger.info("Batch process job executed");
 		processNotificationsToBeSent();
 		processConfirmedFinishedClasses();
 	}
-	
-	private void processNotificationsToBeSent(){
+
+	private void processNotificationsToBeSent() {
 		final List<BatchNotification> batchList = batchNotificationService.getNotificationsToBeSent();
 		batchList.forEach(batch -> notificationService.sendBatchNotifications(batchList));
 	}
-	
-	private void processConfirmedFinishedClasses(){
+
+	private void processConfirmedFinishedClasses() {
 		final List<Clase> classes = classService.getConfirmedFinishedClasses();
 		classes.forEach(clase -> {
 			// Update class to DONE
@@ -65,8 +70,10 @@ public class BatchProcessJob {
 			final Instructor instructor = instructorService.findById(clase.getInstructorId());
 			// The course should exist
 			final Course course = courseService.findById(clase.getCourseId());
+			// The student should exist
+			final Student student = studentService.findById(clase.getStudentId());
 			// Send notification to student to rate the instructor
-			notificationService.
+			notificationService.sendRateFinishedClassNotificationToStudent(student.getFcmToken(), instructor, course);
 		});
 	}
 
