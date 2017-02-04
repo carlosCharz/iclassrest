@@ -83,8 +83,8 @@ public class BatchProcessJob {
 			newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
 			studentService.update(student.getId(), newStudent);
 			instructorService.update(instructor.getId(), newInstructor);
-			// Send notification to student to rate the; instructor
-			notificationService.sendRateFinishedClassNotificationToStudent(student.getFcmToken(), instructor, course);
+			// Send notification to student to rate the instructor
+			notificationService.sendFinishedClassToRateNotificationToStudent(student.getFcmToken(), instructor, course);
 		});
 	}
 

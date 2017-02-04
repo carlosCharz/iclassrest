@@ -17,8 +17,10 @@ public enum NotificationType {
 			"El curso %s ha sido aprovado! Solo te falta pagarlo para comenzar a dictar clases!"),
 	CLASS_COMING_SOON(
 			"Tienes una asesoría del curso %s a las %s horas!"),
-	RATE_FINISHED_CLASS_FOR_STUDENT(
-			"Tu asesoría del curso %s con %s ha terminado. Califícalo!");
+	FINISHED_CLASS_TO_RATE_FOR_STUDENT(
+			"Tu asesoría del curso %s con %s ha terminado. Califícalo!"),
+	FINISHED_CLASS_RATING_FOR_INSTRUCTOR(
+					"Has recibido un rating de %s/5.0 para el curso %s!");
 
 	private String message;
 

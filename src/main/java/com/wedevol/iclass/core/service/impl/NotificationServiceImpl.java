@@ -143,13 +143,24 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public void sendRateFinishedClassNotificationToStudent(String tokenTo, Instructor instructor, Course course) {
+	public void sendFinishedClassToRateNotificationToStudent(String tokenTo, Instructor instructor, Course course) {
 		// TODO: send notification to the admins
-		final NotificationType notificationType = NotificationType.RATE_FINISHED_CLASS_FOR_STUDENT;
+		final NotificationType notificationType = NotificationType.FINISHED_CLASS_TO_RATE_FOR_STUDENT;
 		final List<String> data = Arrays.asList(course.getName(), instructor.getFullName());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
 		final NotificationRequest request = new NotificationRequest(message, notificationType);
 		sendNotificationInThread(request, tokenTo);
 	}
+
+	@Override
+	public void sendFinishedClassRatingNotificationToInstructor(String tokenTo, Course course, Float rating) {
+		final NotificationType notificationType = NotificationType.FINISHED_CLASS_RATING_FOR_INSTRUCTOR;
+		final List<String> data = Arrays.asList(rating.toString(), course.getName());
+		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
+		final NotificationRequest request = new NotificationRequest(message, notificationType);
+		sendNotificationInThread(request, tokenTo);
+	}
+	
+
 
 }

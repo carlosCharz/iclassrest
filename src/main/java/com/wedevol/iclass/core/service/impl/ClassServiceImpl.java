@@ -241,6 +241,8 @@ public class ClassServiceImpl implements ClassService {
 	public void rateInstructorClass(Long classId, Float rating) {
 		// The class should exist
 		Clase existingClass = findById(classId);
+		// The course should exist
+		final Course course = courseService.findById(existingClass.getCourseId());
 		// The instructor should exist
 		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
 		// Update the rating and rating count
@@ -249,6 +251,8 @@ public class ClassServiceImpl implements ClassService {
 		newInstructor.setRating(newRating);
 		newInstructor.setRatingCount(instructor.getRatingCount() +1);
 		instructorService.update(instructor.getId(), newInstructor);
+		// Send notification
+		notificationService.sendFinishedClassRatingNotificationToInstructor(instructor.getFcmToken(), course, rating);
 	}
 
 }
