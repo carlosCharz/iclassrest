@@ -49,7 +49,7 @@ public class BatchProcessJob {
 	private StudentService studentService;
 
 	public void execute() {
-		logger.info("Batch process job executed");
+		logger.info("****** Batch process job executed ******");
 		processNotificationsToBeSent();
 		processConfirmedFinishedClasses();
 	}
