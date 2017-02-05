@@ -71,7 +71,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private NotificationService notificationService;
-	
+
 	@Autowired
 	private BatchNotificationService batchNotificationService;
 
@@ -115,8 +115,6 @@ public class ClassServiceImpl implements ClassService {
 		final Clase clase = classRepository.save(c);
 		// Send notification
 		notificationService.sendNewClassRequestNotificationToInstructor(instructor.getFcmToken(), student, course);
-		// Save batch notification
-		batchNotificationService.saveClassComingSoonReminder(student, instructor, course, clase);
 		return clase;
 	}
 
@@ -167,8 +165,8 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
-			Integer actualTime, String statusFilter) {
+	public List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
+			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
@@ -177,12 +175,27 @@ public class ClassServiceImpl implements ClassService {
 		studentService.findById(studentId);
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
 		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
-		return classRepository.findClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
+		return classRepository.findComingClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
 				actualTime, classStatusList);
 	}
 
 	@Override
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	public List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
+			Date actualDate, Integer actualTime, String statusFilter) {
+		// The class status should be valid
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
+		// The student should exist
+		studentService.findById(studentId);
+		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
+		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
+		return classRepository.findHistoricClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId,
+				actualDateStr, actualTime, classStatusList);
+	}
+
+	@Override
+	public List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
@@ -192,8 +205,23 @@ public class ClassServiceImpl implements ClassService {
 		// The instructor should exist
 		instructorService.findById(instructorId);
 		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
-		return classRepository.findClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId, actualDateStr,
-				actualTime, classStatusList);
+		return classRepository.findComingClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
+				actualDateStr, actualTime, classStatusList);
+	}
+
+	@Override
+	public List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String statusFilter) {
+		// The class status should be valid
+		if (!areValidClassStatusFilters(statusFilter)) {
+			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
+		}
+		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
+		// The instructor should exist
+		instructorService.findById(instructorId);
+		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
+		return classRepository.findHistoricClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
+				actualDateStr, actualTime, classStatusList);
 	}
 
 	@Override
@@ -212,6 +240,8 @@ public class ClassServiceImpl implements ClassService {
 		classRepository.save(existingClass);
 		// Send notification
 		notificationService.sendClassConfirmedNotificationToStudent(student.getFcmToken(), instructor, course);
+		// Save batch notification
+		batchNotificationService.saveClassComingSoonReminder(student, instructor, course, existingClass);
 	}
 
 	@Override
@@ -225,34 +255,93 @@ public class ClassServiceImpl implements ClassService {
 		// The course should exist
 		final Course course = courseService.findById(existingClass.getCourseId());
 		// Change status
-		existingClass.setStatus(ClassStatusType.CONFIRMED.getDescription());
+		existingClass.setStatus(ClassStatusType.REJECTED.getDescription());
 		// Update
 		classRepository.save(existingClass);
 		// Send notification
 		notificationService.sendClassRejectedNotificationToStudent(student.getFcmToken(), instructor, course);
+		// Delete batch notifications
+		batchNotificationService.deleteClassComingSoonReminder(existingClass.getId());
 	}
 
 	@Override
-	public List<Clase> getConfirmedFinishedClasses() {
-		return classRepository.getConfirmedFinishedClasses();
+	public void studentCancelClass(Long classId, Long studentId) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// The student should exist
+		final Student student = studentService.findById(existingClass.getStudentId());
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
+		// The course should exist
+		final Course course = courseService.findById(existingClass.getCourseId());
+		// Change status
+		existingClass.setStatus(ClassStatusType.CANCELLED.getDescription());
+		// Update
+		classRepository.save(existingClass);
+		// Send notification
+		notificationService.sendClassCancelledNotificationToInstructor(instructor.getFcmToken(), student, course);
 	}
 
 	@Override
-	public void rateInstructorClass(Long classId, Float rating) {
+	public void rateInstructorClass(Long classId, Long instructorId, Float rating) {
 		// The class should exist
 		Clase existingClass = findById(classId);
 		// The course should exist
 		final Course course = courseService.findById(existingClass.getCourseId());
 		// The instructor should exist
-		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
-		// Update the rating and rating count
-		final Float newRating = (instructor.getRatingCount()*instructor.getRating() + rating)/(instructor.getRatingCount() +1);
+		final Instructor instructor = instructorService.findById(instructorId);
+		// Update the instructor rating and rating count
+		final Float newRating = (instructor.getRatingCount() * instructor.getRating() + rating)
+				/ (instructor.getRatingCount() + 1);
 		Instructor newInstructor = new Instructor();
 		newInstructor.setRating(newRating);
-		newInstructor.setRatingCount(instructor.getRatingCount() +1);
+		newInstructor.setRatingCount(instructor.getRatingCount() + 1);
+		// Update the instructor total hours
+		final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
+		newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
 		instructorService.update(instructor.getId(), newInstructor);
+		// Update class to DONE
+		Clase newClase = new Clase();
+		newClase.setStatus(ClassStatusType.DONE.getDescription());
+		this.update(existingClass.getId(), newClase);
 		// Send notification
-		notificationService.sendFinishedClassRatingNotificationToInstructor(instructor.getFcmToken(), course, rating);
+		notificationService.sendFinishedClassRatingNotification(instructor.getFcmToken(), course, rating);
+	}
+
+	@Override
+	public void ratingClassCancelled(Long classId) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// Update class to DONE
+		Clase newClase = new Clase();
+		newClase.setStatus(ClassStatusType.DONE.getDescription());
+		this.update(existingClass.getId(), newClase);
+	}
+
+	@Override
+	public void rateStudentClass(Long classId, Long studentId, Float rating) {
+		// The class should exist
+		Clase existingClass = findById(classId);
+		// The course should exist
+		final Course course = courseService.findById(existingClass.getCourseId());
+		// The student should exist
+		final Student student = studentService.findById(studentId);
+		// Update the student rating and rating count
+		final Float newRating = (student.getRatingCount() * student.getRating() + rating)
+				/ (student.getRatingCount() + 1);
+		Student newStudent = new Student();
+		newStudent.setRating(newRating);
+		newStudent.setRatingCount(student.getRatingCount() + 1);
+		// Update the student total hours
+		final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
+		newStudent.setTotalHours(student.getTotalHours() + diffHours);
+		studentService.update(student.getId(), newStudent);
+		// Update class to DONE
+		Clase newClase = new Clase();
+		newClase.setStatus(ClassStatusType.DONE.getDescription());
+		this.update(existingClass.getId(), newClase);
+		// Send notification
+		notificationService.sendFinishedClassRatingNotification(student.getFcmToken(), course, rating);
 	}
 
 }

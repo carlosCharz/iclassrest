@@ -51,7 +51,10 @@ public interface InstructorService {
 
 	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 
-	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
+	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
+			Integer actualTime, String classStatusFilter);
+	
+	List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
 			Integer actualTime, String classStatusFilter);
 
 	InstructorView getInstructorByIdWithFullInfo(Long userId);

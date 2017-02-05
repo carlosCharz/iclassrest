@@ -99,17 +99,30 @@ public class StudentController {
 		return studentService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
-	@RequestMapping(value = "/{userId}/classes", method = RequestMethod.GET)
+	@RequestMapping(value = "/{userId}/classes/coming", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
-		logger.info("Find classes of a student since " + actualTime + " hours " + dateToString(actualDate)
+		logger.info("Find coming classes of a student since " + actualTime + " hours " + dateToString(actualDate)
 				+ " filtered by the supplied class status: " + statusFilter);
-		return studentService.findClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate, actualTime,
-				statusFilter);
+		return studentService.findComingClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate,
+				actualTime, statusFilter);
+	}
+	
+	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
+			@RequestParam(value = "actualTime", required = true) Integer actualTime,
+			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
+		logger.info("Find historic classes of a student since " + actualTime + " hours " + dateToString(actualDate)
+				+ " filtered by the supplied class status: " + statusFilter);
+		return studentService.findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(userId, actualDate,
+				actualTime, statusFilter);
 	}
 
 }

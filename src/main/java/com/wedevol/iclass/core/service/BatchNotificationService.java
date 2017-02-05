@@ -30,4 +30,6 @@ public interface BatchNotificationService {
 	
 	void saveClassComingSoonReminder(Student student, Instructor instructor, Course course, Clase clase);
 	
+	void deleteClassComingSoonReminder(Long classId);
+	
 }

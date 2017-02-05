@@ -159,6 +159,9 @@ public class InstructorServiceImpl implements InstructorService {
 		if (instructor.getRatingCount() != null) {
 			existingInstructor.setRatingCount(instructor.getRatingCount());
 		}
+		if (instructor.getTotalHours() != null) {
+			existingInstructor.setTotalHours(instructor.getTotalHours());
+		}
 		// Save
 		instructorRepository.save(existingInstructor);
 	}
@@ -272,9 +275,16 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	public List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter) {
-		return classService.findClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
+		return classService.findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
+				actualTime, classStatusFilter);
+	}
+	
+	@Override
+	public List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String classStatusFilter) {
+		return classService.findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
 

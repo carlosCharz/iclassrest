@@ -77,10 +77,17 @@ public class InstructorEnrollmentController {
 		insEnrService.delete(id);
 	}
 
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/approved", method = RequestMethod.POST)
+	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/approve", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void approveCourseInstructorEnrollment(@PathVariable Long instructorId, @PathVariable Long courseId) {
 		insEnrService.approveCourseInstructorEnrollment(instructorId, courseId);
+	}
+	
+	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/deny", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void denyCourseInstructorEnrollment(@PathVariable Long instructorId, @PathVariable Long courseId) {
+		insEnrService.denyCourseInstructorEnrollment(instructorId, courseId);
 	}
 }

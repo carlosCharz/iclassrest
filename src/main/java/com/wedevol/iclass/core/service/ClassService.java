@@ -24,18 +24,28 @@ public interface ClassService {
 
 	void delete(Long classId);
 
-	List<ClassFullInfo> findClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+	List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
-	
-	List<ClassFullInfo> findClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
-			Integer actualTime, String classStatusFilter);
-	
+
+	List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+			Integer actualTime, String statusFilter);
+
+	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String classStatusFilter);
+
+	List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String classStatusFilter);
+
 	void instructorConfirmClass(Long classId, Long instructorId);
-	
+
 	void instructorRejectClass(Long classId, Long instructorId);
-	
-	void rateInstructorClass(Long classId, Float rating);
-	
-	List<Clase> getConfirmedFinishedClasses();
+
+	void studentCancelClass(Long classId, Long studentId);
+
+	void rateInstructorClass(Long classId, Long instructorId, Float rating);
+
+	void rateStudentClass(Long classId, Long studentId, Float rating);
+
+	void ratingClassCancelled(Long classId);
 
 }

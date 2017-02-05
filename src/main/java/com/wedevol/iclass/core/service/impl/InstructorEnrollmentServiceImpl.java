@@ -131,11 +131,29 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 		// The course should exist
 		final Course course = courseService.findById(courseId);
 		// Change status
-		existingEnr.setStatus(EnrollmentStatusType.PENDING_PAYMENT.getDescription());
+		// TODO: change this when payment is done
+		existingEnr.setStatus(EnrollmentStatusType.PAYED.getDescription());
 		// Update
 		enrRepository.save(existingEnr);
 		// Send notification
 		notificationService.sendCourseApprovedNotificationToInstructor(instructor.getFcmToken(), course);
+	}
+
+	@Override
+	public void denyCourseInstructorEnrollment(Long instructorId, Long courseId) {
+		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
+		// The instructorEnrollment should exist
+		InstructorEnrollment existingEnr = findById(id);
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(instructorId);
+		// The course should exist
+		final Course course = courseService.findById(courseId);
+		// Change status
+		existingEnr.setStatus(EnrollmentStatusType.DENIED.getDescription());
+		// Update
+		enrRepository.save(existingEnr);
+		// Send notification
+		notificationService.sendCourseDeniedNotificationToInstructor(instructor.getFcmToken(), course);
 	}
 
 }

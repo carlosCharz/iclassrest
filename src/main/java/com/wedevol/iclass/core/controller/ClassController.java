@@ -83,20 +83,34 @@ public class ClassController {
 	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long instructorId) {
 		classService.instructorRejectClass(classId, instructorId);
 	}
-	
-	@RequestMapping(value = "/{classId}/rating/{rating}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/{classId}/students/{studentId}/cancel", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void rateInstructorClass(@PathVariable Long classId, @PathVariable Float rating) {
-		classService.rateInstructorClass(classId, rating);
+	public void studentCancelClass(@PathVariable Long classId, @PathVariable Long studentId) {
+		classService.studentCancelClass(classId, studentId);
 	}
-	
-	@ApiIgnore
-	@RequestMapping(value = "/getConfirmedFinishedClasses", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/{classId}/instructors/{instructorId}/rating/{rating}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Clase> getConfirmedFinishedClasses() {
-		return classService.getConfirmedFinishedClasses();
+	public void rateInstructorClass(@PathVariable Long classId, @PathVariable Long instructorId,
+			@PathVariable Float rating) {
+		classService.rateInstructorClass(classId, instructorId, rating);
+	}
+
+	@RequestMapping(value = "/{classId}/students/{studentId}/rating/{rating}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void rateStudentClass(@PathVariable Long classId, @PathVariable Long studentId, @PathVariable Float rating) {
+		classService.rateStudentClass(classId, studentId, rating);
+	}
+
+	@RequestMapping(value = "/{classId}/rating/cancel", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public void ratingClassCancelled(@PathVariable Long classId) {
+		classService.ratingClassCancelled(classId);
 	}
 
 }

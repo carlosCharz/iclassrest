@@ -8,17 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wedevol.iclass.core.entity.BatchNotification;
-import com.wedevol.iclass.core.entity.Clase;
-import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.entity.enums.ClassStatusType;
 import com.wedevol.iclass.core.service.BatchNotificationService;
-import com.wedevol.iclass.core.service.ClassService;
-import com.wedevol.iclass.core.service.CourseService;
-import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
-import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Batch process job
@@ -36,22 +27,9 @@ public class BatchProcessJob {
 	@Autowired
 	private BatchNotificationService batchNotificationService;
 
-	@Autowired
-	private ClassService classService;
-
-	@Autowired
-	private InstructorService instructorService;
-
-	@Autowired
-	private CourseService courseService;
-
-	@Autowired
-	private StudentService studentService;
-
 	public void execute() {
 		logger.info("****** Batch process job executed ******");
 		processNotificationsToBeSent();
-		processConfirmedFinishedClasses();
 	}
 
 	private void processNotificationsToBeSent() {
@@ -59,32 +37,6 @@ public class BatchProcessJob {
 		notificationService.sendBatchNotifications(batchList);
 		batchList.forEach(batch -> {
 			batchNotificationService.delete(batch.getId());
-		});
-	}
-
-	private void processConfirmedFinishedClasses() {
-		final List<Clase> classes = classService.getConfirmedFinishedClasses();
-		classes.forEach(clase -> {
-			// Update class to DONE
-			Clase newClase = new Clase();
-			newClase.setStatus(ClassStatusType.DONE.getDescription());
-			classService.update(newClase.getId(), newClase);
-			// The course should exist
-			final Course course = courseService.findById(clase.getCourseId());
-			// The instructor should exist
-			final Instructor instructor = instructorService.findById(clase.getInstructorId());
-			// The student should exist
-			final Student student = studentService.findById(clase.getStudentId());
-			// Update the total hours
-			final Integer diffHours = clase.getEndTime() - clase.getStartTime();
-			Student newStudent = new Student();
-			newStudent.setTotalHours(student.getTotalHours() + diffHours);
-			Instructor newInstructor = new Instructor();
-			newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
-			studentService.update(student.getId(), newStudent);
-			instructorService.update(instructor.getId(), newInstructor);
-			// Send notification to student to rate the instructor
-			notificationService.sendFinishedClassToRateNotificationToStudent(student.getFcmToken(), instructor, course);
 		});
 	}
 

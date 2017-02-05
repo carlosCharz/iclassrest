@@ -27,4 +27,6 @@ public interface InstructorEnrollmentService {
 
 	void approveCourseInstructorEnrollment(Long instructorId, Long courseId);
 
+	void denyCourseInstructorEnrollment(Long instructorId, Long courseId);
+
 }

@@ -30,13 +30,17 @@ public interface NotificationService {
 	void sendClassConfirmedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
 
 	void sendFinishedClassToRateNotificationToStudent(String tokenTo, Instructor instructor, Course course);
-	
-	void sendFinishedClassRatingNotificationToInstructor(String tokenTo, Course course, Float rating);
+
+	void sendFinishedClassRatingNotification(String tokenTo, Course course, Float rating);
 
 	void sendCourseApprovedNotificationToInstructor(String tokenTo, Course course);
-	
+
+	void sendCourseDeniedNotificationToInstructor(String tokenTo, Course course);
+
 	void sendBatchNotifications(List<BatchNotification> batchs);
-	
+
 	void sendClassRejectedNotificationToStudent(String tokenTo, Instructor instructor, Course course);
+
+	void sendClassCancelledNotificationToInstructor(String tokenTo, Student student, Course course);
 
 }

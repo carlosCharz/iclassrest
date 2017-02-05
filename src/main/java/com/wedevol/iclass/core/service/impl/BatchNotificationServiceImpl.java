@@ -54,14 +54,15 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 	@Override
 	public BatchNotification findById(Long batchId) {
 		final Optional<BatchNotification> batchObj = Optional.ofNullable(batchRepository.findOne(batchId));
-		return batchObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.BATCH_NOTIFICATION_NOT_FOUND));
+		return batchObj.orElseThrow(
+				() -> new ResourceNotFoundException(NotFoundErrorType.BATCH_NOTIFICATION_NOT_FOUND));
 	}
 
 	@Override
 	public BatchNotification create(BatchNotification batch) {
 		// Fields missing validation
 		if (batch.getMessage() == null || batch.getTokenTo() == null || batch.getScheduledAt() == null) {
-			//TODO: validate the optional attributes if they come (notification type)
+			// TODO: validate the optional attributes if they come (notification type)
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// Save
@@ -78,13 +79,13 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 		if (!isNullOrEmpty(batch.getTokenTo())) {
 			existingBatch.setTokenTo(batch.getTokenTo());
 		}
-		if (batch.getScheduledAt()!=null) {
+		if (batch.getScheduledAt() != null) {
 			existingBatch.setScheduledAt(batch.getScheduledAt());
 		}
-		if (batch.getClassId()!=null) {
+		if (batch.getClassId() != null) {
 			existingBatch.setClassId(batch.getClassId());
 		}
-		//TODO: change this to enum
+		// TODO: change this to enum
 		if (!isNullOrEmpty(batch.getNotificationType())) {
 			existingBatch.setNotificationType(batch.getNotificationType());
 		}
@@ -109,13 +110,23 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 		final NotificationType notificationType = NotificationType.CLASS_COMING_SOON;
 		final List<String> data = Arrays.asList(course.getName(), clase.getStartTime().toString());
 		final String message = MessageContentBuilder.buildMessageContent(notificationType, data);
-		final Date scheduledAt = new Date(clase.getClassDate().getTime() - 1 * HOUR);
+		final Date scheduledAt = new Date(clase.getClassDate().getTime() + (clase.getStartTime() - 1) * HOUR);
 		// Reminder for the student
-		BatchNotification studentBatch = new BatchNotification(message, student.getFcmToken(), scheduledAt, clase.getId(), notificationType.name());
+		BatchNotification studentBatch = new BatchNotification(message, student.getFcmToken(), scheduledAt,
+				clase.getId(), notificationType.name());
 		batchRepository.save(studentBatch);
 		// Reminder for the instructor
-		BatchNotification instructorBatch = new BatchNotification(message, instructor.getFcmToken(), scheduledAt, clase.getId(), notificationType.name());
+		BatchNotification instructorBatch = new BatchNotification(message, instructor.getFcmToken(), scheduledAt,
+				clase.getId(), notificationType.name());
 		batchRepository.save(instructorBatch);
+	}
+
+	@Override
+	public void deleteClassComingSoonReminder(Long classId) {
+		final List<BatchNotification> batchList = batchRepository.findByClassId(classId);
+		batchList.forEach(batch -> {
+			batchRepository.delete(batch.getId());
+		});
 	}
 
 }
