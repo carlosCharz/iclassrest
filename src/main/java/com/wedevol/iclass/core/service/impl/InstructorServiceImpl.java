@@ -280,12 +280,11 @@ public class InstructorServiceImpl implements InstructorService {
 		return classService.findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
-	
+
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
-			Date actualDate, Integer actualTime, String classStatusFilter) {
-		return classService.findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
-				actualTime, classStatusFilter);
+	public List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+			String classStatusFilter) {
+		return classService.findHistoricClassesByInstructorIdWithClassStatusFilter(instructorId, classStatusFilter);
 	}
 
 	@Override

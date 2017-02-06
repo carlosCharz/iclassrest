@@ -42,8 +42,7 @@ public interface StudentService {
 	List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
 
-	List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
-			Integer actualTime, String statusFilter);
+	List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
 
 	StudentView getStudentByIdWithFullInfo(Long userId);
 

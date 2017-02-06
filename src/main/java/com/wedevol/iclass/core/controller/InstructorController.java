@@ -145,14 +145,10 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(
-			@PathVariable Long userId,
-			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
-			@RequestParam(value = "actualTime", required = true) Integer actualTime,
+	public List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
-		logger.info("Find historic classes of an instructor since " + actualTime + " hours " + dateToString(actualDate)
-				+ " filtered by the supplied class status: " + statusFilter);
-		return instructorService.findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(userId, actualDate,
-				actualTime, statusFilter);
+		logger.info("Find historic classes of the instructor " + userId + " filtered by the supplied class status: "
+				+ statusFilter);
+		return instructorService.findHistoricClassesByInstructorIdWithClassStatusFilter(userId, statusFilter);
 	}
 }

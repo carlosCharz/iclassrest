@@ -22,7 +22,7 @@ public interface InstructorService {
 	List<Instructor> findAll();
 
 	Instructor findByEmail(String email);
-	
+
 	Instructor findByDeviceId(String deviceId);
 
 	Instructor findById(Long userId);
@@ -51,11 +51,11 @@ public interface InstructorService {
 
 	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 
-	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
-			Integer actualTime, String classStatusFilter);
-	
-	List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId, Date actualDate,
-			Integer actualTime, String classStatusFilter);
+	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+			Date actualDate, Integer actualTime, String classStatusFilter);
+
+	List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+			String classStatusFilter);
 
 	InstructorView getInstructorByIdWithFullInfo(Long userId);
 

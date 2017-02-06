@@ -180,8 +180,8 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
-			Date actualDate, Integer actualTime, String statusFilter) {
+	public List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
+			String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
@@ -189,9 +189,7 @@ public class ClassServiceImpl implements ClassService {
 		// The student should exist
 		studentService.findById(studentId);
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
-		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
-		return classRepository.findHistoricClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId,
-				actualDateStr, actualTime, classStatusList);
+		return classRepository.findHistoricClassesWithStudentIdWithClassStatusFilter(studentId, classStatusList);
 	}
 
 	@Override
@@ -210,8 +208,8 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
-			Date actualDate, Integer actualTime, String statusFilter) {
+	public List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+			String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.CLASS_STATUS_NOT_VALID);
@@ -219,9 +217,7 @@ public class ClassServiceImpl implements ClassService {
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
 		// The instructor should exist
 		instructorService.findById(instructorId);
-		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
-		return classRepository.findHistoricClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
-				actualDateStr, actualTime, classStatusList);
+		return classRepository.findHistoricClassesWithInstructorIdWithClassStatusFilter(instructorId, classStatusList);
 	}
 
 	@Override

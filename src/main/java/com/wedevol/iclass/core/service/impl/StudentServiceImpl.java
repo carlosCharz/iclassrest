@@ -232,10 +232,9 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
-			Date actualDate, Integer actualTime, String statusFilter) {
-		return classService.findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(studentId, actualDate,
-				actualTime, statusFilter);
+	public List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
+			String statusFilter) {
+		return classService.findHistoricClassesByStudentIdWithClassStatusFilter(studentId, statusFilter);
 	}
 
 	@Override

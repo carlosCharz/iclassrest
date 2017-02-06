@@ -27,14 +27,13 @@ public interface ClassService {
 	List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
 
-	List<ClassFullInfo> findHistoricClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
-			Integer actualTime, String statusFilter);
+	List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
 
 	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter);
 
-	List<ClassFullInfo> findHistoricClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
-			Date actualDate, Integer actualTime, String classStatusFilter);
+	List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+			String classStatusFilter);
 
 	void instructorConfirmClass(Long classId, Long instructorId);
 
