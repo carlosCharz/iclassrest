@@ -106,11 +106,4 @@ public class ClassController {
 		classService.rateStudentClass(classId, studentId, rating);
 	}
 
-	@RequestMapping(value = "/{classId}/rating/cancel", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public void ratingClassCancelled(@PathVariable Long classId) {
-		classService.ratingClassCancelled(classId);
-	}
-
 }

@@ -72,6 +72,12 @@ public class Clase implements Serializable {
 	@JsonSerialize(using = CustomDatetimeSerialize.class)
 	@Column(name = "requestedat")
 	private Date requestedAt;
+	
+	@Column(name = "ratingtoinstructor")
+	private Float ratingToInstructor;
+	
+	@Column(name = "ratingtostudent")
+	private Float ratingToStudent;
 
 	@ClassStatus
 	@Column
@@ -158,6 +164,22 @@ public class Clase implements Serializable {
 
 	public void setRequestedAt(Date requestedAt) {
 		this.requestedAt = requestedAt;
+	}
+
+	public Float getRatingToInstructor() {
+		return ratingToInstructor;
+	}
+
+	public void setRatingToInstructor(Float ratingToInstructor) {
+		this.ratingToInstructor = ratingToInstructor;
+	}
+
+	public Float getRatingToStudent() {
+		return ratingToStudent;
+	}
+
+	public void setRatingToStudent(Float ratingToStudent) {
+		this.ratingToStudent = ratingToStudent;
 	}
 
 	public String getStatus() {

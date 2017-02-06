@@ -35,13 +35,15 @@ public class ClassFullInfo implements Serializable {
 	private String phone;
 	private Float price;
 	private String currency;
+	private Float ratingToInstructor;
+	private Float ratingToStudent;
 
 	protected ClassFullInfo() {
 	}
 
 	public ClassFullInfo(Long classId, Integer startTime, Integer endTime, String weekDay, Date classDate,
 			String classStatus, Long courseId, String courseName, String userType, Long userId, String firstName,
-			String lastName, String phone, Float price, String currency) {
+			String lastName, String phone, Float price, String currency, Float ratingToInstructor, Float ratingToStudent) {
 		super();
 		this.classId = classId;
 		this.startTime = startTime;
@@ -58,6 +60,8 @@ public class ClassFullInfo implements Serializable {
 		this.phone = phone;
 		this.price = price;
 		this.currency = currency;
+		this.ratingToInstructor = ratingToInstructor;
+		this.ratingToStudent = ratingToStudent;
 	}
 
 	public Long getClassId() {
@@ -178,6 +182,22 @@ public class ClassFullInfo implements Serializable {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+	public Float getRatingToInstructor() {
+		return ratingToInstructor;
+	}
+
+	public void setRatingToInstructor(Float ratingToInstructor) {
+		this.ratingToInstructor = ratingToInstructor;
+	}
+
+	public Float getRatingToStudent() {
+		return ratingToStudent;
+	}
+
+	public void setRatingToStudent(Float ratingToStudent) {
+		this.ratingToStudent = ratingToStudent;
 	}
 
 	@Override

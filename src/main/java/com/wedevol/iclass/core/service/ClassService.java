@@ -45,6 +45,4 @@ public interface ClassService {
 
 	void rateStudentClass(Long classId, Long studentId, Float rating);
 
-	void ratingClassCancelled(Long classId);
-
 }

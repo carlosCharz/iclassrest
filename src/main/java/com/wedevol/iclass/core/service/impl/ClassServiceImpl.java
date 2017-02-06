@@ -153,6 +153,12 @@ public class ClassServiceImpl implements ClassService {
 		if (!isNullOrEmpty(c.getStatus())) {
 			existingClass.setStatus(c.getStatus());
 		}
+		if (c.getRatingToInstructor() != null) {
+			existingClass.setRatingToInstructor(c.getRatingToInstructor());
+		}
+		if (c.getRatingToStudent() != null) {
+			existingClass.setRatingToStudent(c.getRatingToStudent());
+		}
 		// Update
 		classRepository.save(existingClass);
 	}
@@ -286,32 +292,22 @@ public class ClassServiceImpl implements ClassService {
 		final Course course = courseService.findById(existingClass.getCourseId());
 		// The instructor should exist
 		final Instructor instructor = instructorService.findById(instructorId);
+		// The student should exist
+		final Student student = studentService.findById(existingClass.getStudentId());
 		// Update the instructor rating and rating count
 		final Float newRating = (instructor.getRatingCount() * instructor.getRating() + rating)
 				/ (instructor.getRatingCount() + 1);
 		Instructor newInstructor = new Instructor();
 		newInstructor.setRating(newRating);
 		newInstructor.setRatingCount(instructor.getRatingCount() + 1);
-		// Update the instructor total hours
-		final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
-		newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
 		instructorService.update(instructor.getId(), newInstructor);
-		// Update class to DONE
-		Clase newClase = new Clase();
-		newClase.setStatus(ClassStatusType.DONE.getDescription());
-		this.update(existingClass.getId(), newClase);
+		// Update instructor rating
+		existingClass.setRatingToInstructor(rating);
+		classRepository.save(existingClass);
+		// Process if class is DONE
+		processClassToDoneAfterRatings(existingClass, instructor, student);
 		// Send notification
 		notificationService.sendFinishedClassRatingNotification(instructor.getFcmToken(), course, rating);
-	}
-
-	@Override
-	public void ratingClassCancelled(Long classId) {
-		// The class should exist
-		Clase existingClass = findById(classId);
-		// Update class to DONE
-		Clase newClase = new Clase();
-		newClase.setStatus(ClassStatusType.DONE.getDescription());
-		this.update(existingClass.getId(), newClase);
 	}
 
 	@Override
@@ -322,22 +318,40 @@ public class ClassServiceImpl implements ClassService {
 		final Course course = courseService.findById(existingClass.getCourseId());
 		// The student should exist
 		final Student student = studentService.findById(studentId);
+		// The instructor should exist
+		final Instructor instructor = instructorService.findById(existingClass.getInstructorId());
 		// Update the student rating and rating count
 		final Float newRating = (student.getRatingCount() * student.getRating() + rating)
 				/ (student.getRatingCount() + 1);
 		Student newStudent = new Student();
 		newStudent.setRating(newRating);
 		newStudent.setRatingCount(student.getRatingCount() + 1);
-		// Update the student total hours
-		final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
-		newStudent.setTotalHours(student.getTotalHours() + diffHours);
 		studentService.update(student.getId(), newStudent);
-		// Update class to DONE
-		Clase newClase = new Clase();
-		newClase.setStatus(ClassStatusType.DONE.getDescription());
-		this.update(existingClass.getId(), newClase);
+		// Update student rating
+		existingClass.setRatingToStudent(rating);
+		classRepository.save(existingClass);
+		// Process if class is DONE
+		processClassToDoneAfterRatings(existingClass, instructor, student);
 		// Send notification
 		notificationService.sendFinishedClassRatingNotification(student.getFcmToken(), course, rating);
+	}
+	
+	private void processClassToDoneAfterRatings(Clase existingClass, Instructor instructor, Student student) {
+		if (existingClass.getRatingToInstructor() != null && existingClass.getRatingToStudent() != null) {
+			// Update class to DONE
+			Clase newClase = new Clase();
+			newClase.setStatus(ClassStatusType.DONE.getDescription());
+			this.update(existingClass.getId(), newClase);
+			final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
+			// Update the instructor total hours
+			Instructor newInstructor = new Instructor();
+			newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
+			instructorService.update(instructor.getId(), newInstructor);
+			// Update the student total hours
+			Student newStudent = new Student();
+			newStudent.setTotalHours(student.getTotalHours() + diffHours);
+			studentService.update(student.getId(), newStudent);
+		}
 	}
 
 }
