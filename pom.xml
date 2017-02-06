@@ -14,6 +14,7 @@
 		<guava.version>20.0</guava.version>
 		<swagger2.version>2.6.1</swagger2.version>
 		<quartz.version>2.2.3</quartz.version>
+		<amazon.version>1.11.86</amazon.version>
 	</properties>
 
 	<parent>
@@ -84,6 +85,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<!-- Amazon S3 -->
+		<dependency>
+    		<groupId>com.amazonaws</groupId>
+    		<artifactId>aws-java-sdk</artifactId>
+    		<version>${amazon.version}</version>
 		</dependency>
 	</dependencies>
 
