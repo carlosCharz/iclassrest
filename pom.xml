@@ -15,6 +15,7 @@
 		<swagger2.version>2.6.1</swagger2.version>
 		<quartz.version>2.2.3</quartz.version>
 		<amazon.version>1.11.86</amazon.version>
+		<oauth.version>1.22.0</oauth.version>
 	</properties>
 
 	<parent>
@@ -91,6 +92,12 @@
     		<groupId>com.amazonaws</groupId>
     		<artifactId>aws-java-sdk</artifactId>
     		<version>${amazon.version}</version>
+		</dependency>
+		<!-- Google OAuth -->
+		<dependency>
+    		<groupId>com.google.oauth-client</groupId>
+    		<artifactId>google-oauth-client-java6</artifactId>
+    		<version>${oauth.version}</version>
 		</dependency>
 	</dependencies>
 
