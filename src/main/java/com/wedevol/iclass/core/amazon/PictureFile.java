@@ -4,38 +4,33 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * Picture Info Entity
+ * Picture File Entity
  * 
  * @author Charz++
  */
-public class PictureInfo {
+public class PictureFile {
 
 	private String fileName;
-	private String format;
+	private String contentType;
 	private Long size;
 	private InputStream inputStream;
 	private FileMetadata metadata;
-	private String height;
-	private String width;
 
-	public PictureInfo(String fileName, String format, Long size, InputStream inputStream, String height, String width,
-			FileMetadata metadata) {
-		this(fileName, format, size, inputStream, metadata);
-		this.height = height;
-		this.width = width;
+	public static PictureFile from(MediaFile file) {
+		return new PictureFile(file.getFileName(), file.getContentType(), file.getSize(), file.getInputStream());
 	}
 
-	public PictureInfo(String fileName, String format, Long size, InputStream inputStream, FileMetadata metadata) {
+	public PictureFile(String fileName, String contentType, Long size, InputStream inputStream, FileMetadata metadata) {
 		this.fileName = fileName;
-		this.format = format;
+		this.contentType = contentType;
 		this.size = size;
 		this.inputStream = inputStream;
 		this.metadata = metadata;
 	}
 
-	public PictureInfo(String fileName, String format, Long size, InputStream inputStream) {
+	public PictureFile(String fileName, String contentType, Long size, InputStream inputStream) {
 		this.fileName = fileName;
-		this.format = format;
+		this.contentType = contentType;
 		this.size = size;
 		this.inputStream = inputStream;
 	}
@@ -54,12 +49,12 @@ public class PictureInfo {
 		this.fileName = fileName;
 	}
 
-	public String getFormat() {
-		return format;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setFormat(String format) {
-		this.format = format;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	public Long getSize() {
@@ -84,21 +79,5 @@ public class PictureInfo {
 
 	public void setMetadata(FileMetadata metadata) {
 		this.metadata = metadata;
-	}
-
-	public String getHeight() {
-		return height;
-	}
-
-	public void setHeight(String height) {
-		this.height = height;
-	}
-
-	public String getWidth() {
-		return width;
-	}
-
-	public void setWidth(String width) {
-		this.width = width;
 	}
 }

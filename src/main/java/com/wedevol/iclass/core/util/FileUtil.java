@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.wedevol.iclass.core.entity.enums.UserType;
+
 /**
  * File Util Class
  * 
@@ -15,11 +17,22 @@ public class FileUtil {
 	public static final char DIRECTORY_SEPARATOR = '/';
 	public static final char EXTENSION_SEPARATOR = '.';
 	public static final String ASPECT_RATIO_HEADER_NAME = "aspect-ratio";
+	public static final String DIRECTORY_PICTURES = "picture";
 	
-	public static String generateFileId(String prefix, Long uploaderId, String directory, String origFileName) {
+	/**
+	 * 
+	 * @param prefix
+	 * @param userTypeDirectory
+	 * @param userId
+	 * @param mediaTypeDirectory
+	 * @param origFileName
+	 * @return prefix/userTypeDirectory/userId/mediaTypeDirectory/origFileName
+	 */
+	public static String generateFileId(String prefix, String userTypeDirectory, Long userId, String mediaTypeDirectory, String origFileName) {
 		StringBuilder fileId = new StringBuilder(prefix);
-		Optional.ofNullable(uploaderId).ifPresent(userId -> fileId.append(userId).append(DIRECTORY_SEPARATOR));
-		Optional.ofNullable(directory).ifPresent(directoryName -> fileId.append(directoryName)
+		Optional.ofNullable(userTypeDirectory).ifPresent(directoryName -> fileId.append(directoryName).append(DIRECTORY_SEPARATOR));
+		Optional.ofNullable(userId).ifPresent(id -> fileId.append(id).append(DIRECTORY_SEPARATOR));
+		Optional.ofNullable(mediaTypeDirectory).ifPresent(directoryName -> fileId.append(directoryName)
 				.append(DIRECTORY_SEPARATOR));
 		fileId.append(generateUniqueFileName(origFileName));
 		return fileId.toString();
