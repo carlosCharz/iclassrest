@@ -16,6 +16,9 @@
 		<quartz.version>2.2.3</quartz.version>
 		<amazon.version>1.11.86</amazon.version>
 		<oauth.version>1.22.0</oauth.version>
+		<fcm.version>1.0.0</fcm.version>
+		<apacheio.version>2.5</apacheio.version>
+		<uuid.version>3.1.4</uuid.version>
 	</properties>
 
 	<parent>
@@ -53,7 +56,7 @@
 		<dependency>
 			<groupId>com.google.gcm</groupId>
 			<artifactId>gcm-server</artifactId>
-			<version>1.0.0</version>
+			<version>${fcm.version}</version>
 		</dependency>
 		<!-- Google Guava -->
 		<dependency>
@@ -98,6 +101,18 @@
     		<groupId>com.google.oauth-client</groupId>
     		<artifactId>google-oauth-client-java6</artifactId>
     		<version>${oauth.version}</version>
+		</dependency>
+		<!-- Apache Commons IO -->
+		<dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>${apacheio.version}</version>
+		</dependency>
+		<!-- Java UUID Generator -->
+		<dependency>
+    		<groupId>com.fasterxml.uuid</groupId>
+    		<artifactId>java-uuid-generator</artifactId>
+    		<version>${uuid.version}</version>
 		</dependency>
 	</dependencies>
 
