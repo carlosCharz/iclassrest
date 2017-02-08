@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
@@ -74,6 +75,9 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private BatchNotificationService batchNotificationService;
+	
+	@Autowired
+	private BusinessSetting bussinessSetting;
 
 	@Override
 	public List<Clase> findAll() {
@@ -348,12 +352,12 @@ public class ClassServiceImpl implements ClassService {
 			// Update the instructor total hours
 			Instructor newInstructor = new Instructor();
 			newInstructor.setTotalHours(totalHoursInstructor);
-			newInstructor.setLevel(totalHoursInstructor/10);
+			newInstructor.setLevel(totalHoursInstructor/bussinessSetting.getLevelBase());
 			instructorService.update(instructor.getId(), newInstructor);
 			// Update the student total hours
 			Student newStudent = new Student();
 			newStudent.setTotalHours(totalHoursStudent);
-			newStudent.setLevel(totalHoursStudent/10);
+			newStudent.setLevel(totalHoursStudent/bussinessSetting.getLevelBase());
 			studentService.update(student.getId(), newStudent);
 		}
 	}

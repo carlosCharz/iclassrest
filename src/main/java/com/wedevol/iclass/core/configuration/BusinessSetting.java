@@ -21,6 +21,8 @@ public class BusinessSetting {
 	private Float instructorDefaultPrice;
 
 	private String instructorDefaultCurrency;
+	
+	private Integer levelBase;
 
 	public BusinessSetting() {
 		logger.info("Loading Business properties");
@@ -28,7 +30,7 @@ public class BusinessSetting {
 
 	@PostConstruct
 	public void postConstruct() {
-		logger.info("Business properties -> instructorDefaultPrice: '{}', instructorDefaultCurrency: '{}'",
+		logger.info("Business properties -> instructorDefaultPrice: '{}', instructorDefaultCurrency: '{}', levelBase: '{}'",
 				instructorDefaultPrice, instructorDefaultCurrency);
 	}
 
@@ -46,6 +48,14 @@ public class BusinessSetting {
 
 	public void setInstructorDefaultCurrency(String instructorDefaultCurrency) {
 		this.instructorDefaultCurrency = instructorDefaultCurrency;
+	}
+
+	public Integer getLevelBase() {
+		return levelBase;
+	}
+
+	public void setLevelBase(Integer levelBase) {
+		this.levelBase = levelBase;
 	}
 
 }
