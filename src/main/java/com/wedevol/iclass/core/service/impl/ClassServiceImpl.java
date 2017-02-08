@@ -343,13 +343,17 @@ public class ClassServiceImpl implements ClassService {
 			newClase.setStatus(ClassStatusType.DONE.getDescription());
 			this.update(existingClass.getId(), newClase);
 			final Integer diffHours = existingClass.getEndTime() - existingClass.getStartTime();
+			final Integer totalHoursInstructor = instructor.getTotalHours() + diffHours;
+			final Integer totalHoursStudent = student.getTotalHours() + diffHours;
 			// Update the instructor total hours
 			Instructor newInstructor = new Instructor();
-			newInstructor.setTotalHours(instructor.getTotalHours() + diffHours);
+			newInstructor.setTotalHours(totalHoursInstructor);
+			newInstructor.setLevel(totalHoursInstructor/10);
 			instructorService.update(instructor.getId(), newInstructor);
 			// Update the student total hours
 			Student newStudent = new Student();
-			newStudent.setTotalHours(student.getTotalHours() + diffHours);
+			newStudent.setTotalHours(totalHoursStudent);
+			newStudent.setLevel(totalHoursStudent/10);
 			studentService.update(student.getId(), newStudent);
 		}
 	}
