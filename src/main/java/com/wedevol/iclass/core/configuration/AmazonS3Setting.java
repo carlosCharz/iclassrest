@@ -5,7 +5,11 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import com.wedevol.iclass.core.amazon.AmazonS3Service;
+import com.wedevol.iclass.core.amazon.AmazonS3ServiceImpl;
 
 /**
  * Amazon S3 settings loaded from a property file
@@ -63,6 +67,11 @@ public class AmazonS3Setting {
 
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+	}
+	
+	@Bean
+	public AmazonS3Service amazonServiceImpl() {
+		return new AmazonS3ServiceImpl(accessKey, secretKey, bucket, prefix);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.wedevol.iclass.core.amazon.MediaFile;
 import com.wedevol.iclass.core.entity.enums.UserType;
 
@@ -12,6 +14,8 @@ import com.wedevol.iclass.core.entity.enums.UserType;
  */
 public interface MediaService {
 	
-	String addPicture(Long userId, UserType userType, MediaFile file);
+	String uploadPicture(Long userId, UserType userType, MediaFile file);
+	
+	String addPicture(Long userId, UserType userType, MultipartFile multipart);
 
 }
