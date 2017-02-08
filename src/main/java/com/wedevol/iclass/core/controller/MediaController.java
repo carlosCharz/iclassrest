@@ -40,5 +40,14 @@ public class MediaController {
 		final String url = mediaService.addPicture(userId, UserType.STUDENT, file);
 		return url;
 	}
+	
+	@RequestMapping(value = "/instructors/{userId}/picture/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public String uploadPictureInstructor(@PathVariable Long userId,
+			@RequestParam(value = "file", required = true) MultipartFile file) {
+		final String url = mediaService.addPicture(userId, UserType.INSTRUCTOR, file);
+		return url;
+	}
 
 }
