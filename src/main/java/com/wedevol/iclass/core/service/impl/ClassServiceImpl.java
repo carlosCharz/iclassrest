@@ -352,12 +352,12 @@ public class ClassServiceImpl implements ClassService {
 			// Update the instructor total hours
 			Instructor newInstructor = new Instructor();
 			newInstructor.setTotalHours(totalHoursInstructor);
-			newInstructor.setLevel(totalHoursInstructor/bussinessSetting.getLevelBase());
+			newInstructor.setLevel(totalHoursInstructor/bussinessSetting.getLevelBase() + 1);
 			instructorService.update(instructor.getId(), newInstructor);
 			// Update the student total hours
 			Student newStudent = new Student();
 			newStudent.setTotalHours(totalHoursStudent);
-			newStudent.setLevel(totalHoursStudent/bussinessSetting.getLevelBase());
+			newStudent.setLevel(totalHoursStudent/bussinessSetting.getLevelBase() + 1);
 			studentService.update(student.getId(), newStudent);
 		}
 	}
