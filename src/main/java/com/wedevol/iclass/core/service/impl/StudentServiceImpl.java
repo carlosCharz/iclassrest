@@ -150,6 +150,9 @@ public class StudentServiceImpl implements StudentService {
 		if (student.getTotalHours() != null) {
 			existingStudent.setTotalHours(student.getTotalHours());
 		}
+		if (student.getLevel() != null) {
+			existingStudent.setLevel(student.getLevel());
+		}
 		// Save
 		studentRepository.save(existingStudent);
 	}

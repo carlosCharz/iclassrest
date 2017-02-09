@@ -14,8 +14,8 @@ import com.wedevol.iclass.core.entity.enums.UserType;
  */
 public interface MediaService {
 	
-	String uploadPicture(Long userId, UserType userType, MediaFile file);
+	String uploadUserPicture(Long userId, UserType userType, MediaFile file);
 	
-	String addPicture(Long userId, UserType userType, MultipartFile multipart);
+	String addUserPicture(Long userId, UserType userType, MultipartFile multipart);
 
 }

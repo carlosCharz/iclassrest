@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import springfox.documentation.annotations.ApiIgnore;
-
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.service.ClassService;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Class Controller
@@ -91,7 +91,7 @@ public class ClassController {
 		classService.studentCancelClass(classId, studentId);
 	}
 
-	@RequestMapping(value = "/{classId}/instructors/{instructorId}/rating/{rating}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/instructors/{instructorId}/rating/{rating:.+}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void rateInstructorClass(@PathVariable Long classId, @PathVariable Long instructorId,
@@ -99,7 +99,7 @@ public class ClassController {
 		classService.rateInstructorClass(classId, instructorId, rating);
 	}
 
-	@RequestMapping(value = "/{classId}/students/{studentId}/rating/{rating}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/students/{studentId}/rating/{rating:.+}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void rateStudentClass(@PathVariable Long classId, @PathVariable Long studentId, @PathVariable Float rating) {

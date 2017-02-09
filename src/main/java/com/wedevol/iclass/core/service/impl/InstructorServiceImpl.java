@@ -162,6 +162,9 @@ public class InstructorServiceImpl implements InstructorService {
 		if (instructor.getTotalHours() != null) {
 			existingInstructor.setTotalHours(instructor.getTotalHours());
 		}
+		if (instructor.getLevel() != null) {
+			existingInstructor.setLevel(instructor.getLevel());
+		}
 		// Save
 		instructorRepository.save(existingInstructor);
 	}

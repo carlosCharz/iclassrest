@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.wedevol.iclass.core.entity.enums.UserType;
-
 /**
  * File Util Class
  * 

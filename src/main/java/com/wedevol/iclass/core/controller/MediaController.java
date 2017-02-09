@@ -37,7 +37,7 @@ public class MediaController {
 	@ResponseBody
 	public String uploadPictureStudent(@PathVariable Long userId,
 			@RequestParam(value = "file", required = true) MultipartFile file) {
-		final String url = mediaService.addPicture(userId, UserType.STUDENT, file);
+		final String url = mediaService.addUserPicture(userId, UserType.STUDENT, file);
 		return url;
 	}
 	
@@ -46,7 +46,7 @@ public class MediaController {
 	@ResponseBody
 	public String uploadPictureInstructor(@PathVariable Long userId,
 			@RequestParam(value = "file", required = true) MultipartFile file) {
-		final String url = mediaService.addPicture(userId, UserType.INSTRUCTOR, file);
+		final String url = mediaService.addUserPicture(userId, UserType.INSTRUCTOR, file);
 		return url;
 	}
 
