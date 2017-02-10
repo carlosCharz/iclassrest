@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.InstructorBasic;
+import com.wedevol.iclass.core.view.response.InstructorBasic;
 
 /**
  * Instructor Repository

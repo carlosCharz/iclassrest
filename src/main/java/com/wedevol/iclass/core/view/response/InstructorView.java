@@ -8,12 +8,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
-import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
 
 /**
  * Instructor Response View
@@ -32,7 +30,6 @@ public class InstructorView implements Serializable {
 	private String email;
 	private String password;
 	@JsonDeserialize(using = CustomDateDeserialize.class)
-	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date birthday;
 	private String gender;
 	private String profilePictureUrl;

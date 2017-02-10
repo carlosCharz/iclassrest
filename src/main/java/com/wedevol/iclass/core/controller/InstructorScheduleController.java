@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.InstructorSchedule;
-import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
+import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 import springfox.documentation.annotations.ApiIgnore;
 

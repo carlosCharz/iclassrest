@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.Clase;
-import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
@@ -39,6 +38,7 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.util.CommonUtil;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
 
 /**
  * Class Service Implementation

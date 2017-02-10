@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.InstructorSchedule;
-import com.wedevol.iclass.core.entity.ScheduleBasic;
+import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
  * Instructor Schedule Service Interface

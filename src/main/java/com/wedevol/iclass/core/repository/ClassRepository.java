@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wedevol.iclass.core.entity.ClassFullInfo;
 import com.wedevol.iclass.core.entity.Clase;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
 
 /**
  * Class Repository

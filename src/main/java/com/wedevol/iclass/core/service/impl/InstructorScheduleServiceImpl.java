@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.InstructorSchedule;
-import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -24,6 +23,7 @@ import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.util.CommonUtil;
+import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
  * Instructor Schedule Service Implementation

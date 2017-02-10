@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.entity;
+package com.wedevol.iclass.core.view.response;
 
 import java.io.Serializable;
 import java.util.Date;

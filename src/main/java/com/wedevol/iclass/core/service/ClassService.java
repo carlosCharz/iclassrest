@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.Clase;
-import com.wedevol.iclass.core.entity.ClassFullInfo;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
 
 /**
  * Class Service Interface

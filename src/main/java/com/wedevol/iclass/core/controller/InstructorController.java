@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.InstructorBasic;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.request.UserBasicView;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
+import com.wedevol.iclass.core.view.response.InstructorBasic;
 
 import springfox.documentation.annotations.ApiIgnore;
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.InstructorSchedule;
-import com.wedevol.iclass.core.entity.ScheduleBasic;
+import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
  * Instructor Schedule Repository

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
@@ -34,6 +32,8 @@ import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
 import com.wedevol.iclass.core.view.response.StudentView;
 
 /**

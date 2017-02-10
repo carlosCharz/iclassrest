@@ -3,10 +3,10 @@ package com.wedevol.iclass.core.service;
 import java.util.Date;
 import java.util.List;
 
-import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
 import com.wedevol.iclass.core.view.response.StudentView;
 
 /**

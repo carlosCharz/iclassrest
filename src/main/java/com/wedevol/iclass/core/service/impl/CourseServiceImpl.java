@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.DepartmentId;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
@@ -30,6 +29,7 @@ import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
 
 /**
  * Course Service Implementation

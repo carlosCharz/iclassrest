@@ -3,13 +3,13 @@ package com.wedevol.iclass.core.service;
 import java.util.Date;
 import java.util.List;
 
-import com.wedevol.iclass.core.entity.ClassFullInfo;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
-import com.wedevol.iclass.core.entity.InstructorBasic;
-import com.wedevol.iclass.core.entity.ScheduleBasic;
 import com.wedevol.iclass.core.view.request.UserView;
+import com.wedevol.iclass.core.view.response.ClassFullInfo;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
+import com.wedevol.iclass.core.view.response.InstructorBasic;
 import com.wedevol.iclass.core.view.response.InstructorView;
+import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
  * Instructor Service Interface

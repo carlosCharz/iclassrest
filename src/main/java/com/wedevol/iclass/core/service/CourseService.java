@@ -3,9 +3,9 @@ package com.wedevol.iclass.core.service;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.entity.CourseFullInfo;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.view.response.CourseFullInfo;
 
 /**
  * Course Service Interface
