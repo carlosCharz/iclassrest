@@ -11,7 +11,7 @@ import com.wedevol.iclass.core.entity.University;
  * @author charz
  *
  */
-public class AdminView implements Serializable {
+public class AdminFull implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,10 +26,10 @@ public class AdminView implements Serializable {
 	private String deviceId;
 	private boolean active;
 
-	protected AdminView() {
+	protected AdminFull() {
 	}
 
-	public AdminView(Long id) {
+	public AdminFull(Long id) {
 		this.id = id;
 	}
 
@@ -113,8 +113,8 @@ public class AdminView implements Serializable {
 		this.active = active;
 	}
 
-	public static AdminView from(Admin admin) {
-		AdminView adminView = new AdminView(admin.getId());
+	public static AdminFull from(Admin admin) {
+		AdminFull adminView = new AdminFull(admin.getId());
 		adminView.setFirstName(admin.getFirstName());
 		adminView.setLastName(admin.getLastName());
 		adminView.setEmail(admin.getEmail());
@@ -126,8 +126,8 @@ public class AdminView implements Serializable {
 		return adminView;
 	}
 
-	public static AdminView from(Admin admin, University university) {
-		AdminView adminView = AdminView.from(admin);
+	public static AdminFull from(Admin admin, University university) {
+		AdminFull adminView = AdminFull.from(admin);
 		adminView.setUniversityName(university.getShortName());
 		return adminView;
 	}

@@ -22,7 +22,7 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.AdminRepository;
 import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.UniversityService;
-import com.wedevol.iclass.core.view.response.AdminView;
+import com.wedevol.iclass.core.view.response.AdminFull;
 
 /**
  * Admin Service Implementation
@@ -114,11 +114,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public AdminView getAdminByIdWithFullInfo(Long userId) {
+	public AdminFull getAdminByIdWithFullInfo(Long userId) {
 		Admin admin = this.findById(userId);
 		// The university should exist
 		final University university = universityService.findById(admin.getUniversityId());
-		return AdminView.from(admin, university);
+		return AdminFull.from(admin, university);
 	}
 
 	@Override

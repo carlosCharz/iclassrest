@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.Course;
-import com.wedevol.iclass.core.view.response.CourseFullInfo;
+import com.wedevol.iclass.core.view.response.CourseFull;
 
 /**
  * Course Repository
@@ -36,8 +36,8 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList order by cou.name asc")
-	public List<CourseFullInfo> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
+	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseFull(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList order by cou.name asc")
+	public List<CourseFull> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 
 	/**
@@ -47,8 +47,8 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.entity.CourseFullInfo(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList order by cou.name asc")
-	public List<CourseFullInfo> findCoursesWithInstructorIdWithCourseStatusFilter(
+	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseFull(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList order by cou.name asc")
+	public List<CourseFull> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 	
 	/**

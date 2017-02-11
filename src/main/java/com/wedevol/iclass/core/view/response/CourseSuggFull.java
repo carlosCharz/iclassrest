@@ -12,7 +12,7 @@ import com.wedevol.iclass.core.entity.constraint.CustomDatetimeDeserialize;
  * @author charz
  *
  */
-public class CourseSuggFullInfo implements Serializable {
+public class CourseSuggFull implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class CourseSuggFullInfo implements Serializable {
 	private Date requestedAt;
 	private String status;
 
-	public CourseSuggFullInfo(Long id, String userType, Long userId, String userName, String userEmail,
+	public CourseSuggFull(Long id, String userType, Long userId, String userName, String userEmail,
 			String courseName, String description, Long facultyId, String facultyName, Long universityId,
 			String universityName, Date requestedAt, String status) {
 		super();

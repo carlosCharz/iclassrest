@@ -1,8 +1,8 @@
 package com.wedevol.iclass.core.service;
 
-import com.wedevol.iclass.core.view.response.AdminView;
-import com.wedevol.iclass.core.view.response.InstructorView;
-import com.wedevol.iclass.core.view.response.StudentView;
+import com.wedevol.iclass.core.view.response.AdminFull;
+import com.wedevol.iclass.core.view.response.InstructorFull;
+import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
  * Auth Service Interface
@@ -12,11 +12,11 @@ import com.wedevol.iclass.core.view.response.StudentView;
  */
 public interface AuthService {
 
-	StudentView loginStudent(String email, String password);
+	StudentFull loginStudent(String email, String password);
 
-	InstructorView loginInstructor(String email, String password);
+	InstructorFull loginInstructor(String email, String password);
 	
-	AdminView loginAdmin(String email, String password);
+	AdminFull loginAdmin(String email, String password);
 	
 	void refreshFCMToken(String fcmToken, String deviceId);
 

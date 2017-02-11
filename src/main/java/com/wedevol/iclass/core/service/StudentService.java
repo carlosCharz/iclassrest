@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFullInfo;
-import com.wedevol.iclass.core.view.response.CourseFullInfo;
-import com.wedevol.iclass.core.view.response.StudentView;
+import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
  * Student Service Interface
@@ -37,14 +37,14 @@ public interface StudentService {
 
 	List<Student> findStudentsByCourseId(Long courseId);
 
-	List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
+	List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 
-	List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+	List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
 
-	List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
+	List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
 
-	StudentView getStudentByIdWithFullInfo(Long userId);
+	StudentFull getStudentByIdWithFullInfo(Long userId);
 
 	Student getStudentByEmail(String email);
 }

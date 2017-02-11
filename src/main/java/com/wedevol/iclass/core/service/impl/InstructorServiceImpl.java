@@ -36,10 +36,10 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFullInfo;
-import com.wedevol.iclass.core.view.response.CourseFullInfo;
+import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.CourseFull;
 import com.wedevol.iclass.core.view.response.InstructorBasic;
-import com.wedevol.iclass.core.view.response.InstructorView;
+import com.wedevol.iclass.core.view.response.InstructorFull;
 import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
@@ -208,7 +208,7 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+	public List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
 			String courseStatusFilter) {
 		return courseService.findCoursesByInstructorIdWithCourseStatusFilter(instructorId, courseStatusFilter);
 	}
@@ -278,14 +278,14 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	public List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter) {
 		return classService.findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
 
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+	public List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
 			String classStatusFilter) {
 		return classService.findHistoricClassesByInstructorIdWithClassStatusFilter(instructorId, classStatusFilter);
 	}
@@ -300,13 +300,13 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public InstructorView getInstructorByIdWithFullInfo(Long userId) {
+	public InstructorFull getInstructorByIdWithFullInfo(Long userId) {
 		Instructor instructor = this.findById(userId);
 		// The university should exist
 		final University university = universityService.findById(instructor.getUniversityId());
 		// The faculty should exist
 		final Faculty faculty = facultyService.findById(instructor.getFacultyId());
-		return InstructorView.from(instructor, university, faculty);
+		return InstructorFull.from(instructor, university, faculty);
 	}
 
 	@Override

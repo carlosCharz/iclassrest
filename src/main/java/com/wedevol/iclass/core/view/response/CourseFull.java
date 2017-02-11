@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author charz
  *
  */
-public class CourseFullInfo implements Serializable {
+public class CourseFull implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,10 @@ public class CourseFullInfo implements Serializable {
 	private Float price;
 	private String currency;
 
-	protected CourseFullInfo() {
+	protected CourseFull() {
 	}
 
-	public CourseFullInfo(Long id, String name, String description, String faculty, String university, String status,
+	public CourseFull(Long id, String name, String description, String faculty, String university, String status,
 			Float price, String currency) {
 		this.id = id;
 		this.name = name;
@@ -36,7 +36,7 @@ public class CourseFullInfo implements Serializable {
 		this.currency = currency;
 	}
 
-	public CourseFullInfo(Long id, String name, String description, String faculty, String university, String status) {
+	public CourseFull(Long id, String name, String description, String faculty, String university, String status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;

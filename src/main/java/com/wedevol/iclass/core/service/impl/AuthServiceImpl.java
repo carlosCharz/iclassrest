@@ -19,9 +19,9 @@ import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.view.response.AdminView;
-import com.wedevol.iclass.core.view.response.InstructorView;
-import com.wedevol.iclass.core.view.response.StudentView;
+import com.wedevol.iclass.core.view.response.AdminFull;
+import com.wedevol.iclass.core.view.response.InstructorFull;
+import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
  * Auth Service Implementation
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 	/********************* Authentication logic ****************************/
 
 	@Override
-	public StudentView loginStudent(String email, String password) {
+	public StudentFull loginStudent(String email, String password) {
 		final Student student = studentService.getStudentByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(student.getPassword())) {
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public InstructorView loginInstructor(String email, String password) {
+	public InstructorFull loginInstructor(String email, String password) {
 		final Instructor instructor = instructorService.getInstructorByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(instructor.getPassword())) {
@@ -69,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public AdminView loginAdmin(String email, String password) {
+	public AdminFull loginAdmin(String email, String password) {
 		final Admin admin = adminService.getAdminByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(admin.getPassword())) {

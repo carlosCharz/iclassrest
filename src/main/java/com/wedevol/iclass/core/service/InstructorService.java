@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFullInfo;
-import com.wedevol.iclass.core.view.response.CourseFullInfo;
+import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.CourseFull;
 import com.wedevol.iclass.core.view.response.InstructorBasic;
-import com.wedevol.iclass.core.view.response.InstructorView;
+import com.wedevol.iclass.core.view.response.InstructorFull;
 import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
@@ -45,19 +45,19 @@ public interface InstructorService {
 	List<InstructorBasic> findInstructorsByCourseIdByWeekDayByTime(Long courseId, String weekDayStr, Integer startTime,
 			Integer endTime);
 
-	List<CourseFullInfo> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
+	List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 
 	List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate);
 
 	List<ScheduleBasic> findSchedulesByCourseIdByWeekDay(Long courseId, String weekDayStr);
 
-	List<ClassFullInfo> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter);
 
-	List<ClassFullInfo> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+	List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
 			String classStatusFilter);
 
-	InstructorView getInstructorByIdWithFullInfo(Long userId);
+	InstructorFull getInstructorByIdWithFullInfo(Long userId);
 
 	Instructor getInstructorByEmail(String email);
 }

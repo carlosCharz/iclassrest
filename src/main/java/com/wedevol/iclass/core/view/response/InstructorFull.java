@@ -8,20 +8,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.Faculty;
-import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.University;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
-import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
 
 /**
- * Student Response View
+ * Instructor Response View
  * 
  * @author charz
  *
  */
-public class StudentView implements Serializable {
+public class InstructorFull implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +30,6 @@ public class StudentView implements Serializable {
 	private String email;
 	private String password;
 	@JsonDeserialize(using = CustomDateDeserialize.class)
-	@JsonSerialize(using = CustomDateSerialize.class)
 	private Date birthday;
 	private String gender;
 	private String profilePictureUrl;
@@ -48,10 +45,10 @@ public class StudentView implements Serializable {
 	private Integer level;
 	private Integer totalHours;
 
-	protected StudentView() {
+	protected InstructorFull() {
 	}
 
-	public StudentView(Long id) {
+	public InstructorFull(Long id) {
 		this.id = id;
 	}
 
@@ -175,7 +172,7 @@ public class StudentView implements Serializable {
 	public void setUniversityName(String universityName) {
 		this.universityName = universityName;
 	}
-	
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -216,33 +213,33 @@ public class StudentView implements Serializable {
 		this.totalHours = totalHours;
 	}
 
-	public static StudentView from(Student student) {
-		StudentView studentView = new StudentView(student.getId());
-		studentView.setFirstName(student.getFirstName());
-		studentView.setLastName(student.getLastName());
-		studentView.setPhone(student.getPhone());
-		studentView.setEmail(student.getEmail());
-		studentView.setPassword(student.getPassword());
-		studentView.setBirthday(student.getBirthday());
-		studentView.setGender(student.getGender());
-		studentView.setProfilePictureUrl(student.getProfilePictureUrl());
-		studentView.setPlaceOptions(student.getPlaceOptions().isEmpty() ? null : student.getPlaceOptions());
-		studentView.setFacultyId(student.getFacultyId());
-		studentView.setUniversityId(student.getUniversityId());
-		studentView.setFcmToken(student.getFcmToken());
-		studentView.setDeviceId(student.getDeviceId());
-		studentView.setRating(student.getRating());
-		studentView.setRatingCount(student.getRatingCount());
-		studentView.setLevel(student.getLevel());
-		studentView.setTotalHours(student.getTotalHours());
-		return studentView;
+	public static InstructorFull from(Instructor instructor) {
+		InstructorFull instructorView = new InstructorFull(instructor.getId());
+		instructorView.setFirstName(instructor.getFirstName());
+		instructorView.setLastName(instructor.getLastName());
+		instructorView.setPhone(instructor.getPhone());
+		instructorView.setEmail(instructor.getEmail());
+		instructorView.setPassword(instructor.getPassword());
+		instructorView.setBirthday(instructor.getBirthday());
+		instructorView.setGender(instructor.getGender());
+		instructorView.setProfilePictureUrl(instructor.getProfilePictureUrl());
+		instructorView.setPlaceOptions(instructor.getPlaceOptions().isEmpty() ? null : instructor.getPlaceOptions());
+		instructorView.setFacultyId(instructor.getFacultyId());
+		instructorView.setUniversityId(instructor.getUniversityId());
+		instructorView.setFcmToken(instructor.getFcmToken());
+		instructorView.setDeviceId(instructor.getDeviceId());
+		instructorView.setRating(instructor.getRating());
+		instructorView.setRatingCount(instructor.getRatingCount());
+		instructorView.setLevel(instructor.getLevel());
+		instructorView.setTotalHours(instructor.getTotalHours());
+		return instructorView;
 	}
 
-	public static StudentView from(Student student, University university, Faculty faculty) {
-		StudentView studentView = StudentView.from(student);
-		studentView.setUniversityName(university.getShortName());
-		studentView.setFacultyName(faculty.getShortName());
-		return studentView;
+	public static InstructorFull from(Instructor instructor, University university, Faculty faculty) {
+		InstructorFull instructorView = InstructorFull.from(instructor);
+		instructorView.setUniversityName(university.getShortName());
+		instructorView.setFacultyName(faculty.getShortName());
+		return instructorView;
 	}
 
 }

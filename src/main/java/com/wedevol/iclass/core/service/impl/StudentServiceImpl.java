@@ -32,9 +32,9 @@ import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFullInfo;
-import com.wedevol.iclass.core.view.response.CourseFullInfo;
-import com.wedevol.iclass.core.view.response.StudentView;
+import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
  * Student Service Implementation
@@ -222,20 +222,20 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<CourseFullInfo> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
+	public List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
 			String courseStatusFilter) {
 		return courseService.findCoursesByStudentIdWithCourseStatusFilter(studentId, courseStatusFilter);
 	}
 
 	@Override
-	public List<ClassFullInfo> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
+	public List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
 			Date actualDate, Integer actualTime, String statusFilter) {
 		return classService.findComingClassesByStudentIdByDateTimeWithClassStatusFilter(studentId, actualDate,
 				actualTime, statusFilter);
 	}
 
 	@Override
-	public List<ClassFullInfo> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
+	public List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
 			String statusFilter) {
 		return classService.findHistoricClassesByStudentIdWithClassStatusFilter(studentId, statusFilter);
 	}
@@ -250,13 +250,13 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public StudentView getStudentByIdWithFullInfo(Long userId) {
+	public StudentFull getStudentByIdWithFullInfo(Long userId) {
 		Student student = this.findById(userId);
 		// The university should exist
 		final University university = universityService.findById(student.getUniversityId());
 		// The faculty should exist
 		final Faculty faculty = facultyService.findById(student.getFacultyId());
-		return StudentView.from(student, university, faculty);
+		return StudentFull.from(student, university, faculty);
 	}
 
 	@Override

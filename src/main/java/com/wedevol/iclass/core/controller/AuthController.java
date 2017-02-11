@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.view.request.FCMTokenView;
 import com.wedevol.iclass.core.view.request.LoginView;
-import com.wedevol.iclass.core.view.response.AdminView;
-import com.wedevol.iclass.core.view.response.InstructorView;
-import com.wedevol.iclass.core.view.response.StudentView;
+import com.wedevol.iclass.core.view.response.AdminFull;
+import com.wedevol.iclass.core.view.response.InstructorFull;
+import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
  * Auth Controller
@@ -40,21 +40,21 @@ public class AuthController {
 	@RequestMapping(value = "/student/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public StudentView loginStudent(@Valid @RequestBody LoginView request) {
+	public StudentFull loginStudent(@Valid @RequestBody LoginView request) {
 		return authService.loginStudent(request.getEmail(), request.getPassword());
 	}
 
 	@RequestMapping(value = "/instructor/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public InstructorView loginInstructor(@Valid @RequestBody LoginView request) {
+	public InstructorFull loginInstructor(@Valid @RequestBody LoginView request) {
 		return authService.loginInstructor(request.getEmail(), request.getPassword());
 	}
 
 	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public AdminView loginAdmin(@Valid @RequestBody LoginView request) {
+	public AdminFull loginAdmin(@Valid @RequestBody LoginView request) {
 		return authService.loginAdmin(request.getEmail(), request.getPassword());
 	}
 	
