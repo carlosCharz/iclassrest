@@ -3,6 +3,7 @@ package com.wedevol.iclass.core.service.impl;
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
+import static com.wedevol.iclass.core.util.CommonUtil.DATE_FORMAT_QUERY_DB;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -184,7 +185,7 @@ public class ClassServiceImpl implements ClassService {
 		// The student should exist
 		studentService.findById(studentId);
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
-		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
+		final String actualDateStr = dateToString(actualDate, DATE_FORMAT_QUERY_DB);
 		return classRepository.findComingClassesWithStudentIdWithDateTimeWithClassStatusFilter(studentId, actualDateStr,
 				actualTime, classStatusList);
 	}
@@ -212,7 +213,7 @@ public class ClassServiceImpl implements ClassService {
 		final List<String> classStatusList = Arrays.asList(statusFilter.split(","));
 		// The instructor should exist
 		instructorService.findById(instructorId);
-		final String actualDateStr = dateToString(actualDate, CommonUtil.DATE_FORMAT_QUERY_DB);
+		final String actualDateStr = dateToString(actualDate, DATE_FORMAT_QUERY_DB);
 		return classRepository.findComingClassesWithInstructorIdWithDateTimeWithClassStatusFilter(instructorId,
 				actualDateStr, actualTime, classStatusList);
 	}

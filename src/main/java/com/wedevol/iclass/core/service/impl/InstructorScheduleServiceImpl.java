@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.DATE_FORMAT_QUERY_DB;
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
 
 import java.util.Date;
@@ -22,7 +23,6 @@ import com.wedevol.iclass.core.repository.InstructorScheduleRepository;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.service.InstructorService;
-import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.response.ScheduleBasic;
 
 /**
@@ -120,7 +120,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);
-		final String dateStr = dateToString(classDate, CommonUtil.DATE_FORMAT_QUERY_DB);
+		final String dateStr = dateToString(classDate, DATE_FORMAT_QUERY_DB);
 		return scheduleRepository.findSchedulesWithCourseIdWithDate(courseId, dateStr);
 	}
 

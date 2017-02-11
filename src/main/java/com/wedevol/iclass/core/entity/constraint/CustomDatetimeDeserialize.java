@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.entity.constraint;
 
+import static com.wedevol.iclass.core.util.CommonUtil.DATETIME_FORMAT;
 import static com.wedevol.iclass.core.util.CommonUtil.stringToDate;
 
 import java.io.IOException;
@@ -12,7 +13,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
-import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Custom Datetime Deserialize
@@ -26,7 +26,7 @@ public class CustomDatetimeDeserialize extends JsonDeserializer<Date> {
 			throws IOException, JsonProcessingException {
 		final String str = paramJsonParser.getText().trim();
 		try {
-			return stringToDate(str, CommonUtil.DATETIME_FORMAT);
+			return stringToDate(str, DATETIME_FORMAT);
 		} catch (ParseException e) {
 			throw new BadRequestException(BadRequestErrorType.WRONG_DESERIALIZATION);
 		}

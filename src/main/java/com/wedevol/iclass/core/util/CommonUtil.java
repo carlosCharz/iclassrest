@@ -32,7 +32,7 @@ public class CommonUtil {
 	}
 
 	public static String dateToString(Date date) {
-		return CommonUtil.dateFormatPretty.format(date.getTime());
+		return dateFormatPretty.format(date.getTime());
 	}
 
 	public static String dateToString(Date date, String dateFormatStr) {
@@ -41,7 +41,7 @@ public class CommonUtil {
 	}
 
 	public static Date stringToDate(String dateStr) throws ParseException {
-		return CommonUtil.dateFormatPretty.parse(dateStr);
+		return dateFormatPretty.parse(dateStr);
 	}
 	
 	public static Date stringToDate(String dateStr, String dateFormatStr) throws ParseException {

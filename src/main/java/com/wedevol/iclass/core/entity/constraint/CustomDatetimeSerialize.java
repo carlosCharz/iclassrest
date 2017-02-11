@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.entity.constraint;
 
+import static com.wedevol.iclass.core.util.CommonUtil.DATETIME_FORMAT;
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.wedevol.iclass.core.util.CommonUtil;
 
 /**
  * Custom Datetime Serialize
@@ -24,7 +24,7 @@ public class CustomDatetimeSerialize extends JsonSerializer<Date> {
 		if (value == null) {
 			gen.writeNull();
 		} else {
-			gen.writeString(dateToString(value, CommonUtil.DATETIME_FORMAT));
+			gen.writeString(dateToString(value, DATETIME_FORMAT));
 		}
 	}
 }
