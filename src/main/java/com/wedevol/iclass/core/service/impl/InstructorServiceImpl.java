@@ -36,8 +36,8 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFull;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 import com.wedevol.iclass.core.view.response.InstructorBasic;
 import com.wedevol.iclass.core.view.response.InstructorFull;
 import com.wedevol.iclass.core.view.response.ScheduleBasic;
@@ -208,7 +208,7 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+	public List<CourseResponse> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
 			String courseStatusFilter) {
 		return courseService.findCoursesByInstructorIdWithCourseStatusFilter(instructorId, courseStatusFilter);
 	}
@@ -278,14 +278,14 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
-	public List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	public List<ClassResponse> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter) {
 		return classService.findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(instructorId, actualDate,
 				actualTime, classStatusFilter);
 	}
 
 	@Override
-	public List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+	public List<ClassResponse> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
 			String classStatusFilter) {
 		return classService.findHistoricClassesByInstructorIdWithClassStatusFilter(instructorId, classStatusFilter);
 	}

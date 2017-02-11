@@ -38,7 +38,7 @@ import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.util.CommonUtil;
-import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
 
 /**
  * Class Service Implementation
@@ -175,7 +175,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
+	public List<ClassResponse> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId,
 			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
@@ -190,7 +190,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
+	public List<ClassResponse> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId,
 			String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
@@ -203,7 +203,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	public List<ClassResponse> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {
@@ -218,7 +218,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+	public List<ClassResponse> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
 			String statusFilter) {
 		// The class status should be valid
 		if (!areValidClassStatusFilters(statusFilter)) {

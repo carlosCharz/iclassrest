@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.Clase;
-import com.wedevol.iclass.core.view.response.ClassFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
 
 /**
  * Class Service Interface
@@ -24,15 +24,15 @@ public interface ClassService {
 
 	void delete(Long classId);
 
-	List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+	List<ClassResponse> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
 
-	List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
+	List<ClassResponse> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
 
-	List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
+	List<ClassResponse> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(Long instructorId,
 			Date actualDate, Integer actualTime, String classStatusFilter);
 
-	List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
+	List<ClassResponse> findHistoricClassesByInstructorIdWithClassStatusFilter(Long instructorId,
 			String classStatusFilter);
 
 	void instructorConfirmClass(Long classId, Long instructorId);

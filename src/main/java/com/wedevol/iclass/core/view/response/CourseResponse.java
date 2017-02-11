@@ -3,12 +3,12 @@ package com.wedevol.iclass.core.view.response;
 import java.io.Serializable;
 
 /**
- * Course Full Info Entity
+ * Course Response
  * 
  * @author charz
  *
  */
-public class CourseFull implements Serializable {
+public class CourseResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,10 @@ public class CourseFull implements Serializable {
 	private Float price;
 	private String currency;
 
-	protected CourseFull() {
+	protected CourseResponse() {
 	}
 
-	public CourseFull(Long id, String name, String description, String faculty, String university, String status,
+	public CourseResponse(Long id, String name, String description, String faculty, String university, String status,
 			Float price, String currency) {
 		this.id = id;
 		this.name = name;
@@ -36,7 +36,7 @@ public class CourseFull implements Serializable {
 		this.currency = currency;
 	}
 
-	public CourseFull(Long id, String name, String description, String faculty, String university, String status) {
+	public CourseResponse(Long id, String name, String description, String faculty, String university, String status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -111,7 +111,7 @@ public class CourseFull implements Serializable {
 	
 	@Override
 	public String toString() {
-		return String.format("CourseFullInfo[id=%d, name='%s']%n", id, name);
+		return String.format("CourseResponse[id=%d, name='%s']%n", id, name);
 	}
 
 }

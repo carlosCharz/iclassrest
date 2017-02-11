@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFull;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 import com.wedevol.iclass.core.view.response.StudentFull;
 
 /**
@@ -37,12 +37,12 @@ public interface StudentService {
 
 	List<Student> findStudentsByCourseId(Long courseId);
 
-	List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
+	List<CourseResponse> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 
-	List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
+	List<ClassResponse> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);
 
-	List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
+	List<ClassResponse> findHistoricClassesByStudentIdWithClassStatusFilter(Long studentId, String statusFilter);
 
 	StudentFull getStudentByIdWithFullInfo(Long userId);
 

@@ -5,7 +5,7 @@ import java.util.List;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 
 /**
  * Course Service Interface
@@ -29,11 +29,11 @@ public interface CourseService {
 	
 	List<Instructor> findInstructorsByCourseId(Long courseId);
 	
-	List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
+	List<CourseResponse> findCoursesByStudentIdWithCourseStatusFilter(Long studentId, String courseStatusFilter);
 	
 	List<Student> findStudentsByCourseId(Long courseId);
 	
-	List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
+	List<CourseResponse> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 	
 	List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId);
 

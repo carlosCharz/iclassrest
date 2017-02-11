@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
-import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
+import com.wedevol.iclass.core.entity.constraint.CustomDatetimeDeserialize;
 
 /**
- * Class full information
+ * Class Full Information
  * 
  * @author charz
  *
@@ -18,74 +17,86 @@ public class ClassFull implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long classId;
-	private Integer startTime;
-	private Integer endTime;
-	private String weekDay;
-	@JsonDeserialize(using = CustomDateDeserialize.class)
-	@JsonSerialize(using = CustomDateSerialize.class)
-	private Date classDate;
-	private String classStatus;
+	private Long id;
+	private Long studentId;
+	private String studentName;
+	private Long instructorId;
+	private String instructorName;
 	private Long courseId;
 	private String courseName;
-	private String userType;
-	private Long userId;
-	private String firstName;
-	private String lastName;
-	private String phone;
-	private Float price;
-	private String currency;
+	private String weekDay;
+	@JsonDeserialize(using = CustomDateDeserialize.class)
+	private Date classDate;
+	private Integer startTime;
+	private Integer endTime;
+	@JsonDeserialize(using = CustomDatetimeDeserialize.class)
+	private Date requestedAt;
 	private Float ratingToInstructor;
 	private Float ratingToStudent;
-
-	protected ClassFull() {
+	private String status;
+	
+	public ClassFull() {
 	}
-
-	public ClassFull(Long classId, Integer startTime, Integer endTime, String weekDay, Date classDate,
-			String classStatus, Long courseId, String courseName, String userType, Long userId, String firstName,
-			String lastName, String phone, Float price, String currency, Float ratingToInstructor, Float ratingToStudent) {
+	
+	public ClassFull(Long id, Long studentId, String studentName, Long instructorId, String instructorName,
+			Long courseId, String courseName, String weekDay, Date classDate, Integer startTime, Integer endTime,
+			Date requestedAt, Float ratingToInstructor, Float ratingToStudent, String status) {
 		super();
-		this.classId = classId;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.weekDay = weekDay;
-		this.classDate = classDate;
-		this.classStatus = classStatus;
+		this.id = id;
+		this.studentId = studentId;
+		this.studentName = studentName;
+		this.instructorId = instructorId;
+		this.instructorName = instructorName;
 		this.courseId = courseId;
 		this.courseName = courseName;
-		this.userType = userType;
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone = phone;
-		this.price = price;
-		this.currency = currency;
+		this.weekDay = weekDay;
+		this.classDate = classDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.requestedAt = requestedAt;
 		this.ratingToInstructor = ratingToInstructor;
 		this.ratingToStudent = ratingToStudent;
+		this.status = status;
 	}
 
-	public Long getClassId() {
-		return classId;
+	private ClassFull(Long id) {
+		this.id = id;
 	}
 
-	public void setClassId(Long classId) {
-		this.classId = classId;
+	public static ClassFull from(Long id) {
+		return new ClassFull(id);
 	}
 
-	public Integer getStartTime() {
-		return startTime;
+	public Long getId() {
+		return id;
 	}
 
-	public void setStartTime(Integer startTime) {
-		this.startTime = startTime;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public Integer getEndTime() {
-		return endTime;
+	public Long getStudentId() {
+		return studentId;
 	}
 
-	public void setEndTime(Integer endTime) {
-		this.endTime = endTime;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
+
+	public Long getInstructorId() {
+		return instructorId;
+	}
+
+	public void setInstructorId(Long instructorId) {
+		this.instructorId = instructorId;
+	}
+
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
 	public String getWeekDay() {
@@ -104,84 +115,28 @@ public class ClassFull implements Serializable {
 		this.classDate = classDate;
 	}
 
-	public String getClassStatus() {
-		return classStatus;
+	public Integer getStartTime() {
+		return startTime;
 	}
 
-	public void setClassStatus(String classStatus) {
-		this.classStatus = classStatus;
+	public void setStartTime(Integer startTime) {
+		this.startTime = startTime;
 	}
 
-	public Long getCourseId() {
-		return courseId;
+	public Integer getEndTime() {
+		return endTime;
 	}
 
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
+	public void setEndTime(Integer endTime) {
+		this.endTime = endTime;
 	}
 
-	public String getCourseName() {
-		return courseName;
+	public Date getRequestedAt() {
+		return requestedAt;
 	}
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public Float getPrice() {
-		return price;
-	}
-
-	public void setPrice(Float price) {
-		this.price = price;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
+	public void setRequestedAt(Date requestedAt) {
+		this.requestedAt = requestedAt;
 	}
 
 	public Float getRatingToInstructor() {
@@ -200,10 +155,42 @@ public class ClassFull implements Serializable {
 		this.ratingToStudent = ratingToStudent;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+	public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("ClassFullInfo[classId=%d, startTime='%d', endTime='%d', weekDay='%s']%n", classId,
-				startTime, endTime, weekDay);
+		return String.format("ClassFullInfo[id=%d, studentId='%d', instructorId='%d', courseId='%d']%n", id, studentId,
+				instructorId, courseId);
 	}
 
 }

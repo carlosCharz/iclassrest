@@ -29,7 +29,7 @@ import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 
 /**
  * Course Service Implementation
@@ -131,7 +131,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
+	public List<CourseResponse> findCoursesByStudentIdWithCourseStatusFilter(Long studentId,
 			String courseStatusFilter) {
 		// The student should exist
 		studentService.findById(studentId);
@@ -154,7 +154,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
+	public List<CourseResponse> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId,
 			String courseStatusFilter) {
 		if (!areValidEnrollmentStatusFilters(courseStatusFilter)) {
 			throw new BadRequestException(BadRequestErrorType.COURSE_STATUS_NOT_VALID);

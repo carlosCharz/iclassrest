@@ -25,8 +25,8 @@ import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.request.UserBasicView;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFull;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 import com.wedevol.iclass.core.view.response.InstructorBasic;
 
 import springfox.documentation.annotations.ApiIgnore;
@@ -94,7 +94,7 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<CourseFull> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
+	public List<CourseResponse> findCoursesByInstructorIdWithCourseStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "payed") String courseStatusFilter) {
 		logger.info("Find courses of the instructor " + userId + " filtered by the supplied course status: "
 				+ courseStatusFilter);
@@ -132,7 +132,7 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/classes/coming", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFull> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassResponse> findComingClassesByInstructorIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
@@ -145,7 +145,7 @@ public class InstructorController {
 	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFull> findHistoricClassesByInstructorIdWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassResponse> findHistoricClassesByInstructorIdWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "requested,confirmed") String statusFilter) {
 		logger.info("Find historic classes of the instructor " + userId + " filtered by the supplied class status: "
 				+ statusFilter);

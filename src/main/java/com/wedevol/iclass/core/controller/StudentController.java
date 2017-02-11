@@ -25,8 +25,8 @@ import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.request.UserBasicView;
 import com.wedevol.iclass.core.view.request.UserView;
-import com.wedevol.iclass.core.view.response.ClassFull;
-import com.wedevol.iclass.core.view.response.CourseFull;
+import com.wedevol.iclass.core.view.response.ClassResponse;
+import com.wedevol.iclass.core.view.response.CourseResponse;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -93,7 +93,7 @@ public class StudentController {
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<CourseFull> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
+	public List<CourseResponse> findCoursesByStudentIdWithCourseStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "free,payed") String courseStatusFilter) {
 		logger.info("Find courses of a student filtered by the supplied course status: " + courseStatusFilter);
 		return studentService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
@@ -102,7 +102,7 @@ public class StudentController {
 	@RequestMapping(value = "/{userId}/classes/coming", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFull> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassResponse> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "actualDate", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date actualDate,
 			@RequestParam(value = "actualTime", required = true) Integer actualTime,
 			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
@@ -115,7 +115,7 @@ public class StudentController {
 	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ClassFull> findHistoricClassesByStudentIdWithClassStatusFilter(@PathVariable Long userId,
+	public List<ClassResponse> findHistoricClassesByStudentIdWithClassStatusFilter(@PathVariable Long userId,
 			@RequestParam(value = "status", defaultValue = "confirmed") String statusFilter) {
 		logger.info("Find historic classes of the student " + userId + " filtered by the supplied class status: "
 				+ statusFilter);
