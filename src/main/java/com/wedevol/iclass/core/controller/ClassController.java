@@ -32,7 +32,6 @@ public class ClassController {
 	@Autowired
 	private ClassService classService;
 
-	@ApiIgnore
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
