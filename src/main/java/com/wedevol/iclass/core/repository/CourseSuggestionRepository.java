@@ -25,7 +25,7 @@ public interface CourseSuggestionRepository extends CrudRepository<CourseSuggest
 	 * 
 	 * @return list of suggested courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseSuggFull(cou.id, cou.userType, cou.userId, cou.name, cou.description, fac.id, fac.shortName, uni.id, uni.shortName, cou.requestedAt, cou.status) FROM CourseSuggestion cou, Faculty fac, University uni WHERE fac.id = cou.facultyId AND uni.id=cou.universityId")
+	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseSuggFull(cou.id, cou.userType, cou.userId, cou.name, cou.description, fac.id, fac.shortName, uni.id, uni.shortName, cou.requestedAt, cou.status) FROM CourseSuggestion cou INNER JOIN Faculty fac ON fac.id = cou.facultyId INNER JOIN University uni ON uni.id=cou.universityId")
 	public List<CourseSuggFull> findAllFullInfo();
 
 }
