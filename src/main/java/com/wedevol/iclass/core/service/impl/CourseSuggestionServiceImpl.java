@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.CourseSuggestion;
 import com.wedevol.iclass.core.entity.enums.CourseSuggestionStatusType;
 import com.wedevol.iclass.core.entity.enums.UserType;
@@ -25,6 +24,7 @@ import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
+import com.wedevol.iclass.core.view.response.CourseSuggFull;
 
 /**
  * Course Suggestion Service Implementation
@@ -54,9 +54,8 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	private FacultyService facultyService;
 
 	@Override
-	public List<CourseSuggestion> findAll() {
-		final Iterable<CourseSuggestion> coursesIterator = courseSuggestionRepository.findAll();
-		return Lists.newArrayList(coursesIterator);
+	public List<CourseSuggFull> findAllFullInfo() {
+		return courseSuggestionRepository.findAllFullInfo();
 	}
 
 	@Override

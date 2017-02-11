@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wedevol.iclass.core.entity.CourseSuggestion;
 import com.wedevol.iclass.core.service.CourseSuggestionService;
+import com.wedevol.iclass.core.view.response.CourseSuggFull;
 
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -35,8 +36,8 @@ public class CourseSuggestionController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<CourseSuggestion> findAll() {
-		return courseSuggestionService.findAll();
+	public List<CourseSuggFull> findAllFullInfo() {
+		return courseSuggestionService.findAllFullInfo();
 	}
 
 	@ApiIgnore

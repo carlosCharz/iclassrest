@@ -31,15 +31,30 @@ public class CourseSuggFull implements Serializable {
 	private Date requestedAt;
 	private String status;
 
-	public CourseSuggFull(Long id, String userType, Long userId, String userName, String userEmail,
-			String courseName, String description, Long facultyId, String facultyName, Long universityId,
-			String universityName, Date requestedAt, String status) {
+	public CourseSuggFull(Long id, String userType, Long userId, String userName, String userEmail, String courseName,
+			String description, Long facultyId, String facultyName, Long universityId, String universityName,
+			Date requestedAt, String status) {
 		super();
 		this.id = id;
 		this.userType = userType;
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
+		this.courseName = courseName;
+		this.description = description;
+		this.facultyId = facultyId;
+		this.facultyName = facultyName;
+		this.universityId = universityId;
+		this.universityName = universityName;
+		this.requestedAt = requestedAt;
+		this.status = status;
+	}
+
+	public CourseSuggFull(Long id, String userType, String courseName, String description, Long facultyId, String facultyName,
+			Long universityId, String universityName, Date requestedAt, String status) {
+		super();
+		this.id = id;
+		this.userType = userType;
 		this.courseName = courseName;
 		this.description = description;
 		this.facultyId = facultyId;
