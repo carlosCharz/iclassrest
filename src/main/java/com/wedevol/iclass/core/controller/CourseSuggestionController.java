@@ -62,7 +62,6 @@ public class CourseSuggestionController {
 		courseSuggestionService.update(courseSuggestionId, courseSuggestion);
 	}
 
-	@ApiIgnore
 	@RequestMapping(value = "/{courseSuggestionId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

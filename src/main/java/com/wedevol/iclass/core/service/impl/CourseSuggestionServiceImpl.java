@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wedevol.iclass.core.entity.CourseSuggestion;
+import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.CourseSuggestionStatusType;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -46,16 +48,18 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 
 	@Autowired
 	private InstructorService instructorService;
-	
+
 	@Autowired
 	private UniversityService universityService;
-	
+
 	@Autowired
 	private FacultyService facultyService;
 
 	@Override
 	public List<CourseSuggFull> findAllFullInfo() {
-		return courseSuggestionRepository.findAllFullInfo();
+		List<CourseSuggFull> suggestions = courseSuggestionRepository.findAllFullInfo();
+		setUserInformationToSuggestions(suggestions);
+		return suggestions;
 	}
 
 	@Override
@@ -69,7 +73,8 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	@Override
 	public CourseSuggestion create(CourseSuggestion courseSuggestion) {
 		// Fields missing validation
-		if (courseSuggestion.getName() == null || courseSuggestion.getUniversityId() == null || courseSuggestion.getFacultyId() == null ) {
+		if (courseSuggestion.getName() == null || courseSuggestion.getUniversityId() == null
+				|| courseSuggestion.getFacultyId() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// The university should exist
@@ -104,17 +109,17 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 		if (!isNullOrEmpty(courseSuggestion.getDescription())) {
 			existingCourse.setDescription(courseSuggestion.getDescription());
 		}
-		if (courseSuggestion.getFacultyId()!=null) {
+		if (courseSuggestion.getFacultyId() != null) {
 			// The faculty should exist
 			facultyService.findById(courseSuggestion.getFacultyId());
 			existingCourse.setFacultyId(courseSuggestion.getFacultyId());
 		}
-		if (courseSuggestion.getUniversityId()!=null) {
+		if (courseSuggestion.getUniversityId() != null) {
 			// The university should exist
 			universityService.findById(courseSuggestion.getUniversityId());
 			existingCourse.setUniversityId(courseSuggestion.getUniversityId());
 		}
-		if (courseSuggestion.getStatus()!= null){
+		if (courseSuggestion.getStatus() != null) {
 			existingCourse.setStatus(courseSuggestion.getStatus());
 		}
 		courseSuggestionRepository.save(existingCourse);
@@ -125,5 +130,28 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 		// The course suggestion should exist
 		findById(courseId);
 		courseSuggestionRepository.delete(courseId);
+	}
+
+	private void setUserInformationToSuggestions(List<CourseSuggFull> suggestions) {
+		suggestions.forEach(sugg -> {
+			final Long userId = sugg.getUserId();
+			if (UserType.STUDENT.getDescription().equals(sugg.getUserType())) {
+				// Search in the student repo
+				final Optional<Student> studentObj = Optional.ofNullable(studentService.findById(userId));
+				if (studentObj.isPresent()) {
+					final Student student = studentObj.get();
+					sugg.setUserName(student.getFullName());
+					sugg.setUserEmail(student.getEmail());
+				}
+			} else {
+				// Search in the instructor repo
+				final Optional<Instructor> instructorObj = Optional.ofNullable(instructorService.findById(userId));
+				if (instructorObj.isPresent()) {
+					final Instructor instructor = instructorObj.get();
+					sugg.setUserName(instructor.getFullName());
+					sugg.setUserEmail(instructor.getEmail());
+				}
+			}
+		});
 	}
 }
