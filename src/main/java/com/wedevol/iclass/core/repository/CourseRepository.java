@@ -36,7 +36,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseResponse(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.studentId = :studentId AND enr.status in :courseStatusList order by cou.name asc")
+	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseResponse(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status) FROM StudentEnrollment enr INNER JOIN Course cou ON cou.id = enr.id.courseId INNER JOIN Faculty fac ON fac.id = cou.facultyId INNER JOIN University uni ON uni.id=cou.universityId WHERE enr.id.studentId = :studentId AND enr.status in :courseStatusList order by cou.name asc")
 	public List<CourseResponse> findCoursesWithStudentIdWithCourseStatusFilter(@Param("studentId") Long studentId,
 			@Param("courseStatusList") List<String> courseStatusList);
 
@@ -47,7 +47,7 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 	 * @param courseStatusList
 	 * @return list of courses
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseResponse(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr, Course cou, Faculty fac, University uni WHERE cou.id = enr.id.courseId AND fac.id = cou.facultyId AND uni.id=cou.universityId AND enr.id.instructorId = :instructorId AND enr.status in :courseStatusList order by cou.name asc")
+	@Query("SELECT new com.wedevol.iclass.core.view.response.CourseResponse(cou.id, cou.name, cou.description, fac.shortName, uni.shortName, enr.status, enr.price, enr.currency) FROM InstructorEnrollment enr INNER JOIN Course cou ON cou.id = enr.id.courseId INNER JOIN Faculty fac ON fac.id = cou.facultyId INNER JOIN University uni ON uni.id=cou.universityId WHERE enr.id.instructorId = :instructorId AND enr.status in :courseStatusList order by cou.name asc")
 	public List<CourseResponse> findCoursesWithInstructorIdWithCourseStatusFilter(
 			@Param("instructorId") Long instructorId, @Param("courseStatusList") List<String> courseStatusList);
 	
