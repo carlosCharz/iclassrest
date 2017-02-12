@@ -1,9 +1,9 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CommonUtil.DATE_FORMAT_QUERY_DB;
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
 import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
-import static com.wedevol.iclass.core.util.CommonUtil.DATE_FORMAT_QUERY_DB;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -38,7 +38,6 @@ import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.NotificationService;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.util.CommonUtil;
 import com.wedevol.iclass.core.view.response.ClassResponse;
 
 /**

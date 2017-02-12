@@ -43,7 +43,7 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param courseId
 	 * @return list of instructors
 	 */
-	@Query("SELECT ins FROM InstructorEnrollment enr INNER JOIN Instructor ins ON ins.id = enr.id.instructorId WHERE enr.id.courseId = :courseId")
+	@Query(value = "SELECT ins FROM InstructorEnrollment enr INNER JOIN Instructor ins ON ins.id = enr.id.instructorId WHERE enr.id.courseId = :courseId", nativeQuery = true)
 	public List<Instructor> findInstructorsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
@@ -55,7 +55,7 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param endTime
 	 * @return list of instructors
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.view.response.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins INNER JOIN InstructorEnrollment enr ON ins.id = enr.id.instructorId INNER JOIN InstructorSchedule sch ON ins.id = sch.instructorId WHERE enr.id.courseId = :courseId AND enr.status = 'payed' AND DATE_FORMAT(sch.classDate, '%Y%m%d') = :classDateStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
+	@Query("SELECT new com.wedevol.iclass.core.view.response.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND enr.status = 'payed' AND DATE_FORMAT(sch.classDate, '%Y%m%d') = :classDateStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
 	public List<InstructorBasic> findInstructorsWithCourseIdWithDateTime(@Param("courseId") Long courseId,
 			@Param("classDateStr") String classDateStr, @Param("startTime") Integer startTime,
 			@Param("endTime") Integer endTime);
@@ -69,7 +69,7 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param endTime
 	 * @return list of instructors
 	 */
-	@Query("SELECT new com.wedevol.iclass.core.view.response.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins INNER JOIN InstructorEnrollment enr ON ins.id = enr.id.instructorId INNER JOIN InstructorSchedule sch ON ins.id = sch.instructorId WHERE enr.id.courseId = :courseId AND enr.status = 'payed' AND sch.weekDay = :weekDayStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
+	@Query("SELECT new com.wedevol.iclass.core.view.response.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND enr.status = 'payed' AND sch.weekDay = :weekDayStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
 	public List<InstructorBasic> findInstructorsWithCourseIdWithWeekDayWithTime(@Param("courseId") Long courseId,
 			@Param("weekDayStr") String weekDayStr, @Param("startTime") Integer startTime,
 			@Param("endTime") Integer endTime);
