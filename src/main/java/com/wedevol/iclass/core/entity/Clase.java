@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wedevol.iclass.core.entity.constraint.ClassStatus;
+import com.wedevol.iclass.core.entity.constraint.Currency;
 import com.wedevol.iclass.core.entity.constraint.CustomDateDeserialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDateSerialize;
 import com.wedevol.iclass.core.entity.constraint.CustomDatetimeDeserialize;
@@ -82,6 +83,14 @@ public class Clase implements Serializable {
 	@ClassStatus
 	@Column
 	private String status;
+	
+	@Digits(integer = 2, fraction = 2, message = "Price must be just digits with maximum 2 decimals")
+	@Column
+	private Float price;
+
+	@Currency
+	@Column
+	private String currency;
 	
 	public Clase() {
 	}
@@ -188,6 +197,22 @@ public class Clase implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 	@Override

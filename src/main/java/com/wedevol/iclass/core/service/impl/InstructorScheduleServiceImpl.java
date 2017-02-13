@@ -117,6 +117,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 	}
 
 	@Override
+	@Deprecated
 	public List<ScheduleBasic> findSchedulesByCourseIdByDate(Long courseId, Date classDate) {
 		// The course should exist
 		courseService.findById(courseId);

@@ -195,6 +195,7 @@ public class InstructorServiceImpl implements InstructorService {
 	}
 
 	@Override
+	@Deprecated
 	public List<InstructorBasic> findInstructorsByCourseIdByDateTime(Long courseId, Date classDate, Integer startTime,
 			Integer endTime) {
 		// Date times validation

@@ -55,6 +55,7 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param endTime
 	 * @return list of instructors
 	 */
+	@Deprecated
 	@Query("SELECT new com.wedevol.iclass.core.view.response.InstructorBasic(ins.id, ins.firstName, ins.lastName, ins.rating, ins.level, enr.price, enr.currency) FROM Instructor ins, InstructorEnrollment enr, InstructorSchedule sch WHERE ins.id = sch.instructorId AND ins.id = enr.id.instructorId AND enr.id.courseId = :courseId AND enr.status = 'payed' AND DATE_FORMAT(sch.classDate, '%Y%m%d') = :classDateStr AND sch.startTime <= :startTime AND sch.endTime >= :endTime")
 	public List<InstructorBasic> findInstructorsWithCourseIdWithDateTime(@Param("courseId") Long courseId,
 			@Param("classDateStr") String classDateStr, @Param("startTime") Integer startTime,
