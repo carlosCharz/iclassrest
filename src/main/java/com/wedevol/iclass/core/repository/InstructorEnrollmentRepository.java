@@ -25,7 +25,9 @@ public interface InstructorEnrollmentRepository extends CrudRepository<Instructo
 	 * @param courseId
 	 * @return averagePrice
 	 */
-	@Query("SELECT ROUND(AVG(enr.price), 2) as average FROM InstructorEnrollment enr WHERE enr.id.courseId = :courseId")
+	@Query("SELECT ROUND(AVG(enr.price), 2) as average "
+			+ "FROM InstructorEnrollment enr "
+			+ "WHERE enr.id.courseId = :courseId")
 	public Float findAveragePriceForCourseId(@Param("courseId") Long courseId);
 
 

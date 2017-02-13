@@ -34,7 +34,10 @@ public interface FacultyRepository extends CrudRepository<Faculty, Long> {
 	 * @param universityId
 	 * @return list of faculties
 	 */
-	@Query(value = "SELECT fac FROM department depa INNER JOIN faculty fac ON fac.id = depa.facultyId WHERE depa.universityId = :universityId order by fac.name asc", nativeQuery = true)
+	@Query(value = "SELECT fac "
+			+ "FROM department depa INNER JOIN faculty fac ON fac.id = depa.facultyId "
+			+ "WHERE depa.universityId = :universityId "
+			+ "order by fac.name asc", nativeQuery = true)
 	public List<Faculty> findFacultiesWithUniversityId(@Param("universityId") Long universityId);
 
 }

@@ -42,7 +42,9 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 	 * @param courseId
 	 * @return list of students
 	 */
-	@Query(value = "SELECT stu FROM StudentEnrollment enr INNER JOIN Student stu ON stu.id = enr.id.studentId WHERE enr.id.courseId = :courseId", nativeQuery = true)
+	@Query(value = "SELECT stu "
+			+ "FROM StudentEnrollment enr INNER JOIN Student stu ON stu.id = enr.id.studentId "
+			+ "WHERE enr.id.courseId = :courseId", nativeQuery = true)
 	public List<Student> findStudentsWithCourseId(@Param("courseId") Long courseId);
 
 }

@@ -24,7 +24,9 @@ public interface BatchNotificationRepository extends CrudRepository<BatchNotific
 	 * 
 	 * @return list of batch notifications
 	 */
-	@Query(value = "SELECT * FROM batch_notification bat WHERE DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d %H') > DATE_FORMAT(bat.scheduledAt, '%Y%m%d %H')", nativeQuery = true)
+	@Query(value = "SELECT * FROM batch_notification bat "
+			+ "WHERE DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 5 HOUR), '%Y%m%d %H') > "
+			+ "DATE_FORMAT(bat.scheduledAt, '%Y%m%d %H')", nativeQuery = true)
 	public List<BatchNotification> getNotificationsToBeSent();
 
 	/**
