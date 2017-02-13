@@ -21,6 +21,7 @@ import com.wedevol.iclass.core.configuration.BusinessSetting;
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
@@ -110,11 +111,14 @@ public class ClassServiceImpl implements ClassService {
 		final Course course = courseService.findById(c.getCourseId());
 		// The instructor enrollment should exist
 		final InstructorEnrollmentId insEnrId = new InstructorEnrollmentId(c.getInstructorId(), c.getCourseId());
-		instructorEnrollmentService.findById(insEnrId);
+		final InstructorEnrollment enrollment = instructorEnrollmentService.findById(insEnrId);
 		// The student enrollment should exist
 		final StudentEnrollmentId stuEnrId = new StudentEnrollmentId(c.getStudentId(), c.getCourseId());
 		studentEnrollmentService.findById(stuEnrId);
 		c.setStatus(ClassStatusType.REQUESTED.getDescription());
+		// Set the price and currency from the instructor enrollment
+		c.setCurrency(enrollment.getCurrency());
+		c.setPrice(enrollment.getPrice());
 		// Save the class
 		final Clase clase = classRepository.save(c);
 		// Send notification
@@ -162,6 +166,12 @@ public class ClassServiceImpl implements ClassService {
 		}
 		if (c.getRatingToStudent() != null) {
 			existingClass.setRatingToStudent(c.getRatingToStudent());
+		}
+		if (c.getPrice() != null) {
+			existingClass.setPrice(c.getPrice());
+		}
+		if (c.getCurrency() != null) {
+			existingClass.setCurrency(c.getCurrency());
 		}
 		// Update
 		classRepository.save(existingClass);
