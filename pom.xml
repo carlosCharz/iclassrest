@@ -15,7 +15,6 @@
 		<swagger2.version>2.6.1</swagger2.version>
 		<quartz.version>2.2.3</quartz.version>
 		<amazon.version>1.11.86</amazon.version>
-		<oauth.version>1.22.0</oauth.version>
 		<fcm.version>1.0.0</fcm.version>
 		<apacheio.version>2.5</apacheio.version>
 		<uuid.version>3.1.4</uuid.version>
@@ -46,6 +45,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- OAuth2 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
 		</dependency>
 		<!-- MySQL -->
 		<dependency>
@@ -95,12 +103,6 @@
     		<groupId>com.amazonaws</groupId>
     		<artifactId>aws-java-sdk</artifactId>
     		<version>${amazon.version}</version>
-		</dependency>
-		<!-- Google OAuth -->
-		<dependency>
-    		<groupId>com.google.oauth-client</groupId>
-    		<artifactId>google-oauth-client-java6</artifactId>
-    		<version>${oauth.version}</version>
 		</dependency>
 		<!-- Apache Commons IO -->
 		<dependency>
