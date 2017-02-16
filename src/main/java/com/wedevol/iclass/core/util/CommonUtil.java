@@ -3,7 +3,11 @@ package com.wedevol.iclass.core.util;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +55,14 @@ public class CommonUtil {
 
 	public static boolean isNullOrEmpty(String element) {
 		return element == null || element.isEmpty();
+	}
+	
+	public static boolean isNullOrEmpty(List<?> list){
+		return list == null || list.isEmpty();
+	}
+	
+	public static LocalDateTime now(){
+		return ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime();
 	}
 
 }
