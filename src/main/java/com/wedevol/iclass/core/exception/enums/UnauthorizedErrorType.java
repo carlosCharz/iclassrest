@@ -6,7 +6,7 @@ package com.wedevol.iclass.core.exception.enums;
  * @author charz
  */
 public enum UnauthorizedErrorType {
-	UNAUTHORIZED(400, "Unauthorized exception"), INCORRECT_CREDENTIALS(400, "Incorrect iclass credentials");
+	UNAUTHORIZED(400, "Unauthorized application access"), INCORRECT_CREDENTIALS(400, "Incorrect iclass credentials");
 
 	private final int code;
 	private final String message;

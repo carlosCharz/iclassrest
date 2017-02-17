@@ -17,4 +17,5 @@ public @interface Authorize {
 	boolean basic() default false;
 
 	boolean hard() default false;
+
 }

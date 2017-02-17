@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.interceptor;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,11 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wedevol.iclass.core.annotation.Authorize;
+import com.wedevol.iclass.core.entity.AccessToken;
+import com.wedevol.iclass.core.entity.enums.UserType;
+import com.wedevol.iclass.core.exception.UnauthorizedException;
+import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
+import com.wedevol.iclass.core.service.AccessTokenService;
+import com.wedevol.iclass.core.service.AdminService;
+import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Authorization Interceptor
@@ -22,9 +32,21 @@ import com.wedevol.iclass.core.annotation.Authorize;
  */
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-	protected static final Logger logger = LoggerFactory.getLogger(AuthorizationInterceptor.class);
-
 	public static final String HEADER_AUTHORIZATION = "authorization";
+	
+	protected static final Logger logger = LoggerFactory.getLogger(AuthorizationInterceptor.class);
+	
+	@Autowired
+	private AccessTokenService accessTokenService;
+	
+	@Autowired
+	private StudentService studentService;
+
+	@Autowired
+	private InstructorService instructorService;
+	
+	@Autowired
+	private AdminService adminService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -37,8 +59,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			final boolean basicValue = method.getAnnotation(Authorize.class).basic();
 			final boolean hardValue = method.getAnnotation(Authorize.class).hard();
 			logger.info("basic: " + basicValue + " hard: " + hardValue);
-			final String accessToken = getAccessToken(request);
-			logger.info("Header:" + accessToken);
+			final String authParam = getAuthorizationParamOrThrow(request);
+			logger.info("Header:" + authParam);
+			if (basicValue) {
+				// Check that the token exists
+				this.findByTokenOrThrow(authParam);
+			} else if (hardValue) {
+				// Check that the token exists and the userId matches
+			}
 			final Long userId = getUserIdFromUrl(request);
 			logger.info("UserId:" + userId);
 		}
@@ -63,14 +91,40 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		}
 		return Long.valueOf(matcher.group("userId"));
 	}
+	
+	private UserType getUserTypeFromUrl(HttpServletRequest request) {
+		String path = request.getRequestURI().substring(request.getContextPath().length());
+		Matcher matcherInstructor = Pattern.compile(".*/instructors/").matcher(path);
+		Matcher matcherStudent = Pattern.compile(".*/students/").matcher(path);
+		Matcher matcherAdmin = Pattern.compile(".*/admins/").matcher(path);
+		if (matcherInstructor.find()) {
+			return UserType.INSTRUCTOR;
+		} else if (matcherStudent.find()) {
+			return UserType.STUDENT;
+		} else if (matcherAdmin.find()) {
+			return UserType.ADMIN;
+		}
+		return null;
+	}
 
-	private String getAccessToken(HttpServletRequest request) {
+	private String getAuthorizationParam(HttpServletRequest request) {
 		String authorization = HEADER_AUTHORIZATION;
 		return getHeaderParam(request, authorization);
 	}
 
 	private String getHeaderParam(HttpServletRequest request, String param) {
 		return request.getHeader(param);
+	}
+	
+	private String getAuthorizationParamOrThrow(HttpServletRequest request) {
+		// TODO: test null
+		Optional<String> authObj = Optional.ofNullable(getAuthorizationParam(request));
+		return authObj.orElseThrow(() -> new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED));
+	}
+	
+	public AccessToken findByTokenOrThrow(String token) {
+		final Optional<AccessToken> tokenObj = Optional.ofNullable(accessTokenService.findByToken(token));
+		return tokenObj.orElseThrow(() -> new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED));
 	}
 
 }
