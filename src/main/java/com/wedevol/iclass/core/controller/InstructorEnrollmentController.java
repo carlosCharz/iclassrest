@@ -44,11 +44,11 @@ public class InstructorEnrollmentController {
 	}
 
 	@ApiIgnore
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
+	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public InstructorEnrollment findById(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
+	public InstructorEnrollment findById(@PathVariable Long userId, @PathVariable Long courseId) {
+		final InstructorEnrollmentId id = new InstructorEnrollmentId(userId, courseId);
 		return insEnrService.findById(id);
 	}
 
@@ -59,35 +59,35 @@ public class InstructorEnrollmentController {
 		return insEnrService.create(instructorCourse);
 	}
 
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
+	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void update(@PathVariable Long instructorId, @PathVariable Long courseId,
+	public void update(@PathVariable Long userId, @PathVariable Long courseId,
 			@Valid @RequestBody InstructorEnrollment instructorCourse) {
-		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
+		final InstructorEnrollmentId id = new InstructorEnrollmentId(userId, courseId);
 		insEnrService.update(id, instructorCourse);
 	}
 
 	@ApiIgnore
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void delete(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		final InstructorEnrollmentId id = new InstructorEnrollmentId(instructorId, courseId);
+	public void delete(@PathVariable Long userId, @PathVariable Long courseId) {
+		final InstructorEnrollmentId id = new InstructorEnrollmentId(userId, courseId);
 		insEnrService.delete(id);
 	}
 
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/approve", method = RequestMethod.POST)
+	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment/approve", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void approveCourseInstructorEnrollment(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		insEnrService.approveCourseInstructorEnrollment(instructorId, courseId);
+	public void approveCourseInstructorEnrollment(@PathVariable Long userId, @PathVariable Long courseId) {
+		insEnrService.approveCourseInstructorEnrollment(userId, courseId);
 	}
-	
-	@RequestMapping(value = "/instructors/{instructorId}/courses/{courseId}/enrollment/deny", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment/deny", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void denyCourseInstructorEnrollment(@PathVariable Long instructorId, @PathVariable Long courseId) {
-		insEnrService.denyCourseInstructorEnrollment(instructorId, courseId);
+	public void denyCourseInstructorEnrollment(@PathVariable Long userId, @PathVariable Long courseId) {
+		insEnrService.denyCourseInstructorEnrollment(userId, courseId);
 	}
 }

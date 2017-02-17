@@ -69,25 +69,25 @@ public class ClassController {
 		classService.delete(classId);
 	}
 
-	@RequestMapping(value = "/{classId}/instructors/{instructorId}/confirm", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/instructors/{userId}/confirm", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void instructorConfirmClass(@PathVariable Long classId, @PathVariable Long instructorId) {
-		classService.instructorConfirmClass(classId, instructorId);
+	public void instructorConfirmClass(@PathVariable Long classId, @PathVariable Long userId) {
+		classService.instructorConfirmClass(classId, userId);
 	}
 
-	@RequestMapping(value = "/{classId}/instructors/{instructorId}/reject", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/instructors/{userId}/reject", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long instructorId) {
-		classService.instructorRejectClass(classId, instructorId);
+	public void instructorRejectClass(@PathVariable Long classId, @PathVariable Long userId) {
+		classService.instructorRejectClass(classId, userId);
 	}
 
-	@RequestMapping(value = "/{classId}/students/{studentId}/cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/{classId}/students/{userId}/cancel", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void studentCancelClass(@PathVariable Long classId, @PathVariable Long studentId) {
-		classService.studentCancelClass(classId, studentId);
+	public void studentCancelClass(@PathVariable Long classId, @PathVariable Long userId) {
+		classService.studentCancelClass(classId, userId);
 	}
 
 	@RequestMapping(value = "/{classId}/instructors/{instructorId}/rating/{rating:.+}", method = RequestMethod.POST)

@@ -48,11 +48,11 @@ public class StudentEnrollmentController {
 	}
 
 	@ApiIgnore
-	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
+	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public StudentEnrollment findById(@PathVariable Long studentId, @PathVariable Long courseId) {
-		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+	public StudentEnrollment findById(@PathVariable Long userId, @PathVariable Long courseId) {
+		final StudentEnrollmentId id = new StudentEnrollmentId(userId, courseId);
 		return stuEnrService.findById(id);
 	}
 
@@ -63,21 +63,21 @@ public class StudentEnrollmentController {
 		return stuEnrService.create(studentCourse);
 	}
 
-	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
+	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void update(@PathVariable Long studentId, @PathVariable Long courseId,
+	public void update(@PathVariable Long userId, @PathVariable Long courseId,
 			@Valid @RequestBody StudentEnrollment studentCourse) {
-		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+		final StudentEnrollmentId id = new StudentEnrollmentId(userId, courseId);
 		stuEnrService.update(id, studentCourse);
 	}
 
 	@ApiIgnore
-	@RequestMapping(value = "/students/{studentId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void delete(@PathVariable Long studentId, @PathVariable Long courseId) {
-		final StudentEnrollmentId id = new StudentEnrollmentId(studentId, courseId);
+	public void delete(@PathVariable Long userId, @PathVariable Long courseId) {
+		final StudentEnrollmentId id = new StudentEnrollmentId(userId, courseId);
 		stuEnrService.delete(id);
 	}
 }
