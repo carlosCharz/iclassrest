@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.view.request.UserBasicView;
@@ -129,6 +130,7 @@ public class InstructorController {
 		return instructorService.findInstructorsByCourseIdByWeekDayByTime(courseId, weekDay, startTime, endTime);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}/classes/coming", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
