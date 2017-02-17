@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.AccessToken;
 import com.wedevol.iclass.core.entity.enums.UserType;
+import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.UnauthorizedException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
 import com.wedevol.iclass.core.service.AccessTokenService;
 import com.wedevol.iclass.core.service.AdminService;
@@ -90,7 +92,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		Matcher matcher = Pattern.compile(".*/(instructors|students)/(?<userId>\\w+)/?.*").matcher(path);
 		if (!matcher.matches() || matcher.group("userId") == null || matcher.group("userId").isEmpty()) {
-			return null;
+			throw new BadRequestException(BadRequestErrorType.USER_ID_FROM_URL_INVALID);
 		}
 		return Long.valueOf(matcher.group("userId"));
 	}
@@ -107,7 +109,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		} else if (matcherAdmin.find()) {
 			return UserType.ADMIN;
 		}
-		return null;
+		throw new BadRequestException(BadRequestErrorType.USER_TYPE_FROM_URL_INVALID);
 	}
 
 	private String getAuthorizationParam(HttpServletRequest request) {
