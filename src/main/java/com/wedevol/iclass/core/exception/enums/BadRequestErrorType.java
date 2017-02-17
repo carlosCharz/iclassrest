@@ -18,7 +18,8 @@ public enum BadRequestErrorType {
 	USER_TYPE_NOT_VALID(400, "User type not valid"), FIELDS_MISSING(400, "Fields missing"),
 	UNIVERSITY_ALREADY_EXISTS(400, "The university already exists"),
 	FACULTY_ALREADY_EXISTS(400, "The faculty already exists"),
-	DEPARTMENT_ALREADY_EXISTS(400, "The department already exists");
+	DEPARTMENT_ALREADY_EXISTS(400, "The department already exists"),
+	ACCESS_TOKEN_ALREADY_EXISTS(400, "The access token already exists");
 
 	private final int code;
 	private final String message;

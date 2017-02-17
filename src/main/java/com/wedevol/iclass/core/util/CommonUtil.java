@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,11 +53,8 @@ public class CommonUtil {
 	}
 
 	public static boolean isNullOrEmpty(String element) {
+		// TODO: replace with the base functional interface
 		return element == null || element.isEmpty();
-	}
-	
-	public static boolean isNullOrEmpty(List<?> list){
-		return list == null || list.isEmpty();
 	}
 	
 	public static LocalDateTime now(){
