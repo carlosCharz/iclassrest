@@ -43,9 +43,9 @@ public interface InstructorRepository extends CrudRepository<Instructor, Long> {
 	 * @param courseId
 	 * @return list of instructors
 	 */
-	@Query(value = "SELECT ins "
-			+ "FROM InstructorEnrollment enr INNER JOIN Instructor ins ON ins.id = enr.id.instructorId "
-			+ "WHERE enr.id.courseId = :courseId", nativeQuery = true)
+	@Query(value = "SELECT ins.* "
+			+ "FROM instructor_enrollment enr INNER JOIN instructor ins ON ins.id = enr.instructorId "
+			+ "WHERE enr.courseId = :courseId", nativeQuery = true)
 	public List<Instructor> findInstructorsWithCourseId(@Param("courseId") Long courseId);
 
 	/**
