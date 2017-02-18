@@ -13,10 +13,8 @@ import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.AccessToken;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
-import com.wedevol.iclass.core.exception.UnauthorizedException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
 import com.wedevol.iclass.core.repository.AccessTokenRepository;
 import com.wedevol.iclass.core.service.AccessTokenService;
 

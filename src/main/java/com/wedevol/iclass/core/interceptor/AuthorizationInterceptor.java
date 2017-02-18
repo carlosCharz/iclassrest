@@ -23,9 +23,6 @@ import com.wedevol.iclass.core.exception.UnauthorizedException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
 import com.wedevol.iclass.core.service.AccessTokenService;
-import com.wedevol.iclass.core.service.AdminService;
-import com.wedevol.iclass.core.service.InstructorService;
-import com.wedevol.iclass.core.service.StudentService;
 
 /**
  * Authorization Interceptor
@@ -40,15 +37,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private AccessTokenService accessTokenService;
-
-	@Autowired
-	private StudentService studentService;
-
-	@Autowired
-	private InstructorService instructorService;
-
-	@Autowired
-	private AdminService adminService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

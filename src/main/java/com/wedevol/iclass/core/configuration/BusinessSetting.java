@@ -31,7 +31,7 @@ public class BusinessSetting {
 	@PostConstruct
 	public void postConstruct() {
 		logger.info("Business properties -> instructorDefaultPrice: '{}', instructorDefaultCurrency: '{}', levelBase: '{}'",
-				instructorDefaultPrice, instructorDefaultCurrency);
+				instructorDefaultPrice, instructorDefaultCurrency, levelBase);
 	}
 
 	public Float getInstructorDefaultPrice() {
