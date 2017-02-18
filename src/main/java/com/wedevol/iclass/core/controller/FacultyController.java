@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.service.FacultyService;
 
@@ -36,6 +37,7 @@ public class FacultyController {
 	@Autowired
 	private FacultyService facultyService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -44,6 +46,7 @@ public class FacultyController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{facultyId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -51,6 +54,7 @@ public class FacultyController {
 		return facultyService.findById(facultyId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -59,6 +63,7 @@ public class FacultyController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{facultyId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -67,6 +72,7 @@ public class FacultyController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{facultyId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

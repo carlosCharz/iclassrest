@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.InstructorSchedule;
 import com.wedevol.iclass.core.service.InstructorScheduleService;
 import com.wedevol.iclass.core.view.response.ScheduleBasic;
@@ -43,6 +44,7 @@ public class InstructorScheduleController {
 	private InstructorScheduleService scheduleService;
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -51,6 +53,7 @@ public class InstructorScheduleController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -58,6 +61,7 @@ public class InstructorScheduleController {
 		return scheduleService.findById(scheduleId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -65,6 +69,7 @@ public class InstructorScheduleController {
 		return scheduleService.create(schedule);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -72,6 +77,7 @@ public class InstructorScheduleController {
 		scheduleService.update(scheduleId, schedule);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{scheduleId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -79,6 +85,7 @@ public class InstructorScheduleController {
 		scheduleService.delete(scheduleId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/week", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -90,6 +97,7 @@ public class InstructorScheduleController {
 
 	@ApiIgnore
 	@Deprecated
+	@Authorize(basic = true)
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -100,6 +108,7 @@ public class InstructorScheduleController {
 		return scheduleService.findSchedulesByCourseIdByDate(courseId, classDate);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

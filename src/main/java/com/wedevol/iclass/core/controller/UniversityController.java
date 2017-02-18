@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Faculty;
 import com.wedevol.iclass.core.entity.University;
@@ -46,6 +47,7 @@ public class UniversityController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{universityId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -53,6 +55,7 @@ public class UniversityController {
 		return universityService.findById(universityId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -61,6 +64,7 @@ public class UniversityController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{universityId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -69,6 +73,7 @@ public class UniversityController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{universityId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

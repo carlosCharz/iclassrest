@@ -35,7 +35,6 @@ public class CourseController {
 	@Autowired
 	private CourseService courseService;
 
-	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -44,6 +43,7 @@ public class CourseController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -51,6 +51,7 @@ public class CourseController {
 		return courseService.findById(courseId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -59,6 +60,7 @@ public class CourseController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -67,6 +69,7 @@ public class CourseController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -75,6 +78,7 @@ public class CourseController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseId}/instructors", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -83,6 +87,7 @@ public class CourseController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseId}/students", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.view.request.UserBasicView;
@@ -46,6 +47,7 @@ public class StudentController {
 	private StudentService studentService;
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -54,6 +56,7 @@ public class StudentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -68,6 +71,7 @@ public class StudentController {
 		return studentService.createStudentWithCourse(studentView);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -76,6 +80,7 @@ public class StudentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -83,6 +88,7 @@ public class StudentController {
 		studentService.delete(userId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/inactive", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -90,6 +96,7 @@ public class StudentController {
 		studentService.setUserInactive(user.getUserId());
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -99,6 +106,7 @@ public class StudentController {
 		return studentService.findCoursesByStudentIdWithCourseStatusFilter(userId, courseStatusFilter);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}/classes/coming", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -112,6 +120,7 @@ public class StudentController {
 				actualTime, statusFilter);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

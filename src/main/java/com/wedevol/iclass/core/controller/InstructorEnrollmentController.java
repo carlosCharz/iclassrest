@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.InstructorEnrollment;
 import com.wedevol.iclass.core.entity.InstructorEnrollmentId;
 import com.wedevol.iclass.core.service.InstructorEnrollmentService;
@@ -36,6 +37,7 @@ public class InstructorEnrollmentController {
 	/************** CRUD for instructor enrollment **********************/
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructorenrollments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -44,6 +46,7 @@ public class InstructorEnrollmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -52,6 +55,7 @@ public class InstructorEnrollmentController {
 		return insEnrService.findById(id);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructorenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -59,6 +63,7 @@ public class InstructorEnrollmentController {
 		return insEnrService.create(instructorCourse);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -69,6 +74,7 @@ public class InstructorEnrollmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -77,6 +83,7 @@ public class InstructorEnrollmentController {
 		insEnrService.delete(id);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment/approve", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -84,6 +91,7 @@ public class InstructorEnrollmentController {
 		insEnrService.approveCourseInstructorEnrollment(userId, courseId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/courses/{courseId}/enrollment/deny", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

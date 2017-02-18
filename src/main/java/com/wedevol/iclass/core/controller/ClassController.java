@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Clase;
 import com.wedevol.iclass.core.service.ClassService;
 
@@ -32,6 +33,7 @@ public class ClassController {
 	@Autowired
 	private ClassService classService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -40,6 +42,7 @@ public class ClassController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -47,6 +50,7 @@ public class ClassController {
 		return classService.findById(classId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -54,6 +58,7 @@ public class ClassController {
 		return classService.create(c);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -62,6 +67,7 @@ public class ClassController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -69,6 +75,7 @@ public class ClassController {
 		classService.delete(classId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}/instructors/{userId}/confirm", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -76,6 +83,7 @@ public class ClassController {
 		classService.instructorConfirmClass(classId, userId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}/instructors/{userId}/reject", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -83,6 +91,7 @@ public class ClassController {
 		classService.instructorRejectClass(classId, userId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}/students/{userId}/cancel", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -90,6 +99,7 @@ public class ClassController {
 		classService.studentCancelClass(classId, userId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}/instructors/{instructorId}/rating/{rating:.+}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -98,6 +108,7 @@ public class ClassController {
 		classService.rateInstructorClass(classId, instructorId, rating);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{classId}/students/{studentId}/rating/{rating:.+}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

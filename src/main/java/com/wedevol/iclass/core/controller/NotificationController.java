@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.service.NotificationService;
 
 /**
@@ -28,6 +29,7 @@ public class NotificationController {
 	@Autowired
 	private NotificationService notificationService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -37,6 +39,7 @@ public class NotificationController {
 		notificationService.sendDirectNotificationToToken(token, message);
 	}
 	
+	@Authorize(basic = true)
 	@RequestMapping(value = "/send/student", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -46,6 +49,7 @@ public class NotificationController {
 		notificationService.sendDirectNotificationToStudent(id, message);
 	}
 	
+	@Authorize(basic = true)
 	@RequestMapping(value = "/send/instructor", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

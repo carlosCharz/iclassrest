@@ -48,6 +48,7 @@ public class InstructorController {
 	private InstructorService instructorService;
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -56,6 +57,7 @@ public class InstructorController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -70,6 +72,7 @@ public class InstructorController {
 		return instructorService.createInstructorWithCourse(instructorView);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -78,6 +81,7 @@ public class InstructorController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -85,6 +89,7 @@ public class InstructorController {
 		instructorService.delete(userId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/inactive", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -92,6 +97,7 @@ public class InstructorController {
 		instructorService.setUserInactive(user.getUserId());
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{userId}/courses", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -104,6 +110,7 @@ public class InstructorController {
 
 	@ApiIgnore
 	@Deprecated
+	@Authorize(basic = true)
 	@RequestMapping(value = "/fetch2", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -117,6 +124,7 @@ public class InstructorController {
 		return instructorService.findInstructorsByCourseIdByDateTime(courseId, classDate, startTime, endTime);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -144,6 +152,7 @@ public class InstructorController {
 				actualTime, statusFilter);
 	}
 
+	@Authorize(hard = true)
 	@RequestMapping(value = "/{userId}/classes/historic", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

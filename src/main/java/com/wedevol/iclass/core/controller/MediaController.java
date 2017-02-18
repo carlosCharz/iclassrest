@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.service.MediaService;
 
@@ -32,6 +33,7 @@ public class MediaController {
 	@Autowired
 	private MediaService mediaService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/students/{userId}/picture/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -41,6 +43,7 @@ public class MediaController {
 		return url;
 	}
 	
+	@Authorize(basic = true)
 	@RequestMapping(value = "/instructors/{userId}/picture/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody

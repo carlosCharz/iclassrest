@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.CourseSuggestion;
 import com.wedevol.iclass.core.service.CourseSuggestionService;
 import com.wedevol.iclass.core.view.response.CourseSuggFull;
@@ -33,6 +34,7 @@ public class CourseSuggestionController {
 	@Autowired
 	private CourseSuggestionService courseSuggestionService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -41,6 +43,7 @@ public class CourseSuggestionController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseSuggestionId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -48,6 +51,7 @@ public class CourseSuggestionController {
 		return courseSuggestionService.findById(courseSuggestionId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -55,6 +59,7 @@ public class CourseSuggestionController {
 		return courseSuggestionService.create(courseSuggestion);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseSuggestionId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -62,6 +67,7 @@ public class CourseSuggestionController {
 		courseSuggestionService.update(courseSuggestionId, courseSuggestion);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{courseSuggestionId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

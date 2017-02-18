@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
 import com.wedevol.iclass.core.service.StudentEnrollmentService;
@@ -40,6 +41,7 @@ public class StudentEnrollmentController {
 	/************** CRUD for student enrollment **********************/
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -48,6 +50,7 @@ public class StudentEnrollmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -56,6 +59,7 @@ public class StudentEnrollmentController {
 		return stuEnrService.findById(id);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/studentenrollments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -63,6 +67,7 @@ public class StudentEnrollmentController {
 		return stuEnrService.create(studentCourse);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -73,6 +78,7 @@ public class StudentEnrollmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/students/{userId}/courses/{courseId}/enrollment", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

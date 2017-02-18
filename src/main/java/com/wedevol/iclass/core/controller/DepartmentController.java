@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Department;
 import com.wedevol.iclass.core.entity.DepartmentId;
 import com.wedevol.iclass.core.service.DepartmentService;
@@ -38,6 +39,7 @@ public class DepartmentController {
 	private DepartmentService depaService;
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/departments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -46,6 +48,7 @@ public class DepartmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/universities/{universityId}/faculties/{facultyId}/department", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -54,6 +57,7 @@ public class DepartmentController {
 		return depaService.findById(id);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/departments", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -62,6 +66,7 @@ public class DepartmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/universities/{universityId}/faculties/{facultyId}/department", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -72,6 +77,7 @@ public class DepartmentController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/universities/{universityId}/faculties/{facultyId}/department", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

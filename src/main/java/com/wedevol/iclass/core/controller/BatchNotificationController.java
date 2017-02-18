@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.service.BatchNotificationService;
 
@@ -36,6 +37,7 @@ public class BatchNotificationController {
 	@Autowired
 	private BatchNotificationService batchService;
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -44,6 +46,7 @@ public class BatchNotificationController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{batchId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -51,6 +54,7 @@ public class BatchNotificationController {
 		return batchService.findById(batchId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -59,6 +63,7 @@ public class BatchNotificationController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{batchId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -67,6 +72,7 @@ public class BatchNotificationController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{batchId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -75,6 +81,7 @@ public class BatchNotificationController {
 	}
 	
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/getNotificationsToBeSent", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody

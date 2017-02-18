@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.AccessToken;
 import com.wedevol.iclass.core.service.AccessTokenService;
 
@@ -37,6 +38,7 @@ public class AccessTokenController {
 	private AccessTokenService accessTokenService;
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -45,6 +47,7 @@ public class AccessTokenController {
 	}
 
 	@ApiIgnore
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{accessTokenId}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -52,6 +55,7 @@ public class AccessTokenController {
 		return accessTokenService.findById(accessTokenId);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
@@ -59,6 +63,7 @@ public class AccessTokenController {
 		return accessTokenService.create(accessToken);
 	}
 
+	@Authorize(basic = true)
 	@RequestMapping(value = "/{accessTokenId}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -66,6 +71,7 @@ public class AccessTokenController {
 		accessTokenService.update(accessTokenId, accessToken);
 	}
 
+	@Authorize(basic = true)
 	@ApiIgnore
 	@RequestMapping(value = "/{accessTokenId}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
