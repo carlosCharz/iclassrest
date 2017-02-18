@@ -25,6 +25,7 @@ public class AdminFull implements Serializable {
 	private String fcmToken;
 	private String deviceId;
 	private boolean active;
+	private String accessToken;
 
 	protected AdminFull() {
 	}
@@ -96,7 +97,7 @@ public class AdminFull implements Serializable {
 	public void setFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;
 	}
-	
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -111,6 +112,14 @@ public class AdminFull implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	public static AdminFull from(Admin admin) {

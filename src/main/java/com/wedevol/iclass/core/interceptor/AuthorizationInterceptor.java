@@ -39,7 +39,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	private AccessTokenService accessTokenService;
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 		// TODO: remove logger
 		logger.info("--- Before Method Execution ---");
 		final HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -51,10 +52,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	}
 
 	private void validateAuthorization(HttpServletRequest request, final Method method) {
-		final boolean basicValue = method.getAnnotation(Authorize.class)
-											.basic();
-		final boolean hardValue = method.getAnnotation(Authorize.class)
-										.hard();
+		final boolean basicValue = method.getAnnotation(Authorize.class).basic();
+		final boolean hardValue = method.getAnnotation(Authorize.class).hard();
 		logger.info("basic: " + basicValue + " hard: " + hardValue);
 		final String authParam = getAuthorizationParamOrThrow(request);
 		logger.info("Header:" + authParam);
@@ -68,11 +67,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			logger.info("UserId:" + userId);
 			final UserType userType = getUserTypeFromUrl(request);
 			logger.info("UserType:" + userType.getDescription());
-			if (!accessToken.getToken()
-							.equals(accessToken) || !accessToken.getUserId()
-																.equals(userId)
-					|| !accessToken.getUserType()
-									.equals(userType.getDescription())) {
+			if (!accessToken.getToken().equals(accessToken) || !accessToken.getUserId().equals(userId)
+					|| !accessToken.getUserType().equals(userType
+																	.getDescription())) {
 				throw new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_MISMATCH_USER);
 			}
 		}
@@ -89,28 +86,19 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	}
 
 	private Long getUserIdFromUrl(HttpServletRequest request) {
-		String path = request.getRequestURI()
-								.substring(request.getContextPath()
-													.length());
-		Matcher matcher = Pattern.compile(".*/(instructors|students)/(?<userId>\\w+)/?.*")
-									.matcher(path);
-		if (!matcher.matches() || matcher.group("userId") == null || matcher.group("userId")
-																			.isEmpty()) {
+		String path = request.getRequestURI().substring(request.getContextPath().length());
+		Matcher matcher = Pattern.compile(".*/(instructors|students)/(?<userId>\\w+)/?.*").matcher(path);
+		if (!matcher.matches() || matcher.group("userId") == null || matcher.group("userId").isEmpty()) {
 			throw new BadRequestException(BadRequestErrorType.USER_ID_FROM_URL_INVALID);
 		}
 		return Long.valueOf(matcher.group("userId"));
 	}
 
 	private UserType getUserTypeFromUrl(HttpServletRequest request) {
-		final String path = request.getRequestURI()
-									.substring(request.getContextPath()
-														.length());
-		final Matcher matcherInstructor = Pattern.compile(".*/instructors/")
-													.matcher(path);
-		final Matcher matcherStudent = Pattern.compile(".*/students/")
-												.matcher(path);
-		final Matcher matcherAdmin = Pattern.compile(".*/admins/")
-											.matcher(path);
+		final String path = request.getRequestURI().substring(request.getContextPath().length());
+		final Matcher matcherInstructor = Pattern.compile(".*/instructors/").matcher(path);
+		final Matcher matcherStudent = Pattern.compile(".*/students/").matcher(path);
+		final Matcher matcherAdmin = Pattern.compile(".*/admins/").matcher(path);
 		if (matcherInstructor.find()) {
 			return UserType.INSTRUCTOR;
 		} else if (matcherStudent.find()) {
@@ -131,16 +119,15 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	}
 
 	private String getAuthorizationParamOrThrow(HttpServletRequest request) {
-		// TODO: test null
 		Optional<String> authObj = Optional.ofNullable(getAuthorizationParam(request));
-		return authObj.orElseThrow(() -> new UnauthorizedException(
-				UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_AUTHORIZATION_PARAM));
+		return authObj.orElseThrow(
+				() -> new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_AUTHORIZATION_PARAM));
 	}
 
 	public AccessToken findByTokenOrThrow(String token) {
 		final Optional<AccessToken> tokenObj = Optional.ofNullable(accessTokenService.findByToken(token));
-		return tokenObj.orElseThrow(() -> new UnauthorizedException(
-				UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_TOKEN_NOT_FOUND));
+		return tokenObj.orElseThrow(
+				() -> new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_TOKEN_NOT_FOUND));
 	}
 
 }

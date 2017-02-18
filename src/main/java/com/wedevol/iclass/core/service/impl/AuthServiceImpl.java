@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wedevol.iclass.core.entity.Admin;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.UnauthorizedException;
 import com.wedevol.iclass.core.exception.enums.UnauthorizedErrorType;
+import com.wedevol.iclass.core.service.AccessTokenService;
 import com.wedevol.iclass.core.service.AdminService;
 import com.wedevol.iclass.core.service.AuthService;
 import com.wedevol.iclass.core.service.InstructorService;
@@ -44,6 +46,9 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private AdminService adminService;
 
+	@Autowired
+	private AccessTokenService accessTokenService;
+
 	/********************* Authentication logic ****************************/
 
 	@Override
@@ -51,7 +56,10 @@ public class AuthServiceImpl implements AuthService {
 		final Student student = studentService.getStudentByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(student.getPassword())) {
-			return studentService.getStudentByIdWithFullInfo(student.getId());
+			StudentFull studentFull = studentService.getStudentByIdWithFullInfo(student.getId());
+			final String token = accessTokenService.refreshAccessToken(student.getId(), UserType.STUDENT);
+			studentFull.setAccessToken(token);
+			return studentFull;
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}
@@ -62,7 +70,10 @@ public class AuthServiceImpl implements AuthService {
 		final Instructor instructor = instructorService.getInstructorByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(instructor.getPassword())) {
-			return instructorService.getInstructorByIdWithFullInfo(instructor.getId());
+			InstructorFull instructorFull = instructorService.getInstructorByIdWithFullInfo(instructor.getId());
+			final String token = accessTokenService.refreshAccessToken(instructor.getId(), UserType.INSTRUCTOR);
+			instructorFull.setAccessToken(token);
+			return instructorFull;
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}
@@ -73,7 +84,10 @@ public class AuthServiceImpl implements AuthService {
 		final Admin admin = adminService.getAdminByEmail(email);
 		final String passwordHashed = hashSHA256(password);
 		if (passwordHashed.equals(admin.getPassword())) {
-			return adminService.getAdminByIdWithFullInfo(admin.getId());
+			AdminFull adminFull = adminService.getAdminByIdWithFullInfo(admin.getId());
+			final String token = accessTokenService.refreshAccessToken(admin.getId(), UserType.ADMIN);
+			adminFull.setAccessToken(token);
+			return adminFull;
 		} else {
 			throw new UnauthorizedException(UnauthorizedErrorType.INCORRECT_CREDENTIALS);
 		}

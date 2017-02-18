@@ -1,5 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.CryptoUtil.getTimeBasedUUIDString;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.AccessToken;
+import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
@@ -48,15 +51,17 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	@Override
 	public AccessToken create(AccessToken accessToken) {
 		// Fields missing validation
-		if (accessToken.getUserType() == null || accessToken.getUserId() == null || accessToken.getToken() == null) {
+		if (accessToken.getUserType() == null || accessToken.getUserId() == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
 		// The access token should not exist
-		final Optional<AccessToken> tokenObj = Optional.ofNullable(this.findByTokenAndUserType(accessToken.getToken(),
-				accessToken.getUserType()));
+		final Optional<AccessToken> tokenObj = Optional.ofNullable(
+				this.findByUserIdAndUserType(accessToken.getUserId(), accessToken.getUserType()));
 		if (tokenObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ACCESS_TOKEN_ALREADY_EXISTS);
 		}
+		final String newToken = getTimeBasedUUIDString();
+		accessToken.setToken(newToken);
 		// Save
 		return accessTokenRepository.save(accessToken);
 	}
@@ -92,8 +97,31 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	}
 
 	@Override
-	public AccessToken findByTokenAndUserType(String token, String userType) {
-		return accessTokenRepository.findByTokenAndUserType(token, userType);
+	public AccessToken findByUserIdAndUserType(Long userId, String userType) {
+		return accessTokenRepository.findByUserIdAndUserType(userId, userType);
+	}
+
+	@Override
+	public String refreshAccessToken(Long userId, UserType userType) {
+		// Fields missing validation
+		if (userType == null || userId == null) {
+			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
+		}
+		AccessToken accessToken = new AccessToken(userId, UserType.STUDENT);
+		// Check if the access token already exist by userId and userType
+		final Optional<AccessToken> tokenObj = Optional.ofNullable(
+				this.findByUserIdAndUserType(userId, accessToken.getUserType()));
+		// Update or create a new token
+		final String newToken = getTimeBasedUUIDString();
+		if (tokenObj.isPresent()) {
+			AccessToken existingAccessToken = tokenObj.get();
+			existingAccessToken.setToken(newToken);
+			accessTokenRepository.save(existingAccessToken);
+		} else {
+			accessToken.setToken(newToken);
+			accessTokenRepository.save(accessToken);
+		}
+		return newToken;
 	}
 
 }

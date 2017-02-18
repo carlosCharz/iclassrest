@@ -3,6 +3,7 @@ package com.wedevol.iclass.core.service;
 import java.util.List;
 
 import com.wedevol.iclass.core.entity.AccessToken;
+import com.wedevol.iclass.core.entity.enums.UserType;
 
 /**
  * Access Token Service Interface
@@ -16,6 +17,8 @@ public interface AccessTokenService extends BaseService<AccessToken> {
 
 	AccessToken findByToken(String token);
 
-	AccessToken findByTokenAndUserType(String token, String userType);
+	AccessToken findByUserIdAndUserType(Long userId, String userType);
+
+	String refreshAccessToken(Long userId, UserType userType);
 
 }

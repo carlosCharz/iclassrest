@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.wedevol.iclass.core.entity.enums.UserType;
+
 /**
  * Access Token Entity
  * 
@@ -51,6 +53,11 @@ public class AccessToken implements Serializable {
 
 	public static AccessToken from(Long id) {
 		return new AccessToken(id);
+	}
+	
+	public AccessToken(Long userId, UserType userType) {
+		this.userId = userId;
+		this.userType = userType.getDescription();
 	}
 
 	public Long getId() {

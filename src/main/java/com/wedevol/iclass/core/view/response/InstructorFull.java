@@ -44,6 +44,7 @@ public class InstructorFull implements Serializable {
 	private Integer ratingCount;
 	private Integer level;
 	private Integer totalHours;
+	private String accessToken;
 
 	protected InstructorFull() {
 	}
@@ -188,7 +189,7 @@ public class InstructorFull implements Serializable {
 	public void setRating(Float rating) {
 		this.rating = rating;
 	}
-	
+
 	public Integer getRatingCount() {
 		return ratingCount;
 	}
@@ -211,6 +212,14 @@ public class InstructorFull implements Serializable {
 
 	public void setTotalHours(Integer totalHours) {
 		this.totalHours = totalHours;
+	}
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	public static InstructorFull from(Instructor instructor) {

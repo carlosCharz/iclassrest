@@ -17,13 +17,13 @@ import com.wedevol.iclass.core.entity.AccessToken;
 public interface AccessTokenRepository extends CrudRepository<AccessToken, Long> {
 
 	/**
-	 * Return the access token having the passed token and userType or null if no access token is found.
+	 * Return the access token having the passed userId and userType or null if no access token is found.
 	 * 
-	 * @param token
+	 * @param userId
 	 * @param userType
 	 * @return accessToken
 	 */
-	public AccessToken findByTokenAndUserType(String token, String userType);
+	public AccessToken findByUserIdAndUserType(Long userId, String userType);
 
 	/**
 	 * Return the access token having the passed token or null if no access token is found.
