@@ -107,7 +107,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 		if (userType == null || userId == null) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
 		}
-		AccessToken accessToken = new AccessToken(userId, UserType.STUDENT);
+		AccessToken accessToken = new AccessToken(userId, userType);
 		// Check if the access token already exist by userId and userType
 		final Optional<AccessToken> tokenObj = Optional.ofNullable(
 				this.findByUserIdAndUserType(userId, accessToken.getUserType()));
