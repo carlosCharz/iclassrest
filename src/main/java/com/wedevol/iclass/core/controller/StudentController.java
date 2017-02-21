@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.StudentService;
-import com.wedevol.iclass.core.view.request.UserBasicView;
 import com.wedevol.iclass.core.view.request.UserView;
 import com.wedevol.iclass.core.view.response.ClassResponse;
 import com.wedevol.iclass.core.view.response.CourseResponse;
-
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Student Controller
@@ -89,11 +88,11 @@ public class StudentController {
 	}
 
 	@Authorize(basic = true)
-	@RequestMapping(value = "/inactive", method = RequestMethod.POST)
+	@RequestMapping(value = "/{userId}/inactive", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public void setUserInactive(@Valid @RequestBody UserBasicView user) {
-		studentService.setUserInactive(user.getUserId());
+	public void setUserInactive(@PathVariable Long userId) {
+		studentService.setUserInactive(userId);
 	}
 
 	@Authorize(basic = true)
