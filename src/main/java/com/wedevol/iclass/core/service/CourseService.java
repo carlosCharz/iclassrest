@@ -13,19 +13,11 @@ import com.wedevol.iclass.core.view.response.CourseResponse;
  * @author charz
  *
  */
-public interface CourseService {
+public interface CourseService extends BaseService<Course> {
 
 	List<Course> findAll();
 
 	Course findByName(String name);
-
-	Course findById(Long courseId);
-
-	Course create(Course course);
-
-	void update(Long courseId, Course course);
-
-	void delete(Long courseId);
 	
 	List<Instructor> findInstructorsByCourseId(Long courseId);
 	

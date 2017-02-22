@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.hashSHA256;
-import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 
 import java.util.Date;
 import java.util.List;

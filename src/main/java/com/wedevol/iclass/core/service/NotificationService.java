@@ -6,6 +6,7 @@ import com.wedevol.iclass.core.entity.BatchNotification;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.util.DefaultInterface;
 
 /**
  * Notification Service Interface
@@ -13,7 +14,7 @@ import com.wedevol.iclass.core.entity.Student;
  * @author charz
  *
  */
-public interface NotificationService {
+public interface NotificationService extends DefaultInterface {
 
 	void sendWelcomeNotificationToStudent(String tokenTo);
 

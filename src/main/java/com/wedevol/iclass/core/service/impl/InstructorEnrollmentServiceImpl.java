@@ -1,7 +1,5 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
-
 import java.util.List;
 import java.util.Optional;
 

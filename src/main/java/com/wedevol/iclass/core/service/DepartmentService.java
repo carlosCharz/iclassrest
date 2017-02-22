@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Department;
 import com.wedevol.iclass.core.entity.DepartmentId;
+import com.wedevol.iclass.core.util.DefaultInterface;
 
 /**
  * Department Service Interface
@@ -11,7 +12,7 @@ import com.wedevol.iclass.core.entity.DepartmentId;
  * @author charz
  *
  */
-public interface DepartmentService {
+public interface DepartmentService extends DefaultInterface {
 
 	List<Department> findAll();
 

@@ -12,19 +12,11 @@ import com.wedevol.iclass.core.entity.University;
  * @author charz
  *
  */
-public interface UniversityService {
+public interface UniversityService extends BaseService<University>  {
 
 	List<University> findAll();
 
 	University findByName(String name);
-
-	University findById(Long universityId);
-
-	University create(University university);
-
-	void update(Long universityId, University university);
-
-	void delete(Long universityId);
 	
 	List<Faculty> findFacultiesByUniversityId(Long universityId);
 	

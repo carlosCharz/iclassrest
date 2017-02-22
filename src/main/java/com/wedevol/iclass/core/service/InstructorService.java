@@ -17,21 +17,13 @@ import com.wedevol.iclass.core.view.response.ScheduleBasic;
  * @author charz
  *
  */
-public interface InstructorService {
+public interface InstructorService extends BaseService<Instructor> {
 
 	List<Instructor> findAll();
 
 	Instructor findByEmail(String email);
 
 	Instructor findByDeviceId(String deviceId);
-
-	Instructor findById(Long userId);
-
-	Instructor create(Instructor instructor);
-
-	void update(Long userId, Instructor instructor);
-
-	void delete(Long userId);
 
 	void setUserInactive(Long userId);
 

@@ -10,18 +10,10 @@ import com.wedevol.iclass.core.entity.Topic;
  * @author charz
  *
  */
-public interface TopicService {
+public interface TopicService extends BaseService<Topic> {
 
 	List<Topic> findAll();
 
 	Topic findByName(String name);
-
-	Topic findById(Long topicId);
-
-	Topic create(Topic topic);
-
-	void update(Long topicId, Topic topic);
-
-	void delete(Long topicId);
 
 }

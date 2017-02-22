@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.StudentEnrollment;
 import com.wedevol.iclass.core.entity.StudentEnrollmentId;
+import com.wedevol.iclass.core.util.DefaultInterface;
 
 /**
  * Student Enrollment Service Interface
@@ -11,7 +12,7 @@ import com.wedevol.iclass.core.entity.StudentEnrollmentId;
  * @author charz
  *
  */
-public interface StudentEnrollmentService {
+public interface StudentEnrollmentService extends DefaultInterface {
 
 	List<StudentEnrollment> findAll();
 

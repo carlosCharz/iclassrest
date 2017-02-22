@@ -3,9 +3,6 @@ package com.wedevol.iclass.core.util;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,15 +47,6 @@ public class CommonUtil {
 	public static Date stringToDate(String dateStr, String dateFormatStr) throws ParseException {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatStr);
 		return dateFormat.parse(dateStr);
-	}
-
-	public static boolean isNullOrEmpty(String element) {
-		// TODO: replace with the base functional interface
-		return element == null || element.isEmpty();
-	}
-	
-	public static LocalDateTime now(){
-		return ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime();
 	}
 
 }

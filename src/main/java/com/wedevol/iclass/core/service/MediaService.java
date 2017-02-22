@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.wedevol.iclass.core.amazon.MediaFile;
 import com.wedevol.iclass.core.entity.enums.UserType;
+import com.wedevol.iclass.core.util.DefaultInterface;
 
 
 /**
@@ -12,7 +13,7 @@ import com.wedevol.iclass.core.entity.enums.UserType;
  * @author charz
  *
  */
-public interface MediaService {
+public interface MediaService extends DefaultInterface {
 	
 	String uploadUserPicture(Long userId, UserType userType, MediaFile file);
 	

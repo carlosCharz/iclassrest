@@ -10,19 +10,11 @@ import com.wedevol.iclass.core.entity.Faculty;
  * @author charz
  *
  */
-public interface FacultyService {
+public interface FacultyService extends BaseService<Faculty> {
 
 	List<Faculty> findAll();
 
 	Faculty findByName(String name);
-
-	Faculty findById(Long facultyId);
-
-	Faculty create(Faculty faculty);
-
-	void update(Long facultyId, Faculty faculty);
-
-	void delete(Long facultyId);
 	
 	List<Faculty> findFacultiesByUniversityId(Long universityId);
 

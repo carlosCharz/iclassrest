@@ -14,17 +14,9 @@ import com.wedevol.iclass.core.entity.Student;
  * @author charz
  *
  */
-public interface BatchNotificationService {
+public interface BatchNotificationService extends BaseService<BatchNotification>{
 
 	List<BatchNotification> findAll();
-
-	BatchNotification findById(Long batchId);
-
-	BatchNotification create(BatchNotification batch);
-
-	void update(Long batchId, BatchNotification batch);
-
-	void delete(Long batchId);
 	
 	List<BatchNotification> getNotificationsToBeSent();
 	

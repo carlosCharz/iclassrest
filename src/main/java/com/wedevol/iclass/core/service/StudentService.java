@@ -15,21 +15,13 @@ import com.wedevol.iclass.core.view.response.StudentFull;
  * @author charz
  *
  */
-public interface StudentService {
+public interface StudentService extends BaseService<Student> {
 
 	List<Student> findAll();
 
 	Student findByEmail(String email);
 
 	Student findByDeviceId(String deviceId);
-
-	Student findById(Long userId);
-
-	Student create(Student student);
-
-	void update(Long userId, Student student);
-
-	void delete(Long userId);
 
 	void setUserInactive(Long userId);
 

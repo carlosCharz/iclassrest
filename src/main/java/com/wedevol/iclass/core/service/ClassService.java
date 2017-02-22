@@ -12,17 +12,9 @@ import com.wedevol.iclass.core.view.response.ClassResponse;
  * @author charz
  *
  */
-public interface ClassService {
+public interface ClassService extends BaseService<Clase> {
 
 	List<Clase> findAll();
-
-	Clase findById(Long classId);
-
-	Clase create(Clase c);
-
-	void update(Long classId, Clase c);
-
-	void delete(Long classId);
 
 	List<ClassResponse> findComingClassesByStudentIdByDateTimeWithClassStatusFilter(Long studentId, Date actualDate,
 			Integer actualTime, String statusFilter);

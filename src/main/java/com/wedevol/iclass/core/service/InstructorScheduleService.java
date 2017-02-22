@@ -12,17 +12,9 @@ import com.wedevol.iclass.core.view.response.ScheduleBasic;
  * @author charz
  *
  */
-public interface InstructorScheduleService {
+public interface InstructorScheduleService extends BaseService<InstructorSchedule> {
 
 	List<InstructorSchedule> findAll();
-
-	InstructorSchedule findById(Long scheduleId);
-
-	InstructorSchedule create(InstructorSchedule schedule);
-
-	void update(Long scheduleId, InstructorSchedule schedule);
-
-	void delete(Long scheduleId);
 
 	List<InstructorSchedule> findSchedulesForWeekByInstructorId(Long instructorId);
 	

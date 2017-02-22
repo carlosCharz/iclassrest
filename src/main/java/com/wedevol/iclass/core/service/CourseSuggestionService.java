@@ -11,16 +11,8 @@ import com.wedevol.iclass.core.view.response.CourseSuggFull;
  * @author charz
  *
  */
-public interface CourseSuggestionService {
+public interface CourseSuggestionService extends BaseService<CourseSuggestion> {
 
 	List<CourseSuggFull> findAllFullInfo();
-
-	CourseSuggestion findById(Long courseSuggestionId);
-
-	CourseSuggestion create(CourseSuggestion courseSuggestion);
-
-	void update(Long courseSuggestionId, CourseSuggestion courseSuggestion);
-
-	void delete(Long courseSuggestionId);
 
 }

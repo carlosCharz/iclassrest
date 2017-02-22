@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.service;
 
+import com.wedevol.iclass.core.util.DefaultInterface;
 import com.wedevol.iclass.core.view.response.AdminFull;
 import com.wedevol.iclass.core.view.response.InstructorFull;
 import com.wedevol.iclass.core.view.response.StudentFull;
@@ -10,7 +11,7 @@ import com.wedevol.iclass.core.view.response.StudentFull;
  * @author charz
  *
  */
-public interface AuthService {
+public interface AuthService extends DefaultInterface {
 
 	StudentFull loginStudent(String email, String password);
 

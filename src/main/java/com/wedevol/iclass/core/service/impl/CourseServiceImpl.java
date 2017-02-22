@@ -1,6 +1,5 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidEnrollmentStatusFilters;
 
 import java.util.Arrays;

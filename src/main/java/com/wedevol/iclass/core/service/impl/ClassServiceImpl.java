@@ -2,7 +2,6 @@ package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.CommonUtil.DATE_FORMAT_QUERY_DB;
 import static com.wedevol.iclass.core.util.CommonUtil.dateToString;
-import static com.wedevol.iclass.core.util.CommonUtil.isNullOrEmpty;
 import static com.wedevol.iclass.core.util.CoreUtil.areValidClassStatusFilters;
 
 import java.util.Arrays;
