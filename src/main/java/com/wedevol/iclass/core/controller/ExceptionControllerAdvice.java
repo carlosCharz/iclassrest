@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 
 import com.wedevol.iclass.core.entity.ErrorResponse;
 import com.wedevol.iclass.core.exception.BadRequestException;
@@ -103,6 +104,13 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ErrorResponse missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
 		return new ErrorResponse(BadRequestErrorType.MISSING_PARAMETER.getCode(), ex.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(MultipartException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ErrorResponse missingServletRequestParameterExceptionHandler(MultipartException ex) {
+		return new ErrorResponse(BadRequestErrorType.EXCEEDED_MULTIPART_MAX_FILE_SIZE.getCode(), ex.getMessage());
 	}
 
 }
