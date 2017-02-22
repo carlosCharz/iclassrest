@@ -1,6 +1,7 @@
 package com.wedevol.iclass.core.amazon;
 
-import static com.wedevol.iclass.core.util.FileUtil.generateFileId;
+import static com.wedevol.iclass.core.util.FileUtil.generateBasicFileId;
+import static com.wedevol.iclass.core.util.FileUtil.generateUserFileId;
 
 import java.io.InputStream;
 import java.util.Optional;
@@ -63,7 +64,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 	@Override
 	public String uploadFile(Long userId, UserType userType, String mediaTypeDirectory, PictureFile pictureFile) {
 		final String userTypeDirectory = userType.getDescription();
-		String fileId = generateFileId(prefix, userTypeDirectory, userId, mediaTypeDirectory,
+		String fileId = generateUserFileId(prefix, userTypeDirectory, userId, mediaTypeDirectory,
 				pictureFile.getFileName());
 		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
 				pictureFile.getMetadata());
@@ -84,6 +85,13 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 		Optional.ofNullable(contentLength).ifPresent(objectMetadata::setContentLength);
 		Optional.ofNullable(metadata).ifPresent(m -> m.forEach(objectMetadata::addUserMetadata));
 		return objectMetadata;
+	}
+
+	@Override
+	public String uploadFile(String directory, PictureFile pictureFile) {
+		String fileId = generateBasicFileId(prefix, directory, pictureFile.getFileName());
+		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
+				pictureFile.getMetadata());
 	}
 
 }

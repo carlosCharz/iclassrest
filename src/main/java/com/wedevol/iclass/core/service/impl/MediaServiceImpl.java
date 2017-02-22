@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_MATERIAL;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURES;
 
 import java.io.IOException;
@@ -82,6 +83,25 @@ public class MediaServiceImpl implements MediaService {
 			Instructor newInstructor = new Instructor();
 			newInstructor.setProfilePictureUrl(url);
 			instructorService.update(userId, newInstructor);
+		}
+	}
+
+	@Override
+	public String uploadCourseFile(MultipartFile multipart) {
+		if (!multipart.isEmpty()) {
+			MediaFile mediaFile;
+			try {
+				mediaFile = new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(),
+						multipart.getSize(), multipart.getInputStream());
+				final PictureFile pictureInfo = PictureFile.from(mediaFile);
+				return amazonS3Service.uploadFile(DIRECTORY_MATERIAL, pictureInfo);
+			} catch (IOException e) {
+				// TODO: throw exception
+				return null;
+			}
+		} else {
+			logger.info("You failed to upload because the file was empty!.");
+			return null;
 		}
 	}
 

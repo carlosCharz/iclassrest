@@ -18,5 +18,7 @@ public interface AmazonS3Service {
 	ObjectMetadata getObjectMetadata(String objectUrl);
 	
 	String uploadFile(Long userId, UserType userType, String mediaTypeDirectory, PictureFile pictureFile);
+	
+	String uploadFile(String directory, PictureFile pictureFile);
 
 }
