@@ -20,5 +20,7 @@ public interface AccessTokenService extends BaseService<AccessToken> {
 	AccessToken findByUserIdAndUserType(Long userId, String userType);
 
 	String refreshAccessToken(Long userId, UserType userType);
+	
+	AccessToken findAccessTokenByUserIdByUserType(Long userId, String userType);
 
 }

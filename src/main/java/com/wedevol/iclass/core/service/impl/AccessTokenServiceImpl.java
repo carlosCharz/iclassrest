@@ -124,4 +124,9 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 		return newToken;
 	}
 
+	@Override
+	public AccessToken findAccessTokenByUserIdByUserType(Long userId, String userType) {
+		return this.findByUserIdAndUserType(userId, userType);
+	}
+
 }

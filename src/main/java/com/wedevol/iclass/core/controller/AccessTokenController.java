@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,6 +79,17 @@ public class AccessTokenController {
 	@ResponseBody
 	public void delete(@PathVariable Long accessTokenId) {
 		accessTokenService.delete(accessTokenId);
+	}
+
+	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public AccessToken findAccessTokenByUserIdByUserType(
+			@RequestParam(value = "userId", required = true) Long userId,
+			@RequestParam(value = "userType", required = true) String userType
+			) {
+		// TODO: remove this method, this is just a quick access to get the tokenss
+		return accessTokenService.findAccessTokenByUserIdByUserType(userId, userType);
 	}
 
 }
