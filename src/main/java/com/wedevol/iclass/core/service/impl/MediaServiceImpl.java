@@ -1,5 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
+import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_COURSE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_FILE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_SEPARATOR;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wedevol.iclass.core.amazon.AmazonS3Service;
 import com.wedevol.iclass.core.amazon.BasicFile;
 import com.wedevol.iclass.core.amazon.MediaFile;
+import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.MaterialType;
@@ -24,6 +26,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.InternalServerException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.ServerErrorType;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.MediaService;
 import com.wedevol.iclass.core.service.StudentService;
@@ -48,6 +51,9 @@ public class MediaServiceImpl implements MediaService {
 
 	@Autowired
 	private InstructorService instructorService;
+	
+	@Autowired
+	private CourseService courseService;
 
 	@Override
 	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
@@ -101,11 +107,27 @@ public class MediaServiceImpl implements MediaService {
 			instructorService.update(userId, newInstructor);
 		}
 	}
+	
+	private void asocciateMaterialToCourse(Long courseId, MaterialType materialType, String url) {
+		Course newCourse = new Course();
+		if (MaterialType.CLASS.equals(materialType)) {
+			newCourse.setClassMaterialUrl(url);
+			courseService.update(courseId, newCourse);
+		} else if (MaterialType.EXERCISE.equals(materialType)) {
+			newCourse.setClassMaterialUrl(url);
+			courseService.update(courseId, newCourse);
+		}
+	}
 
 	@Override
-	public String uploadMaterialFile(Long userId, MultipartFile multipart, MaterialType materialType) {
-		// TODO: missing implementation
-		return null;
+	public String uploadMaterialFile(Long courseId, MultipartFile multipart, MaterialType materialType) {
+		validateMultipartFile(multipart);
+		final BasicFile basicFile = getMediaFile(multipart);
+		final MediaFile mediaFile = MediaFile.from(basicFile);
+		String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
+		final String url = amazonS3Service.uploadFile(directory, mediaFile);
+		asocciateMaterialToCourse(courseId, materialType, url);
+		return url;
 	}
 
 }

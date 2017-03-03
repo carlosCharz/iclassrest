@@ -61,7 +61,7 @@ public class Course implements Serializable {
 		this.id = id;
 	}
 
-	protected Course() {
+	public Course() {
 	}
 
 	private Course(CourseBuilder builder) {

@@ -115,6 +115,12 @@ public class CourseServiceImpl implements CourseService {
 			universityService.findById(course.getUniversityId());
 			existingCourse.setUniversityId(course.getUniversityId());
 		}
+		if (!isNullOrEmpty(course.getClassMaterialUrl())) {
+			existingCourse.setClassMaterialUrl(course.getClassMaterialUrl());
+		}
+		if (!isNullOrEmpty(course.getExerciseMaterialUrl())) {
+			existingCourse.setExerciseMaterialUrl(course.getExerciseMaterialUrl());
+		}
 		// The department should exist
 		final DepartmentId id = new DepartmentId(course.getUniversityId(), course.getFacultyId());
 		departmentService.findById(id);
