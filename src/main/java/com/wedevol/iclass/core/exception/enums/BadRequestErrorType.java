@@ -22,7 +22,8 @@ public enum BadRequestErrorType {
 	ACCESS_TOKEN_ALREADY_EXISTS(400, "The access token already exists"),
 	USER_ID_FROM_URL_INVALID(400, "There is no userId in the url"),
 	USER_TYPE_FROM_URL_INVALID(400, "Invalid userType (students, instructors or admins) in the url"),
-	EXCEEDED_MULTIPART_MAX_FILE_SIZE(400, "The file exceeds the maximum size permitted");
+	EXCEEDED_MULTIPART_MAX_FILE_SIZE(400, "The file exceeds the maximum size permitted"),
+	EMPTY_MULTIPART_FILE_SIZE(400, "The file is empty");
 
 	private final int code;
 	private final String message;

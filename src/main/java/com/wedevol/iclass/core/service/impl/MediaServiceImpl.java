@@ -18,6 +18,10 @@ import com.wedevol.iclass.core.amazon.PictureFile;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.UserType;
+import com.wedevol.iclass.core.exception.BadRequestException;
+import com.wedevol.iclass.core.exception.InternalServerException;
+import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.MediaService;
 import com.wedevol.iclass.core.service.StudentService;
@@ -65,12 +69,10 @@ public class MediaServiceImpl implements MediaService {
 						multipart.getSize(), multipart.getInputStream());
 				return uploadUserPicture(userId, userType, mediaFile);
 			} catch (IOException e) {
-				// TODO: throw exception
-				return null;
+				throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);
 			}
 		} else {
-			logger.info("You failed to upload because the file was empty!.");
-			return null;
+			throw new BadRequestException(BadRequestErrorType.EMPTY_MULTIPART_FILE_SIZE);
 		}
 	}
 
@@ -96,12 +98,10 @@ public class MediaServiceImpl implements MediaService {
 				final PictureFile pictureInfo = PictureFile.from(mediaFile);
 				return amazonS3Service.uploadFile(DIRECTORY_FILE, pictureInfo);
 			} catch (IOException e) {
-				// TODO: throw exception
-				return null;
+				throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);
 			}
 		} else {
-			logger.info("You failed to upload because the file was empty!.");
-			return null;
+			throw new BadRequestException(BadRequestErrorType.EMPTY_MULTIPART_FILE_SIZE);
 		}
 	}
 
