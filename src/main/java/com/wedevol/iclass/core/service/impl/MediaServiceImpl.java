@@ -48,10 +48,24 @@ public class MediaServiceImpl implements MediaService {
 	private InstructorService instructorService;
 
 	@Override
-	public String uploadUserPicture(Long userId, UserType userType, MediaFile file) {
+	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
+		validateMultipartFile(multipart);
+		final MediaFile mediaFile = getMediaFile(multipart);
+		return uploadUserPicture(userId, userType, mediaFile);
+	}
+
+	private String uploadUserPicture(Long userId, UserType userType, MediaFile file) {
 		final String url = uploadPicture(userId, userType, file);
 		asocciatePictureToProfile(userId, userType, url);
 		return url;
+	}
+
+	@Override
+	public String uploadFile(MultipartFile multipart) {
+		validateMultipartFile(multipart);
+		final MediaFile mediaFile = getMediaFile(multipart);
+		final PictureFile pictureInfo = PictureFile.from(mediaFile);
+		return amazonS3Service.uploadFile(DIRECTORY_FILE, pictureInfo);
 	}
 
 	private String uploadPicture(Long userId, UserType userType, MediaFile file) {
@@ -60,19 +74,18 @@ public class MediaServiceImpl implements MediaService {
 		return amazonS3Service.uploadFile(userId, userType, DIRECTORY_PICTURES, pictureInfo);
 	}
 
-	@Override
-	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
-		if (!multipart.isEmpty()) {
-			MediaFile mediaFile;
-			try {
-				mediaFile = new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(),
-						multipart.getSize(), multipart.getInputStream());
-				return uploadUserPicture(userId, userType, mediaFile);
-			} catch (IOException e) {
-				throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);
-			}
-		} else {
+	private void validateMultipartFile(MultipartFile multipart) {
+		if (multipart.isEmpty()) {
 			throw new BadRequestException(BadRequestErrorType.EMPTY_MULTIPART_FILE_SIZE);
+		}
+	}
+
+	private MediaFile getMediaFile(MultipartFile multipart) {
+		try {
+			return new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(), multipart.getSize(),
+					multipart.getInputStream());
+		} catch (IOException e) {
+			throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);
 		}
 	}
 
@@ -85,23 +98,6 @@ public class MediaServiceImpl implements MediaService {
 			Instructor newInstructor = new Instructor();
 			newInstructor.setProfilePictureUrl(url);
 			instructorService.update(userId, newInstructor);
-		}
-	}
-
-	@Override
-	public String uploadAnyFile(MultipartFile multipart) {
-		if (!multipart.isEmpty()) {
-			MediaFile mediaFile;
-			try {
-				mediaFile = new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(),
-						multipart.getSize(), multipart.getInputStream());
-				final PictureFile pictureInfo = PictureFile.from(mediaFile);
-				return amazonS3Service.uploadFile(DIRECTORY_FILE, pictureInfo);
-			} catch (IOException e) {
-				throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);
-			}
-		} else {
-			throw new BadRequestException(BadRequestErrorType.EMPTY_MULTIPART_FILE_SIZE);
 		}
 	}
 

@@ -57,8 +57,8 @@ public class MediaController {
 	@RequestMapping(value = "/files/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public String uploadAnyFile(@RequestParam(value = "file", required = true) MultipartFile file) {
-		final String url = mediaService.uploadAnyFile(file);
+	public String uploadFile(@RequestParam(value = "file", required = true) MultipartFile file) {
+		final String url = mediaService.uploadFile(file);
 		return url;
 	}
 
