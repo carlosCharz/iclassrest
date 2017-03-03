@@ -1,7 +1,7 @@
 package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_FILE;
-import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURES;
+import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_SEPARATOR;
 
 import java.io.IOException;
@@ -18,6 +18,7 @@ import com.wedevol.iclass.core.amazon.BasicFile;
 import com.wedevol.iclass.core.amazon.MediaFile;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.enums.MaterialType;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.InternalServerException;
@@ -68,7 +69,7 @@ public class MediaServiceImpl implements MediaService {
 		// TODO: here we should use a library to get the metadata and validate
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		final String userTypeDirectory = userType.getDescription();
-		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURES);
+		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURE);
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);
 		asocciatePictureToProfile(userId, userType, url);
 		return url;
@@ -99,6 +100,12 @@ public class MediaServiceImpl implements MediaService {
 			newInstructor.setProfilePictureUrl(url);
 			instructorService.update(userId, newInstructor);
 		}
+	}
+
+	@Override
+	public String uploadMaterialFile(Long userId, MultipartFile multipart, MaterialType materialType) {
+		// TODO: missing implementation
+		return null;
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wedevol.iclass.core.annotation.Authorize;
+import com.wedevol.iclass.core.entity.enums.MaterialType;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.service.MediaService;
 
@@ -59,6 +60,24 @@ public class MediaController {
 	@ResponseBody
 	public String uploadFile(@RequestParam(value = "file", required = true) MultipartFile file) {
 		final String url = mediaService.uploadFile(file);
+		return url;
+	}
+	
+	@Authorize(basic = true)
+	@RequestMapping(value = "/courses/{courseId}/class/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public String uploadClassMaterialFile(@PathVariable Long courseId, @RequestParam(value = "file", required = true) MultipartFile file) {
+		final String url = mediaService.uploadMaterialFile(courseId, file, MaterialType.CLASS);
+		return url;
+	}
+	
+	@Authorize(basic = true)
+	@RequestMapping(value = "/courses/{courseId}/excercise/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public String uploadExerciseMaterialFile(@PathVariable Long courseId, @RequestParam(value = "file", required = true) MultipartFile file) {
+		final String url = mediaService.uploadMaterialFile(courseId, file, MaterialType.EXERCISE);
 		return url;
 	}
 

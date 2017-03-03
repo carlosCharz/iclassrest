@@ -15,8 +15,9 @@ public class FileUtil {
 	public static final String DIRECTORY_SEPARATOR = "/";
 	public static final String EXTENSION_SEPARATOR = ".";
 	public static final String ASPECT_RATIO_HEADER_NAME = "aspect-ratio";
-	public static final String DIRECTORY_PICTURES = "picture";
+	public static final String DIRECTORY_PICTURE = "picture";
 	public static final String DIRECTORY_FILE = "file";
+	public static final String DIRECTORY_COURSE = "course";
 
 	/**
 	 * 
