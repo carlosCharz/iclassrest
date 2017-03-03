@@ -32,16 +32,4 @@ public class ApplicationProfiler {
 		return pjp.proceed();
 	}
 
-	@Around("execution(* com.wedevol.iclass.core.service.impl.*.*(..))")
-	public Object aroundServiceImpls(ProceedingJoinPoint pjp) throws Throwable {
-
-		final Signature method = pjp.getSignature();
-		final String packageName = method.getDeclaringTypeName();
-		final String serviceName = packageName.substring(packageName.lastIndexOf(".") + 1);
-
-		logger.info(serviceName + " -> " + method.getName());
-
-		return pjp.proceed();
-	}
-
 }
