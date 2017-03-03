@@ -54,11 +54,11 @@ public class MediaController {
 	}
 
 	@Authorize(basic = true)
-	@RequestMapping(value = "/courses/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/files/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public String uploadCourseFile(@RequestParam(value = "file", required = true) MultipartFile file) {
-		final String url = mediaService.uploadCourseFile(file);
+	public String uploadAnyFile(@RequestParam(value = "file", required = true) MultipartFile file) {
+		final String url = mediaService.uploadAnyFile(file);
 		return url;
 	}
 

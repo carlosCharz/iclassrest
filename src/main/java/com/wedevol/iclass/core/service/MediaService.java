@@ -19,6 +19,6 @@ public interface MediaService extends DefaultInterface {
 	
 	String addUserPicture(Long userId, UserType userType, MultipartFile multipart);
 	
-	String uploadCourseFile(MultipartFile multipart);
+	String uploadAnyFile(MultipartFile multipart);
 
 }

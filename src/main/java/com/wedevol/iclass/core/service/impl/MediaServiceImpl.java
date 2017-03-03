@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_MATERIAL;
+import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_FILE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURES;
 
 import java.io.IOException;
@@ -87,14 +87,14 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public String uploadCourseFile(MultipartFile multipart) {
+	public String uploadAnyFile(MultipartFile multipart) {
 		if (!multipart.isEmpty()) {
 			MediaFile mediaFile;
 			try {
 				mediaFile = new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(),
 						multipart.getSize(), multipart.getInputStream());
 				final PictureFile pictureInfo = PictureFile.from(mediaFile);
-				return amazonS3Service.uploadFile(DIRECTORY_MATERIAL, pictureInfo);
+				return amazonS3Service.uploadFile(DIRECTORY_FILE, pictureInfo);
 			} catch (IOException e) {
 				// TODO: throw exception
 				return null;
