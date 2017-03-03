@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wedevol.iclass.core.amazon.AmazonS3Service;
+import com.wedevol.iclass.core.amazon.BasicFile;
 import com.wedevol.iclass.core.amazon.MediaFile;
-import com.wedevol.iclass.core.amazon.PictureFile;
 import com.wedevol.iclass.core.entity.Instructor;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.UserType;
@@ -51,30 +51,27 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final MediaFile mediaFile = getMediaFile(multipart);
-		return uploadUserPicture(userId, userType, mediaFile);
+		final BasicFile basicFile = getMediaFile(multipart);
+		return uploadUserPicture(userId, userType, basicFile);
 	}
-
-	private String uploadUserPicture(Long userId, UserType userType, MediaFile file) {
-		final String url = uploadPicture(userId, userType, file);
-		asocciatePictureToProfile(userId, userType, url);
-		return url;
-	}
-
+	
 	@Override
 	public String uploadFile(MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final MediaFile mediaFile = getMediaFile(multipart);
-		final PictureFile pictureInfo = PictureFile.from(mediaFile);
-		return amazonS3Service.uploadFile(DIRECTORY_FILE, pictureInfo);
+		final BasicFile basicFile = getMediaFile(multipart);
+		// TODO: here we should use a library to get the metadata and validate
+		final MediaFile mediaFile = MediaFile.from(basicFile);
+		return amazonS3Service.uploadFile(DIRECTORY_FILE, mediaFile);
 	}
 
-	private String uploadPicture(Long userId, UserType userType, MediaFile file) {
+	private String uploadUserPicture(Long userId, UserType userType, BasicFile basicFile) {
 		// TODO: here we should use a library to get the metadata and validate
-		final PictureFile pictureInfo = PictureFile.from(file);
+		final MediaFile mediaFile = MediaFile.from(basicFile);
 		final String userTypeDirectory = userType.getDescription();
 		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURES);
-		return amazonS3Service.uploadFile(directory, pictureInfo);
+		final String url = amazonS3Service.uploadFile(directory, mediaFile);
+		asocciatePictureToProfile(userId, userType, url);
+		return url;
 	}
 
 	private void validateMultipartFile(MultipartFile multipart) {
@@ -83,9 +80,9 @@ public class MediaServiceImpl implements MediaService {
 		}
 	}
 
-	private MediaFile getMediaFile(MultipartFile multipart) {
+	private BasicFile getMediaFile(MultipartFile multipart) {
 		try {
-			return new MediaFile(multipart.getOriginalFilename(), multipart.getContentType(), multipart.getSize(),
+			return new BasicFile(multipart.getOriginalFilename(), multipart.getContentType(), multipart.getSize(),
 					multipart.getInputStream());
 		} catch (IOException e) {
 			throw new InternalServerException(ServerErrorType.CANNOT_GET_INPUT_STREAM);

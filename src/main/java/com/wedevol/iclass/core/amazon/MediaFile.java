@@ -1,27 +1,44 @@
 package com.wedevol.iclass.core.amazon;
 
 import java.io.InputStream;
+import java.util.Optional;
 
 /**
- * Media File Class
+ * Media File Entity
  * 
- * @author charz
- * 
+ * @author Charz++
  */
-public class MediaFile  {
-
-	protected static final long serialVersionUID = 8457266600876524592L;
+public class MediaFile {
 
 	private String fileName;
 	private String contentType;
 	private Long size;
 	private InputStream inputStream;
+	private FileMetadata metadata;
+
+	public static MediaFile from(BasicFile basicFile) {
+		return new MediaFile(basicFile.getFileName(), basicFile.getContentType(), basicFile.getSize(), basicFile.getInputStream());
+	}
+
+	public MediaFile(String fileName, String contentType, Long size, InputStream inputStream, FileMetadata metadata) {
+		this.fileName = fileName;
+		this.contentType = contentType;
+		this.size = size;
+		this.inputStream = inputStream;
+		this.metadata = metadata;
+	}
 
 	public MediaFile(String fileName, String contentType, Long size, InputStream inputStream) {
 		this.fileName = fileName;
 		this.contentType = contentType;
 		this.size = size;
 		this.inputStream = inputStream;
+	}
+
+	public void addMetadata(FileMetadata metadata) {
+		Optional.ofNullable(this.metadata)
+				.orElseGet(FileMetadata::new)
+				.addAll(metadata);
 	}
 
 	public String getFileName() {
@@ -56,4 +73,11 @@ public class MediaFile  {
 		this.inputStream = inputStream;
 	}
 
+	public FileMetadata getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(FileMetadata metadata) {
+		this.metadata = metadata;
+	}
 }

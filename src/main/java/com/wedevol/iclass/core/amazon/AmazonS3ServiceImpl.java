@@ -38,7 +38,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 	}
 
 	@Override
-	public String uploadFile(String directory, PictureFile pictureFile) {
+	public String uploadFile(String directory, MediaFile pictureFile) {
 		String fileId = generateBasicFileId(prefix, directory, pictureFile.getFileName());
 		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
 				pictureFile.getMetadata());
