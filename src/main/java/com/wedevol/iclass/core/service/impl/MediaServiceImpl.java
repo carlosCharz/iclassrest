@@ -2,6 +2,7 @@ package com.wedevol.iclass.core.service.impl;
 
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_FILE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURES;
+import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_SEPARATOR;
 
 import java.io.IOException;
 
@@ -71,7 +72,9 @@ public class MediaServiceImpl implements MediaService {
 	private String uploadPicture(Long userId, UserType userType, MediaFile file) {
 		// TODO: here we should use a library to get the metadata and validate
 		final PictureFile pictureInfo = PictureFile.from(file);
-		return amazonS3Service.uploadFile(userId, userType, DIRECTORY_PICTURES, pictureInfo);
+		final String userTypeDirectory = userType.getDescription();
+		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURES);
+		return amazonS3Service.uploadFile(directory, pictureInfo);
 	}
 
 	private void validateMultipartFile(MultipartFile multipart) {

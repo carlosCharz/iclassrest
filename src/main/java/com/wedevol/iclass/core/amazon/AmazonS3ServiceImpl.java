@@ -1,7 +1,6 @@
 package com.wedevol.iclass.core.amazon;
 
 import static com.wedevol.iclass.core.util.FileUtil.generateBasicFileId;
-import static com.wedevol.iclass.core.util.FileUtil.generateUserFileId;
 
 import java.io.InputStream;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.wedevol.iclass.core.entity.enums.UserType;
 
 /**
  * Amazon S3 Service Implementation
@@ -33,11 +31,17 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 		this.bucket = bucket;
 		this.prefix = prefix;
 		BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
-		this.client = AmazonS3ClientBuilder
-											.standard()
-												.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-												.withRegion(Regions.US_WEST_2)
-												.build();
+		this.client = AmazonS3ClientBuilder.standard()
+											.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+											.withRegion(Regions.US_WEST_2)
+											.build();
+	}
+
+	@Override
+	public String uploadFile(String directory, PictureFile pictureFile) {
+		String fileId = generateBasicFileId(prefix, directory, pictureFile.getFileName());
+		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
+				pictureFile.getMetadata());
 	}
 
 	@Override
@@ -61,37 +65,23 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 		}
 	}
 
-	@Override
-	public String uploadFile(Long userId, UserType userType, String mediaTypeDirectory, PictureFile pictureFile) {
-		final String userTypeDirectory = userType.getDescription();
-		String fileId = generateUserFileId(prefix, userTypeDirectory, userId, mediaTypeDirectory,
-				pictureFile.getFileName());
-		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
-				pictureFile.getMetadata());
-	}
-
 	private String uploadFile(String fileId, InputStream inputStream, String contentType, Long contentLength,
 			FileMetadata metadata) {
 		ObjectMetadata objectMetadata = buildMetadataObject(contentType, contentLength, metadata);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, fileId, inputStream,
-				objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, fileId, inputStream, objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
 		client.putObject(putObjectRequest);
 		return fileId;
 	}
 
 	private ObjectMetadata buildMetadataObject(String contentType, Long contentLength, FileMetadata metadata) {
 		ObjectMetadata objectMetadata = new ObjectMetadata();
-		Optional.ofNullable(contentType).ifPresent(objectMetadata::setContentType);
-		Optional.ofNullable(contentLength).ifPresent(objectMetadata::setContentLength);
-		Optional.ofNullable(metadata).ifPresent(m -> m.forEach(objectMetadata::addUserMetadata));
+		Optional.ofNullable(contentType)
+				.ifPresent(objectMetadata::setContentType);
+		Optional.ofNullable(contentLength)
+				.ifPresent(objectMetadata::setContentLength);
+		Optional.ofNullable(metadata)
+				.ifPresent(m -> m.forEach(objectMetadata::addUserMetadata));
 		return objectMetadata;
-	}
-
-	@Override
-	public String uploadFile(String directory, PictureFile pictureFile) {
-		String fileId = generateBasicFileId(prefix, directory, pictureFile.getFileName());
-		return uploadFile(fileId, pictureFile.getInputStream(), pictureFile.getContentType(), pictureFile.getSize(),
-				pictureFile.getMetadata());
 	}
 
 }
