@@ -73,7 +73,7 @@ public class MediaController {
 	}
 	
 	@Authorize(basic = true)
-	@RequestMapping(value = "/courses/{courseId}/excercise/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@RequestMapping(value = "/courses/{courseId}/exercise/upload", method = RequestMethod.POST, headers = ("content-type=multipart/*"), consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public String uploadExerciseMaterialFile(@PathVariable Long courseId, @RequestParam(value = "file", required = true) MultipartFile file) {

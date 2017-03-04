@@ -121,9 +121,11 @@ public class CourseServiceImpl implements CourseService {
 		if (!isNullOrEmpty(course.getExerciseMaterialUrl())) {
 			existingCourse.setExerciseMaterialUrl(course.getExerciseMaterialUrl());
 		}
-		// The department should exist
-		final DepartmentId id = new DepartmentId(course.getUniversityId(), course.getFacultyId());
-		departmentService.findById(id);
+		if (course.getUniversityId() != null && course.getFacultyId() != null) {
+			// The department should exist
+			final DepartmentId id = new DepartmentId(course.getUniversityId(), course.getFacultyId());
+			departmentService.findById(id);
+		}
 		// Save
 		courseRepository.save(existingCourse);
 	}
@@ -171,7 +173,7 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId) {
 		// The faculty should exist
-		facultyService.findById(facultyId);				
+		facultyService.findById(facultyId);
 		// The university should exist
 		universityService.findById(universityId);
 		// The department should exist
