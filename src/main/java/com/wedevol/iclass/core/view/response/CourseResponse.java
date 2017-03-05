@@ -15,6 +15,8 @@ public class CourseResponse implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	private String classMaterialUrl;
+	private String exerciseMaterialUrl;
 	private String faculty;
 	private String university;
 	private String status;
@@ -24,11 +26,13 @@ public class CourseResponse implements Serializable {
 	protected CourseResponse() {
 	}
 
-	public CourseResponse(Long id, String name, String description, String faculty, String university, String status,
-			Float price, String currency) {
+	public CourseResponse(Long id, String name, String description, String classMaterialUrl, String exerciseMaterialUrl,
+			String faculty, String university, String status, Float price, String currency) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.classMaterialUrl = classMaterialUrl;
+		this.exerciseMaterialUrl = exerciseMaterialUrl;
 		this.faculty = faculty;
 		this.university = university;
 		this.status = status;
@@ -36,13 +40,9 @@ public class CourseResponse implements Serializable {
 		this.currency = currency;
 	}
 
-	public CourseResponse(Long id, String name, String description, String faculty, String university, String status) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.faculty = faculty;
-		this.university = university;
-		this.status = status;
+	public CourseResponse(Long id, String name, String description, String classMaterialUrl, String exerciseMaterialUrl,
+			String faculty, String university, String status) {
+		this(id, name, description, classMaterialUrl, exerciseMaterialUrl, faculty, university, status, null, null);
 	}
 
 	public Long getId() {
@@ -67,6 +67,22 @@ public class CourseResponse implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getClassMaterialUrl() {
+		return classMaterialUrl;
+	}
+
+	public void setClassMaterialUrl(String classMaterialUrl) {
+		this.classMaterialUrl = classMaterialUrl;
+	}
+
+	public String getExerciseMaterialUrl() {
+		return exerciseMaterialUrl;
+	}
+
+	public void setExerciseMaterialUrl(String exerciseMaterialUrl) {
+		this.exerciseMaterialUrl = exerciseMaterialUrl;
 	}
 
 	public String getFaculty() {
@@ -108,7 +124,7 @@ public class CourseResponse implements Serializable {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("CourseResponse[id=%d, name='%s']%n", id, name);
