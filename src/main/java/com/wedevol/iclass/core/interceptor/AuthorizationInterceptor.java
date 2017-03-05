@@ -41,8 +41,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// TODO: remove logger
-		logger.info("--- Before Method Execution ---");
 		final HandlerMethod handlerMethod = (HandlerMethod) handler;
 		final Method method = handlerMethod.getMethod();
 		if (method.isAnnotationPresent(Authorize.class)) {
@@ -54,9 +52,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	private void validateAuthorization(HttpServletRequest request, final Method method) {
 		final boolean basicValue = method.getAnnotation(Authorize.class).basic();
 		final boolean hardValue = method.getAnnotation(Authorize.class).hard();
-		logger.info("basic: " + basicValue + " hard: " + hardValue);
 		final String authParam = getAuthorizationParamOrThrow(request);
-		logger.info("Header:" + authParam);
 		if (basicValue) {
 			// Check that the token exists
 			this.findByTokenOrThrow(authParam);
