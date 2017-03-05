@@ -164,6 +164,9 @@ public class InstructorServiceImpl implements InstructorService {
 		if (instructor.getLevel() != null) {
 			existingInstructor.setLevel(instructor.getLevel());
 		}
+		if (!isNullOrEmpty(instructor.getDescription())) {
+			existingInstructor.setDescription(instructor.getDescription());
+		}
 		// Save
 		instructorRepository.save(existingInstructor);
 	}

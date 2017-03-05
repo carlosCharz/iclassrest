@@ -111,6 +111,10 @@ public class Instructor implements Serializable {
 	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
 	@Column(name = "deviceid")
 	private String deviceId;
+	
+	@Size(min = 2, max = 300, message = "Description must be between 2 - 300 characters")
+	@Column
+	private String description;
 
 	@Column
 	private boolean active;
@@ -145,6 +149,7 @@ public class Instructor implements Serializable {
 		this.active = builder.active;
 		this.fcmToken = builder.fcmToken;
 		this.deviceId = builder.deviceId;
+		this.description = builder.description;
 	}
 
 	public Long getId() {
@@ -292,6 +297,14 @@ public class Instructor implements Serializable {
 		this.deviceId = deviceId;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -325,6 +338,7 @@ public class Instructor implements Serializable {
 		private Integer totalHours;
 		private String fcmToken;
 		private String deviceId;
+		private String description;
 		private boolean active;
 
 		public InstructorBuilder(String firstName, String lastName, String phone, String email, String password) {
@@ -391,6 +405,11 @@ public class Instructor implements Serializable {
 		
 		public InstructorBuilder deviceId(String deviceId) {
 			this.deviceId = deviceId;
+			return this;
+		}
+		
+		public InstructorBuilder description(String description) {
+			this.description = description;
 			return this;
 		}
 

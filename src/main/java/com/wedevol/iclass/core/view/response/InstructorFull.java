@@ -45,6 +45,7 @@ public class InstructorFull implements Serializable {
 	private Integer level;
 	private Integer totalHours;
 	private String accessToken;
+	private String description;
 
 	protected InstructorFull() {
 	}
@@ -222,26 +223,35 @@ public class InstructorFull implements Serializable {
 		this.accessToken = accessToken;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public static InstructorFull from(Instructor instructor) {
-		InstructorFull instructorView = new InstructorFull(instructor.getId());
-		instructorView.setFirstName(instructor.getFirstName());
-		instructorView.setLastName(instructor.getLastName());
-		instructorView.setPhone(instructor.getPhone());
-		instructorView.setEmail(instructor.getEmail());
-		instructorView.setPassword(instructor.getPassword());
-		instructorView.setBirthday(instructor.getBirthday());
-		instructorView.setGender(instructor.getGender());
-		instructorView.setProfilePictureUrl(instructor.getProfilePictureUrl());
-		instructorView.setPlaceOptions(instructor.getPlaceOptions().isEmpty() ? null : instructor.getPlaceOptions());
-		instructorView.setFacultyId(instructor.getFacultyId());
-		instructorView.setUniversityId(instructor.getUniversityId());
-		instructorView.setFcmToken(instructor.getFcmToken());
-		instructorView.setDeviceId(instructor.getDeviceId());
-		instructorView.setRating(instructor.getRating());
-		instructorView.setRatingCount(instructor.getRatingCount());
-		instructorView.setLevel(instructor.getLevel());
-		instructorView.setTotalHours(instructor.getTotalHours());
-		return instructorView;
+		InstructorFull instructoFull = new InstructorFull(instructor.getId());
+		instructoFull.setFirstName(instructor.getFirstName());
+		instructoFull.setLastName(instructor.getLastName());
+		instructoFull.setPhone(instructor.getPhone());
+		instructoFull.setEmail(instructor.getEmail());
+		instructoFull.setPassword(instructor.getPassword());
+		instructoFull.setBirthday(instructor.getBirthday());
+		instructoFull.setGender(instructor.getGender());
+		instructoFull.setProfilePictureUrl(instructor.getProfilePictureUrl());
+		instructoFull.setPlaceOptions(instructor.getPlaceOptions().isEmpty() ? null : instructor.getPlaceOptions());
+		instructoFull.setFacultyId(instructor.getFacultyId());
+		instructoFull.setUniversityId(instructor.getUniversityId());
+		instructoFull.setFcmToken(instructor.getFcmToken());
+		instructoFull.setDeviceId(instructor.getDeviceId());
+		instructoFull.setRating(instructor.getRating());
+		instructoFull.setRatingCount(instructor.getRatingCount());
+		instructoFull.setLevel(instructor.getLevel());
+		instructoFull.setTotalHours(instructor.getTotalHours());
+		instructoFull.setDescription(instructor.getDescription());
+		return instructoFull;
 	}
 
 	public static InstructorFull from(Instructor instructor, University university, Faculty faculty) {
