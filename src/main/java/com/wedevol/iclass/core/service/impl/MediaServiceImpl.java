@@ -114,7 +114,7 @@ public class MediaServiceImpl implements MediaService {
 			newCourse.setClassMaterialUrl(url);
 			courseService.update(courseId, newCourse);
 		} else if (MaterialType.EXERCISE.equals(materialType)) {
-			newCourse.setClassMaterialUrl(url);
+			newCourse.setExerciseMaterialUrl(url);
 			courseService.update(courseId, newCourse);
 		}
 	}
