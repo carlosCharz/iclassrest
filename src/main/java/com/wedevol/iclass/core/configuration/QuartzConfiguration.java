@@ -19,12 +19,16 @@ import com.wedevol.iclass.core.job.BatchProcessJob;
 public class QuartzConfiguration {
 
 	protected static final Logger logger = LoggerFactory.getLogger(QuartzConfiguration.class);
+	private static final String jobGroupName = "batchGroup";
+	private static final String jobName = "batchProcessJob";
 
 	@Bean
 	public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
 		MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
-		obj.setTargetBeanName("batchProcessJob");
+		obj.setTargetBeanName(jobName);
 		obj.setTargetMethod("execute");
+		obj.setName(jobName);
+		obj.setGroup(jobGroupName); // Do not delete this. If so then the default group is DEFAULT
 		return obj;
 	}
 
@@ -34,7 +38,7 @@ public class QuartzConfiguration {
 		stFactory.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
 		stFactory.setStartDelay(3000);
 		stFactory.setName("batchTrigger");
-		stFactory.setGroup("batchGroup");
+		stFactory.setGroup(jobGroupName);
 		stFactory.setCronExpression("0 0/45 * * * ? *");// Job is scheduled after every 45 minutes
 		logger.info("Setting up the batch process job to be every 45 minutes");
 		return stFactory;
@@ -47,7 +51,7 @@ public class QuartzConfiguration {
 		return scheduler;
 	}
 
-	@Bean(name = "batchProcessJob")
+	@Bean(name = jobName)
 	public BatchProcessJob batchProcessJobBean() {
 		return new BatchProcessJob();
 	}
