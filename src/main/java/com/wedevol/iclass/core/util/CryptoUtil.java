@@ -39,7 +39,7 @@ public class CryptoUtil {
 									.replace("-", "");
 	}
 
-	public static String randomString(Integer size) {
+	public static String randomString(int size) {
 		StringBuilder sb = new StringBuilder(size);
 		for (int i = 0; i < size; i++)
 			sb.append(AVAILABLE_LETTERS.charAt(RANDOM.nextInt(AVAILABLE_LETTERS.length())));
