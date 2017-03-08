@@ -24,7 +24,7 @@ import com.wedevol.iclass.core.service.AccessTokenService;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * Access Token Controller
+ * Access Token Controller (iClass)
  * 
  * @author charz
  *
