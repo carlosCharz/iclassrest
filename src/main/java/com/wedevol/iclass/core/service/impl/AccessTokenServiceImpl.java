@@ -1,6 +1,6 @@
 package com.wedevol.iclass.core.service.impl;
 
-import static com.wedevol.iclass.core.util.CryptoUtil.getTimeBasedUUIDString;
+import static com.wedevol.iclass.core.util.CryptoUtil.createAccessToken;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +60,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 		if (tokenObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ACCESS_TOKEN_ALREADY_EXISTS);
 		}
-		final String newToken = getTimeBasedUUIDString();
+		final String newToken = createAccessToken();
 		accessToken.setToken(newToken);
 		// Save
 		return accessTokenRepository.save(accessToken);
@@ -112,7 +112,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 		final Optional<AccessToken> tokenObj = Optional.ofNullable(
 				this.findByUserIdAndUserType(userId, accessToken.getUserType()));
 		// Update or create a new token
-		final String newToken = getTimeBasedUUIDString();
+		final String newToken = createAccessToken();
 		if (tokenObj.isPresent()) {
 			AccessToken existingAccessToken = tokenObj.get();
 			existingAccessToken.setToken(newToken);

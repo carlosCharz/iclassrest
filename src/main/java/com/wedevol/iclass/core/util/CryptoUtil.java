@@ -45,5 +45,13 @@ public class CryptoUtil {
 			sb.append(AVAILABLE_LETTERS.charAt(RANDOM.nextInt(AVAILABLE_LETTERS.length())));
 		return sb.toString();
 	}
+	
+	public static String createAccessToken() {
+		return getTimeBasedUUIDString();
+	}
+	
+	public static String createReferenceCode() {
+		return randomString(5);
+	}
 
 }
