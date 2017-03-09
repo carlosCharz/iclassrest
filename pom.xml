@@ -18,6 +18,7 @@
 		<fcm.version>1.0.0</fcm.version>
 		<apacheio.version>2.5</apacheio.version>
 		<uuid.version>3.1.4</uuid.version>
+		<orika.version>1.5.0</orika.version>
 	</properties>
 
 	<parent>
@@ -106,6 +107,12 @@
     		<groupId>com.fasterxml.uuid</groupId>
     		<artifactId>java-uuid-generator</artifactId>
     		<version>${uuid.version}</version>
+		</dependency>
+		<!-- Orika bean mapper -->
+		<dependency>
+    		<groupId>ma.glasnost.orika</groupId>
+    		<artifactId>orika-core</artifactId>
+    		<version>${orika.version}</version>
 		</dependency>
 	</dependencies>
 
