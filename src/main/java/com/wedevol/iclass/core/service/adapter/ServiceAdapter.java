@@ -10,7 +10,7 @@ import com.wedevol.iclass.core.view.request.UserView;
  *
  * @author Charz++
  */
-public class ServiceAdapter extends BaseServiceAdapter {
+public class ServiceAdapter extends BaseAdapter {
 
 	@Override
 	protected void defineMappings(MapperFactory mapperFactory) {

@@ -17,11 +17,11 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  *
  * @author Charz++
  */
-public abstract class BaseServiceAdapter {
+public abstract class BaseAdapter {
 
 	private MapperFacade mapperFacade;
 
-	public BaseServiceAdapter() {
+	public BaseAdapter() {
 		MapperFactory mapperFactory = new DefaultMapperFactory.Builder().mapNulls(false).build();
 		mapperFactory.getConverterFactory()
 						.registerConverter(
