@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.service.adapter;
+package com.wedevol.iclass.core.adapter;
 
 import ma.glasnost.orika.MapperFactory;
 
