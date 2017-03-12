@@ -22,7 +22,7 @@ public abstract class BaseServiceAdapter {
 	private MapperFacade mapperFacade;
 
 	public BaseServiceAdapter() {
-		MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+		MapperFactory mapperFactory = new DefaultMapperFactory.Builder().mapNulls(false).build();
 		mapperFactory.getConverterFactory()
 						.registerConverter(
 								new PassThroughConverter(LocalDate.class, LocalDateTime.class, LocalTime.class,

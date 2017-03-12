@@ -17,7 +17,6 @@ public class ServiceAdapter extends BaseServiceAdapter {
 
 		mapperFactory.classMap(Student.class, UserView.class)
 						.byDefault()
-						.mapNulls(false)
 						.mapNullsInReverse(false)
 						.register();
 
