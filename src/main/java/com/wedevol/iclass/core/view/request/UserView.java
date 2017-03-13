@@ -85,7 +85,7 @@ public class UserView implements Serializable {
 	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
 	private String deviceId;
 
-	protected UserView() {
+	public UserView() {
 	}
 
 	public String getFirstName() {
