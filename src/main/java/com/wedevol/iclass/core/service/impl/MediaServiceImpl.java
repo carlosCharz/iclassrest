@@ -6,6 +6,7 @@ import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_PICTURE;
 import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_SEPARATOR;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,14 +59,14 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = getMediaFile(multipart);
+		final BasicFile basicFile = buildMediaFile(multipart);
 		return uploadUserPicture(userId, userType, basicFile);
 	}
 	
 	@Override
 	public String uploadFile(MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = getMediaFile(multipart);
+		final BasicFile basicFile = buildMediaFile(multipart);
 		// TODO: here we should use a library to get the metadata and validate
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		return amazonS3Service.uploadFile(DIRECTORY_FILE, mediaFile);
@@ -87,7 +88,7 @@ public class MediaServiceImpl implements MediaService {
 		}
 	}
 
-	private BasicFile getMediaFile(MultipartFile multipart) {
+	private BasicFile buildMediaFile(MultipartFile multipart) {
 		try {
 			return new BasicFile(multipart.getOriginalFilename(), multipart.getContentType(), multipart.getSize(),
 					multipart.getInputStream());
@@ -122,12 +123,18 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public String uploadMaterialFile(Long courseId, MultipartFile multipart, MaterialType materialType) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = getMediaFile(multipart);
+		final BasicFile basicFile = buildMediaFile(multipart);
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);
 		asocciateMaterialToCourse(courseId, materialType, url);
 		return url;
 	}
+	
+	@Override
+	public MediaFile resizePicture(InputStream inputStream, String fileName, int maxWidth) {
+		// TODO: missing implementation
+		return null;
+    }
 
 }
