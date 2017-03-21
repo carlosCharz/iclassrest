@@ -21,10 +21,7 @@ public class MediaFile {
 	}
 
 	public MediaFile(String fileName, String contentType, Long size, InputStream inputStream, FileMetadata metadata) {
-		this.fileName = fileName;
-		this.contentType = contentType;
-		this.size = size;
-		this.inputStream = inputStream;
+		this(fileName, contentType, size, inputStream);
 		this.metadata = metadata;
 	}
 
