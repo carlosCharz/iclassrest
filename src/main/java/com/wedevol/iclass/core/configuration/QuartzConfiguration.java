@@ -39,8 +39,8 @@ public class QuartzConfiguration {
 		stFactory.setStartDelay(3000);
 		stFactory.setName("batchTrigger");
 		stFactory.setGroup(jobGroupName);
-		stFactory.setCronExpression("0 0/45 * * * ? *");// Job is scheduled after every 45 minutes
-		logger.info("Setting up the batch process job to be every 45 minutes");
+		stFactory.setCronExpression("0 0/55 * * * ? *");// Job is scheduled after every 55 minutes
+		logger.info("Setting up the batch process job to be every 55 minutes");
 		return stFactory;
 	}
 
