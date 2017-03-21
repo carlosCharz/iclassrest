@@ -27,6 +27,7 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.InternalServerException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.ServerErrorType;
+import com.wedevol.iclass.core.media.picture.ImageProcessor;
 import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorService;
 import com.wedevol.iclass.core.service.MediaService;
@@ -55,18 +56,21 @@ public class MediaServiceImpl implements MediaService {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private ImageProcessor imageProcessor;
 
 	@Override
 	public String addUserPicture(Long userId, UserType userType, MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = buildMediaFile(multipart);
+		final BasicFile basicFile = buildBasicFile(multipart);
 		return uploadUserPicture(userId, userType, basicFile);
 	}
 	
 	@Override
 	public String uploadFile(MultipartFile multipart) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = buildMediaFile(multipart);
+		final BasicFile basicFile = buildBasicFile(multipart);
 		// TODO: here we should use a library to get the metadata and validate
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		return amazonS3Service.uploadFile(DIRECTORY_FILE, mediaFile);
@@ -74,7 +78,13 @@ public class MediaServiceImpl implements MediaService {
 
 	private String uploadUserPicture(Long userId, UserType userType, BasicFile basicFile) {
 		// TODO: here we should use a library to get the metadata and validate
-		final MediaFile mediaFile = MediaFile.from(basicFile);
+		// Resize the photo
+		MediaFile mediaFile;
+		try {
+			mediaFile = imageProcessor.resize(basicFile.getInputStream(), basicFile.getFileName(), 200);
+		} catch (IOException e) {
+			throw new InternalServerException(ServerErrorType.CANNOT_RESIZE_THE_PHOTO);
+		}
 		final String userTypeDirectory = userType.getDescription();
 		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURE);
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);
@@ -88,7 +98,7 @@ public class MediaServiceImpl implements MediaService {
 		}
 	}
 
-	private BasicFile buildMediaFile(MultipartFile multipart) {
+	private BasicFile buildBasicFile(MultipartFile multipart) {
 		try {
 			return new BasicFile(multipart.getOriginalFilename(), multipart.getContentType(), multipart.getSize(),
 					multipart.getInputStream());
@@ -123,7 +133,7 @@ public class MediaServiceImpl implements MediaService {
 	@Override
 	public String uploadMaterialFile(Long courseId, MultipartFile multipart, MaterialType materialType) {
 		validateMultipartFile(multipart);
-		final BasicFile basicFile = buildMediaFile(multipart);
+		final BasicFile basicFile = buildBasicFile(multipart);
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);

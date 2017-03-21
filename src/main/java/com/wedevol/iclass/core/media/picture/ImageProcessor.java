@@ -10,16 +10,18 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Component;
 
 import com.wedevol.iclass.core.amazon.MediaFile;
 
 /**
- * Picture Manager: resize picture, convert to jpeg
+ * Image Processor: resize picture, convert to jpeg
  * 
  * @author charz
  *
  */
-public class PictureManager {
+@Component
+public class ImageProcessor {
 
 	public MediaFile resize(InputStream inputStream, String fileName, int maxWidth) throws IOException {
 		ByteArrayOutputStreamDirectAccess outputStream = convertFileToJpeg(inputStream, maxWidth);
@@ -39,7 +41,8 @@ public class PictureManager {
 		ByteArrayOutputStreamDirectAccess outputStream = new ByteArrayOutputStreamDirectAccess(
 				inputForImage.getStreamLength());
 		// Get the max height given the target width and the aspect ratio of the original image
-		int maxHeight = (int) ((float) maxWidth / ((float) bufferedImage.getWidth() / (float) bufferedImage.getHeight()));
+		int maxHeight = (int) ((float) maxWidth
+				/ ((float) bufferedImage.getWidth() / (float) bufferedImage.getHeight()));
 		// Calculate dimensions maintaining the aspect ratio
 		Dimension imgSizeDim = new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight());
 		Dimension boundaryDim = new Dimension(maxWidth, maxHeight);
