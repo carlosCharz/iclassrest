@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Material;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.view.response.CourseResponse;
 
@@ -28,5 +29,7 @@ public interface CourseService extends BaseService<Course> {
 	List<CourseResponse> findCoursesByInstructorIdWithCourseStatusFilter(Long instructorId, String courseStatusFilter);
 	
 	List<Course> findCoursesByFacultyIdByUniversityId(Long facultyId, Long universityId);
+	
+	List<Material> findMaterialsByCourseId(Long courseId);
 
 }

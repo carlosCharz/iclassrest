@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wedevol.iclass.core.annotation.Authorize;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Material;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.service.CourseService;
 
@@ -93,5 +94,13 @@ public class CourseController {
 	@ResponseBody
 	public List<Student> findStudentsByCourseId(@PathVariable Long courseId) {
 		return courseService.findStudentsByCourseId(courseId);
+	}
+	
+	@Authorize(basic = true)
+	@RequestMapping(value = "/{courseId}/materials", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Material> findMaterialsByCourseId(@PathVariable Long courseId) {
+		return courseService.findMaterialsByCourseId(courseId);
 	}
 }

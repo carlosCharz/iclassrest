@@ -17,6 +17,7 @@ public enum BadRequestErrorType {
 	COURSE_ALREADY_EXISTS(400, "The course already exists"), TOPIC_ALREADY_EXISTS(400, "The topic already exists"),
 	USER_TYPE_NOT_VALID(400, "User type not valid"), FIELDS_MISSING(400, "Fields missing"),
 	UNIVERSITY_ALREADY_EXISTS(400, "The university already exists"),
+	MATERIAL_ALREADY_EXISTS(400, "The material already exists"),
 	FACULTY_ALREADY_EXISTS(400, "The faculty already exists"),
 	DEPARTMENT_ALREADY_EXISTS(400, "The department already exists"),
 	ACCESS_TOKEN_ALREADY_EXISTS(400, "The access token already exists"),

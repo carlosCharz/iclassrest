@@ -13,6 +13,7 @@ public enum NotFoundErrorType {
 	INSTRUCTOR_SCHEDULE_NOT_FOUND(404, "Instructor schedule not found"), CLASS_NOT_FOUND(404, "Class not found"),
 	COURSE_SUGGESTION_NOT_FOUND(404, "Course suggestion not found"), ADMIN_NOT_FOUND(404, "Admin not found"),
 	FACULTY_NOT_FOUND(404, "Faculty not found"), UNIVERSITY_NOT_FOUND(404, "University not found"),
+	MATERIAL_NOT_FOUND(404, "Material not found"),
 	BATCH_NOTIFICATION_NOT_FOUND(404, "Batch notification not found"),
 	DEPARTMENT_NOT_FOUND(404, "Department not found"), ACCESS_TOKEN_NOT_FOUND(404, "Access token not found");
 

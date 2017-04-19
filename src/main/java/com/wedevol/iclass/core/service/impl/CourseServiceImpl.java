@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.DepartmentId;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Material;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
@@ -26,6 +27,7 @@ import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.DepartmentService;
 import com.wedevol.iclass.core.service.FacultyService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.MaterialService;
 import com.wedevol.iclass.core.service.StudentService;
 import com.wedevol.iclass.core.service.UniversityService;
 import com.wedevol.iclass.core.view.response.CourseResponse;
@@ -56,6 +58,9 @@ public class CourseServiceImpl implements CourseService {
 
 	@Autowired
 	private FacultyService facultyService;
+	
+	@Autowired
+	private MaterialService materialService;
 
 	@Autowired
 	private DepartmentService departmentService;
@@ -180,6 +185,11 @@ public class CourseServiceImpl implements CourseService {
 		final DepartmentId id = new DepartmentId(universityId, facultyId);
 		departmentService.findById(id);
 		return courseRepository.findCoursesWithFacultyIdWithUniversityId(facultyId, universityId);
+	}
+
+	@Override
+	public List<Material> findMaterialsByCourseId(Long courseId) {
+		return materialService.findMaterialsByCourseId(courseId);
 	}
 
 }
