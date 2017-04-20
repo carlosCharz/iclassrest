@@ -8,6 +8,7 @@ import static com.wedevol.iclass.core.util.FileUtil.DIRECTORY_SEPARATOR;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,10 @@ public class MediaServiceImpl implements MediaService {
 
 	@Autowired
 	private InstructorService instructorService;
-	
+
 	@Autowired
 	private MaterialService materialService;
-	
+
 	@Autowired
 	private ImageProcessor imageProcessor;
 
@@ -66,7 +67,7 @@ public class MediaServiceImpl implements MediaService {
 		final BasicFile basicFile = buildBasicFile(multipart);
 		return uploadUserPicture(userId, userType, basicFile);
 	}
-	
+
 	@Override
 	public String uploadFile(MultipartFile multipart) {
 		validateMultipartFile(multipart);
@@ -118,32 +119,37 @@ public class MediaServiceImpl implements MediaService {
 			instructorService.update(userId, newInstructor);
 		}
 	}
-	
-	private void asocciateMaterialToCourse(Long courseId, MaterialType materialType, String url, String fileName) {
+
+	private Material buildMaterialObject(Long courseId, MaterialType materialType, String url, String fileName) {
 		Material material = new Material();
 		material.setCourseId(courseId);
 		material.setName(fileName);
 		material.setUrl(url);
 		material.setMaterialType(materialType.getDescription());
-		materialService.create(material);
+		return material;
 	}
 
 	@Override
 	public String uploadMaterialFile(Long courseId, MultipartFile multipart, MaterialType materialType) {
 		validateMultipartFile(multipart);
-		// TODO: check the filename before create in amazon
 		final BasicFile basicFile = buildBasicFile(multipart);
 		final MediaFile mediaFile = MediaFile.from(basicFile);
-		String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
-		final String url = amazonS3Service.uploadFile(directory, mediaFile);
-		asocciateMaterialToCourse(courseId, materialType, url, mediaFile.getFileName());
-		return url;
+		final String fileNameWithoutExt = FilenameUtils.removeExtension(mediaFile.getFileName());
+		if (materialService.doesMaterialExist(courseId, fileNameWithoutExt)) {
+			throw new BadRequestException(BadRequestErrorType.MATERIAL_ALREADY_EXISTS);
+		} else {
+			String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
+			final String url = amazonS3Service.uploadFile(directory, mediaFile);
+			final Material newMaterial = buildMaterialObject(courseId, materialType, url, fileNameWithoutExt);
+			materialService.create(newMaterial);
+			return url;
+		}
 	}
-	
+
 	@Override
 	public MediaFile resizePicture(InputStream inputStream, String fileName, int maxWidth) {
 		// TODO: missing implementation
 		return null;
-    }
+	}
 
 }

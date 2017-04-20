@@ -50,6 +50,7 @@ public class MaterialController {
 		return materialService.findById(materialId);
 	}
 
+	@ApiIgnore
 	@Authorize(basic = true)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)

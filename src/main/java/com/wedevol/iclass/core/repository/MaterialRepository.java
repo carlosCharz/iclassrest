@@ -45,6 +45,18 @@ public interface MaterialRepository extends CrudRepository<Material, Long> {
 			+ "FROM Material mat "
 			+ "WHERE mat.courseId = :courseId "
 			+ "order by mat.name asc")
-	public List<Material> findMaterialsWithCourseId(@Param("courseId") Long courseId);
+	public List<Material> findMaterialsWithCourse(@Param("courseId") Long courseId);
+	
+	/**
+	 * Return the materials filtered by courseId and materialName
+	 * 
+	 * @param courseId
+	 * @param materialName
+	 * @return material
+	 */
+	@Query("SELECT mat "
+			+ "FROM Material mat "
+			+ "WHERE mat.courseId = :courseId and mat.name = :materialName")
+	public Material findMaterialWithCourseWithName(@Param("courseId") Long courseId, @Param("materialName") String materialName);
 
 }

@@ -10,12 +10,14 @@ import com.wedevol.iclass.core.entity.Material;
  * @author charz
  *
  */
-public interface MaterialService extends BaseService<Material>  {
+public interface MaterialService extends BaseService<Material> {
 
 	List<Material> findAll();
-	
+
 	Material findByName(String name);
-	
+
 	List<Material> findMaterialsByCourseId(Long courseId);
+
+	boolean doesMaterialExist(Long courseId, String materialName);
 
 }

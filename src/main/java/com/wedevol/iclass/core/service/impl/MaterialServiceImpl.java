@@ -33,7 +33,7 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Autowired
 	private MaterialRepository materialRepository;
-	
+
 	@Autowired
 	private CourseService courseService;
 
@@ -42,7 +42,7 @@ public class MaterialServiceImpl implements MaterialService {
 		final Iterable<Material> materialIterator = materialRepository.findAllByOrderByNameAsc();
 		return Lists.newArrayList(materialIterator);
 	}
-	
+
 	@Override
 	public Material findByName(String name) {
 		return materialRepository.findByName(name);
@@ -55,15 +55,18 @@ public class MaterialServiceImpl implements MaterialService {
 	}
 
 	@Override
+	public boolean doesMaterialExist(Long courseId, String materialName) {
+		final Optional<Material> materialObj = Optional.ofNullable(
+				materialRepository.findMaterialWithCourseWithName(courseId, materialName));
+		return materialObj.isPresent();
+	}
+
+	@Override
 	public Material create(Material material) {
 		// Fields missing validation
-		if (material.getName() == null) {
+		if (material.getCourseId() == null || isNullOrEmpty(material.getName())
+				|| isNullOrEmpty(material.getMaterialType()) || isNullOrEmpty(material.getUrl())) {
 			throw new BadRequestException(BadRequestErrorType.FIELDS_MISSING);
-		}
-		// The material should not exist
-		final Optional<Material> materialObj = Optional.ofNullable(findByName(material.getName()));
-		if (materialObj.isPresent()) {
-			throw new BadRequestException(BadRequestErrorType.MATERIAL_ALREADY_EXISTS);
 		}
 		// Save
 		return materialRepository.save(material);
@@ -75,6 +78,9 @@ public class MaterialServiceImpl implements MaterialService {
 		Material existingMaterial = findById(materialId);
 		if (!isNullOrEmpty(material.getName())) {
 			existingMaterial.setName(material.getName());
+		}
+		if (!isNullOrEmpty(material.getMaterialType())) {
+			existingMaterial.setMaterialType(material.getMaterialType());
 		}
 		// Update
 		materialRepository.save(existingMaterial);
@@ -91,7 +97,7 @@ public class MaterialServiceImpl implements MaterialService {
 	public List<Material> findMaterialsByCourseId(Long courseId) {
 		// The course should exist
 		courseService.findById(courseId);
-		return materialRepository.findMaterialsWithCourseId(courseId);
+		return materialRepository.findMaterialsWithCourse(courseId);
 	}
 
 }
