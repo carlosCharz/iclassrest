@@ -16,6 +16,7 @@ import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.repository.MaterialRepository;
+import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.MaterialService;
 
 /**
@@ -32,6 +33,9 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Autowired
 	private MaterialRepository materialRepository;
+	
+	@Autowired
+	private CourseService courseService;
 
 	@Override
 	public List<Material> findAll() {
@@ -85,8 +89,9 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Override
 	public List<Material> findMaterialsByCourseId(Long courseId) {
-		// TODO Auto-generated method stub
-		return null;
+		// The course should exist
+		courseService.findById(courseId);
+		return materialRepository.findMaterialsWithCourseId(courseId);
 	}
 
 }

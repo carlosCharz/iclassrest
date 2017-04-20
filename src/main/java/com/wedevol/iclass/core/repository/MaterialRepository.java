@@ -2,7 +2,9 @@ package com.wedevol.iclass.core.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,5 +34,17 @@ public interface MaterialRepository extends CrudRepository<Material, Long> {
 	 * @return material list
 	 */
 	public List<Material> findAllByOrderByNameAsc();
+	
+	/**
+	 * Return the materials of a course order by material name asc
+	 * 
+	 * @param courseId
+	 * @return list of materials
+	 */
+	@Query("SELECT mat "
+			+ "FROM Material mat "
+			+ "WHERE mat.courseId = :courseId "
+			+ "order by mat.name asc")
+	public List<Material> findMaterialsWithCourseId(@Param("courseId") Long courseId);
 
 }

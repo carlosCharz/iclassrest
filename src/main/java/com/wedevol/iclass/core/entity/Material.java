@@ -41,6 +41,11 @@ public class Material implements Serializable {
 	@Column(name = "url")
 	private String url;
 
+	@Size(min = 2, max = 50, message = "Material type must be between 2 - 50 characters")
+	@Column(name = "materialtype")
+	// TODO: analyze enum
+	private String materialType;
+
 	public static Material from(Long id) {
 		return new Material(id);
 	}
@@ -84,9 +89,18 @@ public class Material implements Serializable {
 		this.url = url;
 	}
 
+	public String getMaterialType() {
+		return materialType;
+	}
+
+	public void setMaterialType(String materialType) {
+		this.materialType = materialType;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Material[id=%d, courseId='%d', name='%s', url='%s']%n", id, courseId, name, url);
+		return String.format("Material[id=%d, courseId='%d', name='%s', url='%s', materialType='%s']%n", id, courseId,
+				name, url, materialType);
 	}
 
 }

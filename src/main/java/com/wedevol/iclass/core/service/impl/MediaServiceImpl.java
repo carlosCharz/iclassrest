@@ -18,8 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wedevol.iclass.core.amazon.AmazonS3Service;
 import com.wedevol.iclass.core.amazon.BasicFile;
 import com.wedevol.iclass.core.amazon.MediaFile;
-import com.wedevol.iclass.core.entity.Course;
 import com.wedevol.iclass.core.entity.Instructor;
+import com.wedevol.iclass.core.entity.Material;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.MaterialType;
 import com.wedevol.iclass.core.entity.enums.UserType;
@@ -28,8 +28,8 @@ import com.wedevol.iclass.core.exception.InternalServerException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 import com.wedevol.iclass.core.media.picture.ImageProcessor;
-import com.wedevol.iclass.core.service.CourseService;
 import com.wedevol.iclass.core.service.InstructorService;
+import com.wedevol.iclass.core.service.MaterialService;
 import com.wedevol.iclass.core.service.MediaService;
 import com.wedevol.iclass.core.service.StudentService;
 
@@ -55,7 +55,7 @@ public class MediaServiceImpl implements MediaService {
 	private InstructorService instructorService;
 	
 	@Autowired
-	private CourseService courseService;
+	private MaterialService materialService;
 	
 	@Autowired
 	private ImageProcessor imageProcessor;
@@ -119,25 +119,24 @@ public class MediaServiceImpl implements MediaService {
 		}
 	}
 	
-	private void asocciateMaterialToCourse(Long courseId, MaterialType materialType, String url) {
-		Course newCourse = new Course();
-		if (MaterialType.CLASS.equals(materialType)) {
-			newCourse.setClassMaterialUrl(url);
-			courseService.update(courseId, newCourse);
-		} else if (MaterialType.EXERCISE.equals(materialType)) {
-			newCourse.setExerciseMaterialUrl(url);
-			courseService.update(courseId, newCourse);
-		}
+	private void asocciateMaterialToCourse(Long courseId, MaterialType materialType, String url, String fileName) {
+		Material material = new Material();
+		material.setCourseId(courseId);
+		material.setName(fileName);
+		material.setUrl(url);
+		material.setMaterialType(materialType.getDescription());
+		materialService.create(material);
 	}
 
 	@Override
 	public String uploadMaterialFile(Long courseId, MultipartFile multipart, MaterialType materialType) {
 		validateMultipartFile(multipart);
+		// TODO: check the filename before create in amazon
 		final BasicFile basicFile = buildBasicFile(multipart);
 		final MediaFile mediaFile = MediaFile.from(basicFile);
 		String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);
-		asocciateMaterialToCourse(courseId, materialType, url);
+		asocciateMaterialToCourse(courseId, materialType, url, mediaFile.getFileName());
 		return url;
 	}
 	
