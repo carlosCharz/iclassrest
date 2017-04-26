@@ -24,13 +24,28 @@ public class FileUtil {
 	 * @param prefix
 	 * @param directory
 	 * @param origFileName
-	 * @return prefix/directory/origFileName
+	 * @return prefix/directory/origFileNameHashed
 	 */
-	public static String generateBasicFileId(String prefix, String directory, String origFileName) {
+	public static String generateHashedFileId(String prefix, String directory, String origFileName) {
 		StringBuilder fileId = new StringBuilder(prefix);
 		Optional.ofNullable(directory).ifPresent(
 				directoryName -> fileId.append(directoryName).append(DIRECTORY_SEPARATOR));
 		fileId.append(generateUniqueFileName(origFileName));
+		return fileId.toString();
+	}
+	
+	/**
+	 * 
+	 * @param prefix
+	 * @param directory
+	 * @param origFileName
+	 * @return prefix/directory/origFileName
+	 */
+	public static String generateFileIdWithOriginalFileName(String prefix, String directory, String origFileName) {
+		StringBuilder fileId = new StringBuilder(prefix);
+		Optional.ofNullable(directory).ifPresent(
+				directoryName -> fileId.append(directoryName).append(DIRECTORY_SEPARATOR));
+		fileId.append(origFileName);
 		return fileId.toString();
 	}
 

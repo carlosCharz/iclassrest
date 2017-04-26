@@ -26,7 +26,9 @@ import com.wedevol.iclass.core.entity.enums.MaterialType;
 import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.InternalServerException;
+import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
+import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.exception.enums.ServerErrorType;
 import com.wedevol.iclass.core.media.picture.ImageProcessor;
 import com.wedevol.iclass.core.service.InstructorService;
@@ -80,12 +82,7 @@ public class MediaServiceImpl implements MediaService {
 	private String uploadUserPicture(Long userId, UserType userType, BasicFile basicFile) {
 		// TODO: here we should use a library to get the metadata and validate
 		// Resize the photo
-		MediaFile mediaFile;
-		try {
-			mediaFile = imageProcessor.resize(basicFile.getInputStream(), basicFile.getFileName(), 200);
-		} catch (IOException e) {
-			throw new InternalServerException(ServerErrorType.CANNOT_RESIZE_THE_PHOTO);
-		}
+		MediaFile mediaFile = this.resizePicture(basicFile.getInputStream(), basicFile.getFileName(), 200);
 		final String userTypeDirectory = userType.getDescription();
 		String directory = String.join(DIRECTORY_SEPARATOR, userTypeDirectory, userId.toString(), DIRECTORY_PICTURE);
 		final String url = amazonS3Service.uploadFile(directory, mediaFile);
@@ -139,7 +136,7 @@ public class MediaServiceImpl implements MediaService {
 			throw new BadRequestException(BadRequestErrorType.MATERIAL_ALREADY_EXISTS);
 		} else {
 			String directory = String.join(DIRECTORY_SEPARATOR, DIRECTORY_COURSE, courseId.toString());
-			final String url = amazonS3Service.uploadFile(directory, mediaFile);
+			final String url = amazonS3Service.uploadFileWithOriginalFileName(directory, mediaFile);
 			final Material newMaterial = buildMaterialObject(courseId, materialType, url, fileNameWithoutExt);
 			materialService.create(newMaterial);
 			return url;
@@ -147,9 +144,25 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public MediaFile resizePicture(InputStream inputStream, String fileName, int maxWidth) {
-		// TODO: missing implementation
-		return null;
+	public String resizePicture(String pictureUrl, int maxWidth) {
+		InputStream originalPicInputStream = amazonS3Service.getFileStream(pictureUrl);
+		if (originalPicInputStream == null) {
+			throw new ResourceNotFoundException(NotFoundErrorType.PICTURE_URL_NOT_FOUND);
+		}
+		// Resize the photo
+		MediaFile mediaFile = this.resizePicture(originalPicInputStream, pictureUrl, maxWidth);
+		final String url = amazonS3Service.uploadFile(mediaFile);
+		return url;
+	}
+
+	private MediaFile resizePicture(InputStream originalPicInputStream, String pictureUrl, int maxWidth) {
+		MediaFile mediaFile;
+		try {
+			mediaFile = imageProcessor.resize(originalPicInputStream, pictureUrl, maxWidth);
+		} catch (IOException e) {
+			throw new InternalServerException(ServerErrorType.CANNOT_RESIZE_THE_PHOTO);
+		}
+		return mediaFile;
 	}
 
 }

@@ -15,7 +15,8 @@ public enum NotFoundErrorType {
 	FACULTY_NOT_FOUND(404, "Faculty not found"), UNIVERSITY_NOT_FOUND(404, "University not found"),
 	MATERIAL_NOT_FOUND(404, "Material not found"),
 	BATCH_NOTIFICATION_NOT_FOUND(404, "Batch notification not found"),
-	DEPARTMENT_NOT_FOUND(404, "Department not found"), ACCESS_TOKEN_NOT_FOUND(404, "Access token not found");
+	DEPARTMENT_NOT_FOUND(404, "Department not found"), ACCESS_TOKEN_NOT_FOUND(404, "Access token not found"),
+	PICTURE_URL_NOT_FOUND(404, "Picture url not found");
 
 	private final int code;
 	private final String message;
