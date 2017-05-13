@@ -39,7 +39,7 @@ public class BatchNotification implements Serializable {
 	@Column
 	private String message;
 	
-	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
+	@Size(min = 2, max = 255, message = "FCM token must be between 2 - 255 characters")
 	@Column(name = "tokento")
 	private String tokenTo;
 	

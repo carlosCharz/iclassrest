@@ -40,7 +40,7 @@ public class AccessToken implements Serializable {
 	@Column(name = "usertype")
 	private String userType;
 
-	@Size(min = 10, max = 300, message = "Token must be maximum 300 characters")
+	@Size(min = 10, max = 255, message = "Token must be maximum 255 characters")
 	@Column
 	private String token;
 

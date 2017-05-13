@@ -16,11 +16,11 @@ public class FCMTokenView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
+	@Size(min = 2, max = 255, message = "FCM token must be between 2 - 255 characters")
 	private String fcmToken;
 	
 	@NotNull
-	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
+	@Size(min = 2, max = 255, message = "Device id must be between 2 - 255 characters")
 	private String deviceId;
 
 	protected FCMTokenView() {

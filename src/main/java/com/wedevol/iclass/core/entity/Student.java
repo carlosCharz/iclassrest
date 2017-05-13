@@ -105,11 +105,11 @@ public class Student implements Serializable {
 	@Column(name = "totalhours")
 	private Integer totalHours;
 
-	@Size(min = 2, max = 300, message = "FCM token must be between 2 - 300 characters")
+	@Size(min = 2, max = 255, message = "FCM token must be between 2 - 255 characters")
 	@Column(name = "fcmtoken")
 	private String fcmToken;
 
-	@Size(min = 2, max = 300, message = "Device id must be between 2 - 300 characters")
+	@Size(min = 2, max = 255, message = "Device id must be between 2 - 255 characters")
 	@Column(name = "deviceid")
 	private String deviceId;
 
