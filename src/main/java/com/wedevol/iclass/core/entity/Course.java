@@ -44,14 +44,6 @@ public class Course implements Serializable {
 	@Digits(integer = 20, fraction = 0, message = "University id must be just digits")
 	@Column(name = "universityid")
 	private Long universityId;
-	
-	@Size(min = 2, max = 100, message = "Class material url must be between 2 - 100 characters")
-	@Column(name = "classmaterialurl")
-	private String classMaterialUrl;
-	
-	@Size(min = 2, max = 100, message = "Exercise material url must be between 2 - 100 characters")
-	@Column(name = "exercisematerialurl")
-	private String exerciseMaterialUrl;
 
 	public static Course from(Long id) {
 		return new Course(id);
@@ -109,22 +101,6 @@ public class Course implements Serializable {
 
 	public void setUniversityId(Long universityId) {
 		this.universityId = universityId;
-	}
-
-	public String getClassMaterialUrl() {
-		return classMaterialUrl;
-	}
-
-	public void setClassMaterialUrl(String classMaterialUrl) {
-		this.classMaterialUrl = classMaterialUrl;
-	}
-
-	public String getExerciseMaterialUrl() {
-		return exerciseMaterialUrl;
-	}
-
-	public void setExerciseMaterialUrl(String exerciseMaterialUrl) {
-		this.exerciseMaterialUrl = exerciseMaterialUrl;
 	}
 
 	/**
