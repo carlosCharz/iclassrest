@@ -11,9 +11,16 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 public class ResourceNotFoundException extends BaseRuntimeException {
 
 	private static final long serialVersionUID = 1L;
+	private NotFoundErrorType errorType;
 
 	public ResourceNotFoundException(NotFoundErrorType errorType) {
-		super(errorType.getCode(), errorType.getMessage());
+		super(errorType.getMessage());
+		this.errorType = errorType;
+	}
+
+	@Override
+	public Integer getCode() {
+		return this.errorType.getCode();
 	}
 
 }

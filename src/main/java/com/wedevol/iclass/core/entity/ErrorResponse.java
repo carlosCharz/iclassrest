@@ -7,27 +7,28 @@ package com.wedevol.iclass.core.entity;
  */
 public class ErrorResponse {
 
-	private int errorCode;
-	private String errorMessage;
+	private int code;
+	private String message;
 
-	public ErrorResponse(int errorCode, String message) {
-		this.errorCode = errorCode;
-		this.errorMessage = message;
+	public ErrorResponse(int code, String message) {
+		this.code = code;
+		this.message = message;
 	}
 
-	public int getErrorCode() {
-		return errorCode;
+	public int getCode() {
+		return code;
 	}
 
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
+
 }

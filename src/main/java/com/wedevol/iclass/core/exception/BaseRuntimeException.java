@@ -1,37 +1,19 @@
 package com.wedevol.iclass.core.exception;
 
 /**
- * iClass base runtime exception
+ * Base runtime exception
  * 
  * @author charz
  *
  */
-public class BaseRuntimeException extends RuntimeException {
+public abstract class BaseRuntimeException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private int code;
-	private String message;
-
-	public BaseRuntimeException(int code, String message) {
-		super("Error code: " + code + ". Message: " + message);
-		this.code = code;
-		this.message = message;
+	public BaseRuntimeException(String message) {
+		super(message);
 	}
 
-	public int getCode() {
-		return code;
-	}
+	public abstract Integer getCode();
 
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
 }

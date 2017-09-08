@@ -6,24 +6,25 @@ package com.wedevol.iclass.core.exception.enums;
  * @author charz
  */
 public enum ServerErrorType {
-	NOT_IMPLEMENTED(500, "Method not implemented"), INTERNAL_SERVER_ERROR(500, "Internal server error"),
-	CANNOT_GET_INPUT_STREAM(500, "Cannot get the input stream from the multipart file"),
-	CANNOT_RESIZE_THE_PHOTO(500, "Cannot resize the photo");
+	NOT_IMPLEMENTED(1, "Method not implemented"), 
+	INTERNAL_SERVER_ERROR(2, "Internal server error"),
+	CANNOT_GET_INPUT_STREAM(3, "Cannot get the input stream from the multipart file"),
+	CANNOT_RESIZE_THE_PHOTO(4, "Cannot resize the photo");
 
 	private final int code;
 	private final String message;
 
-	ServerErrorType(int code, String message) {
+	private ServerErrorType(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
 	public int getCode() {
-		return code;
+		return this.code;
 	}
 
 	public String getMessage() {
-		return message;
+		return this.message;
 	}
 
 }
