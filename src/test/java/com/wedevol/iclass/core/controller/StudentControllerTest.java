@@ -90,7 +90,7 @@ public class StudentControllerTest {
 			.perform(get("/students/11"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound())
-				.andExpect(jsonPath("$.errorCode").value(404));
+				.andExpect(jsonPath("$.code").value(404));
 
 		verify(studentService, times(1)).findById(11L);
 		verifyNoMoreInteractions(studentService);
@@ -107,7 +107,7 @@ public class StudentControllerTest {
 		mvc
 			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorCode").value(400));
+				.andExpect(jsonPath("$.code").value(400));
 
 		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
 		verifyNoMoreInteractions(studentService);
@@ -132,7 +132,7 @@ public class StudentControllerTest {
 		mvc
 			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorCode").value(400));
+				.andExpect(jsonPath("$.code").value(400));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
@@ -148,7 +148,7 @@ public class StudentControllerTest {
 		mvc
 			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errorCode").value(400));
+				.andExpect(jsonPath("$.code").value(400));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
