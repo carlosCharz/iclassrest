@@ -6,16 +6,16 @@
 	<groupId>com.wedevol.iclass</groupId>
 	<artifactId>api-rest-iclass</artifactId>
 	<packaging>war</packaging>
-	<version>1.3.0</version>
+	<version>1.4.0</version>
 	<name>iClass Api Rest</name>
-	<description>This is the iClass API Rest.</description>
+	<description>iClass API Rest.</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<guava.version>21.0</guava.version>
-		<swagger2.version>2.6.1</swagger2.version>
+		<guava.version>23.0</guava.version>
+		<swagger2.version>2.7.0</swagger2.version>
 		<quartz.version>2.3.0</quartz.version>
-		<amazon.version>1.11.126</amazon.version>
+		<amazon.version>1.11.192</amazon.version>
 		<fcm.version>1.0.0</fcm.version>
 		<apacheio.version>2.5</apacheio.version>
 		<uuid.version>3.1.4</uuid.version>

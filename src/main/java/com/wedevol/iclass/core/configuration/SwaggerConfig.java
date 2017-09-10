@@ -31,8 +31,8 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		Contact contact = new Contact("Charz++", "http://wedevol.com/iclass", "carlos.becerra1234@gmail.com");
-		ApiInfo apiInfo = new ApiInfo("iClass REST API", "App to manage classes", "1.0.0", null, contact, null, null);
+		Contact contact = new Contact("Charz++", "http://iclassapp.com", "carlos.becerra1234@gmail.com");
+		ApiInfo apiInfo = new ApiInfo("iClass REST API", "App to manage classes", "2.0.0", null, contact, null, null, null);
 		return apiInfo;
 	}
 }
