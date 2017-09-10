@@ -13,7 +13,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<guava.version>23.0</guava.version>
-		<swagger2.version>2.7.0</swagger2.version>
+		<swagger2.version>2.6.1</swagger2.version>
 		<quartz.version>2.3.0</quartz.version>
 		<amazon.version>1.11.192</amazon.version>
 		<fcm.version>1.0.0</fcm.version>
