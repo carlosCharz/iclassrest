@@ -19,13 +19,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.wedevol.iclass.core.Application;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
@@ -34,8 +36,9 @@ import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.view.request.UserView;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(StudentController.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@AutoConfigureMockMvc
 public class StudentControllerTest {
 
 	@Autowired
@@ -69,8 +72,8 @@ public class StudentControllerTest {
 
 		when(studentService.findById(1L)).thenReturn(student1);
 
-		mvc
-			.perform(get("/students/1"))
+		// TODO: check the authorization parameter
+		mvc.perform(get("/students/1"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.firstName").value("Carlos"))
@@ -86,8 +89,8 @@ public class StudentControllerTest {
 		when(studentService.findById(11L)).thenThrow(
 				new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 
-		mvc
-			.perform(get("/students/11"))
+		// TODO: check the authorization parameter
+		mvc.perform(get("/students/11"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.code").value(404));
@@ -104,10 +107,9 @@ public class StudentControllerTest {
 					.when(studentService)
 					.createStudentWithCourse(Mockito.any(UserView.class));
 
-		mvc
-			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.code").value(400));
+				.andExpect(jsonPath("$.code").value(1));
 
 		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
 		verifyNoMoreInteractions(studentService);
@@ -129,10 +131,9 @@ public class StudentControllerTest {
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com",
 				"12345678901234567").build();
 		student1JsonString = toJsonString(student1);
-		mvc
-			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.code").value(400));
+				.andExpect(jsonPath("$.code").value(2));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
@@ -145,10 +146,9 @@ public class StudentControllerTest {
 				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
 				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
 		student1JsonString = toJsonString(student1);
-		mvc
-			.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.code").value(400));
+				.andExpect(jsonPath("$.code").value(2));
 
 		verify(studentService, times(0)).create(Mockito.any(Student.class));
 		verifyNoMoreInteractions(studentService);
