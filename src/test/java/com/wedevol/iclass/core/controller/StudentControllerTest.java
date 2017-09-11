@@ -25,11 +25,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wedevol.iclass.core.Application;
+import com.wedevol.iclass.core.entity.AccessToken;
 import com.wedevol.iclass.core.entity.Student;
+import com.wedevol.iclass.core.entity.enums.UserType;
 import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
+import com.wedevol.iclass.core.service.impl.AccessTokenServiceImpl;
 import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.view.request.UserView;
 
@@ -43,10 +46,15 @@ public class StudentControllerTest {
 
 	@MockBean
 	private StudentServiceImpl studentService;
+	
+	@MockBean
+	private AccessTokenServiceImpl accessTokenService;
 
 	private Student student1;
 
 	private String student1JsonString;
+	
+	private AccessToken accessToken;
 
 	@Before
 	public void init() throws JsonProcessingException {
@@ -62,15 +70,18 @@ public class StudentControllerTest {
 
 		student1JsonString = toJsonString(student1);
 		student1.setId(1L);
+		
+		accessToken = new AccessToken(1L, UserType.STUDENT);
 	}
 
 	@Test
 	public void findExistingStudent() throws Exception {
 
 		Mockito.when(studentService.findById(1L)).thenReturn(student1);
+		Mockito.when(accessTokenService.findByToken(Mockito.anyString())).thenReturn(accessToken);
 
-		// TODO: check the authorization parameter
-		mockMvc.perform(get("/students/1"))
+		mockMvc.perform(get("/students/1")
+					.header("authorization", "123456"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.firstName").value("Carlos"))
@@ -85,12 +96,13 @@ public class StudentControllerTest {
 
 		Mockito.when(studentService.findById(11L)).thenThrow(
 				new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
+		Mockito.when(accessTokenService.findByToken(Mockito.anyString())).thenReturn(accessToken);
 
-		// TODO: check the authorization parameter
-		mockMvc.perform(get("/students/11"))
+		mockMvc.perform(get("/students/11")
+					.header("authorization", "123456"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound())
-				.andExpect(jsonPath("$.code").value(404));
+				.andExpect(jsonPath("$.code").value(1));
 
 		Mockito.verify(studentService, times(1)).findById(11L);
 		Mockito.verifyNoMoreInteractions(studentService);
