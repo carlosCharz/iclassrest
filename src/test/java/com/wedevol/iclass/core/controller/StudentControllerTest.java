@@ -2,9 +2,6 @@ package com.wedevol.iclass.core.controller;
 
 import static com.wedevol.iclass.core.util.CommonUtil.toJsonString;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -42,7 +39,7 @@ import com.wedevol.iclass.core.view.request.UserView;
 public class StudentControllerTest {
 
 	@Autowired
-	private MockMvc mvc;
+	private MockMvc mockMvc;
 
 	@MockBean
 	private StudentServiceImpl studentService;
@@ -70,59 +67,58 @@ public class StudentControllerTest {
 	@Test
 	public void findExistingStudent() throws Exception {
 
-		when(studentService.findById(1L)).thenReturn(student1);
+		Mockito.when(studentService.findById(1L)).thenReturn(student1);
 
 		// TODO: check the authorization parameter
-		mvc.perform(get("/students/1"))
+		mockMvc.perform(get("/students/1"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.firstName").value("Carlos"))
 				.andExpect(jsonPath("$.lastName").value("Becerra"));
 
-		verify(studentService, times(1)).findById(1L);
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(1)).findById(1L);
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
 	public void throwExpcetionWhenGetAndStudentDoesNotExist() throws Exception {
 
-		when(studentService.findById(11L)).thenThrow(
+		Mockito.when(studentService.findById(11L)).thenThrow(
 				new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 
 		// TODO: check the authorization parameter
-		mvc.perform(get("/students/11"))
+		mockMvc.perform(get("/students/11"))
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.code").value(404));
 
-		verify(studentService, times(1)).findById(11L);
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(1)).findById(11L);
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
 	public void throwExceptionWhenCreatingAndStudentExists() throws Exception {
 
-		Mockito
-				.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
+		Mockito.doThrow(new BadRequestException(BadRequestErrorType.BAD_REQUEST_EXCEPTION))
 					.when(studentService)
 					.createStudentWithCourse(Mockito.any(UserView.class));
 
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.code").value(1));
 
-		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
 	public void createStudent() throws Exception {
 
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
+		mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString)).andExpect(
 				status().isCreated());
 
-		verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(1)).createStudentWithCourse(Mockito.any(UserView.class));
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
@@ -131,12 +127,12 @@ public class StudentControllerTest {
 		student1 = new Student.StudentBuilder("Carlos", "Becerra", "5216031", "carlos@gmail.com",
 				"12345678901234567").build();
 		student1JsonString = toJsonString(student1);
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.code").value(2));
 
-		verify(studentService, times(0)).create(Mockito.any(Student.class));
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(0)).create(Mockito.any(Student.class));
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	@Test
@@ -146,12 +142,12 @@ public class StudentControllerTest {
 				"CarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlosCarlos",
 				"Becerra", "5216031", "carlos@gmail.com", "123456").build();
 		student1JsonString = toJsonString(student1);
-		mvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
+		mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(student1JsonString))
 				.andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.code").value(2));
 
-		verify(studentService, times(0)).create(Mockito.any(Student.class));
-		verifyNoMoreInteractions(studentService);
+		Mockito.verify(studentService, times(0)).create(Mockito.any(Student.class));
+		Mockito.verifyNoMoreInteractions(studentService);
 	}
 
 	// TODO: test validations in update
