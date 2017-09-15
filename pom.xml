@@ -127,18 +127,21 @@
 		    </activation>
 			<properties>
 				<overrides.props.file>local.overrides.properties</overrides.props.file>
+				<current.profile>local</current.profile>
 			</properties>
 		</profile>
 		<profile>
 			<id>dev</id>
 			<properties>
 				<overrides.props.file>dev.overrides.properties</overrides.props.file>
+				<current.profile>dev</current.profile>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
 				<overrides.props.file>prod.overrides.properties</overrides.props.file>
+				<current.profile>prod</current.profile>
 			</properties>
 		</profile>
 	</profiles>
@@ -162,6 +165,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>generate-resources</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    <configuration>
+                        <tasks>
+                            <echo>Current maven active profile: ${current.profile}</echo>
+                        </tasks>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 		</plugins>
 	</build>
 
