@@ -117,9 +117,46 @@
     		<version>${orika.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<!-- Profiles per environments -->
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+			   <activeByDefault>true</activeByDefault>
+		    </activation>
+			<properties>
+				<overrides.props.file>local.overrides.properties</overrides.props.file>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<overrides.props.file>dev.overrides.properties</overrides.props.file>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<overrides.props.file>prod.overrides.properties</overrides.props.file>
+			</properties>
+		</profile>
+	</profiles>
 
 	<build>
 		<finalName>iclass</finalName>
+		<resources>
+        	<resource>
+            	<directory>src/main/resources</directory>
+           		<filtering>true</filtering>
+           		<excludes>
+					<exclude>profiles/*</exclude>
+				</excludes>
+        	</resource>
+    	</resources>
+    	<filters>
+			<filter>src/main/resources/profiles/${overrides.props.file}</filter>
+		</filters>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
