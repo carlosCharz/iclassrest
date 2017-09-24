@@ -6,7 +6,9 @@ package com.wedevol.iclass.core.entity.enums;
  * @author Charz++
  */
 public enum CourseSuggestionStatusType {
-	SUGGESTED("suggested"), ACCEPTED("accepted"), REJECTED("rejected");
+	SUGGESTED("suggested"), 
+	ACCEPTED("accepted"), 
+	REJECTED("rejected");
 
 	private final String description;
 

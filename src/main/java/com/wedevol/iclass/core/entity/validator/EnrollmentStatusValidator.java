@@ -27,11 +27,10 @@ public class EnrollmentStatusValidator extends BaseValidator implements Constrai
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(EnrollmentStatusType.values())
-											.filter(validOption -> equal(value, validOption.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(EnrollmentStatusType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

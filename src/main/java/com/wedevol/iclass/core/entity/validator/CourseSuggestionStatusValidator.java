@@ -27,11 +27,10 @@ public class CourseSuggestionStatusValidator extends BaseValidator implements Co
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(CourseSuggestionStatusType.values())
-											.filter(validOption -> equal(value, validOption.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(CourseSuggestionStatusType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

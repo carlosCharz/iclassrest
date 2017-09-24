@@ -27,11 +27,10 @@ public class ClassStatusValidator extends BaseValidator implements ConstraintVal
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(ClassStatusType.values())
-											.filter(validOption -> equal(value, validOption.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(ClassStatusType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

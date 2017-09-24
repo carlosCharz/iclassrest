@@ -6,7 +6,8 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum PlaceOptionsType {
-	HOUSE("house"), UNIVERSITY("university");
+	HOUSE("house"), 
+	UNIVERSITY("university");
 
 	private final String description;
 

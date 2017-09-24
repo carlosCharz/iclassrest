@@ -6,7 +6,8 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum CurrencyType {
-	PEN("S/."), USD("$");
+	PEN("S/."), 
+	USD("$");
 
 	private final String description;
 

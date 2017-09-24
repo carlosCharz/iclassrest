@@ -64,8 +64,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			final UserType userType = getUserTypeFromUrl(request);
 			logger.info("UserType:" + userType.getDescription());
 			if (!accessToken.getToken().equals(authParam) || !accessToken.getUserId().equals(userId)
-					|| !accessToken.getUserType().equals(userType
-																	.getDescription())) {
+					|| !accessToken.getUserType().equals(userType.getDescription())) {
 				throw new UnauthorizedException(UnauthorizedErrorType.UNAUTHORIZED_DUE_TO_MISMATCH_USER);
 			}
 		}

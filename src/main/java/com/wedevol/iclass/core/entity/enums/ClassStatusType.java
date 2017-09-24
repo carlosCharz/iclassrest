@@ -6,8 +6,13 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum ClassStatusType {
-	REQUESTED("requested"), CONFIRMED("confirmed"), DONE("done"), REJECTED("rejected"), IGNORED("ignored"),
+	REQUESTED("requested"), 
+	CONFIRMED("confirmed"), 
+	DONE("done"), 
+	REJECTED("rejected"), 
+	IGNORED("ignored"),
 	CANCELLED("cancelled");
+	
 	private final String description;
 
 	ClassStatusType(String description) {

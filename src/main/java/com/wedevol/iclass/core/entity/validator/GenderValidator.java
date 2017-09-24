@@ -27,11 +27,10 @@ public class GenderValidator extends BaseValidator implements ConstraintValidato
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(GenderType.values())
-											.filter(gender -> equal(value, gender.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(GenderType.values())
+										.filter(gender -> equal(value, gender.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

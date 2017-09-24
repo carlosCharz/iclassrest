@@ -28,8 +28,7 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(Application.class).sources(Application.class).properties(getProperties()).run(
-				args);
+		new SpringApplicationBuilder(Application.class).sources(Application.class).properties(getProperties()).run(args);
 	}
 
 	static Properties getProperties() {

@@ -3,6 +3,7 @@ package com.wedevol.iclass.core.amazon;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -30,7 +31,7 @@ public final class FileMetadata implements Serializable {
 		map.putAll(m.map);
 	}
 
-	public void addAll(Set<java.util.Map.Entry<String, String>> set) {
+	public void addAll(Set<Entry<String, String>> set) {
 		set.forEach(e -> map.put(e.getKey(), e.getValue()));
 	}
 
@@ -50,7 +51,7 @@ public final class FileMetadata implements Serializable {
 		return map.get(key);
 	}
 
-	public Set<java.util.Map.Entry<String, String>> getAll() {
+	public Set<Entry<String, String>> getAll() {
 		return map.entrySet();
 	}
 

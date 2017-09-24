@@ -6,7 +6,9 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum UserType {
-	STUDENT("student"), INSTRUCTOR("instructor"), ADMIN("admin");
+	STUDENT("student"), 
+	INSTRUCTOR("instructor"), 
+	ADMIN("admin");
 
 	private final String description;
 

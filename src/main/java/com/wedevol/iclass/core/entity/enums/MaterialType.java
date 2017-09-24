@@ -6,7 +6,9 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum MaterialType {
-	CLASS("class"), EXERCISE("exercise");
+	CLASS("class"), 
+	EXERCISE("exercise");
+	
 	private final String description;
 
 	MaterialType(String description) {

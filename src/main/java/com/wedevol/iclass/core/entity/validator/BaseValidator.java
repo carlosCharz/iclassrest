@@ -5,7 +5,7 @@ package com.wedevol.iclass.core.entity.validator;
  *
  * @author charz
  */
-public class BaseValidator {
+public abstract class BaseValidator {
 
 	protected boolean ignoreCase = false;
 	protected String message;

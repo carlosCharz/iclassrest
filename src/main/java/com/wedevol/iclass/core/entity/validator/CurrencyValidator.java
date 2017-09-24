@@ -27,11 +27,10 @@ public class CurrencyValidator extends BaseValidator implements ConstraintValida
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(CurrencyType.values())
-											.filter(validOption -> equal(value, validOption.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(CurrencyType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

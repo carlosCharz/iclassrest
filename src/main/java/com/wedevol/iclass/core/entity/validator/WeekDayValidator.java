@@ -27,11 +27,10 @@ public class WeekDayValidator extends BaseValidator implements ConstraintValidat
 			return true;
 		}
 
-		final boolean isValid = Arrays
-										.stream(WeekDayType.values())
-											.filter(validOption -> equal(value, validOption.getDescription()))
-											.findFirst()
-											.isPresent();
+		final boolean isValid = Arrays.stream(WeekDayType.values())
+										.filter(validOption -> equal(value, validOption.getDescription()))
+										.findFirst()
+										.isPresent();
 
 		if (!isValid) {
 			context.disableDefaultConstraintViolation();

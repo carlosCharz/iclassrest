@@ -56,12 +56,12 @@ public class FCMMessageSender implements IFCMMessageSender {
 		final Notification notificationPayload = createNotificationPayload(notification);
 		Message message = new Message.Builder()
 												.collapseKey(fcmSetting.getCollapseKey())
-													.timeToLive(fcmSetting.getTimeToLive())
-													.addData("type", notificationType)
-													.addData("message", notification.getMessage())
-													.notification(notificationPayload)
-													.priority(Priority.HIGH)
-													.build();
+												.timeToLive(fcmSetting.getTimeToLive())
+												.addData("type", notificationType)
+												.addData("message", notification.getMessage())
+												.notification(notificationPayload)
+												.priority(Priority.HIGH)
+												.build();
 		logger.info("Full message attributes: {}", message.toString());
 		return message;
 	}
@@ -71,10 +71,10 @@ public class FCMMessageSender implements IFCMMessageSender {
 		final String notificationType = notificationRequest.getNotificationTypeName();
 		return new Notification.Builder("")
 											.body(message)
-												.badge(1)
-												.clickAction(notificationType)
-												.sound("default")
-												.build();
+											.badge(1)
+											.clickAction(notificationType)
+											.sound("default")
+											.build();
 	}
 
 }

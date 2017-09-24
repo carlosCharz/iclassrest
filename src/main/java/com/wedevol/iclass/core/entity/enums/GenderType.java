@@ -7,7 +7,8 @@ package com.wedevol.iclass.core.entity.enums;
  */
 public enum GenderType {
 	// TODO: add enum in database
-	MALE("M"), FEMALE("F");
+	MALE("M"), 
+	FEMALE("F");
 
 	private final String description;
 

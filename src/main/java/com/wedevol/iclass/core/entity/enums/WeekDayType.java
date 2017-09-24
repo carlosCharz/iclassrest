@@ -6,7 +6,13 @@ package com.wedevol.iclass.core.entity.enums;
  * @author charz
  */
 public enum WeekDayType {
-	MONDAY("mon"), TUESDAY("tue"), WEDNESDAY("wed"), THURSDAY("thu"), FRIDAY("fri"), SATURDAY("sat"), SUNDAY("sun");
+	MONDAY("mon"), 
+	TUESDAY("tue"), 
+	WEDNESDAY("wed"), 
+	THURSDAY("thu"), 
+	FRIDAY("fri"), 
+	SATURDAY("sat"), 
+	SUNDAY("sun");
 
 	private final String description;
 
