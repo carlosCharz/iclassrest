@@ -5,7 +5,7 @@
 	<!-- Send debug messages to System.out -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%file:%line] %msg%n</pattern>
+			<pattern>%d{yyyyMMdd HH:mm:ss} %-5level [%file:%line] %msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -14,14 +14,14 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- Daily rollover -->
-			<fileNamePattern>${catalina.home}/logs/iclass-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${catalina.home}/logs/iclass-%d{yyyyMMdd}.log</fileNamePattern>
 			<!-- Keep 7 days' worth of history -->
 			<maxHistory>7</maxHistory>
 			<!-- logs up to a maximum size of 10GB -->
 			<totalSizeCap>3GB</totalSizeCap>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%file:%line] %msg%n</pattern>
+			<pattern>%d{yyyyMMdd HH:mm:ss} %-5level [%file:%line] %msg%n</pattern>
 		</encoder>
 	</appender>
 
