@@ -23,8 +23,8 @@ import com.wedevol.iclass.core.exception.BadRequestException;
 import com.wedevol.iclass.core.exception.ResourceNotFoundException;
 import com.wedevol.iclass.core.exception.enums.BadRequestErrorType;
 import com.wedevol.iclass.core.exception.enums.NotFoundErrorType;
-import com.wedevol.iclass.core.notifier.MessageContentBuilder;
-import com.wedevol.iclass.core.notifier.NotificationType;
+import com.wedevol.iclass.core.fcm.MessageContentBuilder;
+import com.wedevol.iclass.core.fcm.NotificationType;
 import com.wedevol.iclass.core.repository.BatchNotificationRepository;
 import com.wedevol.iclass.core.service.BatchNotificationService;
 

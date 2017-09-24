@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.notifier;
+package com.wedevol.iclass.core.fcm;
 
 /**
  * Notification type

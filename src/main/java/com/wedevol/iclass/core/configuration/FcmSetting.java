@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import com.wedevol.iclass.core.notifier.FCMConnection;
+import com.wedevol.iclass.core.fcm.FCMConnection;
 
 /**
  * FCM settings loaded from a property file

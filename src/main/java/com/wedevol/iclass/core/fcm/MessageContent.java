@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.notifier;
+package com.wedevol.iclass.core.fcm;
 
 import java.util.ArrayList;
 import java.util.List;

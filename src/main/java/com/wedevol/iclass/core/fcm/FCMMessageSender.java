@@ -1,4 +1,4 @@
-package com.wedevol.iclass.core.notifier;
+package com.wedevol.iclass.core.fcm;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.android.gcm.server.Message;
-import com.google.android.gcm.server.Message.Priority;
-import com.google.android.gcm.server.Notification;
 import com.wedevol.iclass.core.configuration.FcmSetting;
+import com.wedevol.iclass.core.fcm.sdk.Message;
+import com.wedevol.iclass.core.fcm.sdk.Message.Priority;
+import com.wedevol.iclass.core.fcm.sdk.Notification;
 
 /**
  * Class that sends messages to FCM to be sent to the client devices
@@ -60,6 +60,7 @@ public class FCMMessageSender implements IFCMMessageSender {
 												.addData("type", notificationType)
 												.addData("message", notification.getMessage())
 												.notification(notificationPayload)
+												.contentAvailable(true)
 												.priority(Priority.HIGH)
 												.build();
 		logger.info("Full message attributes: {}", message.toString());

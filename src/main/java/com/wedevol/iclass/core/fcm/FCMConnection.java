@@ -1,10 +1,10 @@
-package com.wedevol.iclass.core.notifier;
+package com.wedevol.iclass.core.fcm;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.google.android.gcm.server.Sender;
+import com.wedevol.iclass.core.fcm.sdk.Sender;
 
 /**
  * Class that gets the connection from Google API to send messages
