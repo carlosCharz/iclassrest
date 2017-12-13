@@ -53,27 +53,36 @@ public class DepartmentId implements Serializable {
 	public String toString() {
 		return String.format("DepartmentId[universityId=%d, facultyId=%d]%n", universityId, facultyId);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		int hashed = 1;
-		if (universityId != null) {
-			hashed = hashed * 31 + universityId.hashCode();
-		}
-		if (facultyId != null) {
-			hashed = hashed * 31 + facultyId.hashCode();
-		}
-		return hashed;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((facultyId == null) ? 0 : facultyId.hashCode());
+		result = prime * result + ((universityId == null) ? 0 : universityId.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || obj.getClass() != this.getClass())
-			return false;
-		if (obj == this)
+		if (this == obj)
 			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		DepartmentId other = (DepartmentId) obj;
-		return this.hashCode() == other.hashCode();
+		if (facultyId == null) {
+			if (other.facultyId != null)
+				return false;
+		} else if (!facultyId.equals(other.facultyId))
+			return false;
+		if (universityId == null) {
+			if (other.universityId != null)
+				return false;
+		} else if (!universityId.equals(other.universityId))
+			return false;
+		return true;
 	}
 
 }

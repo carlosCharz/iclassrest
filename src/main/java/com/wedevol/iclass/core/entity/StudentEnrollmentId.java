@@ -53,27 +53,36 @@ public class StudentEnrollmentId implements Serializable {
 	public String toString() {
 		return String.format("StudentEnrollmentId[studentId=%d, courseId=%d]%n", studentId, courseId);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		int hashed = 1;
-		if (studentId != null) {
-			hashed = hashed * 31 + studentId.hashCode();
-		}
-		if (courseId != null) {
-			hashed = hashed * 31 + courseId.hashCode();
-		}
-		return hashed;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((courseId == null) ? 0 : courseId.hashCode());
+		result = prime * result + ((studentId == null) ? 0 : studentId.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || obj.getClass() != this.getClass())
-			return false;
-		if (obj == this)
+		if (this == obj)
 			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		StudentEnrollmentId other = (StudentEnrollmentId) obj;
-		return this.hashCode() == other.hashCode();
+		if (courseId == null) {
+			if (other.courseId != null)
+				return false;
+		} else if (!courseId.equals(other.courseId))
+			return false;
+		if (studentId == null) {
+			if (other.studentId != null)
+				return false;
+		} else if (!studentId.equals(other.studentId))
+			return false;
+		return true;
 	}
 
 }
