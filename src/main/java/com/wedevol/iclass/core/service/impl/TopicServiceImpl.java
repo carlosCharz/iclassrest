@@ -51,7 +51,7 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Topic findById(Long topicId) {
-		final Optional<Topic> topicObj = Optional.ofNullable(topicRepository.findOne(topicId));
+		final Optional<Topic> topicObj = topicRepository.findById(topicId);
 		return topicObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.TOPIC_NOT_FOUND));
 	}
 
@@ -92,7 +92,7 @@ public class TopicServiceImpl implements TopicService {
 	public void delete(Long topicId) {
 		// The topic should exist
 		findById(topicId);
-		topicRepository.delete(topicId);
+		topicRepository.deleteById(topicId);
 	}
 
 }

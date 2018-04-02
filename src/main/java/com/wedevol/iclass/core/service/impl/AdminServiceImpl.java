@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin findById(Long userId) {
-		final Optional<Admin> adminObj = Optional.ofNullable(adminRepository.findOne(userId));
+		final Optional<Admin> adminObj = adminRepository.findById(userId);
 		return adminObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.ADMIN_NOT_FOUND));
 	}
 
@@ -109,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
 	public void delete(Long userId) {
 		// The admin should exist
 		findById(userId);
-		adminRepository.delete(userId);
+		adminRepository.deleteById(userId);
 	}
 
 	@Override

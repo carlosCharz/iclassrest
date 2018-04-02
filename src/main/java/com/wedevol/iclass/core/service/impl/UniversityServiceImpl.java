@@ -56,7 +56,7 @@ public class UniversityServiceImpl implements UniversityService {
 
 	@Override
 	public University findById(Long universityId) {
-		final Optional<University> universityObj = Optional.ofNullable(universityRepository.findOne(universityId));
+		final Optional<University> universityObj = universityRepository.findById(universityId);
 		return universityObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.UNIVERSITY_NOT_FOUND));
 	}
 
@@ -93,7 +93,7 @@ public class UniversityServiceImpl implements UniversityService {
 	public void delete(Long universityId) {
 		// The university should exist
 		findById(universityId);
-		universityRepository.delete(universityId);
+		universityRepository.deleteById(universityId);
 	}
 
 	@Override

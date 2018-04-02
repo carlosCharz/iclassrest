@@ -54,7 +54,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 
 	@Override
 	public InstructorSchedule findById(Long scheduleId) {
-		Optional<InstructorSchedule> scheduleObj = Optional.ofNullable(scheduleRepository.findOne(scheduleId));
+		Optional<InstructorSchedule> scheduleObj = scheduleRepository.findById(scheduleId);
 		return scheduleObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_SCHEDULE_NOT_FOUND));
 	}
@@ -106,7 +106,7 @@ public class InstructorScheduleServiceImpl implements InstructorScheduleService 
 	public void delete(Long scheduleId) {
 		// The instructor schedule should exist
 		findById(scheduleId);
-		scheduleRepository.delete(scheduleId);
+		scheduleRepository.deleteById(scheduleId);
 	}
 
 	@Override

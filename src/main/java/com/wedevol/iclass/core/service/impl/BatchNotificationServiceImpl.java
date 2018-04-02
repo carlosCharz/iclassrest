@@ -52,7 +52,7 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 
 	@Override
 	public BatchNotification findById(Long batchId) {
-		final Optional<BatchNotification> batchObj = Optional.ofNullable(batchRepository.findOne(batchId));
+		final Optional<BatchNotification> batchObj = batchRepository.findById(batchId);
 		return batchObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.BATCH_NOTIFICATION_NOT_FOUND));
 	}
@@ -96,7 +96,7 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 	public void delete(Long batchId) {
 		// The batch notification should exist
 		findById(batchId);
-		batchRepository.delete(batchId);
+		batchRepository.deleteById(batchId);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class BatchNotificationServiceImpl implements BatchNotificationService {
 	public void deleteClassComingSoonReminder(Long classId) {
 		final List<BatchNotification> batchList = batchRepository.findByClassId(classId);
 		batchList.forEach(batch -> {
-			batchRepository.delete(batch.getId());
+			batchRepository.deleteById(batch.getId());
 		});
 	}
 

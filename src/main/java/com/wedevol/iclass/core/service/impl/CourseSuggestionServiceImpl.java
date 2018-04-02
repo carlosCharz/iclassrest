@@ -62,8 +62,7 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 
 	@Override
 	public CourseSuggestion findById(Long courseSuggestionId) {
-		final Optional<CourseSuggestion> courseObj = Optional.ofNullable(
-				courseSuggestionRepository.findOne(courseSuggestionId));
+		final Optional<CourseSuggestion> courseObj = courseSuggestionRepository.findById(courseSuggestionId);
 		return courseObj.orElseThrow(
 				() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_SUGGESTION_NOT_FOUND));
 	}
@@ -127,7 +126,7 @@ public class CourseSuggestionServiceImpl implements CourseSuggestionService {
 	public void delete(Long courseId) {
 		// The course suggestion should exist
 		findById(courseId);
-		courseSuggestionRepository.delete(courseId);
+		courseSuggestionRepository.deleteById(courseId);
 	}
 
 	private void setUserInformationToSuggestions(List<CourseSuggFull> suggestions) {

@@ -93,7 +93,7 @@ public class InstructorServiceImpl implements InstructorService {
 
 	@Override
 	public Instructor findById(Long userId) {
-		Optional<Instructor> instructorObj = Optional.ofNullable(instructorRepository.findOne(userId));
+		Optional<Instructor> instructorObj = instructorRepository.findById(userId);
 		return instructorObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_NOT_FOUND));
 	}
 
@@ -175,7 +175,7 @@ public class InstructorServiceImpl implements InstructorService {
 	public void delete(Long userId) {
 		// The instructor should exist
 		findById(userId);
-		instructorRepository.delete(userId);
+		instructorRepository.deleteById(userId);
 	}
 
 	@Override

@@ -87,7 +87,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public Clase findById(Long classId) {
-		Optional<Clase> classObj = Optional.ofNullable(classRepository.findOne(classId));
+		Optional<Clase> classObj = classRepository.findById(classId);
 		return classObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.CLASS_NOT_FOUND));
 	}
 
@@ -180,7 +180,7 @@ public class ClassServiceImpl implements ClassService {
 	public void delete(Long classId) {
 		// The class should exist
 		findById(classId);
-		classRepository.delete(classId);
+		classRepository.deleteById(classId);
 	}
 
 	@Override

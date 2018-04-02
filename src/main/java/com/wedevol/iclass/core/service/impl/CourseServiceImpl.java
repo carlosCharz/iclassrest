@@ -78,7 +78,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course findById(Long courseId) {
-		final Optional<Course> courseObj = Optional.ofNullable(courseRepository.findOne(courseId));
+		final Optional<Course> courseObj = courseRepository.findById(courseId);
 		return courseObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.COURSE_NOT_FOUND));
 	}
 
@@ -133,7 +133,7 @@ public class CourseServiceImpl implements CourseService {
 	public void delete(Long courseId) {
 		// The course should exist
 		findById(courseId);
-		courseRepository.delete(courseId);
+		courseRepository.deleteById(courseId);
 	}
 
 	@Override

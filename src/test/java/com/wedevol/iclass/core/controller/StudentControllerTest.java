@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.wedevol.iclass.core.Application;
+import com.wedevol.iclass.core.EntryPoint;
 import com.wedevol.iclass.core.entity.AccessToken;
 import com.wedevol.iclass.core.entity.Student;
 import com.wedevol.iclass.core.entity.enums.UserType;
@@ -37,7 +37,7 @@ import com.wedevol.iclass.core.service.impl.StudentServiceImpl;
 import com.wedevol.iclass.core.view.request.UserView;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = EntryPoint.class)
 @AutoConfigureMockMvc
 public class StudentControllerTest {
 

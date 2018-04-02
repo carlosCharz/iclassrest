@@ -50,7 +50,7 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Override
 	public Material findById(Long materialId) {
-		final Optional<Material> materialObj = Optional.ofNullable(materialRepository.findOne(materialId));
+		final Optional<Material> materialObj = materialRepository.findById(materialId);
 		return materialObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.MATERIAL_NOT_FOUND));
 	}
 
@@ -90,7 +90,7 @@ public class MaterialServiceImpl implements MaterialService {
 	public void delete(Long materialId) {
 		// The material should exist
 		findById(materialId);
-		materialRepository.delete(materialId);
+		materialRepository.deleteById(materialId);
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 
 	@Override
 	public InstructorEnrollment findById(InstructorEnrollmentId id) {
-		final Optional<InstructorEnrollment> icObj = Optional.ofNullable(enrRepository.findOne(id));
+		final Optional<InstructorEnrollment> icObj = enrRepository.findById(id);
 		return icObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.INSTRUCTOR_COURSE_NOT_FOUND));
 	}
 
@@ -79,8 +79,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 		// The instructor should exist
 		instructorService.findById(instructorEnrollment.getId().getInstructorId());
 		// The instructorEnrollment should not exist
-		final Optional<InstructorEnrollment> enrObj = Optional.ofNullable(enrRepository.findOne(instructorEnrollment
-																													.getId()));
+		final Optional<InstructorEnrollment> enrObj = enrRepository.findById(instructorEnrollment.getId());
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
@@ -110,7 +109,7 @@ public class InstructorEnrollmentServiceImpl implements InstructorEnrollmentServ
 	public void delete(InstructorEnrollmentId id) {
 		// The instructorEnrollment should exist
 		findById(id);
-		enrRepository.delete(id);
+		enrRepository.deleteById(id);
 	}
 
 	@Override

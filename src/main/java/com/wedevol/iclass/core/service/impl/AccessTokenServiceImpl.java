@@ -44,7 +44,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 
 	@Override
 	public AccessToken findById(Long accessTokenId) {
-		final Optional<AccessToken> tokenObj = Optional.ofNullable(accessTokenRepository.findOne(accessTokenId));
+		final Optional<AccessToken> tokenObj = accessTokenRepository.findById(accessTokenId);
 		return tokenObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.ACCESS_TOKEN_NOT_FOUND));
 	}
 
@@ -88,7 +88,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	public void delete(Long accessTokenId) {
 		// The access token should exist
 		this.findById(accessTokenId);
-		accessTokenRepository.delete(accessTokenId);
+		accessTokenRepository.deleteById(accessTokenId);
 	}
 
 	@Override

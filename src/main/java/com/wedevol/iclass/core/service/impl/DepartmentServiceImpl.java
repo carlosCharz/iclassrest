@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public Department findById(DepartmentId id) {
-		final Optional<Department> depaObj = Optional.ofNullable(depaRepository.findOne(id));
+		final Optional<Department> depaObj = depaRepository.findById(id);
 		return depaObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.DEPARTMENT_NOT_FOUND));
 	}
 
@@ -69,8 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		// The faculty should exist
 		facultyService.findById(department.getId().getFacultyId());
 		// The department should not exist
-		final Optional<Department> depaObj = Optional.ofNullable(
-				depaRepository.findOne(department.getId()));
+		final Optional<Department> depaObj = depaRepository.findById(department.getId());
 		if (depaObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.DEPARTMENT_ALREADY_EXISTS);
 		}
@@ -89,7 +88,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public void delete(DepartmentId id) {
 		// The department should exist
 		findById(id);
-		depaRepository.delete(id);
+		depaRepository.deleteById(id);
 	}
 
 }

@@ -50,7 +50,7 @@ public class FacultyServiceImpl implements FacultyService {
 
 	@Override
 	public Faculty findById(Long facultyId) {
-		final Optional<Faculty> facultyObj = Optional.ofNullable(facultyRepository.findOne(facultyId));
+		final Optional<Faculty> facultyObj = facultyRepository.findById(facultyId);
 		return facultyObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.FACULTY_NOT_FOUND));
 	}
 
@@ -87,7 +87,7 @@ public class FacultyServiceImpl implements FacultyService {
 	public void delete(Long facultyId) {
 		// The faculty should exist
 		findById(facultyId);
-		facultyRepository.delete(facultyId);
+		facultyRepository.deleteById(facultyId);
 	}
 
 	@Override

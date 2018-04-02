@@ -53,7 +53,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 	@Override
 	public StudentEnrollment findById(StudentEnrollmentId id) {
-		final Optional<StudentEnrollment> scObj = Optional.ofNullable(enrRepository.findOne(id));
+		final Optional<StudentEnrollment> scObj = enrRepository.findById(id);
 		return scObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_COURSE_NOT_FOUND));
 	}
 
@@ -70,8 +70,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 		// The student should exist
 		studentService.findById(studentEnrollment.getId().getStudentId());
 		// The studentEnrollment should not exist
-		final Optional<StudentEnrollment> enrObj = Optional.ofNullable(
-				enrRepository.findOne(studentEnrollment.getId()));
+		final Optional<StudentEnrollment> enrObj = enrRepository.findById(studentEnrollment.getId());
 		if (enrObj.isPresent()) {
 			throw new BadRequestException(BadRequestErrorType.ENROLLMENT_ALREADY_EXISTS);
 		}
@@ -93,7 +92,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 	public void delete(StudentEnrollmentId id) {
 		// The studentEnrollment should exist
 		findById(id);
-		enrRepository.delete(id);
+		enrRepository.deleteById(id);
 	}
 
 }

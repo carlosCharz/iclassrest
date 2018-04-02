@@ -81,7 +81,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student findById(Long userId) {
-		final Optional<Student> studentObj = Optional.ofNullable(studentRepository.findOne(userId));
+		final Optional<Student> studentObj = studentRepository.findById(userId);
 		return studentObj.orElseThrow(() -> new ResourceNotFoundException(NotFoundErrorType.STUDENT_NOT_FOUND));
 	}
 
@@ -160,7 +160,7 @@ public class StudentServiceImpl implements StudentService {
 	public void delete(Long userId) {
 		// The student should exist
 		findById(userId);
-		studentRepository.delete(userId);
+		studentRepository.deleteById(userId);
 	}
 
 	@Override
